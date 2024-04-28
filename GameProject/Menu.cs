@@ -67,6 +67,7 @@ namespace GameProject
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            PlayAnimation(btnLogin);
             if (loginForm == null || loginForm.IsDisposed)
             {
                 loginForm = new Login();
@@ -80,7 +81,7 @@ namespace GameProject
         }
 
         private void Login_FormClosed(object? sender, FormClosedEventArgs e)
-        {         
+        {
             if (loginForm != null && loginForm.DialogResult == DialogResult.OK)
             {
                 if (WelcomeMessage() == true)
@@ -95,6 +96,7 @@ namespace GameProject
 
         private void btnSignup_Click(object sender, EventArgs e)
         {
+            PlayAnimation(btnSignup);
             if (signupForm == null || signupForm.IsDisposed)
             {
                 signupForm = new Signup();
@@ -108,10 +110,7 @@ namespace GameProject
 
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            Thread animationThread = new Thread(() => PlayButtonAnimation(btnPlay));
-            animationThread.Start();
-            animationThread.Join();
-
+            PlayAnimation(btnPlay);
             if (WelcomeMessage() == true)
             {
                 /*MessageBox.Show("Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!");*/
@@ -125,19 +124,21 @@ namespace GameProject
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
+            PlayAnimation(btnQuit);
             Application.Exit();
         }
 
-        private void Button_Click(object? sender, EventArgs e)
+        private void PlayAnimation(Control control)
         {
-            if (sender is Button button && sender != btnPlay)
+            if (control is Button button)
             {
-                Thread animationThread = new Thread(() => PlayButtonAnimation(button));
+                Thread animationThread = new Thread(() => ButtonAnimation(button));
                 animationThread.Start();
+                animationThread.Join();
             }
         }
 
-        private void PlayButtonAnimation(Button button)
+        private void ButtonAnimation(Button button)
         {
             int delay = 70;
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
@@ -177,7 +178,6 @@ namespace GameProject
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
                     button.BackColor = Color.SaddleBrown;
-                    button.Click += Button_Click;
                 }
             }
         }

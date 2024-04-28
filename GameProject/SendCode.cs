@@ -1,7 +1,4 @@
-﻿using FireSharp.Config;
-using FireSharp.Interfaces;
-using FireSharp.Response;
-using GameProject.CustomControls;
+﻿using GameProject.CustomControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,16 +12,8 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    public partial class Signup : Form
+    public partial class SendCode : Form
     {
-        public IFirebaseConfig config = new FirebaseConfig
-        {
-            BasePath = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/",
-            AuthSecret = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"
-        };
-
-        IFirebaseClient client;
-
         PrivateFontCollection privateFonts = new PrivateFontCollection();
 
         private void LoadCustomFont()
@@ -37,88 +26,61 @@ namespace GameProject
             string smolExtendedFontPath = Path.Combine(Application.StartupPath, "Font/smolExtended.ttf");
             privateFonts.AddFontFile(smolExtendedFontPath);
 
+            // Load the FVFFernando08.ttf font
+            string FVFFernando08FontPath = Path.Combine(Application.StartupPath, "Font/FVFFernando08.ttf");
+            privateFonts.AddFontFile(FVFFernando08FontPath);
+
             foreach (Control control in Controls)
             {
                 if (control is Button || control is TextBoxDesign)
                 {
-                    control.Font = new Font(privateFonts.Families[0], 20f, FontStyle.Bold);
+                    control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
                 }
                 else if (control is Label)
                 {
-                    control.Font = new Font(privateFonts.Families[1], 26f, FontStyle.Bold);
+                    if (control.Name == "Notification")
+                    {
+                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
+                    }
+                    else if (control.Name == "linkLabel1")
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 12f, FontStyle.Bold);
+                    }
+                    else // Header
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 22f, FontStyle.Bold);
+                    }
                 }
             }
         }
 
-        public Signup()
+        public SendCode()
         {
             FormBorderStyle = FormBorderStyle.FixedSingle;
             InitializeComponent();
             LoadCustomFont();
             SetControlImage(this, Animation.UI_Login_Menu_02);
             ButtonConfig();
-            CenterControl(label1);
+            CenterControl(Header);
             BodyConfig();
-        }
-
-        private void Signup_Load(object sender, EventArgs e)
-        {
-            client = new FireSharp.FirebaseClient(config);
-
-            if (client != null)
-            {
-                /*MessageBox.Show("Kết nối thành công!");*/
-            }
-        }
-
-        private async void btnSignup_Click(object sender, EventArgs e)
-        {
-            PlayAnimation(btnSignup);
-
-            foreach (Control x in Controls)
-            {
-                if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
-                {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi");
-                    return;
-                }
-            }
-
-            string usrname = textBoxDesign1.Texts.Trim();
-            string pass = textBoxDesign2.Texts;
-            string passConfirm = textBoxDesign3.Texts;
-            FirebaseResponse response1 = client.Get(@"Information/" + usrname);
-            if (response1.Body == "null")
-            {
-                if (pass == passConfirm)
-                {
-                    var data = new Data
-                    {
-                        Username = usrname,
-                        Password = pass
-                    };
-
-                    SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
-                    Data result = response2.ResultAs<Data>();
-
-                    MessageBox.Show("Đăng ký tài khoản: " + result.Username + " thành công!");
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Mật khẩu nhập lại không đúng!", "Lỗi");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Tài khoản tồn tại!", "Lỗi");
-            }
         }
 
         private void btnReturnHome_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnReturnHome);
+            Login login = new Login();
+            login.Show();
             this.Close();
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnVerify_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void PlayAnimation(Control control)
@@ -145,17 +107,18 @@ namespace GameProject
 
         private void BodyConfig()
         {
+
+            Notification.Text = "";
+            Notification.BackColor = Color.Transparent;
+
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
-            CenterControl(textBoxDesign3);
 
             SetControlImage(pictureBox1, Animation.UI_Textbox_02);
             SetControlImage(pictureBox2, Animation.UI_Textbox_02);
-            SetControlImage(pictureBox3, Animation.UI_Textbox_02);
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
-            CenterControl(pictureBox3);
         }
 
         private void ButtonConfig()
@@ -174,6 +137,10 @@ namespace GameProject
 
         private void CenterControl(Control control)
         {
+            if (control.Name == "btnSend" || control.Name == "btnVerify")
+            {
+                return;
+            }
             if (control.Parent != null)
             {
                 int x = (control.Parent.ClientSize.Width - control.Width) / 2;

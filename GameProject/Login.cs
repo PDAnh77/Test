@@ -38,15 +38,30 @@ namespace GameProject
             string smolExtendedFontPath = Path.Combine(Application.StartupPath, "Font/smolExtended.ttf");
             privateFonts.AddFontFile(smolExtendedFontPath);
 
+            // Load the FVFFernando08.ttf font
+            string FVFFernando08FontPath = Path.Combine(Application.StartupPath, "Font/FVFFernando08.ttf");
+            privateFonts.AddFontFile(FVFFernando08FontPath);
+
             foreach (Control control in Controls)
             {
                 if (control is Button || control is TextBoxDesign)
                 {
-                    control.Font = new Font(privateFonts.Families[0], 20f, FontStyle.Bold);
+                    control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
                 }
                 else if (control is Label)
                 {
-                    control.Font = new Font(privateFonts.Families[1], 26f, FontStyle.Bold);
+                    if (control.Name == "Notification")
+                    {
+                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
+                    }
+                    else if (control.Name == "linkLabel1")
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 12f, FontStyle.Bold);
+                    }
+                    else // Header
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 26f, FontStyle.Bold);
+                    }
                 }
             }
         }
@@ -58,9 +73,8 @@ namespace GameProject
             LoadCustomFont();
             SetControlImage(this, Animation.UI_Login_Menu_02);
             ButtonConfig();
-            CenterControl(label1);
+            CenterControl(Header);
             BodyConfig();
-
             /*ResizeScreenEvent(); */ // Can't auto resize label
         }
 
@@ -76,16 +90,15 @@ namespace GameProject
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            Thread animationThread = new Thread(() => PlayButtonAnimation(btnLogin));
-            animationThread.Start();
-            animationThread.Join();
+            PlayAnimation(btnLogin);
 
             string usrname = textBoxDesign1.Texts.Trim();
             string pass = textBoxDesign2.Texts;
 
             if (string.IsNullOrWhiteSpace(usrname) || string.IsNullOrWhiteSpace(pass.Trim()))
             {
-                MessageBox.Show("Vui lòng nhập thông tin đăng nhập!", "Lỗi");
+                Notification.Text = "Vui lòng nhập thông tin đăng nhập!";
+                CenterControl(Notification);
                 return;
             }
 
@@ -102,27 +115,44 @@ namespace GameProject
                         Password = pass
                     };
 
+                    int timerSeconds = 6;
+                    int remainingSeconds = timerSeconds;
+
                     if (Data.IsEqual(ResUser, CurUser))
                     {
-                        MessageBox.Show("Đăng nhập thành công!");
-
+                        Notification.Text = "Đăng nhập thành công!";
                         Data.CurrentUser = new Data()
                         {
                             Username = usrname,
                             Password = pass
                         };
                         DialogResult = DialogResult.OK;
-                        this.Close();
+
+                        var wait = new System.Windows.Forms.Timer();
+                        wait.Tick += delegate
+                        {
+                            remainingSeconds--;
+                            Notification.Text = $"Đăng nhập thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                            CenterControl(Notification);
+
+                            if (remainingSeconds <= 0)
+                            {
+                                this.Close();
+                            }
+                        };
+                        wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
+                        wait.Start();
                     }
                     else
                     {
-                        MessageBox.Show("Mật khẩu không đúng!");
+                        Notification.Text = "Mật khẩu không đúng!";
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Tên đăng nhập không tồn tại!");
+                    Notification.Text = "Tên đăng nhập không tồn tại!";
                 }
+                CenterControl(Notification);
             }
             catch (Exception ex)
             {
@@ -132,22 +162,28 @@ namespace GameProject
 
         private void btnReturnHome_Click(object sender, EventArgs e)
         {
-            Thread animationThread = new Thread(() => PlayButtonAnimation(btnReturnHome));
-            animationThread.Start();
-            animationThread.Join();
+            PlayAnimation(btnReturnHome);
             this.Close();
         }
 
-        private void Button_Click(object? sender, EventArgs e)
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (sender is Button button && sender != btnLogin)
+            SendCode sendCode = new SendCode();
+            sendCode.Show();
+            this.Close();
+        }
+
+        private void PlayAnimation(Control control)
+        {
+            if (control is Button button)
             {
-                Thread animationThread = new Thread(() => PlayButtonAnimation(button));
+                Thread animationThread = new Thread(() => ButtonAnimation(button));
                 animationThread.Start();
+                animationThread.Join();
             }
         }
 
-        private void PlayButtonAnimation(Button button)
+        private void ButtonAnimation(Button button)
         {
             int delay = 70;
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
@@ -161,6 +197,10 @@ namespace GameProject
 
         private void BodyConfig()
         {
+
+            Notification.Text = "";
+            Notification.BackColor = Color.Transparent;
+
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
 
@@ -181,7 +221,6 @@ namespace GameProject
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
                     button.BackColor = Color.SandyBrown;
-                    button.Click += Button_Click;
                 }
             }
         }
@@ -199,7 +238,6 @@ namespace GameProject
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
         }
-
     }
 }
 

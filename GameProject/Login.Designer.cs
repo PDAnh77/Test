@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             btnLogin = new CustomControls.ButtonDesign();
-            label1 = new Label();
+            Header = new Label();
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             textBoxDesign2 = new CustomControls.TextBoxDesign();
             textBoxDesign1 = new CustomControls.TextBoxDesign();
             btnReturnHome = new CustomControls.ButtonDesign();
+            Notification = new Label();
+            linkLabel1 = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -50,7 +52,7 @@
             btnLogin.FlatAppearance.BorderSize = 0;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(74, 488);
+            btnLogin.Location = new Point(78, 488);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(252, 50);
             btnLogin.TabIndex = 3;
@@ -59,21 +61,21 @@
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
-            // label1
+            // Header
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Location = new Point(170, 70);
-            label1.Name = "label1";
-            label1.Size = new Size(51, 20);
-            label1.TabIndex = 4;
-            label1.Text = "LOGIN";
+            Header.AutoSize = true;
+            Header.BackColor = Color.Transparent;
+            Header.Location = new Point(170, 70);
+            Header.Name = "Header";
+            Header.Size = new Size(51, 20);
+            Header.TabIndex = 4;
+            Header.Text = "LOGIN";
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(30, 360);
+            pictureBox1.Location = new Point(30, 329);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(345, 95);
             pictureBox1.TabIndex = 7;
@@ -83,7 +85,7 @@
             // 
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(31, 249);
+            pictureBox2.Location = new Point(31, 218);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(344, 95);
             pictureBox2.TabIndex = 8;
@@ -99,7 +101,7 @@
             textBoxDesign2.BorderSize = 1;
             textBoxDesign2.Font = new Font("Segoe UI", 9.5F);
             textBoxDesign2.ForeColor = Color.Black;
-            textBoxDesign2.Location = new Point(44, 379);
+            textBoxDesign2.Location = new Point(44, 348);
             textBoxDesign2.Margin = new Padding(4);
             textBoxDesign2.Multiline = false;
             textBoxDesign2.Name = "textBoxDesign2";
@@ -122,7 +124,7 @@
             textBoxDesign1.BorderSize = 1;
             textBoxDesign1.Font = new Font("Segoe UI", 9.5F);
             textBoxDesign1.ForeColor = Color.Black;
-            textBoxDesign1.Location = new Point(44, 268);
+            textBoxDesign1.Location = new Point(44, 237);
             textBoxDesign1.Margin = new Padding(4);
             textBoxDesign1.Multiline = false;
             textBoxDesign1.Name = "textBoxDesign1";
@@ -146,7 +148,7 @@
             btnReturnHome.FlatAppearance.BorderSize = 0;
             btnReturnHome.FlatStyle = FlatStyle.Flat;
             btnReturnHome.ForeColor = Color.White;
-            btnReturnHome.Location = new Point(74, 548);
+            btnReturnHome.Location = new Point(78, 548);
             btnReturnHome.Name = "btnReturnHome";
             btnReturnHome.Size = new Size(252, 50);
             btnReturnHome.TabIndex = 11;
@@ -155,18 +157,44 @@
             btnReturnHome.UseVisualStyleBackColor = false;
             btnReturnHome.Click += btnReturnHome_Click;
             // 
+            // Notification
+            // 
+            Notification.AutoSize = true;
+            Notification.ForeColor = Color.Black;
+            Notification.Location = new Point(30, 154);
+            Notification.Name = "Notification";
+            Notification.Size = new Size(50, 20);
+            Notification.TabIndex = 12;
+            Notification.Text = "label2";
+            Notification.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.BackColor = Color.Transparent;
+            linkLabel1.ForeColor = SystemColors.ControlText;
+            linkLabel1.Location = new Point(44, 436);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(126, 20);
+            linkLabel1.TabIndex = 13;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Forget password?";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(432, 673);
+            Controls.Add(linkLabel1);
+            Controls.Add(Notification);
             Controls.Add(btnReturnHome);
             Controls.Add(textBoxDesign1);
             Controls.Add(textBoxDesign2);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
-            Controls.Add(label1);
+            Controls.Add(Header);
             Controls.Add(btnLogin);
             Name = "Login";
             Text = "Login";
@@ -179,11 +207,13 @@
 
         #endregion
         private CustomControls.ButtonDesign btnLogin;
-        private Label label1;
+        private Label Header;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private CustomControls.TextBoxDesign textBoxDesign2;
         private CustomControls.TextBoxDesign textBoxDesign1;
         private CustomControls.ButtonDesign btnReturnHome;
+        private Label Notification;
+        private LinkLabel linkLabel1;
     }
 }
