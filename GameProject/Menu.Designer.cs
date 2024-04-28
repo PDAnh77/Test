@@ -35,7 +35,7 @@
             btnSignup = new CustomControls.ButtonDesign();
             btnPlay = new CustomControls.ButtonDesign();
             btnLogin = new CustomControls.ButtonDesign();
-            label1 = new Label();
+            Notification = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -153,16 +153,16 @@
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
-            // label1
+            // Notification
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Location = new Point(221, 217);
-            label1.Name = "label1";
-            label1.Size = new Size(205, 20);
-            label1.TabIndex = 12;
-            label1.Text = "Chào mừng bạn quay trở lại, !";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            Notification.AutoSize = true;
+            Notification.BackColor = Color.Transparent;
+            Notification.Location = new Point(221, 217);
+            Notification.Name = "Notification";
+            Notification.Size = new Size(205, 20);
+            Notification.TabIndex = 12;
+            Notification.Text = "Chào mừng bạn quay trở lại, !";
+            Notification.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Menu
             // 
@@ -170,7 +170,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1262, 673);
-            Controls.Add(label1);
+            Controls.Add(Notification);
             Controls.Add(btnQuit);
             Controls.Add(btnSignup);
             Controls.Add(btnPlay);
@@ -194,6 +194,6 @@
         private CustomControls.ButtonDesign btnSignup;
         private CustomControls.ButtonDesign btnPlay;
         private CustomControls.ButtonDesign btnLogin;
-        private Label label1;
+        private Label Notification;
     }
 }

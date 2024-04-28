@@ -27,7 +27,7 @@ namespace GameProject
                 }
                 else if (control is Label)
                 {
-                    if (control.Name == "label1") // Check if the control is label1
+                    if (control.Name == "Notification") // Check if the control is label1
                     {
                         control.Font = new Font(privateFonts.Families[0], 12f, FontStyle.Bold);
                     }
@@ -86,8 +86,8 @@ namespace GameProject
             {
                 if (WelcomeMessage() == true)
                 {
-                    label1.Text = "Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!";
-                    CenterControl(label1);
+                    Notification.Text = "Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!";
+                    CenterControl(Notification);
                 }
             }
         }
@@ -118,8 +118,9 @@ namespace GameProject
             }
             else
             {
-                MessageBox.Show("Bạn cần đăng nhập vào tài khoản trước!", "Lỗi");
+                Notification.Text = "Bạn cần đăng nhập vào tài khoản trước!";
             }
+            CenterControl(Notification);
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
@@ -160,8 +161,8 @@ namespace GameProject
 
         private void BodyConfig()
         {
-            CenterControl(label1);
-            label1.ForeColor = Color.White;
+            CenterControl(Notification);
+            Notification.ForeColor = Color.White;
 
             SetControlImage(pictureBox2, Animation.UI_Menu_Border);
             CenterControl(pictureBox2);
