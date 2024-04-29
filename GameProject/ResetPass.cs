@@ -12,10 +12,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GameProject
 {
-    public partial class Signup : Form
+    public partial class ResetPass : Form
     {
         public IFirebaseConfig config = new FirebaseConfig
         {
@@ -37,31 +38,46 @@ namespace GameProject
             string smolExtendedFontPath = Path.Combine(Application.StartupPath, "Font/smolExtended.ttf");
             privateFonts.AddFontFile(smolExtendedFontPath);
 
+            // Load the FVFFernando08.ttf font
+            string FVFFernando08FontPath = Path.Combine(Application.StartupPath, "Font/FVFFernando08.ttf");
+            privateFonts.AddFontFile(FVFFernando08FontPath);
+
             foreach (Control control in Controls)
             {
                 if (control is Button || control is TextBoxDesign)
                 {
-                    control.Font = new Font(privateFonts.Families[0], 20f, FontStyle.Bold);
+                    control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
                 }
                 else if (control is Label)
                 {
-                    control.Font = new Font(privateFonts.Families[1], 26f, FontStyle.Bold);
+                    if (control.Name == "Notification")
+                    {
+                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
+                    }
+                    else if (control.Name == "linkLabel1")
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 12f, FontStyle.Bold);
+                    }
+                    else // Header
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 26f, FontStyle.Bold);
+                    }
                 }
             }
         }
 
-        public Signup()
+        public ResetPass()
         {
             FormBorderStyle = FormBorderStyle.FixedSingle;
             InitializeComponent();
             LoadCustomFont();
             SetControlImage(this, Animation.UI_Login_Menu_02);
             ButtonConfig();
-            CenterControl(label1);
+            CenterControl(Header);
             BodyConfig();
         }
 
-        private void Signup_Load(object sender, EventArgs e)
+        private void ResetPass_Load(object sender, EventArgs e)
         {
             client = new FireSharp.FirebaseClient(config);
 
@@ -71,54 +87,81 @@ namespace GameProject
             }
         }
 
-        private async void btnSignup_Click(object sender, EventArgs e)
+        private async void btnReset_Click(object sender, EventArgs e)
         {
-            PlayAnimation(btnSignup);
+            PlayAnimation(btnReset);
+
+            string usrname = textBoxDesign1.Texts.Trim();
+            string pass = textBoxDesign2.Texts;
+            string passconf = textBoxDesign3.Texts;
 
             foreach (Control x in Controls)
             {
                 if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi");
+                    Notification.Text = "Vui lòng nhập đầy đủ thông tin!";
+                    CenterControl(Notification);
                     return;
                 }
             }
 
-            string usrname = textBoxDesign1.Texts.Trim();
-            string pass = textBoxDesign2.Texts;
-            string passConfirm = textBoxDesign3.Texts;
-
-            FirebaseResponse response1 = client.Get(@"Information/" + usrname);
-            if (response1.Body == "null")
+            try
             {
-                if (pass == passConfirm)
+                FirebaseResponse response1 = client.Get(@"Information/" + usrname);
+                if (response1.Body != "null")
                 {
-                    var data = new Data
+                    if(pass == passconf)
                     {
-                        Username = usrname,
-                        Password = pass
-                    };
+                        Data data = new Data()
+                        {
+                            Username = usrname,
+                            Password = pass
+                        };
+                        SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
 
-                    SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
-                    Data result = response2.ResultAs<Data>();
+                        int timerSeconds = 4;
+                        int remainingSeconds = timerSeconds;
 
-                    MessageBox.Show("Đăng ký tài khoản: " + result.Username + " thành công!");
-                    this.Close();
+                        var wait = new System.Windows.Forms.Timer();
+                        wait.Tick += delegate
+                        {
+                            remainingSeconds--;
+                            Notification.Text = $"Cập nhật mật khẩu mới thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                            CenterControl(Notification);
+
+                            if (remainingSeconds <= 0)
+                            {
+                                Login login = new Login();
+                                login.Show();
+                                wait.Stop();
+                                this.Close();
+                            }
+                        };
+                        wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
+                        wait.Start();
+                    }
+                    else
+                    {
+                        Notification.Text = "Mật khẩu nhập lại không đúng!";
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Mật khẩu nhập lại không đúng!", "Lỗi");
+                    Notification.Text = "Tên đăng nhập không tồn tại!";
                 }
+                CenterControl(Notification);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Tài khoản tồn tại!", "Lỗi");
+                MessageBox.Show(ex.Message);
             }
         }
 
-        private void btnReturnHome_Click(object sender, EventArgs e)
+        private void btnReturn_Click(object sender, EventArgs e)
         {
-            PlayAnimation(btnReturnHome);
+            PlayAnimation(btnReturn);
+            Login login = new Login();
+            login.Show();
             this.Close();
         }
 
@@ -146,6 +189,10 @@ namespace GameProject
 
         private void BodyConfig()
         {
+
+            Notification.Text = "";
+            Notification.BackColor = Color.Transparent;
+
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
             CenterControl(textBoxDesign3);
@@ -185,6 +232,6 @@ namespace GameProject
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
-        }
+        }       
     }
 }

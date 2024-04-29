@@ -1,6 +1,6 @@
 ﻿namespace GameProject
 {
-    partial class SendCode
+    partial class ResetPass
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,15 @@
         {
             Notification = new Label();
             btnReturn = new CustomControls.ButtonDesign();
+            Header = new Label();
+            btnReset = new CustomControls.ButtonDesign();
+            textBoxDesign3 = new CustomControls.TextBoxDesign();
+            pictureBox3 = new PictureBox();
             textBoxDesign1 = new CustomControls.TextBoxDesign();
             textBoxDesign2 = new CustomControls.TextBoxDesign();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
-            Header = new Label();
-            btnVerify = new CustomControls.ButtonDesign();
-            btnSend = new CustomControls.ButtonDesign();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -45,10 +47,10 @@
             // 
             Notification.AutoSize = true;
             Notification.ForeColor = Color.Black;
-            Notification.Location = new Point(29, 166);
+            Notification.Location = new Point(44, 124);
             Notification.Name = "Notification";
             Notification.Size = new Size(50, 20);
-            Notification.TabIndex = 20;
+            Notification.TabIndex = 21;
             Notification.Text = "label2";
             Notification.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -63,14 +65,77 @@
             btnReturn.FlatAppearance.BorderSize = 0;
             btnReturn.FlatStyle = FlatStyle.Flat;
             btnReturn.ForeColor = Color.White;
-            btnReturn.Location = new Point(77, 557);
+            btnReturn.Location = new Point(92, 561);
             btnReturn.Name = "btnReturn";
             btnReturn.Size = new Size(252, 50);
-            btnReturn.TabIndex = 19;
+            btnReturn.TabIndex = 20;
             btnReturn.Text = "Return";
             btnReturn.TextColor = Color.White;
             btnReturn.UseVisualStyleBackColor = false;
             btnReturn.Click += btnReturn_Click;
+            // 
+            // Header
+            // 
+            Header.AutoSize = true;
+            Header.BackColor = Color.Transparent;
+            Header.Location = new Point(184, 72);
+            Header.Name = "Header";
+            Header.Size = new Size(132, 20);
+            Header.TabIndex = 15;
+            Header.Text = "RESET PASSWORD";
+            // 
+            // btnReset
+            // 
+            btnReset.BackColor = Color.MediumSlateBlue;
+            btnReset.BackgroundColor = Color.MediumSlateBlue;
+            btnReset.BackgroundImageLayout = ImageLayout.Stretch;
+            btnReset.BorderColor = Color.PaleVioletRed;
+            btnReset.BorderRadius = 0;
+            btnReset.BorderSize = 0;
+            btnReset.FlatAppearance.BorderSize = 0;
+            btnReset.FlatStyle = FlatStyle.Flat;
+            btnReset.ForeColor = Color.White;
+            btnReset.Location = new Point(92, 501);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(252, 50);
+            btnReset.TabIndex = 14;
+            btnReset.Text = "Reset password";
+            btnReset.TextColor = Color.White;
+            btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
+            // 
+            // textBoxDesign3
+            // 
+            textBoxDesign3.BackColor = Color.Moccasin;
+            textBoxDesign3.BackgroundImageLayout = ImageLayout.Stretch;
+            textBoxDesign3.BorderColor = Color.Transparent;
+            textBoxDesign3.BorderFocusColor = Color.Transparent;
+            textBoxDesign3.BorderRadius = 0;
+            textBoxDesign3.BorderSize = 1;
+            textBoxDesign3.Font = new Font("Segoe UI", 9.5F);
+            textBoxDesign3.ForeColor = Color.Black;
+            textBoxDesign3.Location = new Point(57, 410);
+            textBoxDesign3.Margin = new Padding(4);
+            textBoxDesign3.Multiline = false;
+            textBoxDesign3.Name = "textBoxDesign3";
+            textBoxDesign3.Padding = new Padding(7);
+            textBoxDesign3.PasswordChar = true;
+            textBoxDesign3.PlaceholderColor = Color.DarkGray;
+            textBoxDesign3.PlaceholderText = "Nhập lại mật khẩu";
+            textBoxDesign3.Size = new Size(286, 36);
+            textBoxDesign3.TabIndex = 27;
+            textBoxDesign3.Texts = "";
+            textBoxDesign3.UnderlinedStyle = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Transparent;
+            pictureBox3.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox3.Location = new Point(44, 391);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(344, 95);
+            pictureBox3.TabIndex = 26;
+            pictureBox3.TabStop = false;
             // 
             // textBoxDesign1
             // 
@@ -82,16 +147,16 @@
             textBoxDesign1.BorderSize = 1;
             textBoxDesign1.Font = new Font("Segoe UI", 9.5F);
             textBoxDesign1.ForeColor = Color.Black;
-            textBoxDesign1.Location = new Point(42, 231);
+            textBoxDesign1.Location = new Point(58, 208);
             textBoxDesign1.Margin = new Padding(4);
             textBoxDesign1.Multiline = false;
             textBoxDesign1.Name = "textBoxDesign1";
             textBoxDesign1.Padding = new Padding(7);
             textBoxDesign1.PasswordChar = false;
             textBoxDesign1.PlaceholderColor = Color.DarkGray;
-            textBoxDesign1.PlaceholderText = "Nhập email";
-            textBoxDesign1.Size = new Size(287, 36);
-            textBoxDesign1.TabIndex = 18;
+            textBoxDesign1.PlaceholderText = "Tên đăng nhập";
+            textBoxDesign1.Size = new Size(286, 36);
+            textBoxDesign1.TabIndex = 25;
             textBoxDesign1.Texts = "";
             textBoxDesign1.UnderlinedStyle = false;
             // 
@@ -105,16 +170,16 @@
             textBoxDesign2.BorderSize = 1;
             textBoxDesign2.Font = new Font("Segoe UI", 9.5F);
             textBoxDesign2.ForeColor = Color.Black;
-            textBoxDesign2.Location = new Point(43, 402);
+            textBoxDesign2.Location = new Point(58, 309);
             textBoxDesign2.Margin = new Padding(4);
             textBoxDesign2.Multiline = false;
             textBoxDesign2.Name = "textBoxDesign2";
             textBoxDesign2.Padding = new Padding(7);
             textBoxDesign2.PasswordChar = true;
             textBoxDesign2.PlaceholderColor = Color.DarkGray;
-            textBoxDesign2.PlaceholderText = "Nhập mã";
+            textBoxDesign2.PlaceholderText = "Mật khẩu mới";
             textBoxDesign2.Size = new Size(286, 36);
-            textBoxDesign2.TabIndex = 17;
+            textBoxDesign2.TabIndex = 24;
             textBoxDesign2.Texts = "";
             textBoxDesign2.UnderlinedStyle = false;
             // 
@@ -122,89 +187,42 @@
             // 
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(29, 212);
+            pictureBox2.Location = new Point(45, 189);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(345, 95);
-            pictureBox2.TabIndex = 16;
+            pictureBox2.Size = new Size(344, 95);
+            pictureBox2.TabIndex = 23;
             pictureBox2.TabStop = false;
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(29, 383);
+            pictureBox1.Location = new Point(44, 290);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(345, 95);
-            pictureBox1.TabIndex = 15;
+            pictureBox1.TabIndex = 22;
             pictureBox1.TabStop = false;
             // 
-            // Header
-            // 
-            Header.AutoSize = true;
-            Header.BackColor = Color.Transparent;
-            Header.Location = new Point(176, 70);
-            Header.Name = "Header";
-            Header.Size = new Size(152, 20);
-            Header.TabIndex = 14;
-            Header.Text = "ACCOUNT RECOVERY";
-            // 
-            // btnVerify
-            // 
-            btnVerify.BackColor = Color.MediumSlateBlue;
-            btnVerify.BackgroundColor = Color.MediumSlateBlue;
-            btnVerify.BackgroundImageLayout = ImageLayout.Stretch;
-            btnVerify.BorderColor = Color.PaleVioletRed;
-            btnVerify.BorderRadius = 0;
-            btnVerify.BorderSize = 0;
-            btnVerify.FlatAppearance.BorderSize = 0;
-            btnVerify.FlatStyle = FlatStyle.Flat;
-            btnVerify.ForeColor = Color.White;
-            btnVerify.Location = new Point(249, 484);
-            btnVerify.Name = "btnVerify";
-            btnVerify.Size = new Size(125, 45);
-            btnVerify.TabIndex = 13;
-            btnVerify.Text = "Verify";
-            btnVerify.TextColor = Color.White;
-            btnVerify.UseVisualStyleBackColor = false;
-            btnVerify.Click += btnVerify_Click;
-            // 
-            // btnSend
-            // 
-            btnSend.BackColor = Color.MediumSlateBlue;
-            btnSend.BackgroundColor = Color.MediumSlateBlue;
-            btnSend.BackgroundImageLayout = ImageLayout.Stretch;
-            btnSend.BorderColor = Color.PaleVioletRed;
-            btnSend.BorderRadius = 0;
-            btnSend.BorderSize = 0;
-            btnSend.FlatAppearance.BorderSize = 0;
-            btnSend.FlatStyle = FlatStyle.Flat;
-            btnSend.ForeColor = Color.White;
-            btnSend.Location = new Point(249, 313);
-            btnSend.Name = "btnSend";
-            btnSend.Size = new Size(125, 45);
-            btnSend.TabIndex = 21;
-            btnSend.Text = "Send";
-            btnSend.TextColor = Color.White;
-            btnSend.UseVisualStyleBackColor = false;
-            btnSend.Click += btnSend_Click;
-            // 
-            // SendCode
+            // ResetPass
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(432, 673);
-            Controls.Add(btnSend);
-            Controls.Add(Notification);
-            Controls.Add(btnReturn);
+            Controls.Add(textBoxDesign3);
+            Controls.Add(pictureBox3);
             Controls.Add(textBoxDesign1);
             Controls.Add(textBoxDesign2);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
+            Controls.Add(Notification);
+            Controls.Add(btnReturn);
             Controls.Add(Header);
-            Controls.Add(btnVerify);
-            Name = "SendCode";
-            Text = "SendCode";
+            Controls.Add(btnReset);
+            Name = "ResetPass";
+            Text = "ResetPass";
+            Load += ResetPass_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
@@ -212,15 +230,15 @@
         }
 
         #endregion
-
         private Label Notification;
         private CustomControls.ButtonDesign btnReturn;
+        private Label Header;
+        private CustomControls.ButtonDesign btnReset;
+        private CustomControls.TextBoxDesign textBoxDesign3;
+        private PictureBox pictureBox3;
         private CustomControls.TextBoxDesign textBoxDesign1;
         private CustomControls.TextBoxDesign textBoxDesign2;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
-        private Label Header;
-        private CustomControls.ButtonDesign btnVerify;
-        private CustomControls.ButtonDesign btnSend;
     }
 }
