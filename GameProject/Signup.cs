@@ -37,15 +37,30 @@ namespace GameProject
             string smolExtendedFontPath = Path.Combine(Application.StartupPath, "Font/smolExtended.ttf");
             privateFonts.AddFontFile(smolExtendedFontPath);
 
+            // Load the FVFFernando08.ttf font
+            string FVFFernando08FontPath = Path.Combine(Application.StartupPath, "Font/FVFFernando08.ttf");
+            privateFonts.AddFontFile(FVFFernando08FontPath);
+
             foreach (Control control in Controls)
             {
                 if (control is Button || control is TextBoxDesign)
                 {
-                    control.Font = new Font(privateFonts.Families[0], 20f, FontStyle.Bold);
+                    control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
                 }
                 else if (control is Label)
                 {
-                    control.Font = new Font(privateFonts.Families[1], 26f, FontStyle.Bold);
+                    if (control.Name == "Notification")
+                    {
+                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
+                    }
+                    else if (control.Name == "linkLabel1")
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 12f, FontStyle.Bold);
+                    }
+                    else // Header
+                    {
+                        control.Font = new Font(privateFonts.Families[2], 26f, FontStyle.Bold);
+                    }
                 }
             }
         }
@@ -57,7 +72,7 @@ namespace GameProject
             LoadCustomFont();
             SetControlImage(this, Animation.UI_Login_Menu_02);
             ButtonConfig();
-            CenterControl(label1);
+            CenterControl(Header);
             BodyConfig();
         }
 
@@ -79,7 +94,8 @@ namespace GameProject
             {
                 if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi");
+                    Notification.Text = "Vui lòng nhập đầy đủ thông tin!";
+                    CenterControl(Notification);
                     return;
                 }
             }
@@ -102,18 +118,36 @@ namespace GameProject
                     SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
                     Data result = response2.ResultAs<Data>();
 
-                    MessageBox.Show("Đăng ký tài khoản: " + result.Username + " thành công!");
-                    this.Close();
+                    Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!";
+
+                    int timerSeconds = 6;
+                    int remainingSeconds = timerSeconds;
+                    var wait = new System.Windows.Forms.Timer();
+
+                    wait.Tick += delegate
+                    {
+                        remainingSeconds--;
+                        Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                        CenterControl(Notification);
+
+                        if (remainingSeconds <= 0)
+                        {
+                            this.Close();
+                        }
+                    };
+                    wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
+                    wait.Start();
                 }
                 else
                 {
-                    MessageBox.Show("Mật khẩu nhập lại không đúng!", "Lỗi");
+                    Notification.Text = "Mật khẩu nhập lại không đúng!";
                 }
             }
             else
             {
-                MessageBox.Show("Tài khoản tồn tại!", "Lỗi");
+                Notification.Text = "Tài khoản tồn tại!";
             }
+            CenterControl(Notification);
         }
 
         private void btnReturnHome_Click(object sender, EventArgs e)
@@ -146,6 +180,9 @@ namespace GameProject
 
         private void BodyConfig()
         {
+            Notification.Text = "";
+            Notification.BackColor = Color.Transparent;
+
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
             CenterControl(textBoxDesign3);

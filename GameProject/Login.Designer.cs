@@ -65,7 +65,7 @@
             // 
             Header.AutoSize = true;
             Header.BackColor = Color.Transparent;
-            Header.Location = new Point(170, 70);
+            Header.Location = new Point(167, 61);
             Header.Name = "Header";
             Header.Size = new Size(51, 20);
             Header.TabIndex = 4;

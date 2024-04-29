@@ -83,7 +83,7 @@ namespace GameProject
             PlayAnimation(btnSend);
             string from, pass, to, content;
             Random rand = new Random();
-            randCode = (rand.Next(999999)).ToString();
+            randCode = rand.Next(999999).ToString();
             MailMessage mess = new MailMessage();
             if(string.IsNullOrEmpty(textBoxDesign1.Texts.Trim()))
             {

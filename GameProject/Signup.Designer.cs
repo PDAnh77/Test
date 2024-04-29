@@ -33,10 +33,11 @@
             textBoxDesign2 = new CustomControls.TextBoxDesign();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
-            label1 = new Label();
+            Header = new Label();
             btnSignup = new CustomControls.ButtonDesign();
             textBoxDesign3 = new CustomControls.TextBoxDesign();
             pictureBox3 = new PictureBox();
+            Notification = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -53,7 +54,7 @@
             btnReturnHome.FlatAppearance.BorderSize = 0;
             btnReturnHome.FlatStyle = FlatStyle.Flat;
             btnReturnHome.ForeColor = Color.White;
-            btnReturnHome.Location = new Point(85, 548);
+            btnReturnHome.Location = new Point(88, 561);
             btnReturnHome.Name = "btnReturnHome";
             btnReturnHome.Size = new Size(252, 50);
             btnReturnHome.TabIndex = 18;
@@ -72,7 +73,7 @@
             textBoxDesign1.BorderSize = 1;
             textBoxDesign1.Font = new Font("Segoe UI", 9.5F);
             textBoxDesign1.ForeColor = Color.Black;
-            textBoxDesign1.Location = new Point(51, 180);
+            textBoxDesign1.Location = new Point(54, 206);
             textBoxDesign1.Margin = new Padding(4);
             textBoxDesign1.Multiline = false;
             textBoxDesign1.Name = "textBoxDesign1";
@@ -95,7 +96,7 @@
             textBoxDesign2.BorderSize = 1;
             textBoxDesign2.Font = new Font("Segoe UI", 9.5F);
             textBoxDesign2.ForeColor = Color.Black;
-            textBoxDesign2.Location = new Point(51, 281);
+            textBoxDesign2.Location = new Point(54, 307);
             textBoxDesign2.Margin = new Padding(4);
             textBoxDesign2.Multiline = false;
             textBoxDesign2.Name = "textBoxDesign2";
@@ -112,7 +113,7 @@
             // 
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(38, 161);
+            pictureBox2.Location = new Point(41, 187);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(344, 95);
             pictureBox2.TabIndex = 15;
@@ -122,21 +123,21 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(37, 262);
+            pictureBox1.Location = new Point(40, 288);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(345, 95);
             pictureBox1.TabIndex = 14;
             pictureBox1.TabStop = false;
             // 
-            // label1
+            // Header
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Location = new Point(170, 70);
-            label1.Name = "label1";
-            label1.Size = new Size(64, 20);
-            label1.TabIndex = 13;
-            label1.Text = "SIGN UP";
+            Header.AutoSize = true;
+            Header.BackColor = Color.Transparent;
+            Header.Location = new Point(167, 61);
+            Header.Name = "Header";
+            Header.Size = new Size(64, 20);
+            Header.TabIndex = 13;
+            Header.Text = "SIGN UP";
             // 
             // btnSignup
             // 
@@ -149,7 +150,7 @@
             btnSignup.FlatAppearance.BorderSize = 0;
             btnSignup.FlatStyle = FlatStyle.Flat;
             btnSignup.ForeColor = Color.White;
-            btnSignup.Location = new Point(85, 488);
+            btnSignup.Location = new Point(88, 501);
             btnSignup.Name = "btnSignup";
             btnSignup.Size = new Size(252, 50);
             btnSignup.TabIndex = 12;
@@ -168,7 +169,7 @@
             textBoxDesign3.BorderSize = 1;
             textBoxDesign3.Font = new Font("Segoe UI", 9.5F);
             textBoxDesign3.ForeColor = Color.Black;
-            textBoxDesign3.Location = new Point(50, 382);
+            textBoxDesign3.Location = new Point(53, 408);
             textBoxDesign3.Margin = new Padding(4);
             textBoxDesign3.Multiline = false;
             textBoxDesign3.Name = "textBoxDesign3";
@@ -185,11 +186,22 @@
             // 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox3.Location = new Point(37, 363);
+            pictureBox3.Location = new Point(40, 389);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(344, 95);
             pictureBox3.TabIndex = 19;
             pictureBox3.TabStop = false;
+            // 
+            // Notification
+            // 
+            Notification.AutoSize = true;
+            Notification.ForeColor = Color.Black;
+            Notification.Location = new Point(40, 124);
+            Notification.Name = "Notification";
+            Notification.Size = new Size(50, 20);
+            Notification.TabIndex = 22;
+            Notification.Text = "label2";
+            Notification.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Signup
             // 
@@ -197,6 +209,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(432, 673);
+            Controls.Add(Notification);
             Controls.Add(textBoxDesign3);
             Controls.Add(pictureBox3);
             Controls.Add(btnReturnHome);
@@ -204,7 +217,7 @@
             Controls.Add(textBoxDesign2);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
-            Controls.Add(label1);
+            Controls.Add(Header);
             Controls.Add(btnSignup);
             Name = "Signup";
             Text = "Signup";
@@ -223,9 +236,10 @@
         private CustomControls.TextBoxDesign textBoxDesign2;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
-        private Label label1;
+        private Label Header;
         private CustomControls.ButtonDesign btnSignup;
         private CustomControls.TextBoxDesign textBoxDesign3;
         private PictureBox pictureBox3;
+        private Label Notification;
     }
 }

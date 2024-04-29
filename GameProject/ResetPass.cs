@@ -60,7 +60,7 @@ namespace GameProject
                     }
                     else // Header
                     {
-                        control.Font = new Font(privateFonts.Families[2], 26f, FontStyle.Bold);
+                        control.Font = new Font(privateFonts.Families[2], 24f, FontStyle.Bold);
                     }
                 }
             }
