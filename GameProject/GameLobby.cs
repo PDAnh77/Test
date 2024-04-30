@@ -48,20 +48,31 @@ namespace GameProject
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            Thread animationThread = new Thread(() => PlayButtonAnimation(btnReturn));
-            animationThread.Start();
-            animationThread.Join();
+            PlayAnimation(btnReturn);          
             DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void Button_Click(object? sender, EventArgs e)
+        private void PlayAnimation(Control control)
         {
-            if (sender is Button button)
+            if (control is Button button)
             {
-                Thread animationThread = new Thread(() => PlayButtonAnimation(button));
+                Thread animationThread = new Thread(() => ButtonAnimation(button));
                 animationThread.Start();
+                animationThread.Join();
             }
+        }
+
+        private void ButtonAnimation(Button button)
+        {
+            int delay = 70;
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
+            Thread.Sleep(delay);
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
+            Thread.Sleep(delay);
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
+            Thread.Sleep(delay);
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
         }
 
         private void ButtonConfig()
@@ -74,21 +85,8 @@ namespace GameProject
                     SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
                     button.ForeColor = Color.Transparent;
                     button.BackColor = Color.Transparent;
-                    button.Click += Button_Click;
                 }
             }
-        }
-
-        private void PlayButtonAnimation(Button button)
-        {
-            int delay = 70;
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
         }
 
         private void CenterControl(Control control)
