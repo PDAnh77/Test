@@ -1,0 +1,10 @@
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\obj\Debug\GameProject.csproj.AssemblyReference.cache
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\obj\Debug\GameProject.CustomControls.TextBoxDesign.resources
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\obj\Debug\GameProject.Properties.Resources.resources
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\obj\Debug\GameProject.csproj.GenerateResource.cache
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\obj\Debug\GameProject.csproj.CoreCompileInputs.cache
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\bin\Debug\GameProject.exe.config
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\bin\Debug\GameProject.exe
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\bin\Debug\GameProject.pdb
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\obj\Debug\GameProject.exe
+C:\Users\anhph\Desktop\BT Code\Lập trình mạng căn bản\Lý thuyết\Đồ án môn học\GameProject\4.8\GameProject\GameProject\obj\Debug\GameProject.pdb
