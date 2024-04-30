@@ -27,11 +27,11 @@ namespace GameProject
                 }
                 else if (control is Label)
                 {
-                    if (control.Name == "Notification") // Check if the control is label1
+                    if (control.Name == "Notification") 
                     {
                         control.Font = new Font(privateFonts.Families[0], 12f, FontStyle.Bold);
                     }
-                    else
+                    else // Header
                     {
                         control.Font = new Font(privateFonts.Families[0], 18f, FontStyle.Bold);
                     }

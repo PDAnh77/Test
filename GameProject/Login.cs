@@ -145,7 +145,7 @@ namespace GameProject
                     }
                     else
                     {
-                        Notification.Text = "Mật khẩu không đúng!";
+                        Notification.Text = "Mật khẩu không chính xác!";
                     }
                 }
                 else
