@@ -89,7 +89,7 @@ namespace GameProject
             if (string.IsNullOrEmpty(textBoxDesign1.Texts.Trim()))
             {
                 Notification.Text = "Vui lòng nhập email";
-                textBoxDesign2.Texts = randCode;
+                /*textBoxDesign2.Texts = randCode;*/
             }
             else
             {
