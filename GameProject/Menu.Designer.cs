@@ -45,133 +45,133 @@ namespace GameProject
             // 
             // pictureBox1
             // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Location = new Point(60, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(700, 202);
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Location = new System.Drawing.Point(60, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(700, 202);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
             // 
             // Header
             // 
-            Header.BackColor = Color.Transparent;
-            Header.Font = new Font("Segoe UI", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Header.Location = new Point(11, 12);
-            Header.Name = "Header";
-            Header.Size = new Size(700, 66);
-            Header.TabIndex = 5;
-            Header.Text = "CỜ CÁ NGỰA";
-            Header.TextAlign = ContentAlignment.MiddleCenter;
+            this.Header.BackColor = System.Drawing.Color.Transparent;
+            this.Header.Font = new System.Drawing.Font("Segoe UI", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Header.Location = new System.Drawing.Point(11, 12);
+            this.Header.Name = "Header";
+            this.Header.Size = new System.Drawing.Size(700, 66);
+            this.Header.TabIndex = 5;
+            this.Header.Text = "CỜ CÁ NGỰA";
+            this.Header.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox2
             // 
-            pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(221, 281);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(440, 354);
-            pictureBox2.TabIndex = 7;
-            pictureBox2.TabStop = false;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(221, 281);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(440, 354);
+            this.pictureBox2.TabIndex = 7;
+            this.pictureBox2.TabStop = false;
             // 
             // btnQuit
             // 
-            btnQuit.BackColor = Color.CornflowerBlue;
-            btnQuit.BackgroundColor = Color.CornflowerBlue;
-            btnQuit.BackgroundImageLayout = ImageLayout.Stretch;
-            btnQuit.BorderColor = Color.Black;
-            btnQuit.BorderRadius = 0;
-            btnQuit.BorderSize = 0;
-            btnQuit.FlatAppearance.BorderSize = 0;
-            btnQuit.FlatStyle = FlatStyle.Flat;
-            btnQuit.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnQuit.ForeColor = Color.White;
-            btnQuit.Location = new Point(246, 543);
-            btnQuit.Name = "btnQuit";
-            btnQuit.Size = new Size(336, 60);
-            btnQuit.TabIndex = 11;
-            btnQuit.Text = "QUIT";
-            btnQuit.TextColor = Color.White;
-            btnQuit.UseVisualStyleBackColor = false;
-            btnQuit.Click += btnQuit_Click;
+            this.btnQuit.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnQuit.BackgroundColor = System.Drawing.Color.CornflowerBlue;
+            this.btnQuit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnQuit.BorderColor = System.Drawing.Color.Black;
+            this.btnQuit.BorderRadius = 0;
+            this.btnQuit.BorderSize = 0;
+            this.btnQuit.FlatAppearance.BorderSize = 0;
+            this.btnQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuit.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuit.ForeColor = System.Drawing.Color.White;
+            this.btnQuit.Location = new System.Drawing.Point(246, 543);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(336, 60);
+            this.btnQuit.TabIndex = 11;
+            this.btnQuit.Text = "QUIT";
+            this.btnQuit.TextColor = System.Drawing.Color.White;
+            this.btnQuit.UseVisualStyleBackColor = false;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
             // btnSignup
             // 
-            btnSignup.BackColor = Color.CornflowerBlue;
-            btnSignup.BackgroundColor = Color.CornflowerBlue;
-            btnSignup.BackgroundImageLayout = ImageLayout.Stretch;
-            btnSignup.BorderColor = Color.Black;
-            btnSignup.BorderRadius = 0;
-            btnSignup.BorderSize = 0;
-            btnSignup.FlatAppearance.BorderSize = 0;
-            btnSignup.FlatStyle = FlatStyle.Flat;
-            btnSignup.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSignup.ForeColor = Color.White;
-            btnSignup.Location = new Point(246, 391);
-            btnSignup.Name = "btnSignup";
-            btnSignup.Size = new Size(336, 60);
-            btnSignup.TabIndex = 10;
-            btnSignup.Text = "SIGN UP";
-            btnSignup.TextColor = Color.White;
-            btnSignup.UseVisualStyleBackColor = false;
-            btnSignup.Click += btnSignup_Click;
+            this.btnSignup.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSignup.BackgroundColor = System.Drawing.Color.CornflowerBlue;
+            this.btnSignup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSignup.BorderColor = System.Drawing.Color.Black;
+            this.btnSignup.BorderRadius = 0;
+            this.btnSignup.BorderSize = 0;
+            this.btnSignup.FlatAppearance.BorderSize = 0;
+            this.btnSignup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSignup.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSignup.ForeColor = System.Drawing.Color.White;
+            this.btnSignup.Location = new System.Drawing.Point(246, 391);
+            this.btnSignup.Name = "btnSignup";
+            this.btnSignup.Size = new System.Drawing.Size(336, 60);
+            this.btnSignup.TabIndex = 10;
+            this.btnSignup.Text = "SIGN UP";
+            this.btnSignup.TextColor = System.Drawing.Color.White;
+            this.btnSignup.UseVisualStyleBackColor = false;
+            this.btnSignup.Click += new System.EventHandler(this.btnSignup_Click);
             // 
             // btnPlay
             // 
-            btnPlay.BackColor = Color.CornflowerBlue;
-            btnPlay.BackgroundColor = Color.CornflowerBlue;
-            btnPlay.BackgroundImageLayout = ImageLayout.Stretch;
-            btnPlay.BorderColor = Color.Black;
-            btnPlay.BorderRadius = 0;
-            btnPlay.BorderSize = 0;
-            btnPlay.FlatAppearance.BorderSize = 0;
-            btnPlay.FlatStyle = FlatStyle.Flat;
-            btnPlay.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPlay.ForeColor = Color.White;
-            btnPlay.Location = new Point(246, 467);
-            btnPlay.Name = "btnPlay";
-            btnPlay.Size = new Size(336, 60);
-            btnPlay.TabIndex = 9;
-            btnPlay.Text = "PLAY";
-            btnPlay.TextColor = Color.White;
-            btnPlay.UseVisualStyleBackColor = false;
-            btnPlay.Click += btnPlay_Click;
+            this.btnPlay.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnPlay.BackgroundColor = System.Drawing.Color.CornflowerBlue;
+            this.btnPlay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnPlay.BorderColor = System.Drawing.Color.Black;
+            this.btnPlay.BorderRadius = 0;
+            this.btnPlay.BorderSize = 0;
+            this.btnPlay.FlatAppearance.BorderSize = 0;
+            this.btnPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPlay.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlay.ForeColor = System.Drawing.Color.White;
+            this.btnPlay.Location = new System.Drawing.Point(246, 467);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(336, 60);
+            this.btnPlay.TabIndex = 9;
+            this.btnPlay.Text = "PLAY";
+            this.btnPlay.TextColor = System.Drawing.Color.White;
+            this.btnPlay.UseVisualStyleBackColor = false;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnLogin
             // 
-            btnLogin.BackColor = Color.CornflowerBlue;
-            btnLogin.BackgroundColor = Color.CornflowerBlue;
-            btnLogin.BackgroundImageLayout = ImageLayout.Stretch;
-            btnLogin.BorderColor = Color.Black;
-            btnLogin.BorderRadius = 0;
-            btnLogin.BorderSize = 0;
-            btnLogin.FlatAppearance.BorderSize = 0;
-            btnLogin.FlatStyle = FlatStyle.Flat;
-            btnLogin.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(246, 315);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(336, 60);
-            btnLogin.TabIndex = 8;
-            btnLogin.Text = "LOGIN";
-            btnLogin.TextColor = Color.White;
-            btnLogin.UseVisualStyleBackColor = false;
-            btnLogin.Click += btnLogin_Click;
+            this.btnLogin.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnLogin.BackgroundColor = System.Drawing.Color.CornflowerBlue;
+            this.btnLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnLogin.BorderColor = System.Drawing.Color.Black;
+            this.btnLogin.BorderRadius = 0;
+            this.btnLogin.BorderSize = 0;
+            this.btnLogin.FlatAppearance.BorderSize = 0;
+            this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogin.ForeColor = System.Drawing.Color.White;
+            this.btnLogin.Location = new System.Drawing.Point(246, 315);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(336, 60);
+            this.btnLogin.TabIndex = 8;
+            this.btnLogin.Text = "LOGIN";
+            this.btnLogin.TextColor = System.Drawing.Color.White;
+            this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // Notification
             // 
-            Notification.AutoSize = true;
-            Notification.BackColor = Color.Transparent;
-            Notification.Location = new Point(221, 217);
-            Notification.Name = "Notification";
-            Notification.Size = new Size(205, 20);
-            Notification.TabIndex = 12;
-            Notification.Text = "Chào mừng bạn quay trở lại, !";
-            Notification.TextAlign = ContentAlignment.MiddleCenter;
+            this.Notification.AutoSize = true;
+            this.Notification.BackColor = System.Drawing.Color.Transparent;
+            this.Notification.Location = new System.Drawing.Point(221, 217);
+            this.Notification.Name = "Notification";
+            this.Notification.Size = new System.Drawing.Size(178, 16);
+            this.Notification.TabIndex = 12;
+            this.Notification.Text = "Chào mừng bạn quay trở lại, !";
+            this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.Notification);
             this.Controls.Add(this.btnQuit);

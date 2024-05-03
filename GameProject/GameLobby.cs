@@ -103,6 +103,7 @@ namespace GameProject
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
+            control.BackgroundImageLayout = ImageLayout.Stretch;
         }
     }
 }

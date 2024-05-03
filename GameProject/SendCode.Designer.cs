@@ -46,150 +46,150 @@ namespace GameProject
             // 
             // Notification
             // 
-            Notification.AutoSize = true;
-            Notification.ForeColor = Color.Black;
-            Notification.Location = new Point(29, 166);
-            Notification.Name = "Notification";
-            Notification.Size = new Size(50, 20);
-            Notification.TabIndex = 20;
-            Notification.Text = "label2";
-            Notification.TextAlign = ContentAlignment.MiddleCenter;
+            this.Notification.AutoSize = true;
+            this.Notification.ForeColor = System.Drawing.Color.Black;
+            this.Notification.Location = new System.Drawing.Point(29, 166);
+            this.Notification.Name = "Notification";
+            this.Notification.Size = new System.Drawing.Size(44, 16);
+            this.Notification.TabIndex = 20;
+            this.Notification.Text = "label2";
+            this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnReturn
             // 
-            btnReturn.BackColor = Color.MediumSlateBlue;
-            btnReturn.BackgroundColor = Color.MediumSlateBlue;
-            btnReturn.BackgroundImageLayout = ImageLayout.Stretch;
-            btnReturn.BorderColor = Color.PaleVioletRed;
-            btnReturn.BorderRadius = 0;
-            btnReturn.BorderSize = 0;
-            btnReturn.FlatAppearance.BorderSize = 0;
-            btnReturn.FlatStyle = FlatStyle.Flat;
-            btnReturn.ForeColor = Color.White;
-            btnReturn.Location = new Point(77, 557);
-            btnReturn.Name = "btnReturn";
-            btnReturn.Size = new Size(252, 50);
-            btnReturn.TabIndex = 19;
-            btnReturn.Text = "Return";
-            btnReturn.TextColor = Color.White;
-            btnReturn.UseVisualStyleBackColor = false;
-            btnReturn.Click += btnReturn_Click;
+            this.btnReturn.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnReturn.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnReturn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnReturn.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnReturn.BorderRadius = 0;
+            this.btnReturn.BorderSize = 0;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturn.ForeColor = System.Drawing.Color.White;
+            this.btnReturn.Location = new System.Drawing.Point(77, 557);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(252, 50);
+            this.btnReturn.TabIndex = 19;
+            this.btnReturn.Text = "Return";
+            this.btnReturn.TextColor = System.Drawing.Color.White;
+            this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
             // textBoxDesign1
             // 
-            textBoxDesign1.BackColor = Color.Moccasin;
-            textBoxDesign1.BackgroundImageLayout = ImageLayout.Stretch;
-            textBoxDesign1.BorderColor = Color.Transparent;
-            textBoxDesign1.BorderFocusColor = Color.Transparent;
-            textBoxDesign1.BorderRadius = 0;
-            textBoxDesign1.BorderSize = 1;
-            textBoxDesign1.Font = new Font("Segoe UI", 9.5F);
-            textBoxDesign1.ForeColor = Color.Black;
-            textBoxDesign1.Location = new Point(42, 231);
-            textBoxDesign1.Margin = new Padding(4);
-            textBoxDesign1.Multiline = false;
-            textBoxDesign1.Name = "textBoxDesign1";
-            textBoxDesign1.Padding = new Padding(7);
-            textBoxDesign1.PasswordChar = false;
-            textBoxDesign1.PlaceholderColor = Color.DarkGray;
-            textBoxDesign1.PlaceholderText = "Nhập email";
-            textBoxDesign1.Size = new Size(287, 36);
-            textBoxDesign1.TabIndex = 18;
-            textBoxDesign1.Texts = "";
-            textBoxDesign1.UnderlinedStyle = false;
+            this.textBoxDesign1.BackColor = System.Drawing.Color.Moccasin;
+            this.textBoxDesign1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.textBoxDesign1.BorderColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign1.BorderFocusColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign1.BorderRadius = 0;
+            this.textBoxDesign1.BorderSize = 1;
+            this.textBoxDesign1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxDesign1.ForeColor = System.Drawing.Color.Black;
+            this.textBoxDesign1.Location = new System.Drawing.Point(42, 231);
+            this.textBoxDesign1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxDesign1.Multiline = false;
+            this.textBoxDesign1.Name = "textBoxDesign1";
+            this.textBoxDesign1.Padding = new System.Windows.Forms.Padding(7);
+            this.textBoxDesign1.PasswordChar = false;
+            this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.textBoxDesign1.PlaceholderText = "Nhập email";
+            this.textBoxDesign1.Size = new System.Drawing.Size(287, 36);
+            this.textBoxDesign1.TabIndex = 18;
+            this.textBoxDesign1.Texts = "";
+            this.textBoxDesign1.UnderlinedStyle = false;
             // 
             // textBoxDesign2
             // 
-            textBoxDesign2.BackColor = Color.Moccasin;
-            textBoxDesign2.BackgroundImageLayout = ImageLayout.Stretch;
-            textBoxDesign2.BorderColor = Color.Transparent;
-            textBoxDesign2.BorderFocusColor = Color.Transparent;
-            textBoxDesign2.BorderRadius = 0;
-            textBoxDesign2.BorderSize = 1;
-            textBoxDesign2.Font = new Font("Segoe UI", 9.5F);
-            textBoxDesign2.ForeColor = Color.Black;
-            textBoxDesign2.Location = new Point(43, 402);
-            textBoxDesign2.Margin = new Padding(4);
-            textBoxDesign2.Multiline = false;
-            textBoxDesign2.Name = "textBoxDesign2";
-            textBoxDesign2.Padding = new Padding(7);
-            textBoxDesign2.PasswordChar = true;
-            textBoxDesign2.PlaceholderColor = Color.DarkGray;
-            textBoxDesign2.PlaceholderText = "Nhập mã";
-            textBoxDesign2.Size = new Size(286, 36);
-            textBoxDesign2.TabIndex = 17;
-            textBoxDesign2.Texts = "";
-            textBoxDesign2.UnderlinedStyle = false;
+            this.textBoxDesign2.BackColor = System.Drawing.Color.Moccasin;
+            this.textBoxDesign2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.textBoxDesign2.BorderColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign2.BorderFocusColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign2.BorderRadius = 0;
+            this.textBoxDesign2.BorderSize = 1;
+            this.textBoxDesign2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxDesign2.ForeColor = System.Drawing.Color.Black;
+            this.textBoxDesign2.Location = new System.Drawing.Point(43, 402);
+            this.textBoxDesign2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxDesign2.Multiline = false;
+            this.textBoxDesign2.Name = "textBoxDesign2";
+            this.textBoxDesign2.Padding = new System.Windows.Forms.Padding(7);
+            this.textBoxDesign2.PasswordChar = true;
+            this.textBoxDesign2.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.textBoxDesign2.PlaceholderText = "Nhập mã";
+            this.textBoxDesign2.Size = new System.Drawing.Size(286, 36);
+            this.textBoxDesign2.TabIndex = 17;
+            this.textBoxDesign2.Texts = "";
+            this.textBoxDesign2.UnderlinedStyle = false;
             // 
             // pictureBox2
             // 
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(29, 212);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(345, 95);
-            pictureBox2.TabIndex = 16;
-            pictureBox2.TabStop = false;
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(29, 212);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(345, 95);
+            this.pictureBox2.TabIndex = 16;
+            this.pictureBox2.TabStop = false;
             // 
             // pictureBox1
             // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(29, 383);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(345, 95);
-            pictureBox1.TabIndex = 15;
-            pictureBox1.TabStop = false;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(29, 383);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(345, 95);
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
             // 
             // Header
             // 
-            Header.AutoSize = true;
-            Header.BackColor = Color.Transparent;
-            Header.Location = new Point(176, 70);
-            Header.Name = "Header";
-            Header.Size = new Size(152, 20);
-            Header.TabIndex = 14;
-            Header.Text = "ACCOUNT RECOVERY";
+            this.Header.AutoSize = true;
+            this.Header.BackColor = System.Drawing.Color.Transparent;
+            this.Header.Location = new System.Drawing.Point(176, 70);
+            this.Header.Name = "Header";
+            this.Header.Size = new System.Drawing.Size(151, 16);
+            this.Header.TabIndex = 14;
+            this.Header.Text = "ACCOUNT RECOVERY";
             // 
             // btnVerify
             // 
-            btnVerify.BackColor = Color.MediumSlateBlue;
-            btnVerify.BackgroundColor = Color.MediumSlateBlue;
-            btnVerify.BackgroundImageLayout = ImageLayout.Stretch;
-            btnVerify.BorderColor = Color.PaleVioletRed;
-            btnVerify.BorderRadius = 0;
-            btnVerify.BorderSize = 0;
-            btnVerify.FlatAppearance.BorderSize = 0;
-            btnVerify.FlatStyle = FlatStyle.Flat;
-            btnVerify.ForeColor = Color.White;
-            btnVerify.Location = new Point(249, 484);
-            btnVerify.Name = "btnVerify";
-            btnVerify.Size = new Size(125, 45);
-            btnVerify.TabIndex = 13;
-            btnVerify.Text = "Verify";
-            btnVerify.TextColor = Color.White;
-            btnVerify.UseVisualStyleBackColor = false;
-            btnVerify.Click += btnVerify_Click;
+            this.btnVerify.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnVerify.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnVerify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnVerify.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnVerify.BorderRadius = 0;
+            this.btnVerify.BorderSize = 0;
+            this.btnVerify.FlatAppearance.BorderSize = 0;
+            this.btnVerify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVerify.ForeColor = System.Drawing.Color.White;
+            this.btnVerify.Location = new System.Drawing.Point(249, 484);
+            this.btnVerify.Name = "btnVerify";
+            this.btnVerify.Size = new System.Drawing.Size(125, 45);
+            this.btnVerify.TabIndex = 13;
+            this.btnVerify.Text = "Verify";
+            this.btnVerify.TextColor = System.Drawing.Color.White;
+            this.btnVerify.UseVisualStyleBackColor = false;
+            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
             // 
             // btnSend
             // 
-            btnSend.BackColor = Color.MediumSlateBlue;
-            btnSend.BackgroundColor = Color.MediumSlateBlue;
-            btnSend.BackgroundImageLayout = ImageLayout.Stretch;
-            btnSend.BorderColor = Color.PaleVioletRed;
-            btnSend.BorderRadius = 0;
-            btnSend.BorderSize = 0;
-            btnSend.FlatAppearance.BorderSize = 0;
-            btnSend.FlatStyle = FlatStyle.Flat;
-            btnSend.ForeColor = Color.White;
-            btnSend.Location = new Point(249, 313);
-            btnSend.Name = "btnSend";
-            btnSend.Size = new Size(125, 45);
-            btnSend.TabIndex = 21;
-            btnSend.Text = "Send";
-            btnSend.TextColor = Color.White;
-            btnSend.UseVisualStyleBackColor = false;
-            btnSend.Click += btnSend_Click;
+            this.btnSend.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSend.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSend.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSend.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSend.BorderRadius = 0;
+            this.btnSend.BorderSize = 0;
+            this.btnSend.FlatAppearance.BorderSize = 0;
+            this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSend.ForeColor = System.Drawing.Color.White;
+            this.btnSend.Location = new System.Drawing.Point(249, 313);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(125, 45);
+            this.btnSend.TabIndex = 21;
+            this.btnSend.Text = "Send";
+            this.btnSend.TextColor = System.Drawing.Color.White;
+            this.btnSend.UseVisualStyleBackColor = false;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // SendCode
             // 
