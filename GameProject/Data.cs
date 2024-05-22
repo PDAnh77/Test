@@ -14,6 +14,21 @@ namespace GameProject
 
         public string Password { get; set; }
 
+        public string Email { get; set; }
+        
+        public string Gender { get; set; }
+
+        public string Age { get; set; }
+
+        public Data()
+        {
+            Username = "None";
+            Password = "None";
+            Email = "None";
+            Gender = "None";
+            Age = "None";
+        }
+
         public static bool IsEqual(Data user1, Data user2)
         {
             if (user1 == null || user2 == null) { return false; }

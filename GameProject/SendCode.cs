@@ -13,11 +13,33 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+using System.Text.RegularExpressions;
 
 namespace GameProject
 {
     public partial class SendCode : Form
     {
+        public IFirebaseConfig config = new FirebaseConfig
+        {
+            BasePath = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            AuthSecret = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"
+        };
+
+        IFirebaseClient client;
+
+        private void SendCode_Load(object sender, EventArgs e)
+        {
+            client = new FireSharp.FirebaseClient(config);
+
+            if (client != null)
+            {
+                /*MessageBox.Show("Kết nối thành công!");*/
+            }
+        }
+
         PrivateFontCollection privateFonts = new PrivateFontCollection();
 
         private void LoadCustomFont()
@@ -89,24 +111,32 @@ namespace GameProject
             if (string.IsNullOrEmpty(textBoxDesign1.Texts.Trim()))
             {
                 Notification.Text = "Vui lòng nhập email";
-                /*textBoxDesign2.Texts = randCode;*/
             }
             else
             {
-                to = (textBoxDesign1.Texts).ToString();
+                to = textBoxDesign1.Texts.Trim();
                 from = "22520067@gm.uit.edu.vn";
                 pass = "1267199463";
                 content = "Mã xác minh để đặt lại mật khẩu của bạn là: " + randCode;
-                try
+
+                if (!IsValidEmail(to))
                 {
-                    mess.To.Add(to);
-                }
-                catch
-                {
-                    Notification.Text = "Email không tồn tại";
+                    Notification.Text = "Email không hợp lệ!";
                     CenterControl(Notification);
                     return;
                 }
+
+                if (FindAccount(to))
+                {
+                    mess.To.Add(to);
+                }
+                else
+                {
+                    Notification.Text = "Email này không tồn tại\nVui lòng đăng ký tài khoản!";
+                    CenterControl(Notification);
+                    return;
+                }
+
                 mess.From = new MailAddress(from);
                 mess.Body = content;
                 mess.Subject = "Mã xác minh";
@@ -129,10 +159,34 @@ namespace GameProject
             CenterControl(Notification);
         }
 
+        private bool FindAccount(string email)
+        {
+            FirebaseResponse response = client.Get(@"Information");
+            var allUsers = response.ResultAs<Dictionary<string, Data>>();
+            if (allUsers != null)
+            {
+                foreach (var user in allUsers.Values)
+                {
+                    if (user.Email.Equals(email))
+                    {
+                        Data.CurrentUser = user;
+                        return true;
+                    }              
+                }
+            }
+            return false;
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
+            return emailRegex.IsMatch(email);
+        }
+
         private void btnVerify_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnVerify);
-            if (randCode == (textBoxDesign2.Texts.Trim()))
+            if (randCode == textBoxDesign2.Texts.Trim())
             {
                 Notification.Text = "Xác thực thành công!";
 
@@ -190,7 +244,6 @@ namespace GameProject
 
         private void BodyConfig()
         {
-
             Notification.Text = "";
             Notification.BackColor = Color.Transparent;
 

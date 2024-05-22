@@ -27,6 +27,16 @@ namespace GameProject
 
         IFirebaseClient client;
 
+        private void ResetPass_Load(object sender, EventArgs e)
+        {
+            client = new FireSharp.FirebaseClient(config);
+
+            if (client != null)
+            {
+                /*MessageBox.Show("Kết nối thành công!");*/
+            }
+        }
+
         PrivateFontCollection privateFonts = new PrivateFontCollection();
 
         private void LoadCustomFont()
@@ -78,23 +88,13 @@ namespace GameProject
             BodyConfig();
         }
 
-        private void ResetPass_Load(object sender, EventArgs e)
-        {
-            client = new FireSharp.FirebaseClient(config);
-
-            if (client != null)
-            {
-                /*MessageBox.Show("Kết nối thành công!");*/
-            }
-        }
-
         private async void btnReset_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnReset);
 
-            string usrname = textBoxDesign1.Texts.Trim();
-            string pass = textBoxDesign2.Texts;
-            string passconf = textBoxDesign3.Texts;
+            string usrname = Data.CurrentUser.Username;
+            string pass = textBoxDesign1.Texts;
+            string passconf = textBoxDesign2.Texts;
 
             foreach (Control x in Controls)
             {
@@ -108,47 +108,37 @@ namespace GameProject
 
             try
             {
-                FirebaseResponse response1 = client.Get(@"Information/" + usrname);
-                if (response1.Body != "null")
+                if (pass == passconf)
                 {
-                    if (pass == passconf)
+                    Data.CurrentUser.Password = pass;
+                    Data data = Data.CurrentUser;
+ 
+                    SetResponse response = await client.SetTaskAsync("Information/" + usrname, data);
+
+                    int timerSeconds = 4;
+                    int remainingSeconds = timerSeconds;
+
+                    var wait = new System.Windows.Forms.Timer();
+                    wait.Tick += delegate
                     {
-                        Data data = new Data()
+                        remainingSeconds--;
+                        Notification.Text = $"Cập nhật mật khẩu mới thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                        CenterControl(Notification);
+
+                        if (remainingSeconds <= 0)
                         {
-                            Username = usrname,
-                            Password = pass
-                        };
-                        SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
-
-                        int timerSeconds = 4;
-                        int remainingSeconds = timerSeconds;
-
-                        var wait = new System.Windows.Forms.Timer();
-                        wait.Tick += delegate
-                        {
-                            remainingSeconds--;
-                            Notification.Text = $"Cập nhật mật khẩu mới thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                            CenterControl(Notification);
-
-                            if (remainingSeconds <= 0)
-                            {
-                                Login login = new Login();
-                                login.Show();
-                                wait.Stop();
-                                this.Close();
-                            }
-                        };
-                        wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
-                        wait.Start();
-                    }
-                    else
-                    {
-                        Notification.Text = "Mật khẩu nhập lại không chính xác!";
-                    }
+                            Login login = new Login();
+                            login.Show();
+                            wait.Stop();
+                            this.Close();
+                        }
+                    };
+                    wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
+                    wait.Start();
                 }
                 else
                 {
-                    Notification.Text = "Tên đăng nhập không tồn tại!";
+                    Notification.Text = "Mật khẩu nhập lại không chính xác!";
                 }
                 CenterControl(Notification);
             }
@@ -196,15 +186,12 @@ namespace GameProject
 
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
-            CenterControl(textBoxDesign3);
 
             SetControlImage(pictureBox1, Animation.UI_Textbox_02);
             SetControlImage(pictureBox2, Animation.UI_Textbox_02);
-            SetControlImage(pictureBox3, Animation.UI_Textbox_02);
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
-            CenterControl(pictureBox3);
         }
 
         private void ButtonConfig()

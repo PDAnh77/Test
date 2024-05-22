@@ -11,7 +11,9 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -104,26 +106,34 @@ namespace GameProject
             }
 
             string usrname = textBoxDesign1.Texts.Trim();
-            string pass = textBoxDesign2.Texts;
-            string passConfirm = textBoxDesign3.Texts;
+            string email = textBoxDesign2.Texts.Trim();
+            string pass = textBoxDesign3.Texts;
+            string passConfirm = textBoxDesign4.Texts;
 
-            FirebaseResponse response1 = client.Get(@"Information/" + usrname);
-            if (response1.Body == "null")
+            if (!IsValidEmail(email))
+            {
+                Notification.Text = "Email không hợp lệ!";
+                CenterControl(Notification);
+                return;
+            }
+
+            if (CheckAccountExists(usrname, email) == false)
             {
                 if (pass == passConfirm)
                 {
                     var data = new Data
                     {
                         Username = usrname,
+                        Email = email,
                         Password = pass
                     };
 
-                    SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
-                    Data result = response2.ResultAs<Data>();
+                    SetResponse response = await client.SetTaskAsync("Information/" + usrname, data);
+                    Data result = response.ResultAs<Data>();
 
                     Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!";
 
-                    int timerSeconds = 6;
+                    int timerSeconds = 4; // Countdown timer
                     int remainingSeconds = timerSeconds;
                     var wait = new System.Windows.Forms.Timer();
 
@@ -146,11 +156,36 @@ namespace GameProject
                     Notification.Text = "Mật khẩu nhập lại không chính xác!";
                 }
             }
-            else
-            {
-                Notification.Text = "Tài khoản tồn tại!";
-            }
             CenterControl(Notification);
+        }
+
+        private bool CheckAccountExists(string usrname, string email) // Check if account exists
+        {
+            FirebaseResponse response = client.Get(@"Information");
+            var allUsers = response.ResultAs<Dictionary<string, Data>>();
+            if(allUsers != null)
+            {
+                foreach(var user in allUsers.Values)
+                {
+                    if (user.Email.Equals(email))
+                    {
+                        Notification.Text = "Email đã tồn tại!";
+                        return true;
+                    }
+                    if (user.Username.Equals(usrname))
+                    {
+                        Notification.Text = "Tên đăng nhập đã tồn tại!";
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
+            return emailRegex.IsMatch(email);
         }
 
         private void btnReturnHome_Click(object sender, EventArgs e)
@@ -189,14 +224,17 @@ namespace GameProject
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
             CenterControl(textBoxDesign3);
+            CenterControl(textBoxDesign4);
 
             SetControlImage(pictureBox1, Animation.UI_Textbox_02);
             SetControlImage(pictureBox2, Animation.UI_Textbox_02);
             SetControlImage(pictureBox3, Animation.UI_Textbox_02);
+            SetControlImage(pictureBox4, Animation.UI_Textbox_02);
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
             CenterControl(pictureBox3);
+            CenterControl(pictureBox4);
         }
 
         private void ButtonConfig()
