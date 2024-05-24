@@ -79,6 +79,7 @@
     <Compile Include="GameLobby.Designer.cs">
       <DependentUpon>GameLobby.cs</DependentUpon>
     </Compile>
+    <Compile Include="LanManager.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +112,7 @@
     <Compile Include="Signup.Designer.cs">
       <DependentUpon>Signup.cs</DependentUpon>
     </Compile>
+    <Compile Include="SocketData.cs" />
     <EmbeddedResource Include="Animation.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Animation.Designer.cs</LastGenOutput>
