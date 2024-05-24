@@ -32,14 +32,14 @@ namespace GameProject
         private void InitializeComponent()
         {
             this.Notification = new System.Windows.Forms.Label();
-            this.btnReturn = new GameProject.CustomControls.ButtonDesign();
-            this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
-            this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Header = new System.Windows.Forms.Label();
-            this.btnVerify = new GameProject.CustomControls.ButtonDesign();
             this.btnSend = new GameProject.CustomControls.ButtonDesign();
+            this.btnReturn = new GameProject.CustomControls.ButtonDesign();
+            this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
+            this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
+            this.btnVerify = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -48,12 +48,62 @@ namespace GameProject
             // 
             this.Notification.AutoSize = true;
             this.Notification.ForeColor = System.Drawing.Color.Black;
-            this.Notification.Location = new System.Drawing.Point(29, 166);
+            this.Notification.Location = new System.Drawing.Point(26, 143);
             this.Notification.Name = "Notification";
             this.Notification.Size = new System.Drawing.Size(44, 16);
             this.Notification.TabIndex = 20;
             this.Notification.Text = "label2";
             this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(29, 212);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(345, 95);
+            this.pictureBox2.TabIndex = 16;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(29, 383);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(345, 95);
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            // 
+            // Header
+            // 
+            this.Header.AutoSize = true;
+            this.Header.BackColor = System.Drawing.Color.Transparent;
+            this.Header.Location = new System.Drawing.Point(176, 70);
+            this.Header.Name = "Header";
+            this.Header.Size = new System.Drawing.Size(151, 16);
+            this.Header.TabIndex = 14;
+            this.Header.Text = "ACCOUNT RECOVERY";
+            // 
+            // btnSend
+            // 
+            this.btnSend.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSend.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSend.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSend.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnSend.BorderRadius = 0;
+            this.btnSend.BorderSize = 0;
+            this.btnSend.FlatAppearance.BorderSize = 0;
+            this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSend.ForeColor = System.Drawing.Color.White;
+            this.btnSend.Location = new System.Drawing.Point(249, 313);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(125, 45);
+            this.btnSend.TabIndex = 21;
+            this.btnSend.Text = "Send";
+            this.btnSend.TextColor = System.Drawing.Color.White;
+            this.btnSend.UseVisualStyleBackColor = false;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // btnReturn
             // 
@@ -121,36 +171,6 @@ namespace GameProject
             this.textBoxDesign2.Texts = "";
             this.textBoxDesign2.UnderlinedStyle = false;
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(29, 212);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(345, 95);
-            this.pictureBox2.TabIndex = 16;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(29, 383);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(345, 95);
-            this.pictureBox1.TabIndex = 15;
-            this.pictureBox1.TabStop = false;
-            // 
-            // Header
-            // 
-            this.Header.AutoSize = true;
-            this.Header.BackColor = System.Drawing.Color.Transparent;
-            this.Header.Location = new System.Drawing.Point(176, 70);
-            this.Header.Name = "Header";
-            this.Header.Size = new System.Drawing.Size(151, 16);
-            this.Header.TabIndex = 14;
-            this.Header.Text = "ACCOUNT RECOVERY";
-            // 
             // btnVerify
             // 
             this.btnVerify.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -171,26 +191,6 @@ namespace GameProject
             this.btnVerify.UseVisualStyleBackColor = false;
             this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
             // 
-            // btnSend
-            // 
-            this.btnSend.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnSend.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnSend.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnSend.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSend.BorderRadius = 0;
-            this.btnSend.BorderSize = 0;
-            this.btnSend.FlatAppearance.BorderSize = 0;
-            this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(249, 313);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(125, 45);
-            this.btnSend.TabIndex = 21;
-            this.btnSend.Text = "Send";
-            this.btnSend.TextColor = System.Drawing.Color.White;
-            this.btnSend.UseVisualStyleBackColor = false;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
-            // 
             // SendCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -209,6 +209,7 @@ namespace GameProject
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SendCode";
             this.Text = "SendCode";
+            this.Load += new System.EventHandler(this.SendCode_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
