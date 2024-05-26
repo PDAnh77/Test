@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,8 +16,10 @@ namespace GameProject
 {
     public partial class GameLobby : Form
     {
+        #region Properties
         PrivateFontCollection privateFonts = new PrivateFontCollection();
-
+        LanManager socket;
+        #endregion
         private void LoadCustomFont()
         {
             // Load the Silver.ttf font
@@ -44,8 +47,8 @@ namespace GameProject
         {
             InitializeComponent();
             LoadCustomFont();
-
             ButtonConfig();
+            socket = new LanManager();
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
@@ -105,5 +108,45 @@ namespace GameProject
             control.BackgroundImage = new Bitmap(image, control.Size);
             control.BackgroundImageLayout = ImageLayout.Stretch;
         }
+        public void Listen()
+        {
+            Thread listenThread = new Thread(() =>
+            {
+                try //tránh lỗi 1 bên thoát 
+                {
+                    SocketData data = (SocketData)socket.Receive();
+                    //ProcessData(data);
+                }
+                catch (Exception e)
+                {
+                }
+            });
+            listenThread.IsBackground = true;
+            listenThread.Start();
+
+        }
+        private void btnCreateRoom_Click(object sender, EventArgs e)
+        {
+            socket.IP = txtIP.Text;
+            socket.CreateServer();
+            MessageBox.Show("Tạo phòng thành công");
+        }
+        private void btnFindRoom_Click(object sender, EventArgs e)
+        {
+            socket.IP = txtIP.Text;
+            socket.ConnectServer();
+            socket.Send("Đã tìm thấy đối thủ");
+            //Listen();
+        }
+        private void GameLobby_Shown(object sender, EventArgs e)
+        {
+            txtIP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+            if (string.IsNullOrEmpty(txtIP.Text))
+            {
+                txtIP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+            }    
+        }
+
+       
     }
 }
