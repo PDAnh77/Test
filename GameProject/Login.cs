@@ -116,17 +116,13 @@ namespace GameProject
                         Password = pass
                     };
 
-                    int timerSeconds = 6;
+                    int timerSeconds = 4;
                     int remainingSeconds = timerSeconds;
 
                     if (Data.IsEqual(ResUser, CurUser))
                     {
                         Notification.Text = "Đăng nhập thành công!";
-                        Data.CurrentUser = new Data()
-                        {
-                            Username = usrname,
-                            Password = pass
-                        };
+                        Data.CurrentUser = ResUser;
                         DialogResult = DialogResult.OK;
 
                         var wait = new System.Windows.Forms.Timer();
@@ -196,6 +192,8 @@ namespace GameProject
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
         }
 
+        Color customColor = Color.FromArgb(234, 212, 172);
+
         private void BodyConfig()
         {
 
@@ -210,6 +208,9 @@ namespace GameProject
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
+
+            textBoxDesign1.BackColor = customColor;
+            textBoxDesign2.BackColor = customColor;
         }
 
         private void ButtonConfig()
@@ -221,7 +222,7 @@ namespace GameProject
                     CenterControl(button);
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SandyBrown;
+                    button.BackColor = customColor;
                 }
             }
         }

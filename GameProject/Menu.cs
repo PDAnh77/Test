@@ -47,7 +47,7 @@ namespace GameProject
             }
         }
 
-        private bool WelcomeMessage()
+        private bool CheckCurrentUser()
         {
             if (Data.CurrentUser != null)
             {
@@ -92,7 +92,7 @@ namespace GameProject
         {
             if (loginForm != null && loginForm.DialogResult == DialogResult.OK)
             {
-                if (WelcomeMessage() == true)
+                if (CheckCurrentUser() == true)
                 {
                     Notification.Text = "Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!";
                     CenterControl(Notification);
@@ -119,7 +119,7 @@ namespace GameProject
         private void btnPlay_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnPlay);
-            if (WelcomeMessage() == true)
+            if (CheckCurrentUser() == true)
             {
                 /*MessageBox.Show("Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!");*/
                 DialogResult = DialogResult.OK;
@@ -137,7 +137,22 @@ namespace GameProject
             Application.Exit();
         }
 
-        private void PlayAnimation(Control control)
+        private void btnProfile_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnProfile);
+            if(CheckCurrentUser() == true)
+            {
+                UserProfile userProfile = new UserProfile();
+                userProfile.Show();
+            }
+            else
+            {
+                Notification.Text = "Bạn cần đăng nhập vào tài khoản trước!";
+            }
+            CenterControl(Notification);
+        }
+
+        private void PlayAnimation(Control control) // Manage all control animation
         {
             if (control is Button button)
             {
@@ -150,13 +165,26 @@ namespace GameProject
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            if(button.Name == "btnProfile")
+            {
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a1);
+            }
+            else
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            }
         }
 
         private void HeaderConfig()
@@ -183,10 +211,20 @@ namespace GameProject
             {
                 if (control is Button button)
                 {
-                    CenterControl(button);
-                    SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    Color customColor01 = Color.FromArgb(63, 40, 50);
+                    Color customColor02 = Color.FromArgb(181, 119, 94);
+                    if(button.Name == "btnProfile")
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a1);
+                        button.BackColor = customColor02;
+                    }
+                    else // other buttons
+                    {
+                        CenterControl(button);
+                        SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                        button.BackColor = customColor01;
+                    }
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SaddleBrown;
                 }
             }
         }

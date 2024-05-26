@@ -16,6 +16,7 @@ namespace GameProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Menu gameMenu = new Menu();
             while (true) // Loop to return to GameMenu after closing GameLobby
             {
@@ -32,6 +33,11 @@ namespace GameProject
                     break;
                 }
             }
+
+            // Test form
+
+            /*UserProfile userProfile = new UserProfile();
+            Application.Run(userProfile);*/
 
             Application.Exit();
         }

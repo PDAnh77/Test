@@ -242,6 +242,8 @@ namespace GameProject
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
         }
 
+        Color customColor = Color.FromArgb(234, 212, 172);
+
         private void BodyConfig()
         {
             Notification.Text = "";
@@ -255,6 +257,9 @@ namespace GameProject
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
+
+            textBoxDesign1.BackColor = customColor;
+            textBoxDesign2.BackColor = customColor;      
         }
 
         private void ButtonConfig()
@@ -266,7 +271,7 @@ namespace GameProject
                     CenterControl(button);
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SandyBrown;
+                    button.BackColor = customColor;
                 }
             }
         }

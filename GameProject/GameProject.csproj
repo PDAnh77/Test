@@ -111,6 +111,21 @@
     <Compile Include="Signup.Designer.cs">
       <DependentUpon>Signup.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserProfile.Designer.cs">
+      <DependentUpon>UserProfile.cs</DependentUpon>
+    </Compile>
+    <None Include="Resources\UI_Flat_Profile_Button_Press_01a4.png" />
+    <None Include="Resources\UI_Flat_Profile_Button_Press_01a3.png" />
+    <None Include="Resources\UI_Flat_Profile_Button_Press_01a2.png" />
+    <None Include="Resources\UI_Flat_Profile_Button_Press_01a1.png" />
+    <None Include="Resources\UI_Text_Holder.png" />
+    <None Include="Resources\UI_Text_Holder_01.png" />
+    <None Include="Resources\UI_Profile_Banner.png" />
+    <None Include="Resources\UI_Avatar.png" />
+    <None Include="Resources\UI_InfoBox.png" />
     <EmbeddedResource Include="Animation.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Animation.Designer.cs</LastGenOutput>
@@ -153,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Signup.resx">
       <DependentUpon>Signup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserProfile.resx">
+      <DependentUpon>UserProfile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

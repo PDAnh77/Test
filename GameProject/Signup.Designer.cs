@@ -186,7 +186,7 @@ namespace GameProject
             this.textBoxDesign1.BorderSize = 1;
             this.textBoxDesign1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.textBoxDesign1.ForeColor = System.Drawing.Color.Black;
-            this.textBoxDesign1.Location = new System.Drawing.Point(54, 196);
+            this.textBoxDesign1.Location = new System.Drawing.Point(55, 196);
             this.textBoxDesign1.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxDesign1.Multiline = false;
             this.textBoxDesign1.Name = "textBoxDesign1";

@@ -39,6 +39,7 @@ namespace GameProject
             this.btnPlay = new GameProject.CustomControls.ButtonDesign();
             this.btnLogin = new GameProject.CustomControls.ButtonDesign();
             this.Notification = new System.Windows.Forms.Label();
+            this.btnProfile = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -167,12 +168,31 @@ namespace GameProject
             this.Notification.Text = "Chào mừng bạn quay trở lại, !";
             this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnProfile
+            // 
+            this.btnProfile.BackColor = System.Drawing.Color.Transparent;
+            this.btnProfile.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnProfile.BorderColor = System.Drawing.Color.Transparent;
+            this.btnProfile.BorderRadius = 0;
+            this.btnProfile.BorderSize = 1;
+            this.btnProfile.FlatAppearance.BorderSize = 0;
+            this.btnProfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProfile.ForeColor = System.Drawing.Color.White;
+            this.btnProfile.Location = new System.Drawing.Point(1181, 12);
+            this.btnProfile.Name = "btnProfile";
+            this.btnProfile.Size = new System.Drawing.Size(69, 60);
+            this.btnProfile.TabIndex = 13;
+            this.btnProfile.TextColor = System.Drawing.Color.White;
+            this.btnProfile.UseVisualStyleBackColor = false;
+            this.btnProfile.Click += new System.EventHandler(this.btnProfile_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.Controls.Add(this.btnProfile);
             this.Controls.Add(this.Notification);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnSignup);
@@ -200,6 +220,7 @@ namespace GameProject
         private CustomControls.ButtonDesign btnPlay;
         private CustomControls.ButtonDesign btnLogin;
         private Label Notification;
+        private CustomControls.ButtonDesign btnProfile;
     }
 }
 
