@@ -6,8 +6,10 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,8 +20,18 @@ namespace GameProject
     {
         #region Properties
         PrivateFontCollection privateFonts = new PrivateFontCollection();
-        LanManager socket;
+        private static readonly HttpClient client = new HttpClient();
+        private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
+        private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; // Khóa bí mật
         #endregion
+
+        public GameLobby()
+        {
+            InitializeComponent();
+            LoadCustomFont();
+            ButtonConfig();
+            LoadRooms();
+        }
         private void LoadCustomFont()
         {
             // Load the Silver.ttf font
@@ -42,22 +54,6 @@ namespace GameProject
                 }
             }
         }
-
-        public GameLobby()
-        {
-            InitializeComponent();
-            LoadCustomFont();
-            ButtonConfig();
-            socket = new LanManager();
-        }
-
-        private void btnReturn_Click(object sender, EventArgs e)
-        {
-            PlayAnimation(btnReturn);
-            DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
         private void PlayAnimation(Control control)
         {
             if (control is Button button)
@@ -79,7 +75,6 @@ namespace GameProject
             Thread.Sleep(delay);
             SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
         }
-
         private void ButtonConfig()
         {
             foreach (Control control in Controls)
@@ -108,45 +103,79 @@ namespace GameProject
             control.BackgroundImage = new Bitmap(image, control.Size);
             control.BackgroundImageLayout = ImageLayout.Stretch;
         }
-        public void Listen()
+        private async Task LoadRooms()
         {
-            Thread listenThread = new Thread(() =>
+            try
             {
-                try //tránh lỗi 1 bên thoát 
-                {
-                    SocketData data = (SocketData)socket.Receive();
-                    //ProcessData(data);
-                }
-                catch (Exception e)
-                {
-                }
-            });
-            listenThread.IsBackground = true;
-            listenThread.Start();
+                var response = await client.GetStringAsync($"{firebaseUrl}rooms.json?auth={firebaseAuth}");
+                var rooms = JsonSerializer.Deserialize<Dictionary<string, Room>>(response);
 
+                ListRoom.Items.Clear();
+                if (rooms != null)
+                {
+                    foreach (var room in rooms)
+                    {
+                        ListRoom.Items.Add(room.Key);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải phòng: " + ex.Message);
+            }
         }
-        private void btnCreateRoom_Click(object sender, EventArgs e)
+
+        private void btnReturn_Click(object sender, EventArgs e)
         {
-            socket.IP = txtIP.Text;
-            socket.CreateServer();
-            MessageBox.Show("Tạo phòng thành công");
+            PlayAnimation(btnReturn);
+            DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private async void btnCreateRoom_Click(object sender, EventArgs e)
+        {
+            var roomName = txtRoomName.Text;
+            if (!string.IsNullOrWhiteSpace(roomName))
+            {
+                var roomData = new Room
+                {
+                    Name = roomName,
+                    MaxPlayers = 4,
+                    CurrentPlayers = 0
+                };
+
+                try
+                {
+                    var json = JsonSerializer.Serialize(roomData);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await client.PutAsync($"{firebaseUrl}rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Room created successfully.");
+                        await LoadRooms(); // Refresh the room list
+
+                        RoomForm roomForm = new RoomForm(roomName);
+                        roomForm.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to create room.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi tạo phòng: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Room name cannot be empty.");
+            }
         }
         private void btnFindRoom_Click(object sender, EventArgs e)
         {
-            socket.IP = txtIP.Text;
-            socket.ConnectServer();
-            socket.Send("Đã tìm thấy đối thủ");
-            //Listen();
+            
         }
-        private void GameLobby_Shown(object sender, EventArgs e)
-        {
-            txtIP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
-            if (string.IsNullOrEmpty(txtIP.Text))
-            {
-                txtIP.Text = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
-            }    
-        }
-
-       
     }
 }

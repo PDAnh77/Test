@@ -34,7 +34,9 @@ namespace GameProject
             this.txtIP = new System.Windows.Forms.TextBox();
             this.btnFindRoom = new System.Windows.Forms.Button();
             this.btnCreateRoom = new System.Windows.Forms.Button();
+            this.ListRoom = new System.Windows.Forms.ListBox();
             this.btnReturn = new GameProject.CustomControls.ButtonDesign();
+            this.txtRoomName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtIP
@@ -64,6 +66,14 @@ namespace GameProject
             this.btnCreateRoom.UseVisualStyleBackColor = true;
             this.btnCreateRoom.Click += new System.EventHandler(this.btnCreateRoom_Click);
             // 
+            // ListRoom
+            // 
+            this.ListRoom.FormattingEnabled = true;
+            this.ListRoom.Location = new System.Drawing.Point(12, 13);
+            this.ListRoom.Name = "ListRoom";
+            this.ListRoom.Size = new System.Drawing.Size(922, 355);
+            this.ListRoom.TabIndex = 6;
+            // 
             // btnReturn
             // 
             this.btnReturn.BackColor = System.Drawing.Color.Transparent;
@@ -82,20 +92,28 @@ namespace GameProject
             this.btnReturn.TextColor = System.Drawing.Color.White;
             this.btnReturn.UseVisualStyleBackColor = false;
             // 
+            // txtRoomName
+            // 
+            this.txtRoomName.Location = new System.Drawing.Point(555, 402);
+            this.txtRoomName.Name = "txtRoomName";
+            this.txtRoomName.Size = new System.Drawing.Size(136, 20);
+            this.txtRoomName.TabIndex = 7;
+            // 
             // GameLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(946, 547);
+            this.Controls.Add(this.txtRoomName);
+            this.Controls.Add(this.ListRoom);
             this.Controls.Add(this.btnCreateRoom);
             this.Controls.Add(this.btnFindRoom);
             this.Controls.Add(this.txtIP);
             this.Controls.Add(this.btnReturn);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameLobby";
             this.Text = "GameLobby";
-            this.Shown += new System.EventHandler(this.GameLobby_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,5 +124,7 @@ namespace GameProject
         private TextBox txtIP;
         private Button btnFindRoom;
         private Button btnCreateRoom;
+        private ListBox ListRoom;
+        private TextBox txtRoomName;
     }
 }
