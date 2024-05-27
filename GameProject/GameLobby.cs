@@ -107,7 +107,7 @@ namespace GameProject
         {
             try
             {
-                var response = await client.GetStringAsync($"{firebaseUrl}rooms.json?auth={firebaseAuth}");
+                var response = await client.GetStringAsync($"{firebaseUrl}Rooms.json?auth={firebaseAuth}");
                 var rooms = JsonSerializer.Deserialize<Dictionary<string, Room>>(response);
 
                 ListRoom.Items.Clear();
@@ -141,14 +141,14 @@ namespace GameProject
                 {
                     Name = roomName,
                     MaxPlayers = 4,
-                    CurrentPlayers = 0
+                    CurrentPlayers = 1
                 };
 
                 try
                 {
                     var json = JsonSerializer.Serialize(roomData);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var response = await client.PutAsync($"{firebaseUrl}rooms/{roomName}.json?auth={firebaseAuth}", content);
+                    var response = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
 
                     if (response.IsSuccessStatusCode)
                     {
