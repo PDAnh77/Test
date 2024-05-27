@@ -16,8 +16,8 @@ namespace GameProject
     public partial class RoomForm : Form
     {
         private static readonly HttpClient client = new HttpClient();
-        private const string firebaseUrl = "https://your-database-url.firebaseio.com/";
-        private const string firebaseAuth = "your-auth-secret"; // Thêm khóa bí mật Firebase của bạn nếu cần
+        private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
+        private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; 
         private string roomName;
         public RoomForm(string roomName)
         {

@@ -160,7 +160,7 @@ namespace GameProject
                     }
                     else
                     {
-                        MessageBox.Show("Failed to create room.");
+                       //  MessageBox.Show("Không thể tạo phòng");
                     }
                 }
                 catch (Exception ex)
