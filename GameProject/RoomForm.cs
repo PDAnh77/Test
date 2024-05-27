@@ -45,21 +45,12 @@ namespace GameProject
                 MessageBox.Show("Lỗi khi tải chi tiết phòng: " + ex.Message);
             }
         }
-
-        private async void btnExit_Click(object sender, EventArgs e)
+        
+        private void HamTaoLao()
         {
-            var result = MessageBox.Show("Bạn có chắc chắn muốn thoát phòng không?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    var response = await client.GetStringAsync($"{firebaseUrl}rooms/{roomName}.json?auth={firebaseAuth}");
-                    var room = JsonSerializer.Deserialize<Room>(response);
-
-                    if (room != null)
-                    {
-                        room.CurrentPlayers--;
-                        if (room.CurrentPlayers < 0) room.CurrentPlayers = 0;
+            // Hàm tạo lảo
+            MessageBox.Show("Lào tạo thành công!");
+        }
 
                         var json = JsonSerializer.Serialize(room);
                         var content = new StringContent(json, Encoding.UTF8, "application/json");
