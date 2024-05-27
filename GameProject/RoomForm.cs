@@ -47,7 +47,12 @@ namespace GameProject
                 MessageBox.Show("Lỗi khi tải chi tiết phòng: " + ex.Message);
             }
         }
-
+        
+        private void HamTaoLao()
+        {
+            // Hàm tạo lảo
+            MessageBox.Show("Lào tạo thành công!");
+        }
 
     }
 }
