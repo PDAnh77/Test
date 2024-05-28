@@ -1,4 +1,6 @@
 ﻿using System;
+using Google.Cloud.Firestore;
+using Google.Cloud.Firestore.V1;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,25 +15,40 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlTypes;
 
 namespace GameProject
 {
     public partial class GameLobby : Form
     {
         #region Properties
+
         PrivateFontCollection privateFonts = new PrivateFontCollection();
         private static readonly HttpClient client = new HttpClient();
+        private FirestoreDb db;
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; // Khóa bí mật
+        
         #endregion
 
         public GameLobby()
         {
             InitializeComponent();
+            InitializeFirestore();
             LoadCustomFont();
             ButtonConfig();
             LoadRooms();
         }
+
+
+        private void InitializeFirestore()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"ltmgame-firebase-adminsdk-nxh4i-82f4327feb.json";
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
+            db = FirestoreDb.Create("ltmgame");
+            MessageBox.Show("Firestore Initialized");
+        }
+
         private void LoadCustomFont()
         {
             // Load the Silver.ttf font
@@ -127,14 +144,38 @@ namespace GameProject
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            PlayAnimation(btnReturn);
-            DialogResult = DialogResult.OK;
-            this.Close();
+            //PlayAnimation(btnReturn);
+            //DialogResult = DialogResult.OK;
+            //this.Close();
         }
 
-        private async void btnCreateRoom_Click(object sender, EventArgs e)
+        private void btnJoinRoom_Click(object sender, EventArgs e)
         {
-            var roomName = txtRoomName.Text;
+            MessageBox.Show("OK");
+        }
+
+        private void OnRoomDeleted(string roomName)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<string>(OnRoomDeleted), roomName);
+                return;
+            }
+
+            ListRoom.Items.Remove(roomName);
+            LoadRooms();
+        }
+
+    
+        private void RoomForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Hiển thị lại form GameLobby khi RoomForm đã đóng
+            this.Show();
+        }
+
+        private async void btnCreateRoom_Click_1(object sender, EventArgs e)
+        {
+            var roomName = txtRoomName.Texts;
             if (!string.IsNullOrWhiteSpace(roomName))
             {
                 var roomData = new Room
@@ -152,15 +193,20 @@ namespace GameProject
 
                     if (response.IsSuccessStatusCode)
                     {
+                        txtRoomName.Texts = "";
                         MessageBox.Show("Room created successfully.");
-                        await LoadRooms(); // Refresh the room list
+                        await LoadRooms(); // Tải lại danh sách phòng
 
                         RoomForm roomForm = new RoomForm(roomName);
+                        roomForm.RoomDeleted += OnRoomDeleted;
+                        roomForm.FormClosed += RoomForm_FormClosed; 
+                        roomForm.TriggerRoomDeleted(roomName);
                         roomForm.Show();
+                        this.Hide();
                     }
                     else
                     {
-                       //  MessageBox.Show("Không thể tạo phòng");
+                        //  MessageBox.Show("Không thể tạo phòng");
                     }
                 }
                 catch (Exception ex)
@@ -172,10 +218,6 @@ namespace GameProject
             {
                 MessageBox.Show("Room name cannot be empty.");
             }
-        }
-        private void btnFindRoom_Click(object sender, EventArgs e)
-        {
-            
         }
     }
 }

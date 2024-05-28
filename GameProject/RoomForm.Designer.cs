@@ -31,7 +31,7 @@
             this.txtCurrentPlayer = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
-            this.btnExit = new GameProject.CustomControls.ButtonDesign();
+            this.btnLeaveRoom = new GameProject.CustomControls.ButtonDesign();
             this.SuspendLayout();
             // 
             // txtCurrentPlayer
@@ -64,35 +64,35 @@
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(150, 40);
             this.btnStart.TabIndex = 5;
-            this.btnStart.Text = "Bắt đầu";
+            this.btnStart.Text = "Start";
             this.btnStart.TextColor = System.Drawing.Color.White;
             this.btnStart.UseVisualStyleBackColor = false;
             // 
-            // btnExit
+            // btnLeaveRoom
             // 
-            this.btnExit.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnExit.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnExit.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnExit.BorderRadius = 20;
-            this.btnExit.BorderSize = 0;
-            this.btnExit.FlatAppearance.BorderSize = 0;
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(482, 398);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(150, 40);
-            this.btnExit.TabIndex = 6;
-            this.btnExit.Text = "Thoát phòng";
-            this.btnExit.TextColor = System.Drawing.Color.White;
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnLeaveRoom.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLeaveRoom.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLeaveRoom.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnLeaveRoom.BorderRadius = 20;
+            this.btnLeaveRoom.BorderSize = 0;
+            this.btnLeaveRoom.FlatAppearance.BorderSize = 0;
+            this.btnLeaveRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLeaveRoom.ForeColor = System.Drawing.Color.White;
+            this.btnLeaveRoom.Location = new System.Drawing.Point(482, 398);
+            this.btnLeaveRoom.Name = "btnLeaveRoom";
+            this.btnLeaveRoom.Size = new System.Drawing.Size(150, 40);
+            this.btnLeaveRoom.TabIndex = 6;
+            this.btnLeaveRoom.Text = "Leave";
+            this.btnLeaveRoom.TextColor = System.Drawing.Color.White;
+            this.btnLeaveRoom.UseVisualStyleBackColor = false;
+            this.btnLeaveRoom.Click += new System.EventHandler(this.btnLeaveRoom_Click);
             // 
             // RoomForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.btnLeaveRoom);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtCurrentPlayer);
@@ -107,6 +107,6 @@
         private System.Windows.Forms.TextBox txtCurrentPlayer;
         private System.Windows.Forms.Label label2;
         private CustomControls.ButtonDesign btnStart;
-        private CustomControls.ButtonDesign btnExit;
+        private CustomControls.ButtonDesign btnLeaveRoom;
     }
 }
