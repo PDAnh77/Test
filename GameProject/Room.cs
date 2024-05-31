@@ -9,7 +9,7 @@ namespace GameProject
     public class Room
     {
         public string Name { get; set; }
-        public int MaxPlayers { get; set; }
+        public Data Owner { get; set; }
         public int CurrentPlayers { get; set; }
         public int ViewPlayers { get; set; }
         public string Status { get; set; }

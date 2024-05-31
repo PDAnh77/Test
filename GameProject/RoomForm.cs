@@ -17,8 +17,8 @@ namespace GameProject
     {
         private static readonly HttpClient client = new HttpClient();
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
-        private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; 
-        private string roomName;
+        private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i";
+        private string roomName, usrname;
 
 
         public delegate void RoomDeletedHandler(string roomName);
@@ -41,12 +41,13 @@ namespace GameProject
             // Tải thông tin chi tiết của phòng từ Firebase và hiển thị
             try
             {
-                var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
-                var room = JsonSerializer.Deserialize<Room>(response);
+                var responseRoom = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                var room = JsonSerializer.Deserialize<Room>(responseRoom);
 
                 if (room != null)
                 {
                     txtCurrentPlayer.Text = room.CurrentPlayers.ToString();
+                    txtOwner.Texts = room.Owner.Username.ToString();
                 }
             }
             catch (Exception ex)

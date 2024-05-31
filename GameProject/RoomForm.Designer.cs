@@ -32,6 +32,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
             this.btnLeaveRoom = new GameProject.CustomControls.ButtonDesign();
+            this.txtOwner = new GameProject.CustomControls.TextBoxDesign();
             this.SuspendLayout();
             // 
             // txtCurrentPlayer
@@ -87,11 +88,36 @@
             this.btnLeaveRoom.UseVisualStyleBackColor = false;
             this.btnLeaveRoom.Click += new System.EventHandler(this.btnLeaveRoom_Click);
             // 
+            // txtOwner
+            // 
+            this.txtOwner.BackColor = System.Drawing.SystemColors.Window;
+            this.txtOwner.BorderColor = System.Drawing.Color.MediumSlateBlue;
+            this.txtOwner.BorderFocusColor = System.Drawing.Color.HotPink;
+            this.txtOwner.BorderRadius = 0;
+            this.txtOwner.BorderSize = 2;
+            this.txtOwner.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.txtOwner.ForeColor = System.Drawing.Color.DimGray;
+            this.txtOwner.Location = new System.Drawing.Point(166, 19);
+            this.txtOwner.Margin = new System.Windows.Forms.Padding(4);
+            this.txtOwner.Multiline = false;
+            this.txtOwner.Name = "txtOwner";
+            this.txtOwner.Padding = new System.Windows.Forms.Padding(7);
+            this.txtOwner.PasswordChar = false;
+            this.txtOwner.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.txtOwner.PlaceholderText = "";
+            this.txtOwner.ReadOnly = false;
+            this.txtOwner.Size = new System.Drawing.Size(250, 32);
+            this.txtOwner.TabIndex = 7;
+            this.txtOwner.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtOwner.Texts = "";
+            this.txtOwner.UnderlinedStyle = false;
+            // 
             // RoomForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtOwner);
             this.Controls.Add(this.btnLeaveRoom);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label2);
@@ -108,5 +134,6 @@
         private System.Windows.Forms.Label label2;
         private CustomControls.ButtonDesign btnStart;
         private CustomControls.ButtonDesign btnLeaveRoom;
+        private CustomControls.TextBoxDesign txtOwner;
     }
 }

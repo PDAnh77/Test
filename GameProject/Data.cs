@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    internal class Data
+    public class Data
     {
         public static Data CurrentUser { get; set; }
 

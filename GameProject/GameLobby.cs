@@ -34,20 +34,20 @@ namespace GameProject
         public GameLobby()
         {
             InitializeComponent();
-            InitializeFirestore();
+            //InitializeFirestore();
             LoadCustomFont();
             ButtonConfig();
             LoadRooms();
         }
 
 
-        private void InitializeFirestore()
-        {
-            string path = AppDomain.CurrentDomain.BaseDirectory + @"ltmgame-firebase-adminsdk-nxh4i-82f4327feb.json";
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
-            db = FirestoreDb.Create("ltmgame");
-            MessageBox.Show("Firestore Initialized");
-        }
+        //private void InitializeFirestore()
+        //{
+        //    string path = AppDomain.CurrentDomain.BaseDirectory + @"ltmgame-firebase-adminsdk-nxh4i-82f4327feb.json";
+        //    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
+        //    db = FirestoreDb.Create("ltmgame");
+        //    MessageBox.Show("Firestore Initialized");
+        //}
 
         private void LoadCustomFont()
         {
@@ -144,9 +144,9 @@ namespace GameProject
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            //PlayAnimation(btnReturn);
-            //DialogResult = DialogResult.OK;
-            //this.Close();
+            PlayAnimation(btnReturn);
+            DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void btnJoinRoom_Click(object sender, EventArgs e)
@@ -175,14 +175,16 @@ namespace GameProject
 
         private async void btnCreateRoom_Click_1(object sender, EventArgs e)
         {
+            PlayAnimation(btnCreateRoom);
             var roomName = txtRoomName.Texts;
             if (!string.IsNullOrWhiteSpace(roomName))
             {
                 var roomData = new Room
                 {
                     Name = roomName,
-                    MaxPlayers = 4,
-                    CurrentPlayers = 1
+                    CurrentPlayers = 1,
+                    ViewPlayers = 0,
+                    Owner = Data.CurrentUser
                 };
 
                 try
@@ -194,15 +196,15 @@ namespace GameProject
                     if (response.IsSuccessStatusCode)
                     {
                         txtRoomName.Texts = "";
-                        MessageBox.Show("Room created successfully.");
+                        //MessageBox.Show("Room created successfully.");
                         await LoadRooms(); // Tải lại danh sách phòng
 
                         RoomForm roomForm = new RoomForm(roomName);
                         roomForm.RoomDeleted += OnRoomDeleted;
-                        roomForm.FormClosed += RoomForm_FormClosed; 
+                        //roomForm.FormClosed += RoomForm_FormClosed; 
                         roomForm.TriggerRoomDeleted(roomName);
                         roomForm.Show();
-                        this.Hide();
+                        //this.Hide();
                     }
                     else
                     {
@@ -216,7 +218,7 @@ namespace GameProject
             }
             else
             {
-                MessageBox.Show("Room name cannot be empty.");
+                MessageBox.Show("Vui lòng điền tên phòng trước khi tạo!", "Lỗi");
             }
         }
     }
