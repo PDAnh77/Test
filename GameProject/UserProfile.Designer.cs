@@ -38,15 +38,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TextHolder04 = new System.Windows.Forms.PictureBox();
+            this.textBoxDesign3 = new GameProject.CustomControls.TextBoxDesign();
             this.comboBoxDesign1 = new GameProject.CustomControls.ComboBoxDesign();
             this.datePickerDesign1 = new GameProject.CustomControls.DatePickerDesign();
             this.btnUpdate = new GameProject.CustomControls.ButtonDesign();
             this.btnEdit = new GameProject.CustomControls.ButtonDesign();
             this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
             this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
-            this.textBoxDesign3 = new GameProject.CustomControls.TextBoxDesign();
-            this.label3 = new System.Windows.Forms.Label();
-            this.TextHolder04 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder03)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder02)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder01)).BeginInit();
@@ -157,6 +157,52 @@
             this.label4.TabIndex = 29;
             this.label4.Text = "label4";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(160, 521);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(44, 16);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "label3";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TextHolder04
+            // 
+            this.TextHolder04.BackColor = System.Drawing.Color.Transparent;
+            this.TextHolder04.Location = new System.Drawing.Point(183, 655);
+            this.TextHolder04.Name = "TextHolder04";
+            this.TextHolder04.Size = new System.Drawing.Size(516, 5);
+            this.TextHolder04.TabIndex = 34;
+            this.TextHolder04.TabStop = false;
+            // 
+            // textBoxDesign3
+            // 
+            this.textBoxDesign3.BackColor = System.Drawing.Color.BlanchedAlmond;
+            this.textBoxDesign3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.textBoxDesign3.BorderColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign3.BorderFocusColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign3.BorderRadius = 0;
+            this.textBoxDesign3.BorderSize = 1;
+            this.textBoxDesign3.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxDesign3.ForeColor = System.Drawing.Color.Black;
+            this.textBoxDesign3.Location = new System.Drawing.Point(183, 541);
+            this.textBoxDesign3.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxDesign3.Multiline = false;
+            this.textBoxDesign3.Name = "textBoxDesign3";
+            this.textBoxDesign3.Padding = new System.Windows.Forms.Padding(7);
+            this.textBoxDesign3.PasswordChar = false;
+            this.textBoxDesign3.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.textBoxDesign3.PlaceholderText = "";
+            this.textBoxDesign3.ReadOnly = false;
+            this.textBoxDesign3.Size = new System.Drawing.Size(516, 36);
+            this.textBoxDesign3.TabIndex = 32;
+            this.textBoxDesign3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBoxDesign3.Texts = "";
+            this.textBoxDesign3.UnderlinedStyle = false;
             // 
             // comboBoxDesign1
             // 
@@ -285,52 +331,6 @@
             this.textBoxDesign1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign1.Texts = "";
             this.textBoxDesign1.UnderlinedStyle = false;
-            // 
-            // textBoxDesign3
-            // 
-            this.textBoxDesign3.BackColor = System.Drawing.Color.BlanchedAlmond;
-            this.textBoxDesign3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.textBoxDesign3.BorderColor = System.Drawing.Color.Transparent;
-            this.textBoxDesign3.BorderFocusColor = System.Drawing.Color.Transparent;
-            this.textBoxDesign3.BorderRadius = 0;
-            this.textBoxDesign3.BorderSize = 1;
-            this.textBoxDesign3.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxDesign3.ForeColor = System.Drawing.Color.Black;
-            this.textBoxDesign3.Location = new System.Drawing.Point(183, 541);
-            this.textBoxDesign3.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxDesign3.Multiline = false;
-            this.textBoxDesign3.Name = "textBoxDesign3";
-            this.textBoxDesign3.Padding = new System.Windows.Forms.Padding(7);
-            this.textBoxDesign3.PasswordChar = false;
-            this.textBoxDesign3.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.textBoxDesign3.PlaceholderText = "";
-            this.textBoxDesign3.ReadOnly = false;
-            this.textBoxDesign3.Size = new System.Drawing.Size(516, 36);
-            this.textBoxDesign3.TabIndex = 32;
-            this.textBoxDesign3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.textBoxDesign3.Texts = "";
-            this.textBoxDesign3.UnderlinedStyle = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(160, 521);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 16);
-            this.label3.TabIndex = 33;
-            this.label3.Text = "label3";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // TextHolder04
-            // 
-            this.TextHolder04.BackColor = System.Drawing.Color.Transparent;
-            this.TextHolder04.Location = new System.Drawing.Point(183, 667);
-            this.TextHolder04.Name = "TextHolder04";
-            this.TextHolder04.Size = new System.Drawing.Size(516, 5);
-            this.TextHolder04.TabIndex = 34;
-            this.TextHolder04.TabStop = false;
             // 
             // UserProfile
             // 

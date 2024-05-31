@@ -191,7 +191,7 @@ namespace GameProject
             DateTime today = DateTime.Today;
             DateTime birthday = datePickerDesign1.Value;
             int age = today.Year - birthday.Year;
-            textBoxDesign2.Texts = age.ToString();
+            textBoxDesign3.Texts = age.ToString();
         }
 
         private static bool IsValidEmail(string email)
@@ -237,6 +237,7 @@ namespace GameProject
             SetControlImage(TextHolder01, Animation.UI_Text_Holder_01);
             SetControlImage(TextHolder02, Animation.UI_Text_Holder);
             SetControlImage(TextHolder03, Animation.UI_Text_Holder);
+            SetControlImage(TextHolder04, Animation.UI_Text_Holder);
 
             CenterControl(InfoBox);
             CenterControl(ProfilePic);
@@ -246,6 +247,7 @@ namespace GameProject
             TextHolder01.BringToFront();
             TextHolder02.BringToFront();
             TextHolder03.BringToFront();
+            TextHolder04.BringToFront();
 
             textBoxDesign1.BackColor = customColor;
             textBoxDesign2.BackColor = customColor;
