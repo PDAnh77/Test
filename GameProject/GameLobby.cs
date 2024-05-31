@@ -144,9 +144,9 @@ namespace GameProject
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            //PlayAnimation(btnReturn);
-            //DialogResult = DialogResult.OK;
-            //this.Close();
+            PlayAnimation(btnReturn);
+            DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void btnJoinRoom_Click(object sender, EventArgs e)
@@ -173,7 +173,7 @@ namespace GameProject
             this.Show();
         }
 
-        private async void btnCreateRoom_Click_1(object sender, EventArgs e)
+        private async void btnCreateRoom_Click(object sender, EventArgs e)
         {
             var roomName = txtRoomName.Texts;
             if (!string.IsNullOrWhiteSpace(roomName))

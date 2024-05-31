@@ -76,7 +76,6 @@ namespace GameProject
             ButtonConfig();
             CenterControl(Header);
             BodyConfig();
-            /*ResizeScreenEvent(); */ // Can't auto resize label
         }
 
         private void Login_Load(object sender, EventArgs e)
@@ -89,7 +88,7 @@ namespace GameProject
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnLogin);
 
@@ -105,7 +104,7 @@ namespace GameProject
 
             try
             {
-                FirebaseResponse response = client.Get(@"Information/" + usrname);
+                FirebaseResponse response = await client.GetTaskAsync("Information/" + usrname);
                 if (response.Body != "null")
                 {
                     Data ResUser = response.ResultAs<Data>(); // User data retrieved from database
@@ -116,7 +115,7 @@ namespace GameProject
                         Password = pass
                     };
 
-                    int timerSeconds = 4;
+                    int timerSeconds = 3;
                     int remainingSeconds = timerSeconds;
 
                     if (Data.IsEqual(ResUser, CurUser))
@@ -128,13 +127,15 @@ namespace GameProject
                         var wait = new System.Windows.Forms.Timer();
                         wait.Tick += delegate
                         {
-                            remainingSeconds--;
-                            Notification.Text = $"Đăng nhập thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                            CenterControl(Notification);
-
-                            if (remainingSeconds <= 0)
+                            if (remainingSeconds == 0)
                             {
                                 this.Close();
+                            }
+                            else
+                            {
+                                Notification.Text = $"Đăng nhập thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                                remainingSeconds--;
+                                CenterControl(Notification);
                             }
                         };
                         wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
@@ -243,62 +244,3 @@ namespace GameProject
         }
     }
 }
-
-// Resize Event
-/*Size formOriginalSize;
-Rectangle recLabel1;
-Rectangle recButton1;
-Rectangle recButton2;
-Rectangle recPicture1;
-Rectangle recPicture2;
-Rectangle recTextbox1;
-Rectangle recTextbox2;
-
-private void ResizeScreenEvent()
-{
-    formOriginalSize = this.Size;
-    this.Resize += Login_Resize;
-    recLabel1 = new Rectangle(label1.Location, label1.Size);
-    recButton1 = new Rectangle(btnLogin.Location, btnLogin.Size);
-    recButton2 = new Rectangle(btnReturnHome.Location, btnReturnHome.Size);
-    recTextbox1 = new Rectangle(textBoxDesign1.Location, textBoxDesign1.Size);
-    recTextbox2 = new Rectangle(textBoxDesign2.Location, textBoxDesign2.Size);
-    recPicture1 = new Rectangle(pictureBox1.Location, pictureBox1.Size);
-    recPicture2 = new Rectangle(pictureBox2.Location, pictureBox2.Size);
-    *//*textBoxDesign1.Multiline = true;
-    textBoxDesign2.Multiline = true;*//*
-}
-
-private void Login_Resize(object sender, EventArgs e)
-{
-    resize_Control(btnLogin, recButton1);
-    resize_Control(btnReturnHome, recButton2);
-
-    resize_Control(textBoxDesign1, recTextbox1);
-    resize_Control(textBoxDesign2, recTextbox2);
-
-    resize_Control(label1, recLabel1);
-
-    resize_Control(pictureBox1, recPicture1);
-    resize_Control(pictureBox2, recPicture2);
-}
-
-private void resize_Control(Control control, Rectangle r)
-{
-    float xRatio = (float)this.Width / (float)formOriginalSize.Width;
-    float yRatio = (float)this.Height / (float)formOriginalSize.Height;
-    int newX = (int)(r.X * xRatio);
-    int newY = (int)(r.Y * yRatio);
-    int newWidth = (int)(r.Width * xRatio);
-    int newHeight = (int)(r.Height * yRatio);
-
-    control.Location = new Point(newX, newY);
-    control.Size = new Size(newWidth, newHeight);
-
-    if (control is Label)
-    {
-        float currentFontSize = ((Label)control).Font.Size;
-        float newFontSize = currentFontSize * Math.Min(xRatio, yRatio);
-        ((Label)control).Font = new Font(((Label)control).Font.FontFamily, newFontSize, ((Label)control).Font.Style);
-    }
-}*/

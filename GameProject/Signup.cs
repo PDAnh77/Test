@@ -133,19 +133,21 @@ namespace GameProject
 
                     Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!";
 
-                    int timerSeconds = 4; // Countdown timer
+                    int timerSeconds = 3; // Countdown timer
                     int remainingSeconds = timerSeconds;
                     var wait = new System.Windows.Forms.Timer();
 
                     wait.Tick += delegate
-                    {
-                        remainingSeconds--;
-                        Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                        CenterControl(Notification);
-
-                        if (remainingSeconds <= 0)
+                    {                      
+                        if (remainingSeconds == 0)
                         {
                             this.Close();
+                        }
+                        else
+                        {
+                            Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                            remainingSeconds--;
+                            CenterControl(Notification);
                         }
                     };
                     wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
