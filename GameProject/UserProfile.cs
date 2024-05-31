@@ -47,7 +47,7 @@ namespace GameProject
 
             foreach (Control control in Controls)
             {
-                if (control is TextBoxDesign)
+                if (control is TextBoxDesign || control is DatePickerDesign || control is ComboBoxDesign)
                 {
                     control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
                 }
@@ -98,14 +98,19 @@ namespace GameProject
             textBoxDesign1.Texts = CurUser.Username;
             textBoxDesign2.Texts = CurUser.Email;
             textBoxDesign3.Texts = CurUser.Age;
-            textBoxDesign4.Texts = CurUser.Gender;
+            comboBoxDesign1.Texts = CurUser.Gender;
 
             foreach (Control ctrl in this.Controls)
             {
                 // Check if the control is a TextBoxDesign
-                if (ctrl is TextBoxDesign textBoxDesign)
+                if (ctrl is TextBoxDesign txb)
                 {
-                    textBoxDesign.ReadOnly = true;
+                    txb.ReadOnly = true;
+                }
+                // Check if the control is a ComboBox
+                if (ctrl is ComboBoxDesign cbb)
+                {
+                    cbb.AllowDrop = false;
                 }
             }
         }
@@ -116,9 +121,14 @@ namespace GameProject
             foreach (Control ctrl in this.Controls)
             {
                 // Check if the control is a TextBoxDesign
-                if (ctrl is TextBoxDesign textBoxDesign && ctrl.Name != "textBoxDesign1")
+                if (ctrl is TextBoxDesign txb && ctrl.Name == "textBoxDesign2")
                 {
-                    textBoxDesign.ReadOnly = false;
+                    txb.ReadOnly = false;
+                }
+                // Check if the control is a ComboBox
+                if(ctrl is ComboBoxDesign cbb)
+                {
+                    cbb.AllowDrop = true;
                 }
             }
             Notification.Text = "Vui lòng nhập thông tin";
@@ -142,7 +152,7 @@ namespace GameProject
             string usrname = textBoxDesign1.Texts.Trim();
             string email = textBoxDesign2.Texts.Trim();
             string age = textBoxDesign3.Texts.Trim();
-            string gender = textBoxDesign4.Texts.Trim();
+            string gender = comboBoxDesign1.Texts.Trim();
 
             if (!int.TryParse(age, out int result) || result <= 0)
             {
@@ -174,6 +184,14 @@ namespace GameProject
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void datePickerDesign1_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime today = DateTime.Today;
+            DateTime birthday = datePickerDesign1.Value;
+            int age = today.Year - birthday.Year;
+            textBoxDesign2.Texts = age.ToString();
         }
 
         private static bool IsValidEmail(string email)
@@ -219,7 +237,6 @@ namespace GameProject
             SetControlImage(TextHolder01, Animation.UI_Text_Holder_01);
             SetControlImage(TextHolder02, Animation.UI_Text_Holder);
             SetControlImage(TextHolder03, Animation.UI_Text_Holder);
-            SetControlImage(TextHolder04, Animation.UI_Text_Holder);
 
             CenterControl(InfoBox);
             CenterControl(ProfilePic);
@@ -229,17 +246,18 @@ namespace GameProject
             TextHolder01.BringToFront();
             TextHolder02.BringToFront();
             TextHolder03.BringToFront();
-            TextHolder04.BringToFront();
 
             textBoxDesign1.BackColor = customColor;
             textBoxDesign2.BackColor = customColor;
             textBoxDesign3.BackColor = customColor;
-            textBoxDesign4.BackColor = customColor;
 
             int textLength = textBoxDesign1.Texts.Length;
             int newWidth = 50 + textLength * 10;
             TextHolder01.Size = new Size(newWidth, TextHolder01.Height);
             /*textBoxDesign1.TextAlign = HorizontalAlignment.Center;*/
+
+            datePickerDesign1.SkinColor = customColor;
+            comboBoxDesign1.BackColor = customColor;
         }
 
         private void ButtonConfig()

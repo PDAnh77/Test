@@ -173,7 +173,7 @@ namespace GameProject
             this.Show();
         }
 
-        private async void btnCreateRoom_Click_1(object sender, EventArgs e)
+        private async void btnCreateRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnCreateRoom);
             var roomName = txtRoomName.Texts;

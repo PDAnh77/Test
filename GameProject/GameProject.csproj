@@ -107,8 +107,8 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=111.2.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.111.2.0\lib\net48\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -153,6 +153,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -170,6 +171,12 @@
       <DependentUpon>Animation.resx</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\ButtonDesign.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\ComboBoxDesign.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\DatePickerDesign.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CustomControls\TextBoxDesign.cs">
@@ -232,6 +239,8 @@
     <Compile Include="UserProfile.Designer.cs">
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\calendarWhite.png" />
+    <None Include="Resources\calendarDark.png" />
     <None Include="ltmgame-firebase-adminsdk-nxh4i-82f4327feb.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
