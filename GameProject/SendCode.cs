@@ -129,34 +129,32 @@ namespace GameProject
                 if (FindAccount(to))
                 {
                     mess.To.Add(to);
+                    mess.From = new MailAddress(from, "CoCaNgua@gmail.com");
+                    mess.Body = content;
+                    mess.Subject = "Mã xác minh";
+
+                    SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                    smtp.EnableSsl = true;
+                    smtp.Port = 587;
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.Credentials = new NetworkCredential(from, pass);
+                    try
+                    {
+                        smtp.Send(mess);
+                        Notification.Text = $"Gửi mã xác minh thành công!";
+                    }
+                    catch (Exception ex)
+                    {
+                        Notification.Text = ex.Message;
+                    }
+                    CenterControl(Notification);
                 }
                 else
                 {
                     Notification.Text = "Email này không tồn tại\nVui lòng đăng ký tài khoản!";
                     CenterControl(Notification);
-                    return;
-                }
-
-                mess.From = new MailAddress(from);
-                mess.Body = content;
-                mess.Subject = "Mã xác minh";
-
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-                smtp.EnableSsl = true;
-                smtp.Port = 587;
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Credentials = new NetworkCredential(from, pass);
-                try
-                {
-                    smtp.Send(mess);
-                    Notification.Text = $"Gửi mã xác minh thành công!";
-                }
-                catch (Exception ex)
-                {
-                    Notification.Text = ex.Message;
                 }
             }
-            CenterControl(Notification);
         }
 
         private bool FindAccount(string email)

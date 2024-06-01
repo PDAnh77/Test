@@ -128,7 +128,7 @@ namespace GameProject
                         Password = pass
                     };
 
-                    SetResponse response = await client.SetTaskAsync("Information/" + usrname, data);
+                    SetResponse response = await client.SetAsync("Information/" + usrname, data);
                     Data result = response.ResultAs<Data>();
 
                     Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!";

@@ -113,7 +113,7 @@ namespace GameProject
                     Data.CurrentUser.Password = pass;
                     Data data = Data.CurrentUser;
  
-                    SetResponse response = await client.SetTaskAsync("Information/" + usrname, data);
+                    SetResponse response = await client.SetAsync("Information/" + usrname, data);
 
                     int timerSeconds = 4;
                     int remainingSeconds = timerSeconds;

@@ -104,7 +104,7 @@ namespace GameProject
 
             try
             {
-                FirebaseResponse response = await client.GetTaskAsync("Information/" + usrname);
+                FirebaseResponse response = await client.GetAsync("Information/" + usrname);
                 if (response.Body != "null")
                 {
                     Data ResUser = response.ResultAs<Data>(); // User data retrieved from database

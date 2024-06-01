@@ -185,7 +185,7 @@ namespace GameProject
                 Data.CurrentUser.Gender = gender;
                 Data data = Data.CurrentUser;
 
-                SetResponse response = await client.SetTaskAsync("Information/" + usrname, data);
+                SetResponse response = await client.SetAsync("Information/" + usrname, data);
 
                 Notification.Text = "Cập nhật thông tin thành công!";
                 CenterControl(Notification);
