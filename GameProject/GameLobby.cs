@@ -36,20 +36,10 @@ namespace GameProject
         public GameLobby()
         {
             InitializeComponent();
-            //InitializeFirestore();
             LoadCustomFont();
             ButtonConfig();
             LoadRooms();
         }
-
-
-        //private void InitializeFirestore()
-        //{
-        //    string path = AppDomain.CurrentDomain.BaseDirectory + @"ltmgame-firebase-adminsdk-nxh4i-82f4327feb.json";
-        //    Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
-        //    db = FirestoreDb.Create("ltmgame");
-        //    MessageBox.Show("Firestore Initialized");
-        //}
 
         private void LoadCustomFont()
         {
@@ -69,7 +59,14 @@ namespace GameProject
                 }
                 else if (control is Label)
                 {
-                    control.Font = new Font(privateFonts.Families[0], 18f, FontStyle.Bold);
+                    if (control.Name == "Notification")
+                    {
+                        control.Font = new Font(privateFonts.Families[0], 10f, FontStyle.Regular);
+                    }
+                    else
+                    {
+                        control.Font = new Font(privateFonts.Families[0], 18f, FontStyle.Bold);
+                    }
                 }
             }
         }
@@ -96,6 +93,7 @@ namespace GameProject
         }
         private void ButtonConfig()
         {
+            Notification.Text = "";
             foreach (Control control in Controls)
             {
                 if (control is Button button)
@@ -165,12 +163,42 @@ namespace GameProject
             Room.CurRoomName = null;
         }
 
+        private async Task<bool> CheckRoomNameExists(string name)
+        {
+            try
+            {
+                var response = await client.GetStringAsync($"{firebaseUrl}Rooms.json?auth={firebaseAuth}");
+                var allRooms = JsonSerializer.Deserialize<Dictionary<string, Room>>(response);
+
+                if (allRooms != null)
+                {
+                    if (allRooms.ContainsKey(name))
+                    {
+                        Notification.Text = "Tên phòng đã tồn tại";
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Notification.Text = $"Lỗi khi kiểm tra tên phòng: {ex.Message}";
+            }
+
+            return false;
+        }
+
         private async void btnCreateRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnCreateRoom);
             var roomName = txtRoomName.Texts;
             if (!string.IsNullOrWhiteSpace(roomName))
             {
+                bool Exist = await CheckRoomNameExists(roomName);
+                if (Exist)
+                {
+                    Notification.Text = "Tên phòng đã tồn tại";
+                    return;
+                }
                 var roomData = new Room
                 {
                     Name = roomName,
@@ -188,24 +216,23 @@ namespace GameProject
                     if (response.IsSuccessStatusCode)
                     {
                         txtRoomName.Texts = "";
-                        //MessageBox.Show("Room created successfully.");
                         await LoadRooms(); // Tải lại danh sách phòng
                         Room.CurRoomName = roomName;
                         DialogResult = ContinueToRoomForm;
                     }
                     else
                     {
-                        //  MessageBox.Show("Không thể tạo phòng");
+                        Notification.Text = "Không thể tạo phòng";
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi tạo phòng: " + ex.Message);
+                    Notification.Text = $"Lỗi khi tạo phòng: {ex.Message}";
                 }
             }
             else
             {
-                MessageBox.Show("Vui lòng điền tên phòng trước khi tạo!", "Lỗi");
+                Notification.Text = "Vui lòng nhập tên phòng";
             }
         }
 
