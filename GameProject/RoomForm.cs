@@ -23,13 +23,14 @@ namespace GameProject
 
         public delegate void RoomDeletedHandler(string roomName);
         public event RoomDeletedHandler RoomDeleted;
-        public RoomForm(string roomName)
+        public RoomForm()
         {
             InitializeComponent();
-            this.roomName = roomName;
+            this.roomName = Room.CurRoomName;
             this.Text = $"Room: {roomName}"; // Đặt tiêu đề form là tên phòng
             LoadRoomDetails();
         }
+
         private void RoomForm_Load(object sender, EventArgs e)
         {
             // Connect the button click event to the event handler

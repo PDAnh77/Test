@@ -41,12 +41,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.TextHolder04 = new System.Windows.Forms.PictureBox();
             this.textBoxDesign3 = new GameProject.CustomControls.TextBoxDesign();
-            this.comboBoxDesign1 = new GameProject.CustomControls.ComboBoxDesign();
             this.datePickerDesign1 = new GameProject.CustomControls.DatePickerDesign();
             this.btnUpdate = new GameProject.CustomControls.ButtonDesign();
             this.btnEdit = new GameProject.CustomControls.ButtonDesign();
             this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
             this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
+            this.comboBoxDesign1 = new GameProject.CustomControls.ComboBoxDesign();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder03)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder02)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder01)).BeginInit();
@@ -204,29 +204,6 @@
             this.textBoxDesign3.Texts = "";
             this.textBoxDesign3.UnderlinedStyle = false;
             // 
-            // comboBoxDesign1
-            // 
-            this.comboBoxDesign1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.comboBoxDesign1.BorderColor = System.Drawing.Color.Transparent;
-            this.comboBoxDesign1.BorderSize = 1;
-            this.comboBoxDesign1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.comboBoxDesign1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.comboBoxDesign1.ForeColor = System.Drawing.Color.Black;
-            this.comboBoxDesign1.IconColor = System.Drawing.Color.Black;
-            this.comboBoxDesign1.Items.AddRange(new object[] {
-            "Male",
-            "Female",
-            "None"});
-            this.comboBoxDesign1.ListBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(228)))), ((int)(((byte)(245)))));
-            this.comboBoxDesign1.ListTextColor = System.Drawing.Color.Black;
-            this.comboBoxDesign1.Location = new System.Drawing.Point(183, 619);
-            this.comboBoxDesign1.MinimumSize = new System.Drawing.Size(200, 30);
-            this.comboBoxDesign1.Name = "comboBoxDesign1";
-            this.comboBoxDesign1.Padding = new System.Windows.Forms.Padding(1);
-            this.comboBoxDesign1.Size = new System.Drawing.Size(516, 30);
-            this.comboBoxDesign1.TabIndex = 31;
-            this.comboBoxDesign1.Texts = "";
-            // 
             // datePickerDesign1
             // 
             this.datePickerDesign1.BorderColor = System.Drawing.Color.PaleVioletRed;
@@ -332,6 +309,29 @@
             this.textBoxDesign1.Texts = "";
             this.textBoxDesign1.UnderlinedStyle = false;
             // 
+            // comboBoxDesign1
+            // 
+            this.comboBoxDesign1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.comboBoxDesign1.BorderColor = System.Drawing.Color.Transparent;
+            this.comboBoxDesign1.BorderSize = 1;
+            this.comboBoxDesign1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.comboBoxDesign1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.comboBoxDesign1.ForeColor = System.Drawing.Color.Black;
+            this.comboBoxDesign1.IconColor = System.Drawing.Color.Black;
+            this.comboBoxDesign1.Items.AddRange(new object[] {
+            "Male",
+            "Female",
+            "None"});
+            this.comboBoxDesign1.ListBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(228)))), ((int)(((byte)(245)))));
+            this.comboBoxDesign1.ListTextColor = System.Drawing.Color.Black;
+            this.comboBoxDesign1.Location = new System.Drawing.Point(183, 619);
+            this.comboBoxDesign1.MinimumSize = new System.Drawing.Size(200, 30);
+            this.comboBoxDesign1.Name = "comboBoxDesign1";
+            this.comboBoxDesign1.Padding = new System.Windows.Forms.Padding(1);
+            this.comboBoxDesign1.Size = new System.Drawing.Size(516, 30);
+            this.comboBoxDesign1.TabIndex = 31;
+            this.comboBoxDesign1.Texts = "";
+            // 
             // UserProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -389,9 +389,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private CustomControls.DatePickerDesign datePickerDesign1;
-        private CustomControls.ComboBoxDesign comboBoxDesign1;
         private CustomControls.TextBoxDesign textBoxDesign3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox TextHolder04;
+        private CustomControls.ComboBoxDesign comboBoxDesign1;
     }
 }

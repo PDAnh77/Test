@@ -187,8 +187,7 @@ namespace GameProject.CustomControls
             get { return cmbList.DropDownStyle; }
             set
             {
-                if (cmbList.DropDownStyle != ComboBoxStyle.Simple)
-                    cmbList.DropDownStyle = value;
+                cmbList.DropDownStyle = value;
             }
         }
         //Properties

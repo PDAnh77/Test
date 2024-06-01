@@ -28,8 +28,10 @@ namespace GameProject
         private FirestoreDb db;
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; // Khóa bí mật
-        
+
         #endregion
+
+        public static readonly DialogResult ContinueToRoomForm = DialogResult.OK; 
 
         public GameLobby()
         {
@@ -98,20 +100,10 @@ namespace GameProject
             {
                 if (control is Button button)
                 {
-                    /*CenterControl(button);*/
                     SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
                     button.ForeColor = Color.Transparent;
                     button.BackColor = Color.Transparent;
                 }
-            }
-        }
-
-        private void CenterControl(Control control)
-        {
-            if (control.Parent != null)
-            {
-                int x = (control.Parent.ClientSize.Width - control.Width) / 2;
-                control.Location = new Point(x, control.Location.Y);
             }
         }
 
@@ -120,6 +112,7 @@ namespace GameProject
             control.BackgroundImage = new Bitmap(image, control.Size);
             control.BackgroundImageLayout = ImageLayout.Stretch;
         }
+
         private async Task LoadRooms()
         {
             try
@@ -145,7 +138,7 @@ namespace GameProject
         private void btnReturn_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnReturn);
-            DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.Cancel; // Go back to menu 
             this.Close();
         }
 
@@ -166,11 +159,10 @@ namespace GameProject
             LoadRooms();
         }
 
-    
-        private void RoomForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void GameLobby_Load(object sender, EventArgs e)
         {
-            // Hiển thị lại form GameLobby khi RoomForm đã đóng
-            this.Show();
+            OnRoomDeleted(Room.CurRoomName);
+            Room.CurRoomName = null;
         }
 
         private async void btnCreateRoom_Click(object sender, EventArgs e)
@@ -198,13 +190,8 @@ namespace GameProject
                         txtRoomName.Texts = "";
                         //MessageBox.Show("Room created successfully.");
                         await LoadRooms(); // Tải lại danh sách phòng
-
-                        RoomForm roomForm = new RoomForm(roomName);
-                        roomForm.RoomDeleted += OnRoomDeleted;
-                        //roomForm.FormClosed += RoomForm_FormClosed; 
-                        roomForm.TriggerRoomDeleted(roomName);
-                        roomForm.Show();
-                        //this.Hide();
+                        Room.CurRoomName = roomName;
+                        DialogResult = ContinueToRoomForm;
                     }
                     else
                     {
@@ -221,5 +208,6 @@ namespace GameProject
                 MessageBox.Show("Vui lòng điền tên phòng trước khi tạo!", "Lỗi");
             }
         }
+
     }
 }

@@ -115,16 +115,17 @@ namespace GameProject
                         Password = pass
                     };
 
-                    int timerSeconds = 3;
-                    int remainingSeconds = timerSeconds;
+                    /*int timerSeconds = 1;
+                    int remainingSeconds = timerSeconds;*/
 
                     if (Data.IsEqual(ResUser, CurUser))
                     {
                         Notification.Text = "Đăng nhập thành công!";
                         Data.CurrentUser = ResUser;
                         DialogResult = DialogResult.OK;
+                        this.Close();
 
-                        var wait = new System.Windows.Forms.Timer();
+                        /*var wait = new System.Windows.Forms.Timer();
                         wait.Tick += delegate
                         {
                             if (remainingSeconds == 0)
@@ -139,7 +140,7 @@ namespace GameProject
                             }
                         };
                         wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
-                        wait.Start();
+                        wait.Start();*/
                     }
                     else
                     {

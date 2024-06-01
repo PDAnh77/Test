@@ -44,7 +44,7 @@ namespace GameProject
             this.ListRoom.FormattingEnabled = true;
             this.ListRoom.ItemHeight = 16;
             this.ListRoom.Location = new System.Drawing.Point(16, 16);
-            this.ListRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ListRoom.Margin = new System.Windows.Forms.Padding(4);
             this.ListRoom.Name = "ListRoom";
             this.ListRoom.Size = new System.Drawing.Size(1228, 436);
             this.ListRoom.TabIndex = 6;
@@ -79,7 +79,7 @@ namespace GameProject
             this.btnJoinRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnJoinRoom.ForeColor = System.Drawing.Color.White;
             this.btnJoinRoom.Location = new System.Drawing.Point(671, 606);
-            this.btnJoinRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnJoinRoom.Margin = new System.Windows.Forms.Padding(4);
             this.btnJoinRoom.Name = "btnJoinRoom";
             this.btnJoinRoom.Size = new System.Drawing.Size(200, 49);
             this.btnJoinRoom.TabIndex = 8;
@@ -98,10 +98,10 @@ namespace GameProject
             this.textBoxDesign1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.textBoxDesign1.ForeColor = System.Drawing.Color.DimGray;
             this.textBoxDesign1.Location = new System.Drawing.Point(912, 615);
-            this.textBoxDesign1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.textBoxDesign1.Margin = new System.Windows.Forms.Padding(5);
             this.textBoxDesign1.Multiline = false;
             this.textBoxDesign1.Name = "textBoxDesign1";
-            this.textBoxDesign1.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.textBoxDesign1.Padding = new System.Windows.Forms.Padding(9);
             this.textBoxDesign1.PasswordChar = false;
             this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign1.PlaceholderText = "";
@@ -123,7 +123,7 @@ namespace GameProject
             this.btnCreateRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateRoom.ForeColor = System.Drawing.Color.White;
             this.btnCreateRoom.Location = new System.Drawing.Point(671, 529);
-            this.btnCreateRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreateRoom.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateRoom.Name = "btnCreateRoom";
             this.btnCreateRoom.Size = new System.Drawing.Size(200, 49);
             this.btnCreateRoom.TabIndex = 10;
@@ -142,10 +142,10 @@ namespace GameProject
             this.txtRoomName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtRoomName.ForeColor = System.Drawing.Color.DimGray;
             this.txtRoomName.Location = new System.Drawing.Point(911, 539);
-            this.txtRoomName.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtRoomName.Margin = new System.Windows.Forms.Padding(5);
             this.txtRoomName.Multiline = false;
             this.txtRoomName.Name = "txtRoomName";
-            this.txtRoomName.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.txtRoomName.Padding = new System.Windows.Forms.Padding(9);
             this.txtRoomName.PasswordChar = false;
             this.txtRoomName.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtRoomName.PlaceholderText = "";
@@ -171,6 +171,7 @@ namespace GameProject
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "GameLobby";
             this.Text = "GameLobby";
+            this.Load += new System.EventHandler(this.GameLobby_Load);
             this.ResumeLayout(false);
 
         }

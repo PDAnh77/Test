@@ -8,6 +8,7 @@ namespace GameProject
 {
     public class Room
     {
+        public static string CurRoomName { get; set; }
         public string Name { get; set; }
         public Data Owner { get; set; }
         public int CurrentPlayers { get; set; }

@@ -110,7 +110,12 @@ namespace GameProject
                 // Check if the control is a ComboBox
                 if (ctrl is ComboBoxDesign cbb)
                 {
-                    cbb.AllowDrop = false;
+                    cbb.DropDownStyle = ComboBoxStyle.Simple;
+                }
+                // Check if the control is a Datepicker
+                if (ctrl is DatePickerDesign dp)
+                {
+                    dp.Enabled = false;
                 }
             }
         }
@@ -128,7 +133,12 @@ namespace GameProject
                 // Check if the control is a ComboBox
                 if(ctrl is ComboBoxDesign cbb)
                 {
-                    cbb.AllowDrop = true;
+                    cbb.DropDownStyle = ComboBoxStyle.DropDownList;
+                }
+                // Check if the control is a Datepicker
+                if (ctrl is DatePickerDesign dp)
+                {
+                    dp.Enabled = true;
                 }
             }
             Notification.Text = "Vui lòng nhập thông tin";
@@ -259,7 +269,9 @@ namespace GameProject
             /*textBoxDesign1.TextAlign = HorizontalAlignment.Center;*/
 
             datePickerDesign1.SkinColor = customColor;
+            datePickerDesign1.BorderColor = customColor;
             comboBoxDesign1.BackColor = customColor;
+            comboBoxDesign1.ListBackColor = customColor;
         }
 
         private void ButtonConfig()

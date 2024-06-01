@@ -37,17 +37,19 @@
             // 
             // txtCurrentPlayer
             // 
-            this.txtCurrentPlayer.Location = new System.Drawing.Point(12, 31);
+            this.txtCurrentPlayer.Location = new System.Drawing.Point(16, 38);
+            this.txtCurrentPlayer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCurrentPlayer.Name = "txtCurrentPlayer";
-            this.txtCurrentPlayer.Size = new System.Drawing.Size(100, 20);
+            this.txtCurrentPlayer.Size = new System.Drawing.Size(132, 22);
             this.txtCurrentPlayer.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 15);
+            this.label2.Location = new System.Drawing.Point(12, 18);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
+            this.label2.Size = new System.Drawing.Size(88, 16);
             this.label2.TabIndex = 4;
             this.label2.Text = "Số người chơi";
             // 
@@ -61,9 +63,10 @@
             this.btnStart.FlatAppearance.BorderSize = 0;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStart.ForeColor = System.Drawing.Color.White;
-            this.btnStart.Location = new System.Drawing.Point(638, 398);
+            this.btnStart.Location = new System.Drawing.Point(851, 490);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(150, 40);
+            this.btnStart.Size = new System.Drawing.Size(200, 49);
             this.btnStart.TabIndex = 5;
             this.btnStart.Text = "Start";
             this.btnStart.TextColor = System.Drawing.Color.White;
@@ -79,9 +82,10 @@
             this.btnLeaveRoom.FlatAppearance.BorderSize = 0;
             this.btnLeaveRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveRoom.ForeColor = System.Drawing.Color.White;
-            this.btnLeaveRoom.Location = new System.Drawing.Point(482, 398);
+            this.btnLeaveRoom.Location = new System.Drawing.Point(643, 490);
+            this.btnLeaveRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLeaveRoom.Name = "btnLeaveRoom";
-            this.btnLeaveRoom.Size = new System.Drawing.Size(150, 40);
+            this.btnLeaveRoom.Size = new System.Drawing.Size(200, 49);
             this.btnLeaveRoom.TabIndex = 6;
             this.btnLeaveRoom.Text = "Leave";
             this.btnLeaveRoom.TextColor = System.Drawing.Color.White;
@@ -97,16 +101,16 @@
             this.txtOwner.BorderSize = 2;
             this.txtOwner.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtOwner.ForeColor = System.Drawing.Color.DimGray;
-            this.txtOwner.Location = new System.Drawing.Point(166, 19);
-            this.txtOwner.Margin = new System.Windows.Forms.Padding(4);
+            this.txtOwner.Location = new System.Drawing.Point(221, 23);
+            this.txtOwner.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtOwner.Multiline = false;
             this.txtOwner.Name = "txtOwner";
-            this.txtOwner.Padding = new System.Windows.Forms.Padding(7);
+            this.txtOwner.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
             this.txtOwner.PasswordChar = false;
             this.txtOwner.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtOwner.PlaceholderText = "";
             this.txtOwner.ReadOnly = false;
-            this.txtOwner.Size = new System.Drawing.Size(250, 32);
+            this.txtOwner.Size = new System.Drawing.Size(333, 40);
             this.txtOwner.TabIndex = 7;
             this.txtOwner.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtOwner.Texts = "";
@@ -114,16 +118,18 @@
             // 
             // RoomForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.txtOwner);
             this.Controls.Add(this.btnLeaveRoom);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtCurrentPlayer);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "RoomForm";
             this.Text = "RoomForm";
+            this.Load += new System.EventHandler(this.RoomForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

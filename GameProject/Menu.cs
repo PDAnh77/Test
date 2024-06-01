@@ -121,7 +121,6 @@ namespace GameProject
             PlayAnimation(btnPlay);
             if (CheckCurrentUser() == true)
             {
-                /*MessageBox.Show("Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!");*/
                 DialogResult = DialogResult.OK;
             }
             else
