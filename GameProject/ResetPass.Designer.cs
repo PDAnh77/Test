@@ -47,7 +47,7 @@ namespace GameProject
             // 
             this.Notification.AutoSize = true;
             this.Notification.ForeColor = System.Drawing.Color.Black;
-            this.Notification.Location = new System.Drawing.Point(42, 203);
+            this.Notification.Location = new System.Drawing.Point(42, 212);
             this.Notification.Name = "Notification";
             this.Notification.Size = new System.Drawing.Size(44, 16);
             this.Notification.TabIndex = 21;
@@ -102,8 +102,10 @@ namespace GameProject
             this.textBoxDesign1.PasswordChar = true;
             this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign1.PlaceholderText = "Mật khẩu mới";
+            this.textBoxDesign1.ReadOnly = false;
             this.textBoxDesign1.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign1.TabIndex = 25;
+            this.textBoxDesign1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign1.Texts = "";
             this.textBoxDesign1.UnderlinedStyle = false;
             // 
@@ -125,8 +127,10 @@ namespace GameProject
             this.textBoxDesign2.PasswordChar = true;
             this.textBoxDesign2.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign2.PlaceholderText = "Nhập lại mật khẩu";
+            this.textBoxDesign2.ReadOnly = false;
             this.textBoxDesign2.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign2.TabIndex = 24;
+            this.textBoxDesign2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign2.Texts = "";
             this.textBoxDesign2.UnderlinedStyle = false;
             // 

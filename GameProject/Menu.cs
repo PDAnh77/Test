@@ -47,17 +47,8 @@ namespace GameProject
             }
         }
 
-        private bool CheckCurrentUser()
-        {
-            if (Data.CurrentUser != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        private System.Windows.Forms.Timer userCheckTimer;
+        private string lastLoggedInUser = null;
 
         public Menu()
         {
@@ -69,8 +60,33 @@ namespace GameProject
 
             HeaderConfig();
             BodyConfig();
+
+            // Initialize the timer
+            userCheckTimer = new System.Windows.Forms.Timer();
+            userCheckTimer.Interval = 1000; // Check every second
+            userCheckTimer.Tick += UserCheckTimer_Tick; // Check if any user exists
+            userCheckTimer.Start();
         }
 
+        private bool CheckCurrentUser()
+        {
+            if (User.CurrentUser != null) { return true; }
+            else { return false; }
+        }
+
+        private void UserCheckTimer_Tick(object sender, EventArgs e) 
+        {
+            if (CheckCurrentUser())
+            {
+                if (User.CurrentUser.Username != lastLoggedInUser)
+                {
+                    lastLoggedInUser = User.CurrentUser.Username;
+                    Notification.Text = "Chào mừng bạn quay trở lại, " + User.CurrentUser.Username + "!";
+                    CenterControl(Notification);
+                }
+            }
+        }
+        
         Login loginForm;
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -79,24 +95,11 @@ namespace GameProject
             if (loginForm == null || loginForm.IsDisposed)
             {
                 loginForm = new Login();
-                loginForm.FormClosed += Login_FormClosed;
                 loginForm.Show();
             }
             else // If login menu already opened
             {
                 loginForm.BringToFront();
-            }
-        }
-
-        private void Login_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (loginForm != null && loginForm.DialogResult == DialogResult.OK)
-            {
-                if (CheckCurrentUser() == true)
-                {
-                    Notification.Text = "Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!";
-                    CenterControl(Notification);
-                }
             }
         }
 

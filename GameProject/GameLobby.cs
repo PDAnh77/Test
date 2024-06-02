@@ -83,13 +83,26 @@ namespace GameProject
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+            if (button.Name == "btnReturn")
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+            }
+            else
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            }
         }
         private void ButtonConfig()
         {
@@ -98,8 +111,15 @@ namespace GameProject
             {
                 if (control is Button button)
                 {
-                    SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
-                    button.ForeColor = Color.Transparent;
+                    if (button.Name == "btnReturn")
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+                    }
+                    else
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    }
+                    button.ForeColor = Color.Black;
                     button.BackColor = Color.Transparent;
                 }
             }
@@ -204,7 +224,7 @@ namespace GameProject
                     Name = roomName,
                     CurrentPlayers = 1,
                     ViewPlayers = 0,
-                    Owner = Data.CurrentUser
+                    Owner = User.CurrentUser
                 };
 
                 try

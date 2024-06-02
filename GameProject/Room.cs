@@ -10,7 +10,7 @@ namespace GameProject
     {
         public static string CurRoomName { get; set; }
         public string Name { get; set; }
-        public Data Owner { get; set; }
+        public User Owner { get; set; }
         public int CurrentPlayers { get; set; }
         public int ViewPlayers { get; set; }
         public string Status { get; set; }
