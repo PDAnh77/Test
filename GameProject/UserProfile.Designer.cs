@@ -47,6 +47,7 @@
             this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
             this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
             this.comboBoxDesign1 = new GameProject.CustomControls.ComboBoxDesign();
+            this.btnReturn = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder03)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder02)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder01)).BeginInit();
@@ -332,12 +333,32 @@
             this.comboBoxDesign1.TabIndex = 31;
             this.comboBoxDesign1.Texts = "";
             // 
+            // btnReturn
+            // 
+            this.btnReturn.BackColor = System.Drawing.Color.Transparent;
+            this.btnReturn.BackgroundColor = System.Drawing.Color.Transparent;
+            this.btnReturn.BorderColor = System.Drawing.Color.Transparent;
+            this.btnReturn.BorderRadius = 0;
+            this.btnReturn.BorderSize = 1;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturn.ForeColor = System.Drawing.Color.White;
+            this.btnReturn.Location = new System.Drawing.Point(970, 10);
+            this.btnReturn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(69, 60);
+            this.btnReturn.TabIndex = 35;
+            this.btnReturn.TextColor = System.Drawing.Color.White;
+            this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
+            // 
             // UserProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1050, 754);
+            this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.TextHolder04);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxDesign3);
@@ -393,5 +414,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox TextHolder04;
         private CustomControls.ComboBoxDesign comboBoxDesign1;
+        private CustomControls.ButtonDesign btnReturn;
     }
 }

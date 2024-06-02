@@ -37,11 +37,28 @@ namespace GameProject
         {
             InitializeComponent();
             LoadCustomFont();
-            ButtonConfig();
+
+            HeaderConfig();
+            BodyConfig();
+
+            SetControlImage(this, Animation.UI_Menu);
             LoadRooms();
         }
 
         #region UI
+
+        private void HeaderConfig()
+        {
+
+        }
+
+        private void BodyConfig()
+        {
+            Notification.Text = "";
+            Notification.ForeColor = Color.White;
+            Notification.BackColor = Color.Transparent;
+            ButtonConfig();
+        }
 
         private void LoadCustomFont()
         {
@@ -72,6 +89,7 @@ namespace GameProject
                 }
             }
         }
+
         private void PlayAnimation(Control control)
         {
             if (control is Button button)
@@ -85,24 +103,45 @@ namespace GameProject
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+            if (button.Name == "btnReturn")
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+            }
+            else
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            }
         }
+
         private void ButtonConfig()
         {
-            Notification.Text = "";
+            Color customColor = Color.FromArgb(181, 119, 94);
             foreach (Control control in Controls)
             {
                 if (control is Button button)
                 {
-                    SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
-                    button.ForeColor = Color.Transparent;
-                    button.BackColor = Color.Transparent;
+                    if(button.Name == "btnReturn")
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+                    }
+                    else
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    }
+                    button.ForeColor = Color.Black;
+                    button.BackColor = customColor;
                 }
             }
         }
@@ -209,7 +248,7 @@ namespace GameProject
                     Name = roomName,
                     CurrentPlayers = 1,
                     ViewPlayers = 0,
-                    Player1 = Data.CurrentUser
+                    Player1 = User.CurrentUser
                 };
 
                 try
@@ -267,7 +306,7 @@ namespace GameProject
                                 // Kiểm tra dữ liệu của người chơi 2 có đang trống
                                 if (room.Player2 == null)
                                 {
-                                    room.Player2 = Data.CurrentUser;
+                                    room.Player2 = User.CurrentUser;
                                     room.CurrentPlayers++;
 
                                     var json = JsonSerializer.Serialize(room);
@@ -290,7 +329,7 @@ namespace GameProject
                                 // Kiểm tra dữ liệu người chơi 3 có đang trống 
                                 else if (room.Player3 == null)
                                 {
-                                    room.Player3 = Data.CurrentUser;
+                                    room.Player3 = User.CurrentUser;
                                     room.CurrentPlayers++;
 
                                     var json = JsonSerializer.Serialize(room);
@@ -313,7 +352,7 @@ namespace GameProject
                                 // Kiểm tra dữ liệu người chơi 4 có đang trống
                                 else if (room.Player4 == null)
                                 {
-                                    room.Player4 = Data.CurrentUser;
+                                    room.Player4 = User.CurrentUser;
                                     room.CurrentPlayers++;
 
                                     var json = JsonSerializer.Serialize(room);

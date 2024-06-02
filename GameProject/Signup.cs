@@ -121,7 +121,7 @@ namespace GameProject
             {
                 if (pass == passConfirm)
                 {
-                    var data = new Data
+                    var data = new User
                     {
                         Username = usrname,
                         Email = email,
@@ -129,7 +129,7 @@ namespace GameProject
                     };
 
                     SetResponse response = await client.SetAsync("Information/" + usrname, data);
-                    Data result = response.ResultAs<Data>();
+                    User result = response.ResultAs<User>();
 
                     Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!";
 
@@ -164,7 +164,7 @@ namespace GameProject
         private bool CheckAccountExists(string usrname, string email) // Check if account exists
         {
             FirebaseResponse response = client.Get(@"Information");
-            var allUsers = response.ResultAs<Dictionary<string, Data>>();
+            var allUsers = response.ResultAs<Dictionary<string, User>>();
             if(allUsers != null)
             {
                 foreach(var user in allUsers.Values)

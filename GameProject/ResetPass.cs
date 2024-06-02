@@ -92,7 +92,7 @@ namespace GameProject
         {
             PlayAnimation(btnReset);
 
-            string usrname = Data.CurrentUser.Username;
+            string usrname = User.ResetpassUser.Username;
             string pass = textBoxDesign1.Texts;
             string passconf = textBoxDesign2.Texts;
 
@@ -110,30 +110,21 @@ namespace GameProject
             {
                 if (pass == passconf)
                 {
-                    Data.CurrentUser.Password = pass;
-                    Data data = Data.CurrentUser;
- 
-                    SetResponse response = await client.SetAsync("Information/" + usrname, data);
+                    User.ResetpassUser.Password = pass;
+                    User data = User.ResetpassUser;
 
-                    int timerSeconds = 4;
-                    int remainingSeconds = timerSeconds;
+                    SetResponse response = await client.SetAsync("Information/" + usrname, data);
+                    Notification.Text = "Cập nhật mật khẩu thành công!";
 
                     var wait = new System.Windows.Forms.Timer();
                     wait.Tick += delegate
                     {
-                        remainingSeconds--;
-                        Notification.Text = $"Cập nhật mật khẩu mới thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                        CenterControl(Notification);
-
-                        if (remainingSeconds <= 0)
-                        {
-                            Login login = new Login();
-                            login.Show();
-                            wait.Stop();
-                            this.Close();
-                        }
+                        Login login = new Login();
+                        login.Show();
+                        wait.Stop();
+                        this.Close();
                     };
-                    wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
+                    wait.Interval = (int)TimeSpan.FromSeconds(2).TotalMilliseconds;
                     wait.Start();
                 }
                 else

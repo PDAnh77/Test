@@ -107,39 +107,27 @@ namespace GameProject
                 FirebaseResponse response = await client.GetAsync("Information/" + usrname);
                 if (response.Body != "null")
                 {
-                    Data ResUser = response.ResultAs<Data>(); // User data retrieved from database
+                    User ResUser = response.ResultAs<User>(); // User data retrieved from database
 
-                    Data CurUser = new Data()
+                    User CurUser = new User()
                     {
                         Username = usrname,
                         Password = pass
                     };
 
-                    /*int timerSeconds = 1;
-                    int remainingSeconds = timerSeconds;*/
-
-                    if (Data.IsEqual(ResUser, CurUser))
+                    if (User.IsEqual(ResUser, CurUser))
                     {
                         Notification.Text = "Đăng nhập thành công!";
-                        Data.CurrentUser = ResUser;
+                        User.CurrentUser = ResUser;
                         DialogResult = DialogResult.OK;
                         this.Close();
 
                         /*var wait = new System.Windows.Forms.Timer();
                         wait.Tick += delegate
                         {
-                            if (remainingSeconds == 0)
-                            {
-                                this.Close();
-                            }
-                            else
-                            {
-                                Notification.Text = $"Đăng nhập thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                                remainingSeconds--;
-                                CenterControl(Notification);
-                            }
+                            this.Close();
                         };
-                        wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
+                        wait.Interval = (int)TimeSpan.FromSeconds(1.5).TotalMilliseconds;
                         wait.Start();*/
                     }
                     else

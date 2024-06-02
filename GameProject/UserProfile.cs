@@ -94,12 +94,17 @@ namespace GameProject
                 /*MessageBox.Show("Kết nối thành công!");*/
             }
 
-            Data CurUser = Data.CurrentUser;
+            User CurUser = User.CurrentUser;
             textBoxDesign1.Texts = CurUser.Username;
             textBoxDesign2.Texts = CurUser.Email;
             textBoxDesign3.Texts = CurUser.Age;
             comboBoxDesign1.Texts = CurUser.Gender;
 
+            LockAllControls();
+        }
+
+        private void LockAllControls()
+        {
             foreach (Control ctrl in this.Controls)
             {
                 // Check if the control is a TextBoxDesign
@@ -180,20 +185,27 @@ namespace GameProject
 
             try
             {
-                Data.CurrentUser.Email = email;
-                Data.CurrentUser.Age = age;
-                Data.CurrentUser.Gender = gender;
-                Data data = Data.CurrentUser;
+                User.CurrentUser.Email = email;
+                User.CurrentUser.Age = age;
+                User.CurrentUser.Gender = gender;
+                User data = User.CurrentUser;
 
                 SetResponse response = await client.SetAsync("Information/" + usrname, data);
 
                 Notification.Text = "Cập nhật thông tin thành công!";
                 CenterControl(Notification);
+                LockAllControls();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnReturn);
+            this.Close();
         }
 
         private void datePickerDesign1_ValueChanged(object sender, EventArgs e)
@@ -223,13 +235,26 @@ namespace GameProject
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            if (button.Name == "btnReturn")
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+            }
+            else
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            }
         }
 
         Color customColor = Color.FromArgb(236, 221, 192);
@@ -280,8 +305,14 @@ namespace GameProject
             {
                 if (control is Button button)
                 {
-                    /*CenterControl(button);*/
-                    SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    if (button.Name == "btnReturn")
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+                    }
+                    else
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    }
                     button.ForeColor = Color.Black;
                     button.BackColor = customColor;
                 }

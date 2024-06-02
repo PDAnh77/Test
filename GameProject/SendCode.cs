@@ -160,14 +160,14 @@ namespace GameProject
         private bool FindAccount(string email)
         {
             FirebaseResponse response = client.Get(@"Information");
-            var allUsers = response.ResultAs<Dictionary<string, Data>>();
+            var allUsers = response.ResultAs<Dictionary<string, User>>();
             if (allUsers != null)
             {
                 foreach (var user in allUsers.Values)
                 {
                     if (user.Email.Equals(email))
                     {
-                        Data.CurrentUser = user;
+                        User.ResetpassUser = user;
                         return true;
                     }              
                 }
@@ -188,21 +188,9 @@ namespace GameProject
             {
                 Notification.Text = "Xác thực thành công!";
 
-                /*int timerSeconds = 6;
-                int remainingSeconds = timerSeconds;*/
-
                 var wait = new System.Windows.Forms.Timer();
                 wait.Tick += delegate
                 {
-                    /*remainingSeconds--;
-                    Notification.Text = $"Đăng nhập thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                    CenterControl(Notification);
-
-                    if (remainingSeconds <= 0)
-                    {
-                        this.Close();
-                    }*/
-
                     ResetPass resetPass = new ResetPass();
                     resetPass.Show();
                     wait.Stop();
