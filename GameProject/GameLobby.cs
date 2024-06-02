@@ -29,7 +29,7 @@ namespace GameProject
 
         #endregion
 
-        public static readonly DialogResult ContinueToRoomForm = DialogResult.OK; 
+        public static readonly DialogResult ContinueToRoomForm = DialogResult.OK;
 
         public GameLobby()
         {
@@ -103,7 +103,6 @@ namespace GameProject
             if (control is Button button)
             {
                 Thread animationThread = new Thread(() => ButtonAnimation(button));
-                //Thread animationThreadPanel = new Thread(() => PanelAnimation(button));
                 animationThread.Start();
                 animationThread.Join();
             }
@@ -140,7 +139,7 @@ namespace GameProject
             {
                 if (control is Button button)
                 {
-                    if(button.Name == "btnReturn")
+                    if (button.Name == "btnReturn")
                     {
                         SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
                     }
@@ -189,6 +188,10 @@ namespace GameProject
                             Tag = roomName // Set Tag để dùng cho các hàm ở dưới
                         };
 
+                        // Thêm sự kiện MouseEnter and MouseLeave vào Panel
+                        roomPanel.MouseEnter += RoomPanel_MouseEnter;
+                        roomPanel.MouseLeave += RoomPanel_MouseLeave;
+
                         // Tạo Label để hiển thị tên phòng
                         Label roomNameLabel = new Label
                         {
@@ -225,6 +228,17 @@ namespace GameProject
             }
         }
 
+        private void RoomPanel_MouseEnter(object sender, EventArgs e)
+        {
+            Panel panel = sender as Panel;
+            panel.BorderStyle = BorderStyle.Fixed3D; // Border được in đậm
+        }
+
+        private void RoomPanel_MouseLeave(object sender, EventArgs e)
+        {
+            Panel panel = sender as Panel;
+            panel.BorderStyle = BorderStyle.FixedSingle; // Border về ban đầu
+        }
 
         private void OnRoomDeleted(string roomName)
         {
@@ -344,7 +358,6 @@ namespace GameProject
 
         private void RoomPanel_Click(string roomName)
         {
-            //PlayAnimation(RoomPanel_Click);
             JoinRoom(roomName);
         }
 
@@ -404,7 +417,7 @@ namespace GameProject
                 Notification.Text = "Vui lòng nhập tên phòng muốn tạo";
             }
         }
-        
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnRefresh);
