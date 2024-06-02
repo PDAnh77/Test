@@ -313,7 +313,11 @@ namespace GameProject
                                 return;
                             }
 
-                            if (room.Player2 == null)
+                            if (room.Player1 == null)
+                            {
+                                room.Player1 = User.CurrentUser;
+                            }    
+                            else if (room.Player2 == null)
                             {
                                 room.Player2 = User.CurrentUser;
                             }
@@ -334,6 +338,8 @@ namespace GameProject
 
                             if (updateResponse.IsSuccessStatusCode)
                             {
+                                txtRoomName.Texts = "";
+                                Notification.Text = "";
                                 Room.CurRoomName = roomName;
                                 DialogResult = GameLobby.ContinueToRoomForm;
                             }
@@ -361,6 +367,12 @@ namespace GameProject
             {
                 Notification.Text = "Vui lòng nhập tên phòng muốn tham gia";
             }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnRefresh);
+            LoadRooms();
         }
 
         #endregion
