@@ -34,9 +34,9 @@
             this.txtPlayer1 = new GameProject.CustomControls.TextBoxDesign();
             this.txtCurrentPlay = new GameProject.CustomControls.TextBoxDesign();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
+            this.txtPlayer4 = new GameProject.CustomControls.TextBoxDesign();
             this.txtPlayer2 = new GameProject.CustomControls.TextBoxDesign();
-            this.textBoxDesign3 = new GameProject.CustomControls.TextBoxDesign();
+            this.txtPlayer3 = new GameProject.CustomControls.TextBoxDesign();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -145,29 +145,29 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Người chơi 1";
             // 
-            // textBoxDesign1
+            // txtPlayer4
             // 
-            this.textBoxDesign1.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxDesign1.BorderColor = System.Drawing.Color.MediumSlateBlue;
-            this.textBoxDesign1.BorderFocusColor = System.Drawing.Color.HotPink;
-            this.textBoxDesign1.BorderRadius = 0;
-            this.textBoxDesign1.BorderSize = 2;
-            this.textBoxDesign1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxDesign1.ForeColor = System.Drawing.Color.DimGray;
-            this.textBoxDesign1.Location = new System.Drawing.Point(120, 278);
-            this.textBoxDesign1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxDesign1.Multiline = false;
-            this.textBoxDesign1.Name = "textBoxDesign1";
-            this.textBoxDesign1.Padding = new System.Windows.Forms.Padding(7);
-            this.textBoxDesign1.PasswordChar = false;
-            this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.textBoxDesign1.PlaceholderText = "";
-            this.textBoxDesign1.ReadOnly = false;
-            this.textBoxDesign1.Size = new System.Drawing.Size(92, 32);
-            this.textBoxDesign1.TabIndex = 10;
-            this.textBoxDesign1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.textBoxDesign1.Texts = "";
-            this.textBoxDesign1.UnderlinedStyle = false;
+            this.txtPlayer4.BackColor = System.Drawing.SystemColors.Window;
+            this.txtPlayer4.BorderColor = System.Drawing.Color.MediumSlateBlue;
+            this.txtPlayer4.BorderFocusColor = System.Drawing.Color.HotPink;
+            this.txtPlayer4.BorderRadius = 0;
+            this.txtPlayer4.BorderSize = 2;
+            this.txtPlayer4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.txtPlayer4.ForeColor = System.Drawing.Color.DimGray;
+            this.txtPlayer4.Location = new System.Drawing.Point(120, 278);
+            this.txtPlayer4.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPlayer4.Multiline = false;
+            this.txtPlayer4.Name = "txtPlayer4";
+            this.txtPlayer4.Padding = new System.Windows.Forms.Padding(7);
+            this.txtPlayer4.PasswordChar = false;
+            this.txtPlayer4.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.txtPlayer4.PlaceholderText = "";
+            this.txtPlayer4.ReadOnly = false;
+            this.txtPlayer4.Size = new System.Drawing.Size(92, 32);
+            this.txtPlayer4.TabIndex = 10;
+            this.txtPlayer4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtPlayer4.Texts = "";
+            this.txtPlayer4.UnderlinedStyle = false;
             // 
             // txtPlayer2
             // 
@@ -193,29 +193,29 @@
             this.txtPlayer2.Texts = "";
             this.txtPlayer2.UnderlinedStyle = false;
             // 
-            // textBoxDesign3
+            // txtPlayer3
             // 
-            this.textBoxDesign3.BackColor = System.Drawing.SystemColors.Window;
-            this.textBoxDesign3.BorderColor = System.Drawing.Color.MediumSlateBlue;
-            this.textBoxDesign3.BorderFocusColor = System.Drawing.Color.HotPink;
-            this.textBoxDesign3.BorderRadius = 0;
-            this.textBoxDesign3.BorderSize = 2;
-            this.textBoxDesign3.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxDesign3.ForeColor = System.Drawing.Color.DimGray;
-            this.textBoxDesign3.Location = new System.Drawing.Point(120, 193);
-            this.textBoxDesign3.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxDesign3.Multiline = false;
-            this.textBoxDesign3.Name = "textBoxDesign3";
-            this.textBoxDesign3.Padding = new System.Windows.Forms.Padding(7);
-            this.textBoxDesign3.PasswordChar = false;
-            this.textBoxDesign3.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.textBoxDesign3.PlaceholderText = "";
-            this.textBoxDesign3.ReadOnly = false;
-            this.textBoxDesign3.Size = new System.Drawing.Size(92, 32);
-            this.textBoxDesign3.TabIndex = 12;
-            this.textBoxDesign3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.textBoxDesign3.Texts = "";
-            this.textBoxDesign3.UnderlinedStyle = false;
+            this.txtPlayer3.BackColor = System.Drawing.SystemColors.Window;
+            this.txtPlayer3.BorderColor = System.Drawing.Color.MediumSlateBlue;
+            this.txtPlayer3.BorderFocusColor = System.Drawing.Color.HotPink;
+            this.txtPlayer3.BorderRadius = 0;
+            this.txtPlayer3.BorderSize = 2;
+            this.txtPlayer3.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.txtPlayer3.ForeColor = System.Drawing.Color.DimGray;
+            this.txtPlayer3.Location = new System.Drawing.Point(120, 193);
+            this.txtPlayer3.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPlayer3.Multiline = false;
+            this.txtPlayer3.Name = "txtPlayer3";
+            this.txtPlayer3.Padding = new System.Windows.Forms.Padding(7);
+            this.txtPlayer3.PasswordChar = false;
+            this.txtPlayer3.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.txtPlayer3.PlaceholderText = "";
+            this.txtPlayer3.ReadOnly = false;
+            this.txtPlayer3.Size = new System.Drawing.Size(92, 32);
+            this.txtPlayer3.TabIndex = 12;
+            this.txtPlayer3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtPlayer3.Texts = "";
+            this.txtPlayer3.UnderlinedStyle = false;
             // 
             // label3
             // 
@@ -252,9 +252,9 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxDesign3);
+            this.Controls.Add(this.txtPlayer3);
             this.Controls.Add(this.txtPlayer2);
-            this.Controls.Add(this.textBoxDesign1);
+            this.Controls.Add(this.txtPlayer4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCurrentPlay);
             this.Controls.Add(this.txtPlayer1);
@@ -275,9 +275,9 @@
         private CustomControls.TextBoxDesign txtPlayer1;
         private CustomControls.TextBoxDesign txtCurrentPlay;
         private System.Windows.Forms.Label label1;
-        private CustomControls.TextBoxDesign textBoxDesign1;
+        private CustomControls.TextBoxDesign txtPlayer4;
         private CustomControls.TextBoxDesign txtPlayer2;
-        private CustomControls.TextBoxDesign textBoxDesign3;
+        private CustomControls.TextBoxDesign txtPlayer3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

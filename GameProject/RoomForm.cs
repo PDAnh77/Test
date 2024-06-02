@@ -54,12 +54,17 @@ namespace GameProject
             {
                 var responseRoom = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
                 var room = JsonSerializer.Deserialize<Room>(responseRoom);
-
+                
                 if (room != null)
                 {
-                    txtCurrentPlay.Texts = room.CurrentPlayers.ToString();
-                    txtPlayer1.Texts = room.Player1.Username.ToString();
-                    //txtPlayer2.Texts = room.Player2.Username.ToString();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        txtCurrentPlay.Texts = room.CurrentPlayers.ToString();
+                        txtPlayer1.Texts = room.Player1?.Username ?? "";
+                        txtPlayer2.Texts = room.Player2?.Username ?? "";
+                        txtPlayer3.Texts = room.Player3?.Username ?? "";
+                        txtPlayer4.Texts = room.Player4?.Username ?? "";
+                    });
                 }
             }
             catch (Exception ex)
