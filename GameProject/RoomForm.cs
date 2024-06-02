@@ -60,7 +60,6 @@ namespace GameProject
                 {
                     this.Invoke((MethodInvoker)delegate
                     {
-                        txtCurrentPlay.Texts = room.CurrentPlayers.ToString();
                         txtPlayer1.Texts = room.Player1?.Username ?? "";
                         txtPlayer2.Texts = room.Player2?.Username ?? "";
                         txtPlayer3.Texts = room.Player3?.Username ?? "";

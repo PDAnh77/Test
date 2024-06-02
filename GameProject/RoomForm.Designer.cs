@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
             this.btnLeaveRoom = new GameProject.CustomControls.ButtonDesign();
             this.txtPlayer1 = new GameProject.CustomControls.TextBoxDesign();
-            this.txtCurrentPlay = new GameProject.CustomControls.TextBoxDesign();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPlayer4 = new GameProject.CustomControls.TextBoxDesign();
             this.txtPlayer2 = new GameProject.CustomControls.TextBoxDesign();
@@ -41,15 +39,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 14);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Số người chơi";
             // 
             // btnStart
             // 
@@ -97,7 +86,7 @@
             this.txtPlayer1.BorderSize = 2;
             this.txtPlayer1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer1.ForeColor = System.Drawing.Color.DimGray;
-            this.txtPlayer1.Location = new System.Drawing.Point(120, 31);
+            this.txtPlayer1.Location = new System.Drawing.Point(13, 47);
             this.txtPlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer1.Multiline = false;
             this.txtPlayer1.Name = "txtPlayer1";
@@ -106,40 +95,16 @@
             this.txtPlayer1.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer1.PlaceholderText = "";
             this.txtPlayer1.ReadOnly = false;
-            this.txtPlayer1.Size = new System.Drawing.Size(92, 32);
+            this.txtPlayer1.Size = new System.Drawing.Size(416, 32);
             this.txtPlayer1.TabIndex = 7;
             this.txtPlayer1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer1.Texts = "";
             this.txtPlayer1.UnderlinedStyle = false;
             // 
-            // txtCurrentPlay
-            // 
-            this.txtCurrentPlay.BackColor = System.Drawing.SystemColors.Window;
-            this.txtCurrentPlay.BorderColor = System.Drawing.Color.MediumSlateBlue;
-            this.txtCurrentPlay.BorderFocusColor = System.Drawing.Color.HotPink;
-            this.txtCurrentPlay.BorderRadius = 0;
-            this.txtCurrentPlay.BorderSize = 2;
-            this.txtCurrentPlay.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.txtCurrentPlay.ForeColor = System.Drawing.Color.DimGray;
-            this.txtCurrentPlay.Location = new System.Drawing.Point(12, 31);
-            this.txtCurrentPlay.Margin = new System.Windows.Forms.Padding(4);
-            this.txtCurrentPlay.Multiline = false;
-            this.txtCurrentPlay.Name = "txtCurrentPlay";
-            this.txtCurrentPlay.Padding = new System.Windows.Forms.Padding(7);
-            this.txtCurrentPlay.PasswordChar = false;
-            this.txtCurrentPlay.PlaceholderColor = System.Drawing.Color.DarkGray;
-            this.txtCurrentPlay.PlaceholderText = "";
-            this.txtCurrentPlay.ReadOnly = false;
-            this.txtCurrentPlay.Size = new System.Drawing.Size(69, 32);
-            this.txtCurrentPlay.TabIndex = 8;
-            this.txtCurrentPlay.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.txtCurrentPlay.Texts = "";
-            this.txtCurrentPlay.UnderlinedStyle = false;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(117, 14);
+            this.label1.Location = new System.Drawing.Point(10, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 9;
@@ -154,7 +119,7 @@
             this.txtPlayer4.BorderSize = 2;
             this.txtPlayer4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer4.ForeColor = System.Drawing.Color.DimGray;
-            this.txtPlayer4.Location = new System.Drawing.Point(120, 278);
+            this.txtPlayer4.Location = new System.Drawing.Point(13, 294);
             this.txtPlayer4.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer4.Multiline = false;
             this.txtPlayer4.Name = "txtPlayer4";
@@ -163,7 +128,7 @@
             this.txtPlayer4.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer4.PlaceholderText = "";
             this.txtPlayer4.ReadOnly = false;
-            this.txtPlayer4.Size = new System.Drawing.Size(92, 32);
+            this.txtPlayer4.Size = new System.Drawing.Size(416, 32);
             this.txtPlayer4.TabIndex = 10;
             this.txtPlayer4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer4.Texts = "";
@@ -178,7 +143,7 @@
             this.txtPlayer2.BorderSize = 2;
             this.txtPlayer2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer2.ForeColor = System.Drawing.Color.DimGray;
-            this.txtPlayer2.Location = new System.Drawing.Point(120, 113);
+            this.txtPlayer2.Location = new System.Drawing.Point(13, 129);
             this.txtPlayer2.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer2.Multiline = false;
             this.txtPlayer2.Name = "txtPlayer2";
@@ -187,7 +152,7 @@
             this.txtPlayer2.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer2.PlaceholderText = "";
             this.txtPlayer2.ReadOnly = false;
-            this.txtPlayer2.Size = new System.Drawing.Size(92, 32);
+            this.txtPlayer2.Size = new System.Drawing.Size(416, 32);
             this.txtPlayer2.TabIndex = 11;
             this.txtPlayer2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer2.Texts = "";
@@ -202,7 +167,7 @@
             this.txtPlayer3.BorderSize = 2;
             this.txtPlayer3.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer3.ForeColor = System.Drawing.Color.DimGray;
-            this.txtPlayer3.Location = new System.Drawing.Point(120, 193);
+            this.txtPlayer3.Location = new System.Drawing.Point(13, 209);
             this.txtPlayer3.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer3.Multiline = false;
             this.txtPlayer3.Name = "txtPlayer3";
@@ -211,7 +176,7 @@
             this.txtPlayer3.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer3.PlaceholderText = "";
             this.txtPlayer3.ReadOnly = false;
-            this.txtPlayer3.Size = new System.Drawing.Size(92, 32);
+            this.txtPlayer3.Size = new System.Drawing.Size(416, 32);
             this.txtPlayer3.TabIndex = 12;
             this.txtPlayer3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer3.Texts = "";
@@ -220,7 +185,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(117, 96);
+            this.label3.Location = new System.Drawing.Point(10, 112);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(67, 13);
             this.label3.TabIndex = 13;
@@ -229,7 +194,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(117, 176);
+            this.label4.Location = new System.Drawing.Point(10, 192);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 14;
@@ -238,7 +203,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(117, 261);
+            this.label5.Location = new System.Drawing.Point(10, 277);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(67, 13);
             this.label5.TabIndex = 15;
@@ -256,11 +221,9 @@
             this.Controls.Add(this.txtPlayer2);
             this.Controls.Add(this.txtPlayer4);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtCurrentPlay);
             this.Controls.Add(this.txtPlayer1);
             this.Controls.Add(this.btnLeaveRoom);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.label2);
             this.Name = "RoomForm";
             this.Text = "RoomForm";
             this.ResumeLayout(false);
@@ -269,11 +232,9 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label2;
         private CustomControls.ButtonDesign btnStart;
         private CustomControls.ButtonDesign btnLeaveRoom;
         private CustomControls.TextBoxDesign txtPlayer1;
-        private CustomControls.TextBoxDesign txtCurrentPlay;
         private System.Windows.Forms.Label label1;
         private CustomControls.TextBoxDesign txtPlayer4;
         private CustomControls.TextBoxDesign txtPlayer2;
