@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlTypes;
+using GameProject.CustomControls;
 
 namespace GameProject
 {
@@ -37,27 +38,29 @@ namespace GameProject
         {
             InitializeComponent();
             LoadCustomFont();
-
-            HeaderConfig();
-            BodyConfig();
-
             SetControlImage(this, Animation.UI_Menu);
+            BodyConfig();
             LoadRooms();
         }
 
         #region UI
 
-        private void HeaderConfig()
-        {
-
-        }
+        Color customColor01 = Color.FromArgb(234, 212, 172); // Background textbox
+        Color customColor02 = Color.FromArgb(181, 119, 94); // Background form
 
         private void BodyConfig()
         {
+            ButtonConfig();
             Notification.Text = "";
             Notification.ForeColor = Color.White;
             Notification.BackColor = Color.Transparent;
-            ButtonConfig();
+
+            SetControlImage(pictureBox2, Animation.UI_Menu_Border);
+            SetControlImage(pictureBox1, Animation.UI_Textbox_02);
+
+            txtRoomName.BackColor = customColor01;
+            txtRoomName.BorderFocusColor = customColor01;
+            ListRoom.BackColor = customColor01;
         }
 
         private void LoadCustomFont()
@@ -74,18 +77,26 @@ namespace GameProject
             {
                 if (control is Button)
                 {
-                    control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
+                    control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
                 }
                 else if (control is Label)
                 {
                     if (control.Name == "Notification") // Chỉnh thông số của Control Notification
                     {
-                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Regular);
+                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
                     }
                     else
                     {
                         control.Font = new Font(privateFonts.Families[0], 18f, FontStyle.Bold);
                     }
+                }
+                else if (control is TextBoxDesign)
+                {
+                    control.Font = new Font(privateFonts.Families[1], 15f, FontStyle.Bold);
+                }
+                else if (control is ListBox)
+                {
+                    control.Font = new Font(privateFonts.Families[0], 7f, FontStyle.Bold);
                 }
             }
         }
@@ -127,7 +138,6 @@ namespace GameProject
 
         private void ButtonConfig()
         {
-            Color customColor = Color.FromArgb(181, 119, 94);
             foreach (Control control in Controls)
             {
                 if (control is Button button)
@@ -141,7 +151,7 @@ namespace GameProject
                         SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     }
                     button.ForeColor = Color.Black;
-                    button.BackColor = customColor;
+                    button.BackColor = customColor02;
                 }
             }
         }
