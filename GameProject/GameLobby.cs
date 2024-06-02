@@ -1,6 +1,4 @@
 ﻿using System;
-using Google.Cloud.Firestore;
-using Google.Cloud.Firestore.V1;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,7 +24,6 @@ namespace GameProject
 
         PrivateFontCollection privateFonts = new PrivateFontCollection();
         private static readonly HttpClient client = new HttpClient();
-        private FirestoreDb db;
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; // Khóa bí mật
 
@@ -310,81 +307,39 @@ namespace GameProject
 
                         if (room != null)
                         {
-                            // Kiểm tra số người chơi trong phòng
-                            if (room.CurrentPlayers < 4)
+                            if (room.CurrentPlayers >= 4)
                             {
-                                // Kiểm tra dữ liệu của người chơi 2 có đang trống
-                                if (room.Player2 == null)
-                                {
-                                    room.Player2 = User.CurrentUser;
-                                    room.CurrentPlayers++;
+                                Notification.Text = "Phòng đã đầy";
+                                return;
+                            }
 
-                                    var json = JsonSerializer.Serialize(room);
-                                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+                            if (room.Player2 == null)
+                            {
+                                room.Player2 = User.CurrentUser;
+                            }
+                            else if (room.Player3 == null)
+                            {
+                                room.Player3 = User.CurrentUser;
+                            }
+                            else if (room.Player4 == null)
+                            {
+                                room.Player4 = User.CurrentUser;
+                            }
 
-                                    if (updateResponse.IsSuccessStatusCode)
-                                    {
-                                        txtRoomName.Texts = "";
-                                        Notification.Text = "";
-                                        Room.CurRoomName = roomName;
-                                        DialogResult = ContinueToRoomForm;
-                                    }
-                                    else
-                                    {
-                                        Notification.Text = "Không thể tham gia phòng";
-                                    }
-                                }
+                            room.CurrentPlayers++;
 
-                                // Kiểm tra dữ liệu người chơi 3 có đang trống 
-                                else if (room.Player3 == null)
-                                {
-                                    room.Player3 = User.CurrentUser;
-                                    room.CurrentPlayers++;
+                            var json = JsonSerializer.Serialize(room);
+                            var content = new StringContent(json, Encoding.UTF8, "application/json");
+                            var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
 
-                                    var json = JsonSerializer.Serialize(room);
-                                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
-
-                                    if (updateResponse.IsSuccessStatusCode)
-                                    {
-                                        txtRoomName.Texts = "";
-                                        Notification.Text = "";
-                                        Room.CurRoomName = roomName;
-                                        DialogResult = ContinueToRoomForm;
-                                    }
-                                    else
-                                    {
-                                        Notification.Text = "Không thể tham gia phòng";
-                                    }
-                                }  
-
-                                // Kiểm tra dữ liệu người chơi 4 có đang trống
-                                else if (room.Player4 == null)
-                                {
-                                    room.Player4 = User.CurrentUser;
-                                    room.CurrentPlayers++;
-
-                                    var json = JsonSerializer.Serialize(room);
-                                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
-
-                                    if (updateResponse.IsSuccessStatusCode)
-                                    {
-                                        txtRoomName.Texts = "";
-                                        Notification.Text = "";
-                                        Room.CurRoomName = roomName;
-                                        DialogResult = ContinueToRoomForm;
-                                    }
-                                    else
-                                    {
-                                        Notification.Text = "Không thể tham gia phòng";
-                                    }
-                                }    
+                            if (updateResponse.IsSuccessStatusCode)
+                            {
+                                Room.CurRoomName = roomName;
+                                DialogResult = GameLobby.ContinueToRoomForm;
                             }
                             else
                             {
-                                Notification.Text = "Phòng đã đầy";
+                                Notification.Text = "Không thể tham gia phòng";
                             }
                         }
                         else
