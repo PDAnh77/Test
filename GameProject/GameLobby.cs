@@ -57,7 +57,7 @@ namespace GameProject
 
             txtRoomName.BackColor = customColor01;
             txtRoomName.BorderFocusColor = customColor01;
-            ListRoom.BackColor = customColor01;
+            flowLayoutPanelRooms.BackColor = customColor01;
         }
 
         private void LoadCustomFont()
@@ -103,6 +103,7 @@ namespace GameProject
             if (control is Button button)
             {
                 Thread animationThread = new Thread(() => ButtonAnimation(button));
+                //Thread animationThreadPanel = new Thread(() => PanelAnimation(button));
                 animationThread.Start();
                 animationThread.Join();
             }
@@ -170,12 +171,51 @@ namespace GameProject
                 var response = await client.GetStringAsync($"{firebaseUrl}Rooms.json?auth={firebaseAuth}");
                 var rooms = JsonSerializer.Deserialize<Dictionary<string, Room>>(response);
 
-                ListRoom.Items.Clear();
+                flowLayoutPanelRooms.Controls.Clear();
                 if (rooms != null)
                 {
                     foreach (var room in rooms)
                     {
-                        ListRoom.Items.Add(room.Key);
+                        var roomName = room.Key;
+                        var roomData = room.Value;
+
+                        // Tạo panel lưu trữ thông tin phòng
+                        Panel roomPanel = new Panel
+                        {
+                            Width = 280,
+                            Height = 70,
+                            BorderStyle = BorderStyle.FixedSingle,
+                            Margin = new Padding(10),
+                            Tag = roomName // Set Tag để dùng cho các hàm ở dưới
+                        };
+
+                        // Tạo Label để hiển thị tên phòng
+                        Label roomNameLabel = new Label
+                        {
+                            Text = $"{roomName}",
+                            Font = new Font("Arial", 12, FontStyle.Bold),
+                            Location = new Point(10, 10),
+                            AutoSize = true
+                        };
+
+                        // Tạo Label hiển thị số người chơi trong phòng
+                        Label playerCountLabel = new Label
+                        {
+                            Text = $"Players: {roomData.CurrentPlayers}/4",
+                            Font = new Font("Arial", 10),
+                            Location = new Point(10, 40),
+                            AutoSize = true
+                        };
+
+                        // Thêm label vào panel
+                        roomPanel.Controls.Add(roomNameLabel);
+                        roomPanel.Controls.Add(playerCountLabel);
+
+                        // Thêm event vào panel
+                        roomPanel.Click += (s, e) => RoomPanel_Click(roomName);
+
+                        // Thêm panel vào flowLayoutPanel
+                        flowLayoutPanelRooms.Controls.Add(roomPanel);
                     }
                 }
             }
@@ -194,7 +234,16 @@ namespace GameProject
                 return;
             }
 
-            ListRoom.Items.Remove(roomName);
+            // Tìm và xóa Panel tương ứng với phòng bị xóa
+            foreach (Control control in flowLayoutPanelRooms.Controls)
+            {
+                if (control is Panel panel && panel.Tag.ToString() == roomName)
+                {
+                    flowLayoutPanelRooms.Controls.Remove(panel);
+                    break;
+                }
+            }
+
             LoadRooms();
         }
 
@@ -202,6 +251,68 @@ namespace GameProject
         {
             OnRoomDeleted(Room.CurRoomName);
             Room.CurRoomName = null;
+        }
+
+        private async void JoinRoom(string roomName)
+        {
+            // Thêm người dùng vào phòng
+            try
+            {
+                var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                var room = JsonSerializer.Deserialize<Room>(response);
+
+                if (room != null)
+                {
+                    if (room.CurrentPlayers >= 4)
+                    {
+                        Notification.Text = "Phòng đã đầy";
+                        return;
+                    }
+
+                    if (room.Player1 == null)
+                    {
+                        room.Player1 = User.CurrentUser;
+                    }
+                    else if (room.Player2 == null)
+                    {
+                        room.Player2 = User.CurrentUser;
+                    }
+                    else if (room.Player3 == null)
+                    {
+                        room.Player3 = User.CurrentUser;
+                    }
+                    else if (room.Player4 == null)
+                    {
+                        room.Player4 = User.CurrentUser;
+                    }
+
+                    room.CurrentPlayers++;
+
+                    var json = JsonSerializer.Serialize(room);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                    if (updateResponse.IsSuccessStatusCode)
+                    {
+                        txtRoomName.Texts = "";
+                        Notification.Text = "";
+                        Room.CurRoomName = roomName;
+                        DialogResult = GameLobby.ContinueToRoomForm;
+                    }
+                    else
+                    {
+                        Notification.Text = "Không thể tham gia phòng";
+                    }
+                }
+                else
+                {
+                    Notification.Text = "Phòng không tồn tại";
+                }
+            }
+            catch (Exception ex)
+            {
+                Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
+            }
         }
 
         private async Task<bool> CheckRoomNameExists(string name)
@@ -230,6 +341,12 @@ namespace GameProject
         #endregion
 
         #region Event
+
+        private void RoomPanel_Click(string roomName)
+        {
+            //PlayAnimation(RoomPanel_Click);
+            JoinRoom(roomName);
+        }
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
@@ -287,88 +404,7 @@ namespace GameProject
                 Notification.Text = "Vui lòng nhập tên phòng muốn tạo";
             }
         }
-        private async void btnJoinRoom_Click(object sender, EventArgs e)
-        {
-            PlayAnimation(btnJoinRoom);
-            var roomName = txtRoomName.Texts;
-
-            if (!string.IsNullOrWhiteSpace(roomName))
-            {
-                bool roomExists = await CheckRoomNameExists(roomName);
-
-                // Kiểm tra phòng có tồn tại không
-                if (roomExists)
-                {
-                    // Thêm người dùng vào phòng
-                    try
-                    {
-                        var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
-                        var room = JsonSerializer.Deserialize<Room>(response);
-
-                        if (room != null)
-                        {
-                            if (room.CurrentPlayers >= 4)
-                            {
-                                Notification.Text = "Phòng đã đầy";
-                                return;
-                            }
-
-                            if (room.Player1 == null)
-                            {
-                                room.Player1 = User.CurrentUser;
-                            }    
-                            else if (room.Player2 == null)
-                            {
-                                room.Player2 = User.CurrentUser;
-                            }
-                            else if (room.Player3 == null)
-                            {
-                                room.Player3 = User.CurrentUser;
-                            }
-                            else if (room.Player4 == null)
-                            {
-                                room.Player4 = User.CurrentUser;
-                            }
-
-                            room.CurrentPlayers++;
-
-                            var json = JsonSerializer.Serialize(room);
-                            var content = new StringContent(json, Encoding.UTF8, "application/json");
-                            var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
-
-                            if (updateResponse.IsSuccessStatusCode)
-                            {
-                                txtRoomName.Texts = "";
-                                Notification.Text = "";
-                                Room.CurRoomName = roomName;
-                                DialogResult = GameLobby.ContinueToRoomForm;
-                            }
-                            else
-                            {
-                                Notification.Text = "Không thể tham gia phòng";
-                            }
-                        }
-                        else
-                        {
-                            Notification.Text = "Phòng không tồn tại";
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
-                    }
-                }
-                else
-                {
-                    Notification.Text = "Phòng không tồn tại";
-                }
-            }
-            else
-            {
-                Notification.Text = "Vui lòng nhập tên phòng muốn tham gia";
-            }
-        }
-
+        
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnRefresh);
