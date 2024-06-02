@@ -41,6 +41,8 @@ namespace GameProject
             LoadRooms();
         }
 
+        #region UI
+
         private void LoadCustomFont()
         {
             // Load the Silver.ttf font
@@ -59,9 +61,9 @@ namespace GameProject
                 }
                 else if (control is Label)
                 {
-                    if (control.Name == "Notification")
+                    if (control.Name == "Notification") // Chỉnh thông số của Control Notification
                     {
-                        control.Font = new Font(privateFonts.Families[0], 10f, FontStyle.Regular);
+                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Regular);
                     }
                     else
                     {
@@ -83,26 +85,13 @@ namespace GameProject
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            if (button.Name == "btnReturn")
-            {
-                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
-                Thread.Sleep(delay);
-                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
-                Thread.Sleep(delay);
-                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
-                Thread.Sleep(delay);
-                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
-            }
-            else
-            {
-                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
-                Thread.Sleep(delay);
-                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
-                Thread.Sleep(delay);
-                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
-                Thread.Sleep(delay);
-                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
-            }
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a2);
+            Thread.Sleep(delay);
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a3);
+            Thread.Sleep(delay);
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a4);
+            Thread.Sleep(delay);
+            SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
         }
         private void ButtonConfig()
         {
@@ -111,15 +100,8 @@ namespace GameProject
             {
                 if (control is Button button)
                 {
-                    if (button.Name == "btnReturn")
-                    {
-                        SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
-                    }
-                    else
-                    {
-                        SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
-                    }
-                    button.ForeColor = Color.Black;
+                    SetControlImage(button, Animation.UI_Flat_Button_Small_Press_01a1);
+                    button.ForeColor = Color.Transparent;
                     button.BackColor = Color.Transparent;
                 }
             }
@@ -130,6 +112,10 @@ namespace GameProject
             control.BackgroundImage = new Bitmap(image, control.Size);
             control.BackgroundImageLayout = ImageLayout.Stretch;
         }
+
+        #endregion
+
+        #region Function
 
         private async Task LoadRooms()
         {
@@ -153,17 +139,6 @@ namespace GameProject
             }
         }
 
-        private void btnReturn_Click(object sender, EventArgs e)
-        {
-            PlayAnimation(btnReturn);
-            DialogResult = DialogResult.Cancel; // Go back to menu 
-            this.Close();
-        }
-
-        private void btnJoinRoom_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("OK");
-        }
 
         private void OnRoomDeleted(string roomName)
         {
@@ -194,7 +169,6 @@ namespace GameProject
                 {
                     if (allRooms.ContainsKey(name))
                     {
-                        Notification.Text = "Tên phòng đã tồn tại";
                         return true;
                     }
                 }
@@ -205,6 +179,17 @@ namespace GameProject
             }
 
             return false;
+        }
+
+        #endregion
+
+        #region Event
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnReturn);
+            DialogResult = DialogResult.Cancel; // Quay về Menu
+            this.Close();
         }
 
         private async void btnCreateRoom_Click(object sender, EventArgs e)
@@ -224,7 +209,7 @@ namespace GameProject
                     Name = roomName,
                     CurrentPlayers = 1,
                     ViewPlayers = 0,
-                    Owner = User.CurrentUser
+                    Player1 = Data.CurrentUser
                 };
 
                 try
@@ -236,6 +221,7 @@ namespace GameProject
                     if (response.IsSuccessStatusCode)
                     {
                         txtRoomName.Texts = "";
+                        Notification.Text = "";
                         await LoadRooms(); // Tải lại danh sách phòng
                         Room.CurRoomName = roomName;
                         DialogResult = ContinueToRoomForm;
@@ -252,9 +238,127 @@ namespace GameProject
             }
             else
             {
-                Notification.Text = "Vui lòng nhập tên phòng";
+                Notification.Text = "Vui lòng nhập tên phòng muốn tạo";
+            }
+        }
+        private async void btnJoinRoom_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnJoinRoom);
+            var roomName = txtRoomName.Texts;
+
+            if (!string.IsNullOrWhiteSpace(roomName))
+            {
+                bool roomExists = await CheckRoomNameExists(roomName);
+
+                // Kiểm tra phòng có tồn tại không
+                if (roomExists)
+                {
+                    // Thêm người dùng vào phòng
+                    try
+                    {
+                        var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                        var room = JsonSerializer.Deserialize<Room>(response);
+
+                        if (room != null)
+                        {
+                            // Kiểm tra số người chơi trong phòng
+                            if (room.CurrentPlayers < 4)
+                            {
+                                // Kiểm tra dữ liệu của người chơi 2 có đang trống
+                                if (room.Player2 == null)
+                                {
+                                    room.Player2 = Data.CurrentUser;
+                                    room.CurrentPlayers++;
+
+                                    var json = JsonSerializer.Serialize(room);
+                                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                                    if (updateResponse.IsSuccessStatusCode)
+                                    {
+                                        txtRoomName.Texts = "";
+                                        Notification.Text = "";
+                                        Room.CurRoomName = roomName;
+                                        DialogResult = ContinueToRoomForm;
+                                    }
+                                    else
+                                    {
+                                        Notification.Text = "Không thể tham gia phòng";
+                                    }
+                                }
+
+                                // Kiểm tra dữ liệu người chơi 3 có đang trống 
+                                else if (room.Player3 == null)
+                                {
+                                    room.Player3 = Data.CurrentUser;
+                                    room.CurrentPlayers++;
+
+                                    var json = JsonSerializer.Serialize(room);
+                                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                                    if (updateResponse.IsSuccessStatusCode)
+                                    {
+                                        txtRoomName.Texts = "";
+                                        Notification.Text = "";
+                                        Room.CurRoomName = roomName;
+                                        DialogResult = ContinueToRoomForm;
+                                    }
+                                    else
+                                    {
+                                        Notification.Text = "Không thể tham gia phòng";
+                                    }
+                                }  
+
+                                // Kiểm tra dữ liệu người chơi 4 có đang trống
+                                else if (room.Player4 == null)
+                                {
+                                    room.Player4 = Data.CurrentUser;
+                                    room.CurrentPlayers++;
+
+                                    var json = JsonSerializer.Serialize(room);
+                                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                                    if (updateResponse.IsSuccessStatusCode)
+                                    {
+                                        txtRoomName.Texts = "";
+                                        Notification.Text = "";
+                                        Room.CurRoomName = roomName;
+                                        DialogResult = ContinueToRoomForm;
+                                    }
+                                    else
+                                    {
+                                        Notification.Text = "Không thể tham gia phòng";
+                                    }
+                                }    
+                            }
+                            else
+                            {
+                                Notification.Text = "Phòng đã đầy";
+                            }
+                        }
+                        else
+                        {
+                            Notification.Text = "Phòng không tồn tại";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
+                    }
+                }
+                else
+                {
+                    Notification.Text = "Phòng không tồn tại";
+                }
+            }
+            else
+            {
+                Notification.Text = "Vui lòng nhập tên phòng muốn tham gia";
             }
         }
 
+        #endregion
     }
 }

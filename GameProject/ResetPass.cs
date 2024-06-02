@@ -92,7 +92,7 @@ namespace GameProject
         {
             PlayAnimation(btnReset);
 
-            string usrname = User.ResetpassUser.Username;
+            string usrname = Data.CurrentUser.Username;
             string pass = textBoxDesign1.Texts;
             string passconf = textBoxDesign2.Texts;
 
@@ -110,21 +110,30 @@ namespace GameProject
             {
                 if (pass == passconf)
                 {
-                    User.ResetpassUser.Password = pass;
-                    User data = User.ResetpassUser;
+                    Data.CurrentUser.Password = pass;
+                    Data data = Data.CurrentUser;
  
                     SetResponse response = await client.SetAsync("Information/" + usrname, data);
-                    Notification.Text = "Cập nhật mật khẩu thành công!";
+
+                    int timerSeconds = 4;
+                    int remainingSeconds = timerSeconds;
 
                     var wait = new System.Windows.Forms.Timer();
                     wait.Tick += delegate
                     {
-                        Login login = new Login();
-                        login.Show();
-                        wait.Stop();
-                        this.Close();
+                        remainingSeconds--;
+                        Notification.Text = $"Cập nhật mật khẩu mới thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                        CenterControl(Notification);
+
+                        if (remainingSeconds <= 0)
+                        {
+                            Login login = new Login();
+                            login.Show();
+                            wait.Stop();
+                            this.Close();
+                        }
                     };
-                    wait.Interval = (int)TimeSpan.FromSeconds(2).TotalMilliseconds;
+                    wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
                     wait.Start();
                 }
                 else

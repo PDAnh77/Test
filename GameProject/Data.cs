@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    public class User
+    public class Data
     {
-        public static User CurrentUser { get; set; }
-
-        public static User ResetpassUser { get; set; }
+        public static Data CurrentUser { get; set; }
 
         public string Username { get; set; }
 
@@ -22,7 +20,7 @@ namespace GameProject
 
         public string Age { get; set; }
 
-        public User()
+        public Data()
         {
             Username = "None";
             Password = "None";
@@ -31,7 +29,7 @@ namespace GameProject
             Age = "None";
         }
 
-        public static bool IsEqual(User user1, User user2)
+        public static bool IsEqual(Data user1, Data user2)
         {
             if (user1 == null || user2 == null) { return false; }
             if (user1.Password != user2.Password)

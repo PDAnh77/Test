@@ -9,35 +9,45 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace GameProject
 {
     public partial class RoomForm : Form
     {
+        #region Properties
+
         private static readonly HttpClient client = new HttpClient();
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i";
-        private string roomName, usrname;
+        private string roomName;
 
 
         public delegate void RoomDeletedHandler(string roomName);
         public event RoomDeletedHandler RoomDeleted;
+
+        private System.Timers.Timer updateTimer;
+        #endregion
+
         public RoomForm()
         {
             InitializeComponent();
             this.roomName = Room.CurRoomName;
-            this.Text = $"Room: {roomName}"; // Đặt tiêu đề form là tên phòng
+            this.Text = $"{roomName}"; // Đặt tiêu đề form là tên phòng
+
+            // Khởi tạo và chạy timer
+            updateTimer = new System.Timers.Timer(5000); // Cập nhật mỗi 5s
+            updateTimer.Elapsed += async (sender, e) => await UpdateTimer_Elapsed(sender, e);
+            updateTimer.AutoReset = true;
+            updateTimer.Enabled = true;
+
             LoadRoomDetails();
         }
 
-        private void RoomForm_Load(object sender, EventArgs e)
-        {
-            // Connect the button click event to the event handler
-            btnLeaveRoom.Click += new EventHandler(btnLeaveRoom_Click);
-        }
+        #region Function
 
-        private async void LoadRoomDetails()
+        private async Task LoadRoomDetails()
         {
             // Tải thông tin chi tiết của phòng từ Firebase và hiển thị
             try
@@ -47,8 +57,9 @@ namespace GameProject
 
                 if (room != null)
                 {
-                    txtCurrentPlayer.Text = room.CurrentPlayers.ToString();
-                    txtOwner.Texts = room.Owner.Username.ToString();
+                    txtCurrentPlay.Texts = room.CurrentPlayers.ToString();
+                    txtPlayer1.Texts = room.Player1.Username.ToString();
+                    //txtPlayer2.Texts = room.Player2.Username.ToString();
                 }
             }
             catch (Exception ex)
@@ -57,67 +68,85 @@ namespace GameProject
             }
         }
 
+        private async Task UpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            await LoadRoomDetails();
+        }
+
         public void TriggerRoomDeleted(string roomName)
         {
             RoomDeleted?.Invoke(roomName);
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            // Dừng timer khi form đóng     
+            if (updateTimer != null)
+            {
+                updateTimer.Stop();
+                updateTimer.Dispose();
+            }
+        }
+        #endregion
+
+        #region Event
+
         private async void btnLeaveRoom_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Bạn có chắc chắn muốn thoát phòng không?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+            await Task.Run(async () =>
             {
-                await Task.Run(async () =>
+                try
                 {
-                    try
+                    var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                    var room = JsonSerializer.Deserialize<Room>(response);
+
+                    if (room != null)
                     {
-                        var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
-                        var room = JsonSerializer.Deserialize<Room>(response);
+                        room.CurrentPlayers--;
+                        if (room.CurrentPlayers < 0) room.CurrentPlayers = 0;
 
-                        if (room != null)
+                        if (room.CurrentPlayers == 0)
                         {
-                            room.CurrentPlayers--;
-                            if (room.CurrentPlayers < 0) room.CurrentPlayers = 0;
-
-                            if (room.CurrentPlayers == 0)
+                            var deleteResponse = await client.DeleteAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                            if (deleteResponse.IsSuccessStatusCode)
                             {
-                                var deleteResponse = await client.DeleteAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
-                                if (deleteResponse.IsSuccessStatusCode)
-                                {
-                                    TriggerRoomDeleted(roomName);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Lỗi khi xóa phòng.");
-                                }
+                                TriggerRoomDeleted(roomName);
                             }
                             else
                             {
-                                var json = JsonSerializer.Serialize(room);
-                                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                                var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
-
-                                if (!updateResponse.IsSuccessStatusCode)
-                                {
-                                    MessageBox.Show("Lỗi khi cập nhật số người chơi.");
-                                }
+                                MessageBox.Show("Lỗi khi xóa phòng.");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Phòng không tồn tại.");
+                            var json = JsonSerializer.Serialize(room);
+                            var content = new StringContent(json, Encoding.UTF8, "application/json");
+                            var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                            if (!updateResponse.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Lỗi khi cập nhật số người chơi.");
+                            }
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show("Lỗi khi thoát phòng: " + ex.Message);
+                        MessageBox.Show("Phòng không tồn tại.");
                     }
-                    finally
-                    {
-                        this.Invoke((Action)this.Dispose);
-                    }
-                });
-            }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi thoát phòng: " + ex.Message);
+                }
+                finally
+                {
+                    this.Invoke((Action)this.Dispose);
+                }
+            });
         }
+
+        #endregion
     }
 }
