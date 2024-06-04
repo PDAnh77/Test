@@ -97,7 +97,7 @@ namespace GameProject
 
             if (string.IsNullOrWhiteSpace(usrname) || string.IsNullOrWhiteSpace(pass.Trim()))
             {
-                Notification.Text = "Vui lòng nhập thông tin đăng nhập!";
+                ShowNotification("Vui lòng nhập thông tin đăng nhập!");
                 CenterControl(Notification);
                 return;
             }
@@ -117,7 +117,7 @@ namespace GameProject
 
                     if (User.IsEqual(ResUser, CurUser))
                     {
-                        Notification.Text = "Đăng nhập thành công!";
+                        ShowNotification("Đăng nhập thành công!");
                         User.CurrentUser = ResUser;
                         DialogResult = DialogResult.OK;
                         this.Close();
@@ -132,12 +132,12 @@ namespace GameProject
                     }
                     else
                     {
-                        Notification.Text = "Mật khẩu không chính xác!";
+                        ShowNotification("Mật khẩu không chính xác!");
                     }
                 }
                 else
                 {
-                    Notification.Text = "Tên đăng nhập không tồn tại!";
+                    ShowNotification("Tên đăng nhập không tồn tại!");
                 }
                 CenterControl(Notification);
             }
@@ -158,6 +158,21 @@ namespace GameProject
             SendCode sendCode = new SendCode();
             sendCode.Show();
             this.Close();
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -187,7 +202,7 @@ namespace GameProject
         private void BodyConfig()
         {
 
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);

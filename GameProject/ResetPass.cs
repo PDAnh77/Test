@@ -100,7 +100,7 @@ namespace GameProject
             {
                 if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
                 {
-                    Notification.Text = "Vui lòng nhập đầy đủ thông tin!";
+                    ShowNotification("Vui lòng nhập đầy đủ thông tin!");
                     CenterControl(Notification);
                     return;
                 }
@@ -114,7 +114,7 @@ namespace GameProject
                     User data = User.ResetpassUser;
 
                     SetResponse response = await client.SetAsync("Information/" + usrname, data);
-                    Notification.Text = "Cập nhật mật khẩu thành công!";
+                    ShowNotification("Cập nhật mật khẩu thành công!");
 
                     var wait = new System.Windows.Forms.Timer();
                     wait.Tick += delegate
@@ -129,7 +129,7 @@ namespace GameProject
                 }
                 else
                 {
-                    Notification.Text = "Mật khẩu nhập lại không chính xác!";
+                    ShowNotification("Mật khẩu nhập lại không chính xác!");
                 }
                 CenterControl(Notification);
             }
@@ -145,6 +145,21 @@ namespace GameProject
             Login login = new Login();
             login.Show();
             this.Close();
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -174,7 +189,7 @@ namespace GameProject
         private void BodyConfig()
         {
 
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirebaseAdmin.Messaging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -50,18 +51,8 @@ namespace GameProject
         private System.Windows.Forms.Timer userCheckTimer;
         private string lastLoggedInUser = null;
 
-        public Menu()
+        private void InitializeUserCheckTimer()
         {
-            InitializeComponent();
-            // Set the form's border style to FixedSingle to make it not resizable
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            SetControlImage(this, Animation.UI_Menu);
-            LoadCustomFont();
-
-            HeaderConfig();
-            BodyConfig();
-
-            // Initialize the timer
             userCheckTimer = new System.Windows.Forms.Timer();
             userCheckTimer.Interval = 1000; // Check every second
             userCheckTimer.Tick += UserCheckTimer_Tick; // Check if any user exists
@@ -81,10 +72,24 @@ namespace GameProject
                 if (User.CurrentUser.Username != lastLoggedInUser)
                 {
                     lastLoggedInUser = User.CurrentUser.Username;
-                    Notification.Text = "Chào mừng bạn quay trở lại, " + User.CurrentUser.Username + "!";
+                    ShowNotification("Chào mừng bạn quay trở lại, " + User.CurrentUser.Username + "!");
                     CenterControl(Notification);
                 }
             }
+        }
+
+        public Menu()
+        {
+            InitializeComponent();
+            // Set the form's border style to FixedSingle to make it not resizable
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            SetControlImage(this, Animation.UI_Menu);
+            LoadCustomFont();
+
+            HeaderConfig();
+            BodyConfig();
+
+            InitializeUserCheckTimer();
         }
 
         Login loginForm;
@@ -124,11 +129,28 @@ namespace GameProject
             PlayAnimation(btnPlay);
             if (CheckCurrentUser() == true)
             {
+                // Create a list to store forms that need to be closed
+                List<Form> formsToClose = new List<Form>();
+
+                // Identify forms that need to be closed
+                foreach (Form openForm in Application.OpenForms)
+                {
+                    if (openForm is Login || openForm is Signup)
+                    {
+                        formsToClose.Add(openForm);
+                    }
+                }
+
+                // Close identified forms
+                foreach (Form form in formsToClose)
+                {
+                    form.Close();
+                }
                 DialogResult = DialogResult.OK;
             }
             else
             {
-                Notification.Text = "Bạn cần đăng nhập vào tài khoản trước!";
+                ShowNotification("Bạn cần đăng nhập vào tài khoản trước!");
             }
             CenterControl(Notification);
         }
@@ -149,9 +171,24 @@ namespace GameProject
             }
             else
             {
-                Notification.Text = "Bạn cần đăng nhập vào tài khoản trước!";
+                ShowNotification("Bạn cần đăng nhập vào tài khoản trước!");
             }
             CenterControl(Notification);
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control) // Manage all control animation

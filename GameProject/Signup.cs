@@ -99,7 +99,7 @@ namespace GameProject
             {
                 if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
                 {
-                    Notification.Text = "Vui lòng nhập đầy đủ thông tin!";
+                    ShowNotification("Vui lòng nhập đầy đủ thông tin!");
                     CenterControl(Notification);
                     return;
                 }
@@ -112,7 +112,7 @@ namespace GameProject
 
             if (!IsValidEmail(email))
             {
-                Notification.Text = "Email không hợp lệ!";
+                ShowNotification("Email không hợp lệ!");
                 CenterControl(Notification);
                 return;
             }
@@ -131,7 +131,7 @@ namespace GameProject
                     SetResponse response = await client.SetAsync("Information/" + usrname, data);
                     User result = response.ResultAs<User>();
 
-                    Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!";
+                    ShowNotification($"Đăng ký tài khoản: {result.Username} thành công!");
 
                     int timerSeconds = 3; // Countdown timer
                     int remainingSeconds = timerSeconds;
@@ -145,7 +145,7 @@ namespace GameProject
                         }
                         else
                         {
-                            Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
+                            ShowNotification($"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}");
                             remainingSeconds--;
                             CenterControl(Notification);
                         }
@@ -155,7 +155,7 @@ namespace GameProject
                 }
                 else
                 {
-                    Notification.Text = "Mật khẩu nhập lại không chính xác!";
+                    ShowNotification("Mật khẩu nhập lại không chính xác!");
                 }
             }
             CenterControl(Notification);
@@ -171,12 +171,12 @@ namespace GameProject
                 {
                     if (user.Email.Equals(email))
                     {
-                        Notification.Text = "Email đã tồn tại!";
+                        ShowNotification("Email đã tồn tại!");
                         return true;
                     }
                     if (user.Username.Equals(usrname))
                     {
-                        Notification.Text = "Tên đăng nhập đã tồn tại!";
+                        ShowNotification("Tên đăng nhập đã tồn tại!");
                         return true;
                     }
                 }
@@ -194,6 +194,21 @@ namespace GameProject
         {
             PlayAnimation(btnReturnHome);
             this.Close();
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -222,7 +237,7 @@ namespace GameProject
 
         private void BodyConfig()
         {
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);

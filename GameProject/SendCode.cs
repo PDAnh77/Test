@@ -110,7 +110,7 @@ namespace GameProject
             MailMessage mess = new MailMessage();
             if (string.IsNullOrEmpty(textBoxDesign1.Texts.Trim()))
             {
-                Notification.Text = "Vui lòng nhập email";
+                ShowNotification("Vui lòng nhập email");
             }
             else
             {
@@ -121,7 +121,7 @@ namespace GameProject
 
                 if (!IsValidEmail(to))
                 {
-                    Notification.Text = "Email không hợp lệ!";
+                    ShowNotification("Email không hợp lệ!");
                     CenterControl(Notification);
                     return;
                 }
@@ -141,17 +141,17 @@ namespace GameProject
                     try
                     {
                         smtp.Send(mess);
-                        Notification.Text = $"Gửi mã xác minh thành công!";
+                        ShowNotification($"Gửi mã xác minh thành công!");
                     }
                     catch (Exception ex)
                     {
-                        Notification.Text = ex.Message;
+                        ShowNotification(ex.Message);
                     }
                     CenterControl(Notification);
                 }
                 else
                 {
-                    Notification.Text = "Email này không tồn tại\nVui lòng đăng ký tài khoản!";
+                    ShowNotification("Email này không tồn tại\nVui lòng đăng ký tài khoản!");
                     CenterControl(Notification);
                 }
             }
@@ -186,8 +186,7 @@ namespace GameProject
             PlayAnimation(btnVerify);
             if (randCode == textBoxDesign2.Texts.Trim())
             {
-                Notification.Text = "Xác thực thành công!";
-
+                ShowNotification("Xác thực thành công!");
                 var wait = new System.Windows.Forms.Timer();
                 wait.Tick += delegate
                 {
@@ -201,9 +200,24 @@ namespace GameProject
             }
             else
             {
-                Notification.Text = "Mã đặt lại không chính xác!";
+                ShowNotification("Mã đặt lại không chính xác!");
             }
             CenterControl(Notification);
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -232,7 +246,7 @@ namespace GameProject
 
         private void BodyConfig()
         {
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);
