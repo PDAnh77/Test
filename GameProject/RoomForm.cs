@@ -38,7 +38,7 @@ namespace GameProject
             this.Text = $"{roomName}"; // Đặt tiêu đề form là tên phòng
 
             // Khởi tạo và chạy timer
-            updateTimer = new System.Timers.Timer(2000); // Cập nhật mỗi 5s
+            updateTimer = new System.Timers.Timer(2000); // Cập nhật mỗi 2s
             updateTimer.Elapsed += async (sender, e) => await UpdateTimer_Elapsed(sender, e);
             updateTimer.AutoReset = true;
             updateTimer.Enabled = true;
