@@ -35,8 +35,8 @@ namespace GameProject
         {
             InitializeComponent();
             LoadCustomFont();
-            SetControlImage(this, Animation.UI_Menu);
             BodyConfig();
+
             LoadRooms();
         }
 
@@ -47,6 +47,8 @@ namespace GameProject
 
         private void BodyConfig()
         {
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            SetControlImage(this, Animation.UI_Menu);
             ButtonConfig();
             Notification.Text = "";
             Notification.ForeColor = Color.White;

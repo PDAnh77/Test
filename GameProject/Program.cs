@@ -47,8 +47,8 @@ namespace GameProject
 
             // Test form
 
-            /*GameLobby gameLobby = new GameLobby();
-            Application.Run(gameLobby);*/
+            /*RoomForm roomForm = new RoomForm();
+            Application.Run(roomForm);*/
 
             Application.Exit();
         }

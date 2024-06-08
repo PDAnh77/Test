@@ -254,6 +254,8 @@
     <Compile Include="UserProfile.Designer.cs">
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\UI_Menu_03.png" />
+    <None Include="Resources\UI_Textbox_03.png" />
     <None Include="Resources\calendarWhite.png" />
     <None Include="Resources\calendarDark.png" />
     <None Include="ltmgame-firebase-adminsdk-nxh4i-82f4327feb.json">

@@ -303,6 +303,16 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI_Menu_03 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Menu_03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_Menu_Border {
             get {
                 object obj = ResourceManager.GetObject("UI_Menu_Border", resourceCulture);
@@ -376,6 +386,16 @@ namespace GameProject {
         internal static System.Drawing.Bitmap UI_Textbox_02 {
             get {
                 object obj = ResourceManager.GetObject("UI_Textbox_02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Textbox_03 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Textbox_03", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
