@@ -146,7 +146,7 @@ namespace GameProject
                     dp.Enabled = true;
                 }
             }
-            Notification.Text = "Vui lòng nhập thông tin";
+            ShowNotification("Vui lòng nhập thông tin");
             CenterControl(Notification);
         }
 
@@ -158,7 +158,7 @@ namespace GameProject
             {
                 if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
                 {
-                    Notification.Text = "Vui lòng nhập đầy đủ thông tin!";
+                    ShowNotification("Vui lòng nhập đầy đủ thông tin!");
                     CenterControl(Notification);
                     return;
                 }
@@ -171,14 +171,14 @@ namespace GameProject
 
             if (!int.TryParse(age, out int result) || result <= 0)
             {
-                Notification.Text = "Tuổi không hợp lệ!";
+                ShowNotification("Tuổi không hợp lệ!");
                 CenterControl(Notification);
                 return;
             }
 
             if (!IsValidEmail(email))
             {
-                Notification.Text = "Email không hợp lệ!";
+                ShowNotification("Email không hợp lệ!");
                 CenterControl(Notification);
                 return;
             }
@@ -192,7 +192,7 @@ namespace GameProject
 
                 SetResponse response = await client.SetAsync("Information/" + usrname, data);
 
-                Notification.Text = "Cập nhật thông tin thành công!";
+                ShowNotification("Cập nhật thông tin thành công!");
                 CenterControl(Notification);
                 LockAllControls();
             }
@@ -220,6 +220,21 @@ namespace GameProject
         {
             Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
             return emailRegex.IsMatch(email);
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -261,7 +276,7 @@ namespace GameProject
 
         private void BodyConfig()
         {
-            Notification.Text = "";
+            ShowNotification("");
             label1.Text = "Username:";
             label2.Text = "Email:";
             label3.Text = "Age:";

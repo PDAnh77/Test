@@ -48,8 +48,8 @@ namespace GameProject
             }
         }
 
-        private System.Windows.Forms.Timer userCheckTimer;
-        private string lastLoggedInUser = null;
+        System.Windows.Forms.Timer userCheckTimer;
+        string lastLoggedInUser = null;
 
         private void InitializeUserCheckTimer()
         {

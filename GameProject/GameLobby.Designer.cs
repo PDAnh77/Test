@@ -74,10 +74,10 @@ namespace GameProject
             this.txtRoomName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtRoomName.ForeColor = System.Drawing.Color.Black;
             this.txtRoomName.Location = new System.Drawing.Point(856, 535);
-            this.txtRoomName.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtRoomName.Margin = new System.Windows.Forms.Padding(5);
             this.txtRoomName.Multiline = false;
             this.txtRoomName.Name = "txtRoomName";
-            this.txtRoomName.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.txtRoomName.Padding = new System.Windows.Forms.Padding(9);
             this.txtRoomName.PasswordChar = false;
             this.txtRoomName.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtRoomName.PlaceholderText = "Tên phòng";
@@ -99,7 +99,7 @@ namespace GameProject
             this.btnCreateRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateRoom.ForeColor = System.Drawing.Color.White;
             this.btnCreateRoom.Location = new System.Drawing.Point(1045, 598);
-            this.btnCreateRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreateRoom.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateRoom.Name = "btnCreateRoom";
             this.btnCreateRoom.Size = new System.Drawing.Size(200, 49);
             this.btnCreateRoom.TabIndex = 10;
@@ -149,7 +149,7 @@ namespace GameProject
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.ForeColor = System.Drawing.Color.White;
             this.btnRefresh.Location = new System.Drawing.Point(29, 454);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(145, 49);
             this.btnRefresh.TabIndex = 18;
@@ -162,7 +162,7 @@ namespace GameProject
             // flowLayoutPanelRooms
             // 
             this.flowLayoutPanelRooms.Location = new System.Drawing.Point(29, 30);
-            this.flowLayoutPanelRooms.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanelRooms.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanelRooms.Name = "flowLayoutPanelRooms";
             this.flowLayoutPanelRooms.Size = new System.Drawing.Size(1200, 407);
             this.flowLayoutPanelRooms.TabIndex = 19;
@@ -171,7 +171,7 @@ namespace GameProject
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1261, 673);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.flowLayoutPanelRooms);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.pictureBox2);
