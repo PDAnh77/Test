@@ -208,7 +208,7 @@ namespace GameProject
                         {
                             Text = $"Players: {roomData.CurrentPlayers}/4",
                             Font = new Font("Arial", 10),
-                            Location = new Point(10, 30),
+                            Location = new Point(10, 40),
                             AutoSize = true
                         };
 
@@ -216,7 +216,7 @@ namespace GameProject
                         {
                             Text = $"Rank: {roomData.RankRoom}",
                             Font = new Font("Arial", 10),
-                            Location = new Point(10, 50),
+                            Location = new Point(60, 40),
                             AutoSize = true
                         };
 
