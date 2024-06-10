@@ -220,6 +220,8 @@
     <Compile Include="GamePlay.Designer.cs">
       <DependentUpon>GamePlay.cs</DependentUpon>
     </Compile>
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayRoom.cs" />
     <Compile Include="User.cs" />
     <Compile Include="GameLobby.cs">
       <SubType>Form</SubType>
@@ -247,7 +249,7 @@
     <Compile Include="ResetPass.Designer.cs">
       <DependentUpon>ResetPass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Room.cs" />
+    <Compile Include="WaitRoom.cs" />
     <Compile Include="RoomForm.cs">
       <SubType>Form</SubType>
     </Compile>

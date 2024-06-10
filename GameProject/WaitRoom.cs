@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameProject
 {
-    public class Room
+    public class WaitRoom
     {
         public static string CurRoomName { get; set; }
         public string Name { get; set; }
@@ -15,7 +15,5 @@ namespace GameProject
         public User Player3 { get; set; }
         public User Player4 { get; set; }
         public int CurrentPlayers { get; set; }
-        public int ViewPlayers { get; set; }
-        public string Status { get; set; }
     }
 }

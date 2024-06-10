@@ -16,8 +16,7 @@ namespace GameProject
     public partial class GamePlay : Form
     {
         private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
-        private string username;
-        private string IDphong;
+        
 
         private List<string> DSUser = new List<string>();
         //List<string> là một danh sách các chuỗi (string)
