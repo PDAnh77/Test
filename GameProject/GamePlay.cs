@@ -13,7 +13,7 @@ using GameProject;
 
 namespace GameProject
 {
-    public partial class frmPlay : Form
+    public partial class GamePlay : Form
     {
         private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
         private string username;
@@ -23,7 +23,7 @@ namespace GameProject
         //List<string> là một danh sách các chuỗi (string)
         //Dsách này sẽ chứa tên của các user trong phòng chơi
 
-        private frmLogin FrmLogin;
+        private GameLogin FrmLogin;
 
 
         private string msg;
@@ -32,18 +32,18 @@ namespace GameProject
 
 
 
-        public frmPlay()
+        public GamePlay()
         {
             InitializeComponent();
         }
 
-        public frmPlay(frmLogin frmLogin)
+        public GamePlay(GameLogin frmLogin)
         {
             this.FrmLogin = frmLogin;
             InitializeComponent();
         }
 
-        public frmPlay(string name, string idPhong, string[] arrU)
+        public GamePlay(string name, string idPhong, string[] arrU)
         {
             InitializeComponent();
             for (int i = 0; i < arrU.Length; i++)
@@ -52,7 +52,7 @@ namespace GameProject
             }
             reloadForm();
         }
-        public frmPlay(string name, string idPhong)
+        public GamePlay(string name, string idPhong)
         {
             InitializeComponent();
 
@@ -71,7 +71,7 @@ namespace GameProject
         }
 
         //tương tự như hàm sendFrmPlay trong frmLogin.cs
-        public void sendFormLG(frmLogin frm)
+        public void sendFormLG(GameLogin frm)
         {
             FrmLogin = frm;
         }

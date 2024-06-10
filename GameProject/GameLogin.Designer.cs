@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    partial class frmLogin
+    partial class GameLogin
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace GameProject
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameLogin));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.btnReturn = new GameProject.CustomControls.ButtonDesign();

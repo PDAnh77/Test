@@ -13,13 +13,13 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    public partial class frmMenu : Form
+    public partial class GameMenu : Form
     {
         private string userName;
-        private frmLogin FrmLogin;
-        private frmPlay Frm1;
+        private GameLogin FrmLogin;
+        private GamePlay Frm1;
 
-        public frmMenu()
+        public GameMenu()
         {
             InitializeComponent();
         }
@@ -41,7 +41,7 @@ namespace GameProject
         }
         public void getAllUserinRoom()
         {
-            Frm1 = new frmPlay(FrmLogin);
+            Frm1 = new GamePlay(FrmLogin);
             Frm1.ABC(FrmLogin.sendIDtoForm(), userName, FrmLogin.sendAllnameOtheruser());
             Frm1.Show();
         }
@@ -52,13 +52,13 @@ namespace GameProject
             userName = s;
             return userName;
         }
-        public void getfmrlg(frmLogin frm)
+        public void getfmrlg(GameLogin frm)
         {
             FrmLogin = frm;
         }
         public void showFrmPlayaddphong()
         {
-            Frm1 = new frmPlay(userName, FrmLogin.sendIDtoForm());//tạo frmplay mới vs tên và id
+            Frm1 = new GamePlay(userName, FrmLogin.sendIDtoForm());//tạo frmplay mới vs tên và id
             Frm1.ABC(FrmLogin.sendIDtoForm());
             Frm1.Show();
             FrmLogin.sendFrmPlay(Frm1);
