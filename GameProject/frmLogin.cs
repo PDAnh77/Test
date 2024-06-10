@@ -61,12 +61,12 @@ namespace GameProject
                 this.tcpClient.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), serverPort));
                 this.sWriter = new StreamWriter(tcpClient.GetStream());
                 this.sWriter.AutoFlush = true;
-                sWriter.WriteLine(Data.CurrentUser.Username);
+                sWriter.WriteLine(User.CurrentUser.Username);
                 clientThread = new Thread(this.ClientRecv);
                 clientThread.Start();
-                username = Data.CurrentUser.Username;
+                username = User.CurrentUser.Username;
                 FrmMenu = new frmMenu();
-                FrmMenu.getUsername(Data.CurrentUser.Username);
+                FrmMenu.getUsername(User.CurrentUser.Username);
                 FrmMenu.getfmrlg(this);
                 FrmMenu.Show();
                 this.Hide();
