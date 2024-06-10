@@ -22,6 +22,12 @@ namespace GameProject
 
         public string Age { get; set; }
 
+        public string Rank { get; set; } 
+
+        public int Win { get; set; }
+
+        public int Lose { get; set; }
+
         public User()
         {
             Username = "None";
@@ -29,6 +35,9 @@ namespace GameProject
             Email = "None";
             Gender = "None";
             Age = "None";
+            Rank = "None";
+            Win = 0;
+            Lose = 0; 
         }
 
         public static bool IsEqual(User user1, User user2)

@@ -17,6 +17,10 @@ namespace GameProject
     {
         private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
         
+        public string username;
+
+        public string IDphong;
+
 
         private List<string> DSUser = new List<string>();
         //List<string> là một danh sách các chuỗi (string)

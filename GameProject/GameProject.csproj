@@ -249,7 +249,7 @@
     <Compile Include="ResetPass.Designer.cs">
       <DependentUpon>ResetPass.cs</DependentUpon>
     </Compile>
-    <Compile Include="WaitRoom.cs" />
+    <Compile Include="Room.cs" />
     <Compile Include="RoomForm.cs">
       <SubType>Form</SubType>
     </Compile>

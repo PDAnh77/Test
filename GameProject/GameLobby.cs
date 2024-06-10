@@ -208,13 +208,22 @@ namespace GameProject
                         {
                             Text = $"Players: {roomData.CurrentPlayers}/4",
                             Font = new Font("Arial", 10),
-                            Location = new Point(10, 40),
+                            Location = new Point(10, 30),
+                            AutoSize = true
+                        };
+
+                        Label RankRoom = new Label
+                        {
+                            Text = $"Rank: {roomData.RankRoom}",
+                            Font = new Font("Arial", 10),
+                            Location = new Point(10, 50),
                             AutoSize = true
                         };
 
                         // Thêm label vào panel
                         roomPanel.Controls.Add(roomNameLabel);
                         roomPanel.Controls.Add(playerCountLabel);
+                        roomPanel.Controls.Add(RankRoom);
 
                         // Thêm event vào panel
                         roomPanel.Click += (s, e) => RoomPanel_Click(roomName);
@@ -282,6 +291,12 @@ namespace GameProject
                     if (room.CurrentPlayers >= 4)
                     {
                         Notification.Text = "Phòng đã đầy";
+                        return;
+                    }
+
+                    if (room.RankRoom != User.CurrentUser.Rank)
+                    {
+                        Notification.Text = "Phòng khác bậc hạng của bạn!";
                         return;
                     }
 
@@ -386,7 +401,7 @@ namespace GameProject
                 {
                     Name = roomName,
                     CurrentPlayers = 1,
-                    ViewPlayers = 0,
+                    RankRoom = User.CurrentUser.Rank,
                     Player1 = User.CurrentUser
                 };
 

@@ -145,6 +145,7 @@ namespace GameProject
                         }
                         else
                         {
+                            result.Rank = "Đồng";
                             ShowNotification($"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}");
                             remainingSeconds--;
                             CenterControl(Notification);
