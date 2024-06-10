@@ -261,6 +261,7 @@
             this.btnStart.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnStart.TextColor = System.Drawing.Color.White;
             this.btnStart.UseVisualStyleBackColor = false;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // Notification
             // 

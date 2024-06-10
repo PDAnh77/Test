@@ -351,5 +351,10 @@ namespace GameProject
         }
 
         #endregion
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
