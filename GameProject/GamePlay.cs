@@ -254,8 +254,6 @@ namespace GameProject
             }
             else if (Do[0] == "4")
             {
-
-
                 if (Do[2] != "")
                 {
                     string s = "";
