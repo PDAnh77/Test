@@ -43,6 +43,8 @@
             this.btnLeaveRoom = new GameProject.CustomControls.ButtonDesign();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
             this.Notification = new System.Windows.Forms.Label();
+            this.labelnotifi = new System.Windows.Forms.Label();
+            this.labelNotifi2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -53,21 +55,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(44, 34);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(33, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 16);
+            this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Người chơi 1";
+            this.label1.Text = "Chủ phòng";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Location = new System.Drawing.Point(45, 172);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(34, 140);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(81, 16);
+            this.label3.Size = new System.Drawing.Size(67, 13);
             this.label3.TabIndex = 13;
             this.label3.Text = "Người chơi 2";
             // 
@@ -75,10 +75,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(44, 310);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(33, 252);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 16);
+            this.label4.Size = new System.Drawing.Size(67, 13);
             this.label4.TabIndex = 14;
             this.label4.Text = "Người chơi 3";
             // 
@@ -86,42 +85,45 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(44, 448);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(33, 364);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 16);
+            this.label5.Size = new System.Drawing.Size(67, 13);
             this.label5.TabIndex = 15;
             this.label5.Text = "Người chơi 4";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(41, 76);
+            this.pictureBox1.Location = new System.Drawing.Point(31, 62);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(413, 65);
+            this.pictureBox1.Size = new System.Drawing.Size(310, 53);
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(41, 214);
+            this.pictureBox2.Location = new System.Drawing.Point(31, 174);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(413, 65);
+            this.pictureBox2.Size = new System.Drawing.Size(310, 53);
             this.pictureBox2.TabIndex = 21;
             this.pictureBox2.TabStop = false;
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(41, 352);
+            this.pictureBox3.Location = new System.Drawing.Point(31, 286);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(413, 65);
+            this.pictureBox3.Size = new System.Drawing.Size(310, 53);
             this.pictureBox3.TabIndex = 23;
             this.pictureBox3.TabStop = false;
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(41, 490);
+            this.pictureBox4.Location = new System.Drawing.Point(31, 398);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(413, 65);
+            this.pictureBox4.Size = new System.Drawing.Size(310, 53);
             this.pictureBox4.TabIndex = 25;
             this.pictureBox4.TabStop = false;
             // 
@@ -134,16 +136,16 @@
             this.txtPlayer4.BorderSize = 2;
             this.txtPlayer4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer4.ForeColor = System.Drawing.Color.Black;
-            this.txtPlayer4.Location = new System.Drawing.Point(58, 501);
-            this.txtPlayer4.Margin = new System.Windows.Forms.Padding(5);
+            this.txtPlayer4.Location = new System.Drawing.Point(44, 407);
+            this.txtPlayer4.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer4.Multiline = false;
             this.txtPlayer4.Name = "txtPlayer4";
-            this.txtPlayer4.Padding = new System.Windows.Forms.Padding(9);
+            this.txtPlayer4.Padding = new System.Windows.Forms.Padding(7);
             this.txtPlayer4.PasswordChar = false;
             this.txtPlayer4.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer4.PlaceholderText = "";
             this.txtPlayer4.ReadOnly = false;
-            this.txtPlayer4.Size = new System.Drawing.Size(378, 40);
+            this.txtPlayer4.Size = new System.Drawing.Size(284, 32);
             this.txtPlayer4.TabIndex = 26;
             this.txtPlayer4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer4.Texts = "";
@@ -158,16 +160,16 @@
             this.txtPlayer3.BorderSize = 2;
             this.txtPlayer3.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer3.ForeColor = System.Drawing.Color.Black;
-            this.txtPlayer3.Location = new System.Drawing.Point(58, 363);
-            this.txtPlayer3.Margin = new System.Windows.Forms.Padding(5);
+            this.txtPlayer3.Location = new System.Drawing.Point(44, 295);
+            this.txtPlayer3.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer3.Multiline = false;
             this.txtPlayer3.Name = "txtPlayer3";
-            this.txtPlayer3.Padding = new System.Windows.Forms.Padding(9);
+            this.txtPlayer3.Padding = new System.Windows.Forms.Padding(7);
             this.txtPlayer3.PasswordChar = false;
             this.txtPlayer3.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer3.PlaceholderText = "";
             this.txtPlayer3.ReadOnly = false;
-            this.txtPlayer3.Size = new System.Drawing.Size(378, 40);
+            this.txtPlayer3.Size = new System.Drawing.Size(284, 32);
             this.txtPlayer3.TabIndex = 24;
             this.txtPlayer3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer3.Texts = "";
@@ -182,16 +184,16 @@
             this.txtPlayer2.BorderSize = 2;
             this.txtPlayer2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer2.ForeColor = System.Drawing.Color.Black;
-            this.txtPlayer2.Location = new System.Drawing.Point(58, 225);
-            this.txtPlayer2.Margin = new System.Windows.Forms.Padding(5);
+            this.txtPlayer2.Location = new System.Drawing.Point(44, 183);
+            this.txtPlayer2.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer2.Multiline = false;
             this.txtPlayer2.Name = "txtPlayer2";
-            this.txtPlayer2.Padding = new System.Windows.Forms.Padding(9);
+            this.txtPlayer2.Padding = new System.Windows.Forms.Padding(7);
             this.txtPlayer2.PasswordChar = false;
             this.txtPlayer2.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer2.PlaceholderText = "";
             this.txtPlayer2.ReadOnly = false;
-            this.txtPlayer2.Size = new System.Drawing.Size(378, 40);
+            this.txtPlayer2.Size = new System.Drawing.Size(284, 32);
             this.txtPlayer2.TabIndex = 22;
             this.txtPlayer2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer2.Texts = "";
@@ -206,16 +208,16 @@
             this.txtPlayer1.BorderSize = 2;
             this.txtPlayer1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtPlayer1.ForeColor = System.Drawing.Color.Black;
-            this.txtPlayer1.Location = new System.Drawing.Point(58, 87);
-            this.txtPlayer1.Margin = new System.Windows.Forms.Padding(5);
+            this.txtPlayer1.Location = new System.Drawing.Point(44, 71);
+            this.txtPlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayer1.Multiline = false;
             this.txtPlayer1.Name = "txtPlayer1";
-            this.txtPlayer1.Padding = new System.Windows.Forms.Padding(9);
+            this.txtPlayer1.Padding = new System.Windows.Forms.Padding(7);
             this.txtPlayer1.PasswordChar = false;
             this.txtPlayer1.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPlayer1.PlaceholderText = "";
             this.txtPlayer1.ReadOnly = false;
-            this.txtPlayer1.Size = new System.Drawing.Size(378, 40);
+            this.txtPlayer1.Size = new System.Drawing.Size(284, 32);
             this.txtPlayer1.TabIndex = 20;
             this.txtPlayer1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPlayer1.Texts = "";
@@ -231,10 +233,9 @@
             this.btnLeaveRoom.FlatAppearance.BorderSize = 0;
             this.btnLeaveRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveRoom.ForeColor = System.Drawing.Color.White;
-            this.btnLeaveRoom.Location = new System.Drawing.Point(782, 592);
-            this.btnLeaveRoom.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLeaveRoom.Location = new System.Drawing.Point(586, 481);
             this.btnLeaveRoom.Name = "btnLeaveRoom";
-            this.btnLeaveRoom.Size = new System.Drawing.Size(200, 50);
+            this.btnLeaveRoom.Size = new System.Drawing.Size(150, 41);
             this.btnLeaveRoom.TabIndex = 6;
             this.btnLeaveRoom.Text = "Leave";
             this.btnLeaveRoom.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -252,10 +253,9 @@
             this.btnStart.FlatAppearance.BorderSize = 0;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStart.ForeColor = System.Drawing.Color.White;
-            this.btnStart.Location = new System.Drawing.Point(990, 592);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
+            this.btnStart.Location = new System.Drawing.Point(742, 481);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(200, 50);
+            this.btnStart.Size = new System.Drawing.Size(150, 41);
             this.btnStart.TabIndex = 5;
             this.btnStart.Text = "Start";
             this.btnStart.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -267,18 +267,45 @@
             // 
             this.Notification.AutoSize = true;
             this.Notification.BackColor = System.Drawing.Color.Transparent;
-            this.Notification.Location = new System.Drawing.Point(520, 9);
+            this.Notification.Location = new System.Drawing.Point(390, 7);
+            this.Notification.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Notification.Name = "Notification";
-            this.Notification.Size = new System.Drawing.Size(73, 16);
+            this.Notification.Size = new System.Drawing.Size(60, 13);
             this.Notification.TabIndex = 27;
             this.Notification.Text = "Notification";
             this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // labelnotifi
+            // 
+            this.labelnotifi.AutoSize = true;
+            this.labelnotifi.BackColor = System.Drawing.Color.Transparent;
+            this.labelnotifi.Location = new System.Drawing.Point(583, 447);
+            this.labelnotifi.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelnotifi.Name = "labelnotifi";
+            this.labelnotifi.Size = new System.Drawing.Size(60, 13);
+            this.labelnotifi.TabIndex = 27;
+            this.labelnotifi.Text = "Notification";
+            this.labelnotifi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelNotifi2
+            // 
+            this.labelNotifi2.AutoSize = true;
+            this.labelNotifi2.BackColor = System.Drawing.Color.Transparent;
+            this.labelNotifi2.Location = new System.Drawing.Point(583, 426);
+            this.labelNotifi2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelNotifi2.Name = "labelNotifi2";
+            this.labelNotifi2.Size = new System.Drawing.Size(60, 13);
+            this.labelNotifi2.TabIndex = 27;
+            this.labelNotifi2.Text = "Notification";
+            this.labelNotifi2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // RoomForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.ClientSize = new System.Drawing.Size(946, 547);
+            this.Controls.Add(this.labelNotifi2);
+            this.Controls.Add(this.labelnotifi);
             this.Controls.Add(this.Notification);
             this.Controls.Add(this.txtPlayer4);
             this.Controls.Add(this.pictureBox4);
@@ -294,7 +321,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLeaveRoom);
             this.Controls.Add(this.btnStart);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RoomForm";
             this.Text = "RoomForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -322,5 +348,7 @@
         private CustomControls.TextBoxDesign txtPlayer4;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label Notification;
+        private System.Windows.Forms.Label labelnotifi;
+        private System.Windows.Forms.Label labelNotifi2;
     }
 }

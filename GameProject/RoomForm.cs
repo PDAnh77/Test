@@ -26,6 +26,7 @@ namespace GameProject
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i";
         private string roomName;
+        private bool isGameStarted = false; // Flag to track if the game has started
 
         public delegate void RoomDeletedHandler(string roomName);
         public event RoomDeletedHandler RoomDeleted;
@@ -48,9 +49,11 @@ namespace GameProject
             updateTimer.AutoReset = true;
             updateTimer.Enabled = true;
 
+
             BodyConfig();
             LoadCustomFont();
             LoadRoomDetails();
+            UpdateUIForOwnership();
         }
 
         #region UI
@@ -188,14 +191,17 @@ namespace GameProject
                 if (room != null)
                 {
                     this.Invoke((MethodInvoker)delegate
+
                     {
-                        txtPlayer1.Texts = room.Player1?.Username ?? "";
+                        txtPlayer1.Texts = room.Owner?.Username ?? "";
                         txtPlayer2.Texts = room.Player2?.Username ?? "";
                         txtPlayer3.Texts = room.Player3?.Username ?? "";
                         txtPlayer4.Texts = room.Player4?.Username ?? "";
+                        labelnotifi.Text = room.CurrentReady.ToString();
+                        labelNotifi2.Text = room.CurrentPlayers.ToString();
 
                         // Identify the logged-in user and move the Notification label
-                        if (room.Player1?.Username == User.CurrentUser.Username)
+                        if (room.Owner?.Username == User.CurrentUser.Username)
                         {
                             MoveNotificationLabel(label1);
                         }
@@ -243,6 +249,7 @@ namespace GameProject
         private async Task UpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             await LoadRoomDetails();
+            CheckGameStarted();
         }
 
         public void TriggerRoomDeleted(string roomName)
@@ -261,6 +268,123 @@ namespace GameProject
                 updateTimer.Dispose();
             }
         }
+
+        public void UpdateUIForOwnership()
+        {
+            if (User.CurrentUser.isOwner)
+            {
+                btnStart.Text = "Start";
+            }
+            else
+            {
+                btnStart.Text = "Ready";
+            }
+        }
+
+        private async Task StartGame()
+        {
+            PlayAnimation(btnStart);
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    // Truy cập vào dữ liệu Rooms của Firebase
+                    var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                    var room = JsonSerializer.Deserialize<Room>(response);
+
+                    room.CurrentReady++;
+
+                    if (room.CurrentReady == room.CurrentPlayers)
+                    {
+                        // Set GameStarted to true
+                        room.GameStarted = true;
+
+                        // Cập nhật lại trạng thái phòng khi game bắt đầu
+                        var json = JsonSerializer.Serialize(room);
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                        if (updateResponse.IsSuccessStatusCode)
+                        {
+                            isGameStarted = true; // Set the flag
+                                                  // Mở form game
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                GamePlay game = new GamePlay(User.CurrentUser.Username, roomName);
+                                game.ShowDialog();
+                            });
+                        }
+                    }
+                    else
+                    {
+                        room.CurrentReady--;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi bắt đầu game: " + ex.Message);
+                }
+            });
+        }
+
+        private async Task ReadyGame()
+        {
+            PlayAnimation(btnStart);
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    // Truy cập vào dữ liệu Rooms của Firebase
+                    var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                    var room = JsonSerializer.Deserialize<Room>(response);
+
+                    room.CurrentReady++;
+
+                    var json = JsonSerializer.Serialize(room);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                    if (!updateResponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Lỗi khi cập nhật trạng thái sẵn sàng.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi sẵn sàng game: " + ex.Message);
+                }
+            });
+            btnStart.Enabled = false;
+        }
+
+        private async void CheckGameStarted()
+        {
+            if (isGameStarted) return; // Check the flag to prevent opening multiple instances
+
+            try
+            {
+                var responseRoom = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                var room = JsonSerializer.Deserialize<Room>(responseRoom);
+
+                if (room.GameStarted)
+                {
+                    isGameStarted = true; // Set the flag to true when game has started
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        GamePlay game = new GamePlay(User.CurrentUser.Username, roomName);
+                        game.ShowDialog();
+                    });
+
+                    // Stop the timer to prevent opening multiple instances
+                    updateTimer.Stop();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi kiểm tra trạng thái game: " + ex.Message);
+            }
+        }
+
         #endregion
 
         #region Event
@@ -272,15 +396,18 @@ namespace GameProject
             {
                 try
                 {
+                    // Truy cập vào dữ liệu Rooms của Firebase
                     var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
                     var room = JsonSerializer.Deserialize<Room>(response);
 
                     if (room != null)
                     {
-                        // Xóa dữ liệu người chơi hiện tại khỏi phòng
-                        if (room.Player1?.Username == User.CurrentUser.Username)
+                        // Kiểm tra tên và xóa dữ liệu người chơi tương ứng
+                        bool wasOwner = room.Owner?.Username == User.CurrentUser.Username;
+
+                        if (wasOwner)
                         {
-                            room.Player1 = null;
+                            room.Owner = null;
                         }
                         else if (room.Player2?.Username == User.CurrentUser.Username)
                         {
@@ -294,10 +421,11 @@ namespace GameProject
                         {
                             room.Player4 = null;
                         }
-
+        
                         room.CurrentPlayers--;
                         if (room.CurrentPlayers < 0) room.CurrentPlayers = 0;
-
+                        
+                        // Nếu số người chơi hiện tại của phòng là 0, thì xóa dữ liệu phòng chờ khỏi Firebase
                         if (room.CurrentPlayers == 0)
                         {
                             var deleteResponse = await client.DeleteAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
@@ -315,6 +443,26 @@ namespace GameProject
                         }
                         else
                         {
+                            if (wasOwner)
+                            {
+                                // Chuyển quyền chủ phòng cho player khả dụng và cập nhật lại UI của Player đó nếu được chuyển quy
+                                if (room.Player2 != null)
+                                {
+                                    room.Owner = room.Player2;
+                                    room.Player2 = null;
+                                }
+                                else if (room.Player3 != null)
+                                {
+                                    room.Owner = room.Player3;
+                                    room.Player3 = null;
+                                }
+                                else if (room.Player4 != null)
+                                {
+                                    room.Owner = room.Player4;
+                                    room.Player4 = null;
+                                }
+                            }
+
                             var json = JsonSerializer.Serialize(room);
                             var content = new StringContent(json, Encoding.UTF8, "application/json");
                             var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
@@ -350,11 +498,21 @@ namespace GameProject
             });
         }
 
-        #endregion
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private async void btnStart_Click(object sender, EventArgs e)
         {
-
+            if (User.CurrentUser.isOwner)
+            {
+                //Thực hiện logic start của chủ phòng
+                await StartGame();
+            }
+            else
+            {
+                // Thực hiện logic ready của người chơi khác
+                await ReadyGame();
+            }
         }
+
+        #endregion
     }
 }

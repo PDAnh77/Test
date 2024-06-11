@@ -26,10 +26,10 @@ namespace GameProject
         private static readonly HttpClient client = new HttpClient();
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; // Khóa bí mật
+        public static readonly DialogResult ContinueToRoomForm = DialogResult.OK;
 
         #endregion
 
-        public static readonly DialogResult ContinueToRoomForm = DialogResult.OK;
 
         public GameLobby()
         {
@@ -216,7 +216,7 @@ namespace GameProject
                         {
                             Text = $"Rank: {roomData.RankRoom}",
                             Font = new Font("Arial", 10),
-                            Location = new Point(60, 40),
+                            Location = new Point(120, 40),
                             AutoSize = true
                         };
 
@@ -242,13 +242,13 @@ namespace GameProject
         private void RoomPanel_MouseEnter(object sender, EventArgs e)
         {
             Panel panel = sender as Panel;
-            panel.BorderStyle = BorderStyle.Fixed3D; // Border được in đậm
+            panel.BorderStyle = BorderStyle.Fixed3D; // Border được in đậm khi di chuyển chuột vào Panel
         }
 
         private void RoomPanel_MouseLeave(object sender, EventArgs e)
         {
             Panel panel = sender as Panel;
-            panel.BorderStyle = BorderStyle.FixedSingle; // Border về ban đầu
+            panel.BorderStyle = BorderStyle.FixedSingle; // Border về ban đầu khi di chuyển chuột ra khỏi Panel
         }
 
         private void OnRoomDeleted(string roomName)
@@ -300,11 +300,9 @@ namespace GameProject
                         return;
                     }
 
-                    if (room.Player1 == null)
-                    {
-                        room.Player1 = User.CurrentUser;
-                    }
-                    else if (room.Player2 == null)
+                    User.CurrentUser.isOwner = false; // Khi join thì isOwner là false
+
+                    if (room.Player2 == null)
                     {
                         room.Player2 = User.CurrentUser;
                     }
@@ -330,21 +328,21 @@ namespace GameProject
                         Room.CurRoomName = roomName;
                         DialogResult = GameLobby.ContinueToRoomForm;
                     }
+                        else
+                        {
+                            Notification.Text = "Không thể tham gia phòng";
+                        }
+                    }
                     else
                     {
-                        Notification.Text = "Không thể tham gia phòng";
+                        Notification.Text = "Phòng không tồn tại";
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Notification.Text = "Phòng không tồn tại";
+                    Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
                 }
             }
-            catch (Exception ex)
-            {
-                Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
-            }
-        }
 
         private async Task<bool> CheckRoomNameExists(string name)
         {
@@ -397,12 +395,16 @@ namespace GameProject
                     Notification.Text = "Tên phòng đã tồn tại";
                     return;
                 }
+
+                User.CurrentUser.isOwner = true; // Set isOwner thành true
+
                 var roomData = new Room
                 {
                     Name = roomName,
                     CurrentPlayers = 1,
+                    CurrentReady = 0,
                     RankRoom = User.CurrentUser.Rank,
-                    Player1 = User.CurrentUser
+                    Owner = User.CurrentUser
                 };
 
                 try
