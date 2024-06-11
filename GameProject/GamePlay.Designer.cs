@@ -254,7 +254,7 @@
             this.lbluotchoi.Size = new System.Drawing.Size(21, 20);
             this.lbluotchoi.TabIndex = 2;
             this.lbluotchoi.Text = "...";
-            this.lbluotchoi.Click += new System.EventHandler(this.lbluotchoi_Click);
+//            this.lbluotchoi.Click += new System.EventHandler(this.lbluotchoi_Click);
             // 
             // richTextBox1
             // 
@@ -1549,7 +1549,7 @@
             this.imgXiNgau.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgXiNgau.TabIndex = 1;
             this.imgXiNgau.TabStop = false;
-            this.imgXiNgau.Click += new System.EventHandler(this.imgXiNgau_Click);
+   //         this.imgXiNgau.Click += new System.EventHandler(this.imgXiNgau_Click);
             // 
             // frmPlay
             // 

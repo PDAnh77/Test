@@ -33,8 +33,6 @@ namespace GameProject
         private int counter = 30;
         private int time = 0;
 
-
-
         public GamePlay()
         {
             InitializeComponent();
@@ -109,11 +107,6 @@ namespace GameProject
             }
         }
 
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
         public void getUsername(string name, string idPhong)
         {
             string uname;
@@ -420,10 +413,7 @@ namespace GameProject
             FrmLogin.SendMSG("3", username, IDphong, "");
         }
 
-        private void lbluotchoi_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -854,10 +844,6 @@ namespace GameProject
             }
         }
 
-        private void imgXiNgau_Click(object sender, EventArgs e)
-        {
-
-        }
 
 
         private void PlayAnimation(Control control)
