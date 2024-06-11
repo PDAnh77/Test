@@ -26,7 +26,7 @@ namespace GameProject
         private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i";
         private string roomName;
-        private bool isGameStarted = false; // Flag to track if the game has started
+        private bool isGameStarted = false; // Cờ để biết game ở local đã start chưa
 
         public delegate void RoomDeletedHandler(string roomName);
         public event RoomDeletedHandler RoomDeleted;
@@ -74,6 +74,7 @@ namespace GameProject
             SetControlImage(pictureBox3, Animation.UI_Textbox_03);
             SetControlImage(pictureBox4, Animation.UI_Textbox_03);
 
+            NotificationStart.Text = "";
             txtPlayer1.BackColor = customColor;
             txtPlayer2.BackColor = customColor;
             txtPlayer3.BackColor = customColor;
@@ -110,6 +111,10 @@ namespace GameProject
                     {
                         control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
                     }
+                    else if (control.Name == "NotificationStart")
+                    {
+                        control.Font = new Font(privateFonts.Families[0], 8f, FontStyle.Bold);
+                    }    
                     else
                     {
                         control.Font = new Font(privateFonts.Families[0], 10f, FontStyle.Bold);
@@ -197,8 +202,6 @@ namespace GameProject
                         txtPlayer2.Texts = room.Player2?.Username ?? "";
                         txtPlayer3.Texts = room.Player3?.Username ?? "";
                         txtPlayer4.Texts = room.Player4?.Username ?? "";
-                        labelnotifi.Text = room.CurrentReady.ToString();
-                        labelNotifi2.Text = room.CurrentPlayers.ToString();
 
                         // Identify the logged-in user and move the Notification label
                         if (room.Owner?.Username == User.CurrentUser.Username)
@@ -249,6 +252,7 @@ namespace GameProject
         private async Task UpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             await LoadRoomDetails();
+            await UpdateUIForOwnership();
             CheckGameStarted();
         }
 
@@ -269,11 +273,18 @@ namespace GameProject
             }
         }
 
-        public void UpdateUIForOwnership()
+        private async Task UpdateUIForOwnership()
         {
-            if (User.CurrentUser.isOwner)
+            var responseRoom = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+            var room = JsonSerializer.Deserialize<Room>(responseRoom);
+
+            if (User.CurrentUser.Username == room.Owner.Username)
             {
-                btnStart.Text = "Start";
+                this.Invoke((MethodInvoker)delegate
+                {
+                    btnStart.Text = "Start";
+                    btnStart.Enabled = true;
+                });
             }
             else
             {
@@ -292,32 +303,44 @@ namespace GameProject
                     var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
                     var room = JsonSerializer.Deserialize<Room>(response);
 
-                    room.CurrentReady++;
-
-                    if (room.CurrentReady == room.CurrentPlayers)
+                    if (room.CurrentPlayers >= 2) // Kiểm tra xem phòng có từ 2 người chơi chưa
                     {
-                        // Set GameStarted to true
-                        room.GameStarted = true;
-
-                        // Cập nhật lại trạng thái phòng khi game bắt đầu
-                        var json = JsonSerializer.Serialize(room);
-                        var content = new StringContent(json, Encoding.UTF8, "application/json");
-                        var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
-
-                        if (updateResponse.IsSuccessStatusCode)
+                        if (room.CurrentReady == room.CurrentPlayers) // Kiểm tra xem tất cả người chơi đã sẵn sàng chưa
                         {
-                            isGameStarted = true; // Set the flag
-                                                  // Mở form game
+                            // Cờ gamestart để truyền cho server là game đã bắt đầu
+                            room.GameStarted = true;
+
+                            // Cập nhật lại trạng thái phòng khi game bắt đầu
+                            var json = JsonSerializer.Serialize(room);
+                            var content = new StringContent(json, Encoding.UTF8, "application/json");
+                            var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+
+                            if (updateResponse.IsSuccessStatusCode)
+                            {
+                                isGameStarted = true; // Cờ tại local của player 
+
+                                // Mở form game
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    GamePlay game = new GamePlay(User.CurrentUser.Username, roomName);
+                                    game.ShowDialog();
+                                });
+                            }
+                        }
+                        else
+                        {
                             this.Invoke((MethodInvoker)delegate
                             {
-                                GamePlay game = new GamePlay(User.CurrentUser.Username, roomName);
-                                game.ShowDialog();
+                                NotificationStart.Text = "Có người chơi chưa sẵn sàng";
                             });
                         }
                     }
                     else
                     {
-                        room.CurrentReady--;
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            NotificationStart.Text = "Cần tối thiểu hai người chơi để bắt đầu";
+                        });
                     }
                 }
                 catch (Exception ex)
@@ -339,7 +362,8 @@ namespace GameProject
                     var room = JsonSerializer.Deserialize<Room>(response);
 
                     room.CurrentReady++;
-
+                    
+                    // Cập nhật dữ liệu Rooms lên Firebase
                     var json = JsonSerializer.Serialize(room);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
@@ -359,7 +383,7 @@ namespace GameProject
 
         private async void CheckGameStarted()
         {
-            if (isGameStarted) return; // Check the flag to prevent opening multiple instances
+            if (isGameStarted) return; // Kiểm tra cờ để ngăn chặn mở nhiều form
 
             try
             {
@@ -368,14 +392,14 @@ namespace GameProject
 
                 if (room.GameStarted)
                 {
-                    isGameStarted = true; // Set the flag to true when game has started
+                    isGameStarted = true; // Cờ thông báo game đã bắt đầu ở máy người chơi
                     this.Invoke((MethodInvoker)delegate
                     {
                         GamePlay game = new GamePlay(User.CurrentUser.Username, roomName);
                         game.ShowDialog();
                     });
 
-                    // Stop the timer to prevent opening multiple instances
+                    // Dừng timer
                     updateTimer.Stop();
                 }
             }
@@ -421,10 +445,10 @@ namespace GameProject
                         {
                             room.Player4 = null;
                         }
-        
-                        room.CurrentPlayers--;
+
+                        room.CurrentPlayers--; // Trừ 1 vào  số người chơi hiện tại của phòng
                         if (room.CurrentPlayers < 0) room.CurrentPlayers = 0;
-                        
+
                         // Nếu số người chơi hiện tại của phòng là 0, thì xóa dữ liệu phòng chờ khỏi Firebase
                         if (room.CurrentPlayers == 0)
                         {
@@ -443,9 +467,14 @@ namespace GameProject
                         }
                         else
                         {
-                            if (wasOwner)
+                            if (btnStart.Enabled == false) // Kiểm tra xem người chơi có Ready trước đó không
                             {
-                                // Chuyển quyền chủ phòng cho player khả dụng và cập nhật lại UI của Player đó nếu được chuyển quy
+                                room.CurrentReady--;
+                            }
+                            else if (wasOwner)
+                            {
+                                if (room.CurrentReady > 1) room.CurrentReady--;
+                                // Chuyển quyền chủ phòng cho player khả dụng và cập nhật lại UI của Player đó nếu được chuyển quyền
                                 if (room.Player2 != null)
                                 {
                                     room.Owner = room.Player2;
@@ -499,9 +528,13 @@ namespace GameProject
         }
 
 
+
         private async void btnStart_Click(object sender, EventArgs e)
         {
-            if (User.CurrentUser.isOwner)
+            var responseRoom = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+            var room = JsonSerializer.Deserialize<Room>(responseRoom);
+
+            if (User.CurrentUser.Username == room.Owner.Username)
             {
                 //Thực hiện logic start của chủ phòng
                 await StartGame();

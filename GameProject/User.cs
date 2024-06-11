@@ -28,8 +28,6 @@ namespace GameProject
 
         public int Lose { get; set; }
 
-        public bool isOwner { get; set; }
-
         public User()
         {
             Username = "None";
@@ -40,7 +38,6 @@ namespace GameProject
             Rank = "None";
             Win = 0;
             Lose = 0; 
-            isOwner = false;
         }
 
         public static bool IsEqual(User user1, User user2)

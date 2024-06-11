@@ -300,8 +300,6 @@ namespace GameProject
                         return;
                     }
 
-                    User.CurrentUser.isOwner = false; // Khi join thì isOwner là false
-
                     if (room.Player2 == null)
                     {
                         room.Player2 = User.CurrentUser;
@@ -396,13 +394,11 @@ namespace GameProject
                     return;
                 }
 
-                User.CurrentUser.isOwner = true; // Set isOwner thành true
-
                 var roomData = new Room
                 {
                     Name = roomName,
                     CurrentPlayers = 1,
-                    CurrentReady = 0,
+                    CurrentReady = 1,
                     RankRoom = User.CurrentUser.Rank,
                     Owner = User.CurrentUser
                 };

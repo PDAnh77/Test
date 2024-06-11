@@ -36,15 +36,14 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.Notification = new System.Windows.Forms.Label();
+            this.NotificationStart = new System.Windows.Forms.Label();
             this.txtPlayer4 = new GameProject.CustomControls.TextBoxDesign();
             this.txtPlayer3 = new GameProject.CustomControls.TextBoxDesign();
             this.txtPlayer2 = new GameProject.CustomControls.TextBoxDesign();
             this.txtPlayer1 = new GameProject.CustomControls.TextBoxDesign();
             this.btnLeaveRoom = new GameProject.CustomControls.ButtonDesign();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
-            this.Notification = new System.Windows.Forms.Label();
-            this.labelnotifi = new System.Windows.Forms.Label();
-            this.labelNotifi2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -126,6 +125,31 @@
             this.pictureBox4.Size = new System.Drawing.Size(310, 53);
             this.pictureBox4.TabIndex = 25;
             this.pictureBox4.TabStop = false;
+            // 
+            // Notification
+            // 
+            this.Notification.AutoSize = true;
+            this.Notification.BackColor = System.Drawing.Color.Transparent;
+            this.Notification.Location = new System.Drawing.Point(390, 7);
+            this.Notification.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Notification.Name = "Notification";
+            this.Notification.Size = new System.Drawing.Size(60, 13);
+            this.Notification.TabIndex = 27;
+            this.Notification.Text = "Notification";
+            this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // NotificationStart
+            // 
+            this.NotificationStart.AutoSize = true;
+            this.NotificationStart.BackColor = System.Drawing.Color.Transparent;
+            this.NotificationStart.ForeColor = System.Drawing.Color.Transparent;
+            this.NotificationStart.Location = new System.Drawing.Point(583, 456);
+            this.NotificationStart.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.NotificationStart.Name = "NotificationStart";
+            this.NotificationStart.Size = new System.Drawing.Size(35, 13);
+            this.NotificationStart.TabIndex = 28;
+            this.NotificationStart.Text = "label2";
+            this.NotificationStart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtPlayer4
             // 
@@ -263,49 +287,12 @@
             this.btnStart.UseVisualStyleBackColor = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // Notification
-            // 
-            this.Notification.AutoSize = true;
-            this.Notification.BackColor = System.Drawing.Color.Transparent;
-            this.Notification.Location = new System.Drawing.Point(390, 7);
-            this.Notification.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.Notification.Name = "Notification";
-            this.Notification.Size = new System.Drawing.Size(60, 13);
-            this.Notification.TabIndex = 27;
-            this.Notification.Text = "Notification";
-            this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelnotifi
-            // 
-            this.labelnotifi.AutoSize = true;
-            this.labelnotifi.BackColor = System.Drawing.Color.Transparent;
-            this.labelnotifi.Location = new System.Drawing.Point(583, 447);
-            this.labelnotifi.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelnotifi.Name = "labelnotifi";
-            this.labelnotifi.Size = new System.Drawing.Size(60, 13);
-            this.labelnotifi.TabIndex = 27;
-            this.labelnotifi.Text = "Notification";
-            this.labelnotifi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelNotifi2
-            // 
-            this.labelNotifi2.AutoSize = true;
-            this.labelNotifi2.BackColor = System.Drawing.Color.Transparent;
-            this.labelNotifi2.Location = new System.Drawing.Point(583, 426);
-            this.labelNotifi2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelNotifi2.Name = "labelNotifi2";
-            this.labelNotifi2.Size = new System.Drawing.Size(60, 13);
-            this.labelNotifi2.TabIndex = 27;
-            this.labelNotifi2.Text = "Notification";
-            this.labelNotifi2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // RoomForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(946, 547);
-            this.Controls.Add(this.labelNotifi2);
-            this.Controls.Add(this.labelnotifi);
+            this.Controls.Add(this.NotificationStart);
             this.Controls.Add(this.Notification);
             this.Controls.Add(this.txtPlayer4);
             this.Controls.Add(this.pictureBox4);
@@ -348,7 +335,6 @@
         private CustomControls.TextBoxDesign txtPlayer4;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label Notification;
-        private System.Windows.Forms.Label labelnotifi;
-        private System.Windows.Forms.Label labelNotifi2;
+        private System.Windows.Forms.Label NotificationStart;
     }
 }
