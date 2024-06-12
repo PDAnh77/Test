@@ -8,7 +8,7 @@ namespace GameProject
 {
     public class Player
     {
-        public static User OwnerPlayer { get; set; }
+        public User OwnerPlayer { get; set; }
         public int Code { get; set; }
         public string Message { get; set; }
         public bool isOwner { get; set; }

@@ -202,18 +202,6 @@
     <Compile Include="CustomControls\TextBoxDesign.Designer.cs">
       <DependentUpon>TextBoxDesign.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GameLogin.Designer.cs">
-      <DependentUpon>GameLogin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GameMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GameMenu.Designer.cs">
-      <DependentUpon>GameMenu.cs</DependentUpon>
-    </Compile>
     <Compile Include="GamePlay.cs">
       <SubType>Form</SubType>
     </Compile>
