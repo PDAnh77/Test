@@ -48,6 +48,9 @@
             this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
             this.comboBoxDesign1 = new GameProject.CustomControls.ComboBoxDesign();
             this.btnReturn = new GameProject.CustomControls.ButtonDesign();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxDesign4 = new GameProject.CustomControls.TextBoxDesign();
+            this.TextHolder05 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder03)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder02)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder01)).BeginInit();
@@ -55,6 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ProfilePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InfoBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder04)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextHolder05)).BeginInit();
             this.SuspendLayout();
             // 
             // TextHolder03
@@ -107,7 +111,7 @@
             this.InfoBox.BackColor = System.Drawing.Color.Transparent;
             this.InfoBox.Location = new System.Drawing.Point(33, 329);
             this.InfoBox.Name = "InfoBox";
-            this.InfoBox.Size = new System.Drawing.Size(884, 413);
+            this.InfoBox.Size = new System.Drawing.Size(884, 512);
             this.InfoBox.TabIndex = 0;
             this.InfoBox.TabStop = false;
             // 
@@ -231,7 +235,7 @@
             this.btnUpdate.FlatAppearance.BorderSize = 0;
             this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdate.ForeColor = System.Drawing.Color.White;
-            this.btnUpdate.Location = new System.Drawing.Point(759, 678);
+            this.btnUpdate.Location = new System.Drawing.Point(759, 751);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(147, 50);
             this.btnUpdate.TabIndex = 24;
@@ -251,7 +255,7 @@
             this.btnEdit.FlatAppearance.BorderSize = 0;
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.ForeColor = System.Drawing.Color.White;
-            this.btnEdit.Location = new System.Drawing.Point(606, 678);
+            this.btnEdit.Location = new System.Drawing.Point(606, 751);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(147, 50);
             this.btnEdit.TabIndex = 23;
@@ -352,12 +356,61 @@
             this.btnReturn.UseVisualStyleBackColor = false;
             this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(160, 663);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 16);
+            this.label5.TabIndex = 38;
+            this.label5.Text = "label5";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // textBoxDesign4
+            // 
+            this.textBoxDesign4.BackColor = System.Drawing.Color.BlanchedAlmond;
+            this.textBoxDesign4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.textBoxDesign4.BorderColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign4.BorderFocusColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign4.BorderRadius = 0;
+            this.textBoxDesign4.BorderSize = 1;
+            this.textBoxDesign4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxDesign4.ForeColor = System.Drawing.Color.Black;
+            this.textBoxDesign4.Location = new System.Drawing.Point(183, 683);
+            this.textBoxDesign4.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxDesign4.Multiline = false;
+            this.textBoxDesign4.Name = "textBoxDesign4";
+            this.textBoxDesign4.Padding = new System.Windows.Forms.Padding(7);
+            this.textBoxDesign4.PasswordChar = false;
+            this.textBoxDesign4.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.textBoxDesign4.PlaceholderText = "";
+            this.textBoxDesign4.ReadOnly = false;
+            this.textBoxDesign4.Size = new System.Drawing.Size(516, 36);
+            this.textBoxDesign4.TabIndex = 37;
+            this.textBoxDesign4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBoxDesign4.Texts = "";
+            this.textBoxDesign4.UnderlinedStyle = false;
+            // 
+            // TextHolder05
+            // 
+            this.TextHolder05.BackColor = System.Drawing.Color.Transparent;
+            this.TextHolder05.Location = new System.Drawing.Point(183, 726);
+            this.TextHolder05.Name = "TextHolder05";
+            this.TextHolder05.Size = new System.Drawing.Size(516, 5);
+            this.TextHolder05.TabIndex = 36;
+            this.TextHolder05.TabStop = false;
+            // 
             // UserProfile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1050, 754);
+            this.ClientSize = new System.Drawing.Size(1050, 853);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBoxDesign4);
+            this.Controls.Add(this.TextHolder05);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.TextHolder04);
             this.Controls.Add(this.label3);
@@ -388,6 +441,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ProfilePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.InfoBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder04)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TextHolder05)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -415,5 +469,8 @@
         private System.Windows.Forms.PictureBox TextHolder04;
         private CustomControls.ComboBoxDesign comboBoxDesign1;
         private CustomControls.ButtonDesign btnReturn;
+        private System.Windows.Forms.Label label5;
+        private CustomControls.TextBoxDesign textBoxDesign4;
+        private System.Windows.Forms.PictureBox TextHolder05;
     }
 }

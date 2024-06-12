@@ -47,9 +47,13 @@ namespace GameProject
 
             foreach (Control control in Controls)
             {
-                if (control is TextBoxDesign || control is DatePickerDesign || control is ComboBoxDesign)
+                if (control is TextBoxDesign || control is DatePickerDesign)
                 {
-                    control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
+                    control.Font = new Font(privateFonts.Families[0], 10f, FontStyle.Bold);
+                }
+                else if(control is ComboBoxDesign)
+                {
+                    control.Font = new Font(privateFonts.Families[0], 9f, FontStyle.Bold);
                 }
                 else if (control is Button)
                 {
@@ -99,6 +103,7 @@ namespace GameProject
             textBoxDesign2.Texts = CurUser.Email;
             textBoxDesign3.Texts = CurUser.Age;
             comboBoxDesign1.Texts = CurUser.Gender;
+            textBoxDesign4.Texts = CurUser.Rank;
 
             LockAllControls();
         }
@@ -281,6 +286,7 @@ namespace GameProject
             label2.Text = "Email:";
             label3.Text = "Age:";
             label4.Text = "Gender:";
+            label5.Text = "Rank:";
 
             SetControlImage(InfoBox, Animation.UI_InfoBox);
             SetControlImage(ProfilePic, Animation.UI_Avatar);
@@ -288,6 +294,7 @@ namespace GameProject
             SetControlImage(TextHolder02, Animation.UI_Text_Holder);
             SetControlImage(TextHolder03, Animation.UI_Text_Holder);
             SetControlImage(TextHolder04, Animation.UI_Text_Holder);
+            SetControlImage(TextHolder05, Animation.UI_Text_Holder);
 
             CenterControl(InfoBox);
             CenterControl(ProfilePic);
@@ -298,10 +305,12 @@ namespace GameProject
             TextHolder02.BringToFront();
             TextHolder03.BringToFront();
             TextHolder04.BringToFront();
+            TextHolder05.BringToFront();
 
             textBoxDesign1.BackColor = customColor;
             textBoxDesign2.BackColor = customColor;
             textBoxDesign3.BackColor = customColor;
+            textBoxDesign4.BackColor = customColor;
 
             int textLength = textBoxDesign1.Texts.Length;
             int newWidth = 50 + textLength * 10;
