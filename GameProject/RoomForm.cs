@@ -80,9 +80,9 @@ namespace GameProject
             txtPlayer3.BackColor = customColor;
             txtPlayer4.BackColor = customColor;
 
-            foreach (Control ctrl in this.Controls) // Lock all textbox
+            foreach (Control ctrl in this.Controls) // Lock all textbox ngoài txtMes
             {
-                if (ctrl is TextBoxDesign txtPlayer)
+                if (ctrl is TextBoxDesign txtPlayer && ctrl.Name != "txtMes")
                 {
                     txtPlayer.ReadOnly = true;
                 }
@@ -545,7 +545,30 @@ namespace GameProject
                 await ReadyGame();
             }
         }
+        private async void btnSendMes_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnSendMes);
+            try
+            {
+                var responseRoom = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
+                var room = JsonSerializer.Deserialize<Room>(responseRoom);
+
+                room.Chat = $"{User.CurrentUser.Username}: {txtMes.Texts}";
+
+                var json = JsonSerializer.Serialize(room);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
+            }
+            catch (Exception ex) 
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    MessageBox.Show("Lỗi khi gửi tin nhắn: " + ex.Message);
+                });
+            }
+        }
 
         #endregion
+
     }
 }
