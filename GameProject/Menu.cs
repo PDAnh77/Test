@@ -135,7 +135,7 @@ namespace GameProject
                 // Identify forms that need to be closed
                 foreach (Form openForm in Application.OpenForms)
                 {
-                    if (openForm is Login || openForm is Signup)
+                    if (openForm is Login || openForm is Signup || openForm is UserProfile)
                     {
                         formsToClose.Add(openForm);
                     }
@@ -161,13 +161,22 @@ namespace GameProject
             Application.Exit();
         }
 
+        UserProfile userprofileForm;
+
         private void btnProfile_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnProfile);
             if(CheckCurrentUser() == true)
             {
-                UserProfile userProfile = new UserProfile();
-                userProfile.Show();
+                if (userprofileForm == null || userprofileForm.IsDisposed)
+                {
+                    userprofileForm = new UserProfile();
+                    userprofileForm.Show();
+                }
+                else // If userprofile menu already opened
+                {
+                    userprofileForm.BringToFront();
+                }
             }
             else
             {
