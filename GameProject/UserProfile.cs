@@ -47,9 +47,13 @@ namespace GameProject
 
             foreach (Control control in Controls)
             {
-                if (control is TextBoxDesign || control is DatePickerDesign || control is ComboBoxDesign)
+                if (control is TextBoxDesign || control is DatePickerDesign)
                 {
-                    control.Font = new Font(privateFonts.Families[1], 20f, FontStyle.Bold);
+                    control.Font = new Font(privateFonts.Families[0], 10f, FontStyle.Bold);
+                }
+                else if(control is ComboBoxDesign)
+                {
+                    control.Font = new Font(privateFonts.Families[0], 9f, FontStyle.Bold);
                 }
                 else if (control is Button)
                 {
@@ -99,6 +103,14 @@ namespace GameProject
             textBoxDesign2.Texts = CurUser.Email;
             textBoxDesign3.Texts = CurUser.Age;
             comboBoxDesign1.Texts = CurUser.Gender;
+            textBoxDesign4.Texts = CurUser.Rank;
+            textBoxDesign5.Texts = CurUser.Win.ToString();
+            textBoxDesign6.Texts = CurUser.Lose.ToString();
+
+            // Resize text holder size according to user name in text box
+            int textLength = textBoxDesign1.Texts.Length;
+            int newWidth = 20 + textLength * 10;
+            TextHolder01.Size = new Size(newWidth, TextHolder01.Height);
 
             LockAllControls();
         }
@@ -281,6 +293,9 @@ namespace GameProject
             label2.Text = "Email:";
             label3.Text = "Age:";
             label4.Text = "Gender:";
+            label5.Text = "Rank:";
+            label6.Text = "Wins:";
+            label7.Text = "Loses:";
 
             SetControlImage(InfoBox, Animation.UI_InfoBox);
             SetControlImage(ProfilePic, Animation.UI_Avatar);
@@ -288,6 +303,9 @@ namespace GameProject
             SetControlImage(TextHolder02, Animation.UI_Text_Holder);
             SetControlImage(TextHolder03, Animation.UI_Text_Holder);
             SetControlImage(TextHolder04, Animation.UI_Text_Holder);
+            SetControlImage(TextHolder05, Animation.UI_Text_Holder);
+            SetControlImage(TextHolder06, Animation.UI_Text_Holder);
+            SetControlImage(TextHolder07, Animation.UI_Text_Holder);
 
             CenterControl(InfoBox);
             CenterControl(ProfilePic);
@@ -298,15 +316,16 @@ namespace GameProject
             TextHolder02.BringToFront();
             TextHolder03.BringToFront();
             TextHolder04.BringToFront();
+            TextHolder05.BringToFront();
+            TextHolder06.BringToFront();
+            TextHolder07.BringToFront();
 
             textBoxDesign1.BackColor = customColor;
             textBoxDesign2.BackColor = customColor;
             textBoxDesign3.BackColor = customColor;
-
-            int textLength = textBoxDesign1.Texts.Length;
-            int newWidth = 50 + textLength * 10;
-            TextHolder01.Size = new Size(newWidth, TextHolder01.Height);
-            /*textBoxDesign1.TextAlign = HorizontalAlignment.Center;*/
+            textBoxDesign4.BackColor = customColor;
+            textBoxDesign5.BackColor = customColor;
+            textBoxDesign6.BackColor = customColor;
 
             datePickerDesign1.SkinColor = customColor;
             datePickerDesign1.BorderColor = customColor;

@@ -11,6 +11,7 @@ namespace GameProject
         public static string CurRoomName { get; set; }
         public string Name { get; set; } // Tên phòng
 
+        public string Chat {  get; set; }
         public string RankRoom { get; set; } // Rank của phòng, người chơi cùng rank với phòng mới được vào
 
         public User Owner { get; set; } // Chứa dữ liệu của người chơi chủ phòng
