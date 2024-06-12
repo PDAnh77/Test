@@ -27,6 +27,7 @@ namespace GameProject
         private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i";
         private string roomName;
         private bool isGameStarted = false; // Cờ để biết game ở local đã start chưa
+        public static readonly DialogResult ContinueToGamePlayForm = DialogResult.OK;
 
         public delegate void RoomDeletedHandler(string roomName);
         public event RoomDeletedHandler RoomDeleted;
@@ -322,8 +323,7 @@ namespace GameProject
                                 // Mở form game
                                 this.Invoke((MethodInvoker)delegate
                                 {
-                                    GamePlay game = new GamePlay(User.CurrentUser.Username, roomName);
-                                    game.ShowDialog();
+                                    DialogResult = ContinueToGamePlayForm;
                                 });
                             }
                         }
@@ -395,8 +395,7 @@ namespace GameProject
                     isGameStarted = true; // Cờ thông báo game đã bắt đầu ở máy người chơi
                     this.Invoke((MethodInvoker)delegate
                     {
-                        GamePlay game = new GamePlay(User.CurrentUser.Username, roomName);
-                        game.ShowDialog();
+                        DialogResult = ContinueToGamePlayForm;
                     });
 
                     // Dừng timer
@@ -522,7 +521,8 @@ namespace GameProject
                 }
                 finally
                 {
-                    this.Invoke((Action)this.Dispose);
+                    DialogResult = DialogResult.Cancel;
+                    /*this.Invoke((Action)this.Dispose);*/
                 }
             });
         }

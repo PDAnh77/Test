@@ -485,12 +485,6 @@ namespace GameProject
             PlayAnimation(btn_BoLuot);
             FrmLogin.SendMSG("7", username, IDphong, "");
         }
-
-        private void frmPlay_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
-
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)
         {

@@ -324,7 +324,7 @@ namespace GameProject
                         txtRoomName.Texts = "";
                         Notification.Text = "";
                         Room.CurRoomName = roomName;
-                        DialogResult = GameLobby.ContinueToRoomForm;
+                        DialogResult = ContinueToRoomForm;
                     }
                         else
                         {
