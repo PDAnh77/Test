@@ -9,14 +9,25 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using GameProject;
+using FireSharp.Response;
+using FireSharp.Config;
+using FireSharp.Interfaces;
 
 
 namespace GameProject
 {
     public partial class GamePlay : Form
     {
+        public IFirebaseConfig config = new FirebaseConfig
+        {
+            BasePath = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            AuthSecret = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"
+        };
+
+        IFirebaseClient client;
+
         private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
-        
+
         public string username;
 
         public string IDphong;
@@ -26,33 +37,33 @@ namespace GameProject
         //List<string> là một danh sách các chuỗi (string)
         //Dsách này sẽ chứa tên của các user trong phòng chơi
 
-        private GameLogin FrmLogin;
+        //private GameLogin FrmLogin;
 
 
         private string msg;
         private int counter = 30;
         private int time = 0;
 
-        public GamePlay()
-        {
-            InitializeComponent();
-        }
+        //public GamePlay()
+        //{
+        //    InitializeComponent();
+        //}
 
-        public GamePlay(GameLogin frmLogin)
-        {
-            this.FrmLogin = frmLogin;
-            InitializeComponent();
-        }
+        //public GamePlay(GameLogin frmLogin)
+        //{
+        //    this.FrmLogin = frmLogin;
+        //    InitializeComponent();
+        //}
 
-        public GamePlay(string name, string idPhong, string[] arrU)
-        {
-            InitializeComponent();
-            for (int i = 0; i < arrU.Length; i++)
-            {
-                DSUser.Add(arrU[i]);
-            }
-            reloadForm();
-        }
+        //public GamePlay(string name, string idPhong, string[] arrU)
+        //{
+        //    InitializeComponent();
+        //    for (int i = 0; i < arrU.Length; i++)
+        //    {
+        //        DSUser.Add(arrU[i]);
+        //    }
+        //    reloadForm();
+        //}
         public GamePlay(string name, string idPhong)
         {
             InitializeComponent();
@@ -72,12 +83,12 @@ namespace GameProject
         }
 
         //tương tự như hàm sendFrmPlay trong frmLogin.cs
-        public void sendFormLG(GameLogin frm)
-        {
-            FrmLogin = frm;
-        }
+        //public void sendFormLG(GameLogin frm)
+        //{
+        //    FrmLogin = frm;
+        //}
 
-        private void addUsserInForm(string name)
+        private void addUsserInForm(string name)// Hàm viết tên lên label của frmPlay
         {
             Invoke(new Action(() =>
             {
@@ -118,6 +129,8 @@ namespace GameProject
 
         private void frmPlay_Load(object sender, EventArgs e) //LoadForm chinh
         {
+            client = new FireSharp.FirebaseClient(config);
+
             Setptbimage();
             ButtonConfig();
             //SetControlImage(lbID, Animation.UI_Textbox_02);
@@ -162,7 +175,8 @@ namespace GameProject
                 {
                     SetButtonEnabledSafe(btnXiNgau, true);// bỏ khóa nút thảy xí ngầu
                 }
-                for (int i = 0; i < DSUser.Count; i++)
+                for (int i = 0; i < DSUser.Count; i++)//Duyệt qua danh sách các user để tạo cho mỗi 
+                                                      //user một bộ cờ ngựa màu 4 con tương ứng
                 {
                     for (int m = 0; m < 4; m++)
                     {
@@ -399,26 +413,24 @@ namespace GameProject
         {
             PictureBox ptb = (PictureBox)this.Controls.Find("btn" + x, false).FirstOrDefault() as PictureBox;
             if (ptb.Image != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
-                FrmLogin.SendMSG("6", username, IDphong, x.ToString());
+                SendMSGtoFB("6", username, IDphong, x.ToString());
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnStart);
-            FrmLogin.SendMSG("2", username, IDphong, "");
+            SendMSGtoFB("2", username, IDphong, "");
         }
 
         private void btnXiNgau_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnXiNgau);
-            FrmLogin.SendMSG("3", username, IDphong, "");
+            SendMSGtoFB("3", username, IDphong, "");
         }
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
             PlayAnimation(dichD1);
-            FrmLogin.senDoFrom("5", username, IDphong, textBox1.Text);
+            senDoFrom("5", username, IDphong, textBox1.Text);
         }
 
         private int timUser()
@@ -444,7 +456,7 @@ namespace GameProject
                     if (numUser == 0)
                     {
                         if (ptb.Image != null)
-                            FrmLogin.SendMSG("4", username, IDphong, co);
+                            SendMSGtoFB("4", username, IDphong, co);
                     }
                     break;
                 case "r1":
@@ -454,7 +466,7 @@ namespace GameProject
                     if (numUser == 1)
                     {
                         if (ptb.Image != null)
-                            FrmLogin.SendMSG("4", username, IDphong, co);
+                            SendMSGtoFB("4", username, IDphong, co);
                     }
                     break;
                 case "y1":
@@ -464,7 +476,7 @@ namespace GameProject
                     if (numUser == 2)
                     {
                         if (ptb.Image != null)
-                            FrmLogin.SendMSG("4", username, IDphong, co);
+                            SendMSGtoFB("4", username, IDphong, co);
                     }
                     break;
                 case "g1":
@@ -474,7 +486,7 @@ namespace GameProject
                     if (numUser == 3)
                     {
                         if (ptb.Image != null)
-                            FrmLogin.SendMSG("4", username, IDphong, co);
+                            SendMSGtoFB("4", username, IDphong, co);
                     }
                     break;
 
@@ -483,7 +495,7 @@ namespace GameProject
         private void btn_BoLuot_Click(object sender, EventArgs e)
         {
             PlayAnimation(btn_BoLuot);
-            FrmLogin.SendMSG("7", username, IDphong, "");
+            SendMSGtoFB("7", username, IDphong, "");
         }
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)
@@ -789,7 +801,7 @@ namespace GameProject
             if (counter == 0)
             {
                 luotchoitimer.Stop();
-                FrmLogin.SendMSG("7", username, IDphong, "");
+                SendMSGtoFB("7", username, IDphong, "");
             }
         }
 
@@ -839,7 +851,7 @@ namespace GameProject
         }
 
 
-
+        ///////////////////////////////////////////////////////////////////////
         private void PlayAnimation(Control control)
         {
             if (control is Button button)
@@ -876,6 +888,8 @@ namespace GameProject
             }
         }
 
+
+
         private void CenterControl(Control control)
         {
             if (control.Parent != null)
@@ -904,6 +918,155 @@ namespace GameProject
                 }
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        #region CopyTuGameLogin
+
+        private async void SendMSGtoFB (string code, string username, string idphong, string MSG)
+        {
+            
+            string data = code + "/" + username + "/" + idphong + "/" + MSG;
+            SetResponse response = await client.SetAsync("Messages/" , data);
+        }
+
+        public void senDoFrom(string code, string username, string idphong, string MSG)
+        {
+            if (string.IsNullOrEmpty(MSG))
+            {
+                return;
+            }
+            SendMSGtoFB(code, username, idphong, MSG);
+        }
+
+        //private void check(string data)
+        //{
+        //    string[] arr = data.Split('/');
+        //    Console.WriteLine(data);
+
+        //    //bằng 0 khi cần tạo phòng mới
+        //    if (arr[0] == "0")
+        //    {
+        //        //kiểm tra xem có phải đang là tên người dùng hiện tại k
+        //        if (arr[1] == username)
+        //        {
+        //            idPhong = arr[2];
+
+        //            //FrmMenu.showFrmChoiaddphong(arr[2]);
+        //        }
+        //    }
+
+        //    //bằng 1 khi ng chơi tham gia vào phòng có sẵn
+        //    else if (arr[0] == "1")
+        //    {
+        //        //arrU được chia từ arr[3] theo dấu ":"
+        //        arrU = arr[3].Split(':');
+
+        //        if (arr[1] == username)
+        //        {
+        //            // FrmMenu.getAllUserinRoom(idPhong,arrU);
+        //            idPhong = arr[2];
+        //        }
+        //        else
+        //        {
+        //            if (arr[2] == idPhong)
+        //            {
+        //                FrmMenu.getNameuserother(arr[1]);
+        //            }
+        //        }
+        //    }
+
+        //    else if (arr[0] == "2")
+        //    {
+        //        string msgToForm = "";
+        //        if (idPhong == arr[2])
+        //        {
+        //            msgToForm = "2" + ":" + arr[1] + ":" + arr[3];
+        //            FrmMenu.sendMSG(msgToForm);
+        //        }
+        //    }
+        //    else if (arr[0] == "3")
+        //    {
+        //        string msgToForm = "";
+        //        if (idPhong == arr[2])
+        //        {
+        //            msgToForm = "3" + ":" + arr[1] + ":" + arr[3] + ":" + arr[4];
+        //            FrmMenu.sendMSG(msgToForm);
+        //        }
+        //    }
+        //    else if (arr[0] == "5")
+        //    {
+        //        string msgToForm = "";
+        //        if (idPhong == arr[2])
+        //        {
+        //            msgToForm = "5" + ":" + arr[1] + ":" + arr[3];
+
+        //            FrmMenu.sendMSG(msgToForm);
+        //        }
+        //    }
+        //    else if (arr[0] == "4")
+        //    {
+        //        string msgToForm = "";
+        //        if (idPhong == arr[2])
+        //        {
+        //            msgToForm = "4" + ":" + arr[1] + ":" + arr[3];
+
+        //            FrmMenu.sendMSG(msgToForm);
+        //        }
+        //    }
+        //    else if (arr[0] == "6")
+        //    {
+        //        string msgToForm = "";
+        //        if (idPhong == arr[2])
+        //        {
+
+        //            msgToForm = "6" + ":" + arr[1] + ":" + arr[3];
+
+        //            FrmMenu.sendMSG(msgToForm);
+        //        }
+        //    }
+        //    else if (arr[0] == "7")
+        //    {
+        //        string msgToForm = "";
+        //        if (idPhong == arr[2])
+        //        {
+        //            msgToForm = "7" + ":" + arr[1] + ":" + arr[3];
+        //            FrmMenu.sendMSG(msgToForm);
+        //        }
+        //    }
+        //}
+        #endregion
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        #region CopyTuGameMenu
+
+        public void getAllUserinRoom()
+        {
+            //ABC(FrmLogin.sendIDtoForm(), userName, FrmLogin.sendAllnameOtheruser());
+        }
+
+        //public string getUsername(string s)
+        //{
+        //    //userName = s;
+        //    //return userName;
+        //}
+        //public void getfmrlg(GameLogin frm)
+        //{
+        //    //FrmLogin = frm;
+        //}
+        public void showFrmPlayaddphong()
+        {
+            //Frm1 = new GamePlay(userName, FrmLogin.sendIDtoForm());//tạo frmplay mới vs tên và id
+           // Frm1.ABC(FrmLogin.sendIDtoForm());
+           // Frm1.Show();
+            //FrmLogin.sendFrmPlay(Frm1);
+
+           // Frm1.sendFormLG(FrmLogin);
+        }
+
+        #endregion
+
+
+        //FirebaseResponse response = await client.GetAsync("Messages/" );
+        //string msg = response.ResultAs<string>();
     }
 }
 

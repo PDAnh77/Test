@@ -254,7 +254,6 @@
             this.lbluotchoi.Size = new System.Drawing.Size(21, 20);
             this.lbluotchoi.TabIndex = 2;
             this.lbluotchoi.Text = "...";
-//            this.lbluotchoi.Click += new System.EventHandler(this.lbluotchoi_Click);
             // 
             // richTextBox1
             // 
@@ -1549,14 +1548,13 @@
             this.imgXiNgau.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgXiNgau.TabIndex = 1;
             this.imgXiNgau.TabStop = false;
-   //         this.imgXiNgau.Click += new System.EventHandler(this.imgXiNgau_Click);
             // 
-            // frmPlay
+            // GamePlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
-            this.ClientSize = new System.Drawing.Size(1215, 702);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.btn_BoLuot);
             this.Controls.Add(this.lbWork);
             this.Controls.Add(this.lbun2);
