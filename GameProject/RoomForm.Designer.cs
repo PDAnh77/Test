@@ -297,8 +297,8 @@
             // txtMes
             // 
             this.txtMes.BackColor = System.Drawing.SystemColors.Window;
-            this.txtMes.BorderColor = System.Drawing.Color.MediumSlateBlue;
-            this.txtMes.BorderFocusColor = System.Drawing.Color.HotPink;
+            this.txtMes.BorderColor = System.Drawing.Color.Black;
+            this.txtMes.BorderFocusColor = System.Drawing.Color.Khaki;
             this.txtMes.BorderRadius = 0;
             this.txtMes.BorderSize = 2;
             this.txtMes.Font = new System.Drawing.Font("Segoe UI", 9.5F);
@@ -312,7 +312,7 @@
             this.txtMes.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtMes.PlaceholderText = "";
             this.txtMes.ReadOnly = false;
-            this.txtMes.Size = new System.Drawing.Size(631, 36);
+            this.txtMes.Size = new System.Drawing.Size(597, 36);
             this.txtMes.TabIndex = 29;
             this.txtMes.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtMes.Texts = "";
@@ -323,16 +323,17 @@
             this.btnSendMes.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnSendMes.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
             this.btnSendMes.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSendMes.BorderRadius = 20;
+            this.btnSendMes.BorderRadius = 0;
             this.btnSendMes.BorderSize = 0;
             this.btnSendMes.FlatAppearance.BorderSize = 0;
             this.btnSendMes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendMes.ForeColor = System.Drawing.Color.White;
-            this.btnSendMes.Location = new System.Drawing.Point(1131, 519);
+            this.btnSendMes.Location = new System.Drawing.Point(1097, 519);
             this.btnSendMes.Name = "btnSendMes";
-            this.btnSendMes.Size = new System.Drawing.Size(118, 40);
+            this.btnSendMes.Size = new System.Drawing.Size(140, 45);
             this.btnSendMes.TabIndex = 30;
             this.btnSendMes.Text = "SEND";
+            this.btnSendMes.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSendMes.TextColor = System.Drawing.Color.White;
             this.btnSendMes.UseVisualStyleBackColor = false;
             this.btnSendMes.Click += new System.EventHandler(this.btnSendMes_Click);
@@ -341,7 +342,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(493, 76);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(756, 437);
+            this.richTextBox1.Size = new System.Drawing.Size(744, 438);
             this.richTextBox1.TabIndex = 31;
             this.richTextBox1.Text = "";
             // 
