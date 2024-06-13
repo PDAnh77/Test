@@ -293,19 +293,25 @@ namespace GameProject
             PlayAnimation(btnJoinRoom);
             socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
             socket.isServer = false;
-            socket.ConnectServer();
-            MessageBox.Show("Đã kết nối", "Thông báo");
-            try
+            if(!socket.ConnectServer())
             {
-                socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), "Tôi mới vào"));
-                game = new GamePlay(NameUser, txtRoomName.Texts, socket);
-                game.Show();
+                MessageBox.Show("Phòng đã đầy");
             }
-            catch
+            else
             {
-                MessageBox.Show("Lỏd");
-            }
-            Listen();
+                MessageBox.Show("Đã kết nối", "Thông báo");
+                try
+                {
+                    socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), "Tôi mới vào"));
+                    game = new GamePlay(NameUser, txtRoomName.Texts, socket);
+                    game.Show();
+                }
+                catch
+                {
+                    MessageBox.Show("Lỏd");
+                }
+                Listen();
+            }         
         }
         private void btnRefresh_Click(object sender, EventArgs e)
         {
