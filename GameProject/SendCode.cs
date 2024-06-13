@@ -13,11 +13,33 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+using System.Text.RegularExpressions;
 
 namespace GameProject
 {
     public partial class SendCode : Form
     {
+        public IFirebaseConfig config = new FirebaseConfig
+        {
+            BasePath = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            AuthSecret = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"
+        };
+
+        IFirebaseClient client;
+
+        private void SendCode_Load(object sender, EventArgs e)
+        {
+            client = new FireSharp.FirebaseClient(config);
+
+            if (client != null)
+            {
+                /*MessageBox.Show("Kết nối thành công!");*/
+            }
+        }
+
         PrivateFontCollection privateFonts = new PrivateFontCollection();
 
         private void LoadCustomFont()
@@ -88,57 +110,83 @@ namespace GameProject
             MailMessage mess = new MailMessage();
             if (string.IsNullOrEmpty(textBoxDesign1.Texts.Trim()))
             {
-                Notification.Text = "Vui lòng nhập email";
-                textBoxDesign2.Texts = randCode;
+                ShowNotification("Vui lòng nhập email");
             }
             else
             {
-                to = (textBoxDesign1.Texts).ToString();
+                to = textBoxDesign1.Texts.Trim();
                 from = "22520067@gm.uit.edu.vn";
                 pass = "1267199463";
                 content = "Mã xác minh để đặt lại mật khẩu của bạn là: " + randCode;
-                try
+
+                if (!IsValidEmail(to))
                 {
-                    mess.To.Add(to);
-                }
-                catch
-                {
-                    Notification.Text = "Email không tồn tại";
+                    ShowNotification("Email không hợp lệ!");
                     CenterControl(Notification);
                     return;
                 }
-                mess.From = new MailAddress(from);
-                mess.Body = content;
-                mess.Subject = "Mã xác minh";
 
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-                smtp.EnableSsl = true;
-                smtp.Port = 587;
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Credentials = new NetworkCredential(from, pass);
-                try
+                if (FindAccount(to))
                 {
-                    smtp.Send(mess);
-                    Notification.Text = $"Gửi mã xác minh thành công!";
+                    mess.To.Add(to);
+                    mess.From = new MailAddress(from, "CoCaNgua@gmail.com");
+                    mess.Body = content;
+                    mess.Subject = "Mã xác minh";
+
+                    SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                    smtp.EnableSsl = true;
+                    smtp.Port = 587;
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.Credentials = new NetworkCredential(from, pass);
+                    try
+                    {
+                        smtp.Send(mess);
+                        ShowNotification($"Gửi mã xác minh thành công!");
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowNotification(ex.Message);
+                    }
+                    CenterControl(Notification);
                 }
-                catch (Exception ex)
+                else
                 {
-                    Notification.Text = ex.Message;
+                    ShowNotification("Email này không tồn tại\nVui lòng đăng ký tài khoản!");
+                    CenterControl(Notification);
                 }
             }
-            CenterControl(Notification);
+        }
+
+        private bool FindAccount(string email)
+        {
+            FirebaseResponse response = client.Get(@"Information");
+            var allUsers = response.ResultAs<Dictionary<string, User>>();
+            if (allUsers != null)
+            {
+                foreach (var user in allUsers.Values)
+                {
+                    if (user.Email.Equals(email))
+                    {
+                        User.ResetpassUser = user;
+                        return true;
+                    }              
+                }
+            }
+            return false;
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
+            return emailRegex.IsMatch(email);
         }
 
         private void btnVerify_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnVerify);
-            if (randCode == (textBoxDesign2.Texts.Trim()))
+            if (randCode == textBoxDesign2.Texts.Trim())
             {
-                Notification.Text = "Xác thực thành công!";
-
-                /*int timerSeconds = 6;
-                int remainingSeconds = timerSeconds;*/
-
+                ShowNotification("Xác thực thành công!");
                 var wait = new System.Windows.Forms.Timer();
                 wait.Tick += delegate
                 {
@@ -161,9 +209,24 @@ namespace GameProject
             }
             else
             {
-                Notification.Text = "Mã đặt lại không chính xác!";
+                ShowNotification("Mã đặt lại không chính xác!");
             }
             CenterControl(Notification);
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -188,10 +251,11 @@ namespace GameProject
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
         }
 
+        Color customColor = Color.FromArgb(234, 212, 172);
+
         private void BodyConfig()
         {
-
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);
@@ -202,6 +266,9 @@ namespace GameProject
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
+
+            textBoxDesign1.BackColor = customColor;
+            textBoxDesign2.BackColor = customColor;      
         }
 
         private void ButtonConfig()
@@ -213,7 +280,7 @@ namespace GameProject
                     CenterControl(button);
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SandyBrown;
+                    button.BackColor = customColor;
                 }
             }
         }
@@ -234,6 +301,7 @@ namespace GameProject
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
+            control.BackgroundImageLayout = ImageLayout.Stretch;
         }
     }
 }

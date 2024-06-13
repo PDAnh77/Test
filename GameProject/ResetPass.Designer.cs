@@ -34,28 +34,26 @@ namespace GameProject
             this.Notification = new System.Windows.Forms.Label();
             this.btnReturn = new GameProject.CustomControls.ButtonDesign();
             this.Header = new System.Windows.Forms.Label();
-            this.btnReset = new GameProject.CustomControls.ButtonDesign();
-            this.textBoxDesign3 = new GameProject.CustomControls.TextBoxDesign();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
-            this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
+            this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
+            this.btnReturn = new GameProject.CustomControls.ButtonDesign();
+            this.btnReset = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Notification
             // 
-            Notification.AutoSize = true;
-            Notification.ForeColor = Color.Black;
-            Notification.Location = new Point(44, 124);
-            Notification.Name = "Notification";
-            Notification.Size = new Size(50, 20);
-            Notification.TabIndex = 21;
-            Notification.Text = "label2";
-            Notification.TextAlign = ContentAlignment.MiddleCenter;
+            this.Notification.AutoSize = true;
+            this.Notification.ForeColor = System.Drawing.Color.Black;
+            this.Notification.Location = new System.Drawing.Point(41, 215);
+            this.Notification.Name = "Notification";
+            this.Notification.Size = new System.Drawing.Size(44, 16);
+            this.Notification.TabIndex = 21;
+            this.Notification.Text = "label2";
+            this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnReturn
             // 
@@ -79,56 +77,33 @@ namespace GameProject
             // 
             // Header
             // 
-            Header.AutoSize = true;
-            Header.BackColor = Color.Transparent;
-            Header.Location = new Point(184, 72);
-            Header.Name = "Header";
-            Header.Size = new Size(132, 20);
-            Header.TabIndex = 15;
-            Header.Text = "RESET PASSWORD";
+            this.Header.AutoSize = true;
+            this.Header.BackColor = System.Drawing.Color.Transparent;
+            this.Header.Location = new System.Drawing.Point(184, 72);
+            this.Header.Name = "Header";
+            this.Header.Size = new System.Drawing.Size(135, 16);
+            this.Header.TabIndex = 15;
+            this.Header.Text = "RESET PASSWORD";
             // 
-            // btnReset
+            // pictureBox2
             // 
-            btnReset.BackColor = Color.MediumSlateBlue;
-            btnReset.BackgroundColor = Color.MediumSlateBlue;
-            btnReset.BackgroundImageLayout = ImageLayout.Stretch;
-            btnReset.BorderColor = Color.PaleVioletRed;
-            btnReset.BorderRadius = 0;
-            btnReset.BorderSize = 0;
-            btnReset.FlatAppearance.BorderSize = 0;
-            btnReset.FlatStyle = FlatStyle.Flat;
-            btnReset.ForeColor = Color.White;
-            btnReset.Location = new Point(92, 501);
-            btnReset.Name = "btnReset";
-            btnReset.Size = new Size(252, 50);
-            btnReset.TabIndex = 14;
-            btnReset.Text = "Reset password";
-            btnReset.TextColor = Color.White;
-            btnReset.UseVisualStyleBackColor = false;
-            btnReset.Click += btnReset_Click;
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(45, 279);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(344, 95);
+            this.pictureBox2.TabIndex = 23;
+            this.pictureBox2.TabStop = false;
             // 
-            // textBoxDesign3
+            // pictureBox1
             // 
-            textBoxDesign3.BackColor = Color.Moccasin;
-            textBoxDesign3.BackgroundImageLayout = ImageLayout.Stretch;
-            textBoxDesign3.BorderColor = Color.Transparent;
-            textBoxDesign3.BorderFocusColor = Color.Transparent;
-            textBoxDesign3.BorderRadius = 0;
-            textBoxDesign3.BorderSize = 1;
-            textBoxDesign3.Font = new Font("Segoe UI", 9.5F);
-            textBoxDesign3.ForeColor = Color.Black;
-            textBoxDesign3.Location = new Point(57, 410);
-            textBoxDesign3.Margin = new Padding(4);
-            textBoxDesign3.Multiline = false;
-            textBoxDesign3.Name = "textBoxDesign3";
-            textBoxDesign3.Padding = new Padding(7);
-            textBoxDesign3.PasswordChar = true;
-            textBoxDesign3.PlaceholderColor = Color.DarkGray;
-            textBoxDesign3.PlaceholderText = "Nhập lại mật khẩu";
-            textBoxDesign3.Size = new Size(286, 36);
-            textBoxDesign3.TabIndex = 27;
-            textBoxDesign3.Texts = "";
-            textBoxDesign3.UnderlinedStyle = false;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(44, 380);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(345, 95);
+            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabStop = false;
             // 
             // pictureBox3
             // 
@@ -142,69 +117,93 @@ namespace GameProject
             // 
             // textBoxDesign1
             // 
-            textBoxDesign1.BackColor = Color.Moccasin;
-            textBoxDesign1.BackgroundImageLayout = ImageLayout.Stretch;
-            textBoxDesign1.BorderColor = Color.Transparent;
-            textBoxDesign1.BorderFocusColor = Color.Transparent;
-            textBoxDesign1.BorderRadius = 0;
-            textBoxDesign1.BorderSize = 1;
-            textBoxDesign1.Font = new Font("Segoe UI", 9.5F);
-            textBoxDesign1.ForeColor = Color.Black;
-            textBoxDesign1.Location = new Point(58, 208);
-            textBoxDesign1.Margin = new Padding(4);
-            textBoxDesign1.Multiline = false;
-            textBoxDesign1.Name = "textBoxDesign1";
-            textBoxDesign1.Padding = new Padding(7);
-            textBoxDesign1.PasswordChar = false;
-            textBoxDesign1.PlaceholderColor = Color.DarkGray;
-            textBoxDesign1.PlaceholderText = "Tên đăng nhập";
-            textBoxDesign1.Size = new Size(286, 36);
-            textBoxDesign1.TabIndex = 25;
-            textBoxDesign1.Texts = "";
-            textBoxDesign1.UnderlinedStyle = false;
+            this.textBoxDesign1.BackColor = System.Drawing.Color.Moccasin;
+            this.textBoxDesign1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.textBoxDesign1.BorderColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign1.BorderFocusColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign1.BorderRadius = 0;
+            this.textBoxDesign1.BorderSize = 1;
+            this.textBoxDesign1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxDesign1.ForeColor = System.Drawing.Color.Black;
+            this.textBoxDesign1.Location = new System.Drawing.Point(58, 298);
+            this.textBoxDesign1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxDesign1.Multiline = false;
+            this.textBoxDesign1.Name = "textBoxDesign1";
+            this.textBoxDesign1.Padding = new System.Windows.Forms.Padding(7);
+            this.textBoxDesign1.PasswordChar = true;
+            this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.textBoxDesign1.PlaceholderText = "Mật khẩu mới";
+            this.textBoxDesign1.ReadOnly = false;
+            this.textBoxDesign1.Size = new System.Drawing.Size(286, 36);
+            this.textBoxDesign1.TabIndex = 25;
+            this.textBoxDesign1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBoxDesign1.Texts = "";
+            this.textBoxDesign1.UnderlinedStyle = false;
             // 
             // textBoxDesign2
             // 
-            textBoxDesign2.BackColor = Color.Moccasin;
-            textBoxDesign2.BackgroundImageLayout = ImageLayout.Stretch;
-            textBoxDesign2.BorderColor = Color.Transparent;
-            textBoxDesign2.BorderFocusColor = Color.Transparent;
-            textBoxDesign2.BorderRadius = 0;
-            textBoxDesign2.BorderSize = 1;
-            textBoxDesign2.Font = new Font("Segoe UI", 9.5F);
-            textBoxDesign2.ForeColor = Color.Black;
-            textBoxDesign2.Location = new Point(58, 309);
-            textBoxDesign2.Margin = new Padding(4);
-            textBoxDesign2.Multiline = false;
-            textBoxDesign2.Name = "textBoxDesign2";
-            textBoxDesign2.Padding = new Padding(7);
-            textBoxDesign2.PasswordChar = true;
-            textBoxDesign2.PlaceholderColor = Color.DarkGray;
-            textBoxDesign2.PlaceholderText = "Mật khẩu mới";
-            textBoxDesign2.Size = new Size(286, 36);
-            textBoxDesign2.TabIndex = 24;
-            textBoxDesign2.Texts = "";
-            textBoxDesign2.UnderlinedStyle = false;
+            this.textBoxDesign2.BackColor = System.Drawing.Color.Moccasin;
+            this.textBoxDesign2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.textBoxDesign2.BorderColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign2.BorderFocusColor = System.Drawing.Color.Transparent;
+            this.textBoxDesign2.BorderRadius = 0;
+            this.textBoxDesign2.BorderSize = 1;
+            this.textBoxDesign2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxDesign2.ForeColor = System.Drawing.Color.Black;
+            this.textBoxDesign2.Location = new System.Drawing.Point(58, 399);
+            this.textBoxDesign2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxDesign2.Multiline = false;
+            this.textBoxDesign2.Name = "textBoxDesign2";
+            this.textBoxDesign2.Padding = new System.Windows.Forms.Padding(7);
+            this.textBoxDesign2.PasswordChar = true;
+            this.textBoxDesign2.PlaceholderColor = System.Drawing.Color.DarkGray;
+            this.textBoxDesign2.PlaceholderText = "Nhập lại mật khẩu";
+            this.textBoxDesign2.ReadOnly = false;
+            this.textBoxDesign2.Size = new System.Drawing.Size(286, 36);
+            this.textBoxDesign2.TabIndex = 24;
+            this.textBoxDesign2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBoxDesign2.Texts = "";
+            this.textBoxDesign2.UnderlinedStyle = false;
             // 
-            // pictureBox2
+            // btnReturn
             // 
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox2.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox2.Location = new Point(45, 189);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(344, 95);
-            pictureBox2.TabIndex = 23;
-            pictureBox2.TabStop = false;
+            this.btnReturn.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnReturn.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnReturn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnReturn.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnReturn.BorderRadius = 0;
+            this.btnReturn.BorderSize = 0;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturn.ForeColor = System.Drawing.Color.White;
+            this.btnReturn.Location = new System.Drawing.Point(92, 561);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(252, 50);
+            this.btnReturn.TabIndex = 20;
+            this.btnReturn.Text = "Return";
+            this.btnReturn.TextColor = System.Drawing.Color.White;
+            this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
-            // pictureBox1
+            // btnReset
             // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Location = new Point(44, 290);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(345, 95);
-            pictureBox1.TabIndex = 22;
-            pictureBox1.TabStop = false;
+            this.btnReset.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnReset.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnReset.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnReset.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnReset.BorderRadius = 0;
+            this.btnReset.BorderSize = 0;
+            this.btnReset.FlatAppearance.BorderSize = 0;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReset.ForeColor = System.Drawing.Color.White;
+            this.btnReset.Location = new System.Drawing.Point(92, 501);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(252, 50);
+            this.btnReset.TabIndex = 14;
+            this.btnReset.Text = "Reset password";
+            this.btnReset.TextColor = System.Drawing.Color.White;
+            this.btnReset.UseVisualStyleBackColor = false;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // ResetPass
             // 
@@ -225,12 +224,12 @@ namespace GameProject
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ResetPass";
             this.Text = "ResetPass";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.Load += new System.EventHandler(this.ResetPass_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            Load += ResetPass_Load;
+
         }
 
         #endregion

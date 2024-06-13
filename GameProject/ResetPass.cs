@@ -27,6 +27,16 @@ namespace GameProject
 
         IFirebaseClient client;
 
+        private void ResetPass_Load(object sender, EventArgs e)
+        {
+            client = new FireSharp.FirebaseClient(config);
+
+            if (client != null)
+            {
+                /*MessageBox.Show("Kết nối thành công!");*/
+            }
+        }
+
         PrivateFontCollection privateFonts = new PrivateFontCollection();
 
         private void LoadCustomFont()
@@ -92,15 +102,15 @@ namespace GameProject
         {
             PlayAnimation(btnReset);
 
-            string usrname = textBoxDesign1.Texts.Trim();
-            string pass = textBoxDesign2.Texts;
-            string passconf = textBoxDesign3.Texts;
+            string usrname = User.ResetpassUser.Username;
+            string pass = textBoxDesign1.Texts;
+            string passconf = textBoxDesign2.Texts;
 
             foreach (Control x in Controls)
             {
                 if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
                 {
-                    Notification.Text = "Vui lòng nhập đầy đủ thông tin!";
+                    ShowNotification("Vui lòng nhập đầy đủ thông tin!");
                     CenterControl(Notification);
                     return;
                 }
@@ -111,36 +121,32 @@ namespace GameProject
                 FirebaseResponse response1 = client.Get(@"Information/" + usrname);
                 if (response1.Body != "null")
                 {
-                    if (pass == passconf)
+                if (pass == passconf)
+                {
+                    User.ResetpassUser.Password = pass;
+                    User data = User.ResetpassUser;
+
+                    SetResponse response = await client.SetAsync("Information/" + usrname, data);
+                    ShowNotification("Cập nhật mật khẩu thành công!");
+
+                    var wait = new System.Windows.Forms.Timer();
+                    wait.Tick += delegate
                     {
-                        Data data = new Data()
-                        {
-                            Username = usrname,
-                            Password = pass
-                        };
-                        SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
-
-                        int timerSeconds = 4;
-                        int remainingSeconds = timerSeconds;
-
-                        var wait = new System.Windows.Forms.Timer();
-                        wait.Tick += delegate
-                        {
                             remainingSeconds--;
                             Notification.Text = $"Cập nhật mật khẩu mới thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
                             CenterControl(Notification);
 
                             if (remainingSeconds <= 0)
                             {
-                                Login login = new Login();
-                                login.Show();
-                                wait.Stop();
-                                this.Close();
+                        Login login = new Login();
+                        login.Show();
+                        wait.Stop();
+                        this.Close();
                             }
-                        };
-                        wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
-                        wait.Start();
-                    }
+                    };
+                    wait.Interval = (int)TimeSpan.FromSeconds(2).TotalMilliseconds;
+                    wait.Start();
+                }
                     else
                     {
                         Notification.Text = "Mật khẩu nhập lại không chính xác!";
@@ -148,7 +154,7 @@ namespace GameProject
                 }
                 else
                 {
-                    Notification.Text = "Tên đăng nhập không tồn tại!";
+                    ShowNotification("Mật khẩu nhập lại không chính xác!");
                 }
                 CenterControl(Notification);
             }
@@ -164,6 +170,21 @@ namespace GameProject
             Login login = new Login();
             login.Show();
             this.Close();
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -188,10 +209,12 @@ namespace GameProject
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
         }
 
+        Color customColor = Color.FromArgb(234, 212, 172);
+
         private void BodyConfig()
         {
 
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);
@@ -204,7 +227,9 @@ namespace GameProject
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
-            CenterControl(pictureBox3);
+
+            textBoxDesign1.BackColor = customColor;
+            textBoxDesign2.BackColor = customColor;
         }
 
         private void ButtonConfig()
@@ -216,7 +241,7 @@ namespace GameProject
                     CenterControl(button);
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SandyBrown;
+                    button.BackColor = customColor;
                 }
             }
         }
@@ -233,6 +258,7 @@ namespace GameProject
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
+            control.BackgroundImageLayout = ImageLayout.Stretch;
         }
     }
 }

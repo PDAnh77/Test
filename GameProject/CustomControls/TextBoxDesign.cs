@@ -104,6 +104,20 @@ namespace GameProject.CustomControls
         }
 
         [Category("Textbox Advance")]
+        public HorizontalAlignment TextAlign
+        {
+            get { return textBox1.TextAlign; }
+            set { textBox1.TextAlign = value; }
+        }
+
+        [Category("Textbox Advance")]
+        public bool ReadOnly
+        {
+            get { return textBox1.ReadOnly; }
+            set { textBox1.ReadOnly = value; }
+        }
+
+        [Category("Textbox Advance")]
         public override Color BackColor
         {
             get { return base.BackColor; }

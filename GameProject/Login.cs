@@ -89,7 +89,7 @@ namespace GameProject
             }
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnLogin);
 
@@ -98,38 +98,32 @@ namespace GameProject
 
             if (string.IsNullOrWhiteSpace(usrname) || string.IsNullOrWhiteSpace(pass.Trim()))
             {
-                Notification.Text = "Vui lòng nhập thông tin đăng nhập!";
+                ShowNotification("Vui lòng nhập thông tin đăng nhập!");
                 CenterControl(Notification);
                 return;
             }
 
             try
             {
-                FirebaseResponse response = client.Get(@"Information/" + usrname);
+                FirebaseResponse response = await client.GetAsync("Information/" + usrname);
                 if (response.Body != "null")
                 {
-                    Data ResUser = response.ResultAs<Data>(); // User data retrieved from database
+                    User ResUser = response.ResultAs<User>(); // User data retrieved from database
 
-                    Data CurUser = new Data()
+                    User CurUser = new User()
                     {
                         Username = usrname,
                         Password = pass
                     };
 
-                    int timerSeconds = 6;
-                    int remainingSeconds = timerSeconds;
-
-                    if (Data.IsEqual(ResUser, CurUser))
+                    if (User.IsEqual(ResUser, CurUser))
                     {
-                        Notification.Text = "Đăng nhập thành công!";
-                        Data.CurrentUser = new Data()
-                        {
-                            Username = usrname,
-                            Password = pass
-                        };
+                        ShowNotification("Đăng nhập thành công!");
+                        User.CurrentUser = ResUser;
                         DialogResult = DialogResult.OK;
+                        this.Close();
 
-                        var wait = new System.Windows.Forms.Timer();
+                        /*var wait = new System.Windows.Forms.Timer();
                         wait.Tick += delegate
                         {
                             remainingSeconds--;
@@ -138,20 +132,20 @@ namespace GameProject
 
                             if (remainingSeconds <= 0)
                             {
-                                this.Close();
+                            this.Close();
                             }
                         };
-                        wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
-                        wait.Start();
+                        wait.Interval = (int)TimeSpan.FromSeconds(1.5).TotalMilliseconds;
+                        wait.Start();*/
                     }
                     else
                     {
-                        Notification.Text = "Mật khẩu không chính xác!";
+                        ShowNotification("Mật khẩu không chính xác!");
                     }
                 }
                 else
                 {
-                    Notification.Text = "Tên đăng nhập không tồn tại!";
+                    ShowNotification("Tên đăng nhập không tồn tại!");
                 }
                 CenterControl(Notification);
             }
@@ -172,6 +166,21 @@ namespace GameProject
             SendCode sendCode = new SendCode();
             sendCode.Show();
             this.Close();
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -196,10 +205,12 @@ namespace GameProject
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
         }
 
+        Color customColor = Color.FromArgb(234, 212, 172);
+
         private void BodyConfig()
         {
 
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);
@@ -210,6 +221,9 @@ namespace GameProject
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
+
+            textBoxDesign1.BackColor = customColor;
+            textBoxDesign2.BackColor = customColor;
         }
 
         private void ButtonConfig()
@@ -221,7 +235,7 @@ namespace GameProject
                     CenterControl(button);
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SandyBrown;
+                    button.BackColor = customColor;
                 }
             }
         }
@@ -238,34 +252,8 @@ namespace GameProject
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
+            control.BackgroundImageLayout = ImageLayout.Stretch;
         }
-    }
-}
-
-// Resize Event
-/*Size formOriginalSize;
-Rectangle recLabel1;
-Rectangle recButton1;
-Rectangle recButton2;
-Rectangle recPicture1;
-Rectangle recPicture2;
-Rectangle recTextbox1;
-Rectangle recTextbox2;
-
-private void ResizeScreenEvent()
-{
-    formOriginalSize = this.Size;
-    this.Resize += Login_Resize;
-    recLabel1 = new Rectangle(label1.Location, label1.Size);
-    recButton1 = new Rectangle(btnLogin.Location, btnLogin.Size);
-    recButton2 = new Rectangle(btnReturnHome.Location, btnReturnHome.Size);
-    recTextbox1 = new Rectangle(textBoxDesign1.Location, textBoxDesign1.Size);
-    recTextbox2 = new Rectangle(textBoxDesign2.Location, textBoxDesign2.Size);
-    recPicture1 = new Rectangle(pictureBox1.Location, pictureBox1.Size);
-    recPicture2 = new Rectangle(pictureBox2.Location, pictureBox2.Size);
-    *//*textBoxDesign1.Multiline = true;
-    textBoxDesign2.Multiline = true;*//*
-}
 
 private void Login_Resize(object sender, EventArgs e)
 {
@@ -279,7 +267,7 @@ private void Login_Resize(object sender, EventArgs e)
 
     resize_Control(pictureBox1, recPicture1);
     resize_Control(pictureBox2, recPicture2);
-}
+    }
 
 private void resize_Control(Control control, Rectangle r)
 {
@@ -298,5 +286,5 @@ private void resize_Control(Control control, Rectangle r)
         float currentFontSize = ((Label)control).Font.Size;
         float newFontSize = currentFontSize * Math.Min(xRatio, yRatio);
         ((Label)control).Font = new Font(((Label)control).Font.FontFamily, newFontSize, ((Label)control).Font.Style);
-    }
+}
 }*/

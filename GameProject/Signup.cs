@@ -11,7 +11,9 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -97,45 +99,56 @@ namespace GameProject
             {
                 if (x is TextBoxDesign && string.IsNullOrWhiteSpace(((TextBoxDesign)x).Texts.Trim()))
                 {
-                    Notification.Text = "Vui lòng nhập đầy đủ thông tin!";
+                    ShowNotification("Vui lòng nhập đầy đủ thông tin!");
                     CenterControl(Notification);
                     return;
                 }
             }
 
             string usrname = textBoxDesign1.Texts.Trim();
-            string pass = textBoxDesign2.Texts;
-            string passConfirm = textBoxDesign3.Texts;
+            string email = textBoxDesign2.Texts.Trim();
+            string pass = textBoxDesign3.Texts;
+            string passConfirm = textBoxDesign4.Texts;
 
-            FirebaseResponse response1 = client.Get(@"Information/" + usrname);
-            if (response1.Body == "null")
+            if (!IsValidEmail(email))
+            {
+                ShowNotification("Email không hợp lệ!");
+                CenterControl(Notification);
+                return;
+            }
+
+            if (CheckAccountExists(usrname, email) == false)
             {
                 if (pass == passConfirm)
                 {
-                    var data = new Data
+                    var data = new User
                     {
                         Username = usrname,
+                        Email = email,
                         Password = pass
                     };
 
-                    SetResponse response2 = await client.SetTaskAsync("Information/" + usrname, data);
-                    Data result = response2.ResultAs<Data>();
+                    SetResponse response = await client.SetAsync("Information/" + usrname, data);
+                    User result = response.ResultAs<User>();
 
-                    Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!";
+                    ShowNotification($"Đăng ký tài khoản: {result.Username} thành công!");
 
-                    int timerSeconds = 6;
+                    int timerSeconds = 3; // Countdown timer
                     int remainingSeconds = timerSeconds;
                     var wait = new System.Windows.Forms.Timer();
 
                     wait.Tick += delegate
-                    {
-                        remainingSeconds--;
-                        Notification.Text = $"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                        CenterControl(Notification);
-
-                        if (remainingSeconds <= 0)
+                    {                      
+                        if (remainingSeconds == 0)
                         {
                             this.Close();
+                        }
+                        else
+                        {
+                            result.Rank = "Đồng";
+                            ShowNotification($"Đăng ký tài khoản: {result.Username} thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}");
+                            remainingSeconds--;
+                            CenterControl(Notification);
                         }
                     };
                     wait.Interval = (int)TimeSpan.FromSeconds(1).TotalMilliseconds;
@@ -143,20 +156,60 @@ namespace GameProject
                 }
                 else
                 {
-                    Notification.Text = "Mật khẩu nhập lại không chính xác!";
+                    ShowNotification("Mật khẩu nhập lại không chính xác!");
                 }
             }
-            else
-            {
-                Notification.Text = "Tài khoản tồn tại!";
-            }
             CenterControl(Notification);
+        }
+
+        private bool CheckAccountExists(string usrname, string email) // Check if account exists
+        {
+            FirebaseResponse response = client.Get(@"Information");
+            var allUsers = response.ResultAs<Dictionary<string, User>>();
+            if(allUsers != null)
+            {
+                foreach(var user in allUsers.Values)
+                {
+                    if (user.Email.Equals(email))
+                    {
+                        ShowNotification("Email đã tồn tại!");
+                        return true;
+                    }
+                    if (user.Username.Equals(usrname))
+                    {
+                        ShowNotification("Tên đăng nhập đã tồn tại!");
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", RegexOptions.IgnoreCase);
+            return emailRegex.IsMatch(email);
         }
 
         private void btnReturnHome_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnReturnHome);
             this.Close();
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -181,22 +234,32 @@ namespace GameProject
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
         }
 
+        Color customColor = Color.FromArgb(234, 212, 172);
+
         private void BodyConfig()
         {
-            Notification.Text = "";
+            ShowNotification("");
             Notification.BackColor = Color.Transparent;
 
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
             CenterControl(textBoxDesign3);
+            CenterControl(textBoxDesign4);
 
             SetControlImage(pictureBox1, Animation.UI_Textbox_02);
             SetControlImage(pictureBox2, Animation.UI_Textbox_02);
             SetControlImage(pictureBox3, Animation.UI_Textbox_02);
+            SetControlImage(pictureBox4, Animation.UI_Textbox_02);
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);
             CenterControl(pictureBox3);
+            CenterControl(pictureBox4);
+
+            textBoxDesign1.BackColor = customColor;
+            textBoxDesign2.BackColor = customColor;
+            textBoxDesign3.BackColor = customColor;
+            textBoxDesign4.BackColor = customColor;
         }
 
         private void ButtonConfig()
@@ -208,7 +271,7 @@ namespace GameProject
                     CenterControl(button);
                     SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SandyBrown;
+                    button.BackColor = customColor;
                 }
             }
         }
@@ -225,6 +288,7 @@ namespace GameProject
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
+            control.BackgroundImageLayout = ImageLayout.Stretch;
         }
     }
 }

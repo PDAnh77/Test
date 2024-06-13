@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirebaseAdmin.Messaging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -47,15 +48,33 @@ namespace GameProject
             }
         }
 
-        private bool WelcomeMessage()
+        System.Windows.Forms.Timer userCheckTimer;
+        string lastLoggedInUser = null;
+
+        private void InitializeUserCheckTimer()
         {
-            if (Data.CurrentUser != null)
+            userCheckTimer = new System.Windows.Forms.Timer();
+            userCheckTimer.Interval = 1000; // Check every second
+            userCheckTimer.Tick += UserCheckTimer_Tick; // Check if any user exists
+            userCheckTimer.Start();
+        }
+
+        private bool CheckCurrentUser()
+        {
+            if (User.CurrentUser != null) { return true; }
+            else { return false; }
+        }
+
+        private void UserCheckTimer_Tick(object sender, EventArgs e)
+        {
+            if (CheckCurrentUser())
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                if (User.CurrentUser.Username != lastLoggedInUser)
+                {
+                    lastLoggedInUser = User.CurrentUser.Username;
+                    ShowNotification("Chào mừng bạn quay trở lại, " + User.CurrentUser.Username + "!");
+                    CenterControl(Notification);
+                }
             }
         }
 
@@ -69,6 +88,8 @@ namespace GameProject
 
             HeaderConfig();
             BodyConfig();
+
+            InitializeUserCheckTimer();
         }
 
         Login loginForm;
@@ -119,14 +140,30 @@ namespace GameProject
         private void btnPlay_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnPlay);
-            if (WelcomeMessage() == true)
+            if (CheckCurrentUser() == true)
             {
-                /*MessageBox.Show("Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!");*/
+                // Create a list to store forms that need to be closed
+                List<Form> formsToClose = new List<Form>();
+
+                // Identify forms that need to be closed
+                foreach (Form openForm in Application.OpenForms)
+                {
+                    if (openForm is Login || openForm is Signup || openForm is UserProfile)
+                    {
+                        formsToClose.Add(openForm);
+                    }
+                }
+
+                // Close identified forms
+                foreach (Form form in formsToClose)
+                {
+                    form.Close();
+                }
                 DialogResult = DialogResult.OK;
             }
             else
             {
-                Notification.Text = "Bạn cần đăng nhập vào tài khoản trước!";
+                ShowNotification("Bạn cần đăng nhập vào tài khoản trước!");
             }
             CenterControl(Notification);
         }
@@ -137,7 +174,46 @@ namespace GameProject
             Application.Exit();
         }
 
-        private void PlayAnimation(Control control)
+        UserProfile userprofileForm;
+
+        private void btnProfile_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnProfile);
+            if(CheckCurrentUser() == true)
+            {
+                if (userprofileForm == null || userprofileForm.IsDisposed)
+                {
+                    userprofileForm = new UserProfile();
+                    userprofileForm.Show();
+                }
+                else // If userprofile menu already opened
+                {
+                    userprofileForm.BringToFront();
+                }
+            }
+            else
+            {
+                ShowNotification("Bạn cần đăng nhập vào tài khoản trước!");
+            }
+            CenterControl(Notification);
+        }
+
+        delegate void PrintDelegate(string text);
+
+        private void ShowNotification(string text)
+        {
+            if (Notification.InvokeRequired)
+            {
+                PrintDelegate d = new PrintDelegate(ShowNotification);
+                Notification.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Notification.Text = text;
+            }
+        }
+
+        private void PlayAnimation(Control control) // Manage all control animation
         {
             if (control is Button button)
             {
@@ -150,13 +226,26 @@ namespace GameProject
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            if(button.Name == "btnProfile")
+            {
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a1);
+            }
+            else
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            }
         }
 
         private void HeaderConfig()
@@ -183,8 +272,19 @@ namespace GameProject
             {
                 if (control is Button button)
                 {
-                    CenterControl(button);
-                    SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    Color customColor01 = Color.FromArgb(63, 40, 50);
+                    Color customColor02 = Color.FromArgb(181, 119, 94);
+                    if(button.Name == "btnProfile")
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a1);
+                        button.BackColor = customColor02;
+                    }
+                    else // other buttons
+                    {
+                        CenterControl(button);
+                        SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                        button.BackColor = customColor01;
+                    }
                     button.ForeColor = Color.Black;
                     button.BackColor = Color.SaddleBrown;
                 }
@@ -203,6 +303,7 @@ namespace GameProject
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
+            control.BackgroundImageLayout = ImageLayout.Stretch;
         }
     }
 }

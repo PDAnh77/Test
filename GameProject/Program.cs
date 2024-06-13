@@ -16,15 +16,38 @@ namespace GameProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Menu gameMenu = new Menu();
             while (true) // Loop to return to GameMenu after closing GameLobby
             {
                 if (gameMenu.ShowDialog() == DialogResult.OK)
                 {
                     GameLobby gameLobby = new GameLobby();
-                    if (gameLobby.ShowDialog() != DialogResult.OK)
+                    while (true) // Loop to return to GameLobby after closing RoomForm
                     {
-                        break;
+                        if (gameLobby.ShowDialog() == GameLobby.ContinueToRoomForm)
+                        {
+                            RoomForm room = new RoomForm();
+                            while (true)
+                            {
+                                if(room.ShowDialog() == RoomForm.ContinueToGamePlayForm)
+                                {
+                                    GamePlay gamePlay = new GamePlay();
+                                    if (gamePlay.ShowDialog() != DialogResult.OK)
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }               
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
                 else
@@ -32,6 +55,11 @@ namespace GameProject
                     break;
                 }
             }
+
+            // Test form
+
+            /*RoomForm roomForm = new RoomForm();
+            Application.Run(roomForm);*/
 
             Application.Exit();
         }
