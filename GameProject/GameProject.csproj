@@ -210,6 +210,8 @@
     </Compile>
     <Compile Include="Player.cs" />
     <Compile Include="PlayRoom.cs" />
+    <Compile Include="SocketData.cs" />
+    <Compile Include="SocketManager.cs" />
     <Compile Include="User.cs" />
     <Compile Include="GameLobby.cs">
       <SubType>Form</SubType>
