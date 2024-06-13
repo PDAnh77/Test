@@ -44,10 +44,10 @@ namespace GameProject
         private int counter = 30;
         private int time = 0;
 
-        //public GamePlay()
-        //{
-        //    InitializeComponent();
-        //}
+        public GamePlay()
+        {
+            InitializeComponent();
+        }
 
         //public GamePlay(GameLogin frmLogin)
         //{

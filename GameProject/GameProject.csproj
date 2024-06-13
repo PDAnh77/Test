@@ -263,6 +263,7 @@
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Content Include="Resources\1.png" />
+    <None Include="Resources\victoryyyy.png" />
     <None Include="Resources\UI_Square.png" />
     <None Include="Resources\UI_Menu_03.png" />
     <None Include="Resources\UI_Textbox_03.png" />
