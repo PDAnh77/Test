@@ -44,6 +44,7 @@ namespace GameProject
         private int counter = 30;
         private int time = 0;
 
+        SocketManager socket;
         public GamePlay()
         {
             InitializeComponent();
@@ -64,15 +65,104 @@ namespace GameProject
         //    }
         //    reloadForm();
         //}
-        public GamePlay(string name, string idPhong)
+        public GamePlay(string name, string idPhong, SocketManager socket)
         {
             InitializeComponent();
 
             username = name;
             IDphong = idPhong;
+            this.socket = socket;
             DSUser.Add(name);
         }
-
+        public void Listen()
+        {
+            Thread listenThread = new Thread(() =>
+            {
+                try //tránh lỗi 1 bên thoát 
+                {
+                    SocketData data = (SocketData)socket.Receive();
+                    ProcessData(data);
+                }
+                catch (Exception e)
+                {
+                }
+            });
+            listenThread.IsBackground = true;
+            listenThread.Start();
+        }
+        public void ProcessData(SocketData data)
+        {
+            switch (data.Command)
+            {
+                //    case (int)SocketCommand.NEW_GAME:
+                //        this.Invoke((MethodInvoker)(() =>
+                //        {
+                //            NewGame();
+                //            panelCaroBoard.Enabled = true;
+                //        }));
+                //        if (!socket.isServer)
+                //        {
+                //            CaroBoard.CurrentPlayer = 1;
+                //            CaroBoard.ChangePlayer();
+                //        }
+                //        break;
+                //    case (int)SocketCommand.RQ_NEW_GAME:
+                //        if (MessageBox.Show("Đối thủ muốn chơi ván mới", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+                //            socket.Send(MessageBox.Show("Chơi tiếp đi :)))"));
+                //        else
+                //        {
+                //            socket.Send(new SocketData((int)SocketCommand.NEW_GAME, new Point(), ""));
+                //            this.Invoke((MethodInvoker)(() =>
+                //            {
+                //                NewGame();
+                //                panelCaroBoard.Enabled = false;
+                //            }));
+                //            if (socket.isServer)
+                //            {
+                //                CaroBoard.CurrentPlayer = 1;
+                //                CaroBoard.ChangePlayer();
+                //            }
+                //        }
+                //        break;
+                //    case (int)SocketCommand.SEND_POINT:
+                //        this.Invoke((MethodInvoker)(() =>   //thay đổi giao diện
+                //        {
+                //            progressClock.Value = 0;
+                //            panelCaroBoard.Enabled = true;
+                //            timerClock.Start();
+                //            CaroBoard.OtherPlayerMark(data.Point);
+                //        }));
+                //        newGameToolStripMenuItem.Enabled = true;
+                //        break;
+                //    case (int)SocketCommand.QUIT:
+                //        timerClock.Stop();
+                //        MessageBox.Show("Đối thủ đã thoát", "Thông báo");
+                //        this.Invoke((MethodInvoker)(() =>
+                //        {
+                //            NewGame();
+                //            panelCaroBoard.Enabled = false;
+                //        }));
+                //        if (socket.isServer)
+                //        {
+                //            socket.CloseConnect();
+                //        }
+                //        buttonLAN.Enabled = true;
+                //        newGameToolStripMenuItem.Enabled = false;
+                //        break;
+                case (int)SocketCommand.START:
+                    MessageBox.Show(data.Messege);
+                    break;
+                case (int)SocketCommand.CREATE_ROOM:
+                    MessageBox.Show(data.Messege);
+                    break;
+                case (int)SocketCommand.JOIN_ROOM:
+                    MessageBox.Show(data.Messege);
+                    break;
+                default:
+                    break;
+            }
+            Listen();
+        }
         public void getNameOtheruser(string name)
         {
             DSUser.Add(name);
@@ -418,7 +508,7 @@ namespace GameProject
         private void btnStart_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnStart);
-            SendMSGtoFB("2", username, IDphong, "");
+            Listen();
         }
 
         private void btnXiNgau_Click(object sender, EventArgs e)

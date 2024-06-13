@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlTypes;
 using GameProject.CustomControls;
+using FireSharp.Config;
+using FireSharp.Interfaces;
 
 namespace GameProject
 {
@@ -23,11 +25,18 @@ namespace GameProject
         #region Properties
 
         PrivateFontCollection privateFonts = new PrivateFontCollection();
-        private static readonly HttpClient client = new HttpClient();
-        private const string firebaseUrl = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/";
-        private const string firebaseAuth = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"; // Khóa bí mật
+        public IFirebaseConfig config = new FirebaseConfig
+        {
+            BasePath = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            AuthSecret = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"
+        };
+
+        IFirebaseClient client;
         public static readonly DialogResult ContinueToRoomForm = DialogResult.OK;
 
+        SocketManager socket;
+        private GamePlay game;
+        string NameUser = User.CurrentUser.Username;
         #endregion
 
 
@@ -36,8 +45,7 @@ namespace GameProject
             InitializeComponent();
             LoadCustomFont();
             BodyConfig();
-
-            LoadRooms();
+            socket = new SocketManager();           
         }
 
         #region UI
@@ -165,214 +173,102 @@ namespace GameProject
 
         #region Function
 
-        private async Task LoadRooms()
+        public void Listen()
         {
-            try
+            Thread listenThread = new Thread(() =>
             {
-                var response = await client.GetStringAsync($"{firebaseUrl}Rooms.json?auth={firebaseAuth}");
-                var rooms = JsonSerializer.Deserialize<Dictionary<string, Room>>(response);
-
-                flowLayoutPanelRooms.Controls.Clear();
-                if (rooms != null)
+                try //tránh lỗi 1 bên thoát 
                 {
-                    foreach (var room in rooms)
-                    {
-                        var roomName = room.Key;
-                        var roomData = room.Value;
-
-                        // Tạo panel lưu trữ thông tin phòng
-                        Panel roomPanel = new Panel
-                        {
-                            Width = 280,
-                            Height = 70,
-                            BorderStyle = BorderStyle.FixedSingle,
-                            Margin = new Padding(10),
-                            Tag = roomName // Set Tag để dùng cho các hàm ở dưới
-                        };
-
-                        // Thêm sự kiện MouseEnter and MouseLeave vào Panel
-                        roomPanel.MouseEnter += RoomPanel_MouseEnter;
-                        roomPanel.MouseLeave += RoomPanel_MouseLeave;
-
-                        // Tạo Label để hiển thị tên phòng
-                        Label roomNameLabel = new Label
-                        {
-                            Text = $"{roomName}",
-                            Font = new Font("Arial", 12, FontStyle.Bold),
-                            Location = new Point(10, 10),
-                            AutoSize = true
-                        };
-
-                        // Tạo Label hiển thị số người chơi trong phòng
-                        Label playerCountLabel = new Label
-                        {
-                            Text = $"Players: {roomData.CurrentPlayers}/4",
-                            Font = new Font("Arial", 10),
-                            Location = new Point(10, 40),
-                            AutoSize = true
-                        };
-
-                        Label RankRoom = new Label
-                        {
-                            Text = $"Rank: {roomData.RankRoom}",
-                            Font = new Font("Arial", 10),
-                            Location = new Point(120, 40),
-                            AutoSize = true
-                        };
-
-                        // Thêm label vào panel
-                        roomPanel.Controls.Add(roomNameLabel);
-                        roomPanel.Controls.Add(playerCountLabel);
-                        roomPanel.Controls.Add(RankRoom);
-
-                        // Thêm event vào panel
-                        roomPanel.Click += (s, e) => RoomPanel_Click(roomName);
-
-                        // Thêm panel vào flowLayoutPanel
-                        flowLayoutPanelRooms.Controls.Add(roomPanel);
-                    }
+                    SocketData data = (SocketData)socket.Receive();
+                    ProcessData(data);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi tải phòng: " + ex.Message);
-            }
-        }
-
-        private void RoomPanel_MouseEnter(object sender, EventArgs e)
-        {
-            Panel panel = sender as Panel;
-            panel.BorderStyle = BorderStyle.Fixed3D; // Border được in đậm khi di chuyển chuột vào Panel
-        }
-
-        private void RoomPanel_MouseLeave(object sender, EventArgs e)
-        {
-            Panel panel = sender as Panel;
-            panel.BorderStyle = BorderStyle.FixedSingle; // Border về ban đầu khi di chuyển chuột ra khỏi Panel
-        }
-
-        private void OnRoomDeleted(string roomName)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action<string>(OnRoomDeleted), roomName);
-                return;
-            }
-
-            // Tìm và xóa Panel tương ứng với phòng bị xóa
-            foreach (Control control in flowLayoutPanelRooms.Controls)
-            {
-                if (control is Panel panel && panel.Tag.ToString() == roomName)
+                catch (Exception e)
                 {
-                    flowLayoutPanelRooms.Controls.Remove(panel);
+                }
+            });
+            listenThread.IsBackground = true;
+            listenThread.Start();
+
+        }
+        public void ProcessData(SocketData data)
+        {
+            switch (data.Command)
+            {
+                //    case (int)SocketCommand.NEW_GAME:
+                //        this.Invoke((MethodInvoker)(() =>
+                //        {
+                //            NewGame();
+                //            panelCaroBoard.Enabled = true;
+                //        }));
+                //        if (!socket.isServer)
+                //        {
+                //            CaroBoard.CurrentPlayer = 1;
+                //            CaroBoard.ChangePlayer();
+                //        }
+                //        break;
+                //    case (int)SocketCommand.RQ_NEW_GAME:
+                //        if (MessageBox.Show("Đối thủ muốn chơi ván mới", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+                //            socket.Send(MessageBox.Show("Chơi tiếp đi :)))"));
+                //        else
+                //        {
+                //            socket.Send(new SocketData((int)SocketCommand.NEW_GAME, new Point(), ""));
+                //            this.Invoke((MethodInvoker)(() =>
+                //            {
+                //                NewGame();
+                //                panelCaroBoard.Enabled = false;
+                //            }));
+                //            if (socket.isServer)
+                //            {
+                //                CaroBoard.CurrentPlayer = 1;
+                //                CaroBoard.ChangePlayer();
+                //            }
+                //        }
+                //        break;
+                //    case (int)SocketCommand.SEND_POINT:
+                //        this.Invoke((MethodInvoker)(() =>   //thay đổi giao diện
+                //        {
+                //            progressClock.Value = 0;
+                //            panelCaroBoard.Enabled = true;
+                //            timerClock.Start();
+                //            CaroBoard.OtherPlayerMark(data.Point);
+                //        }));
+                //        newGameToolStripMenuItem.Enabled = true;
+                //        break;
+                //    case (int)SocketCommand.QUIT:
+                //        timerClock.Stop();
+                //        MessageBox.Show("Đối thủ đã thoát", "Thông báo");
+                //        this.Invoke((MethodInvoker)(() =>
+                //        {
+                //            NewGame();
+                //            panelCaroBoard.Enabled = false;
+                //        }));
+                //        if (socket.isServer)
+                //        {
+                //            socket.CloseConnect();
+                //        }
+                //        buttonLAN.Enabled = true;
+                //        newGameToolStripMenuItem.Enabled = false;
+                //        break;
+                case (int)SocketCommand.START:
+                    MessageBox.Show(data.Messege);
                     break;
-                }
+                case (int)SocketCommand.CREATE_ROOM:
+                    MessageBox.Show(data.Messege);
+                    break;
+                case (int)SocketCommand.JOIN_ROOM:
+                    MessageBox.Show(data.Messege);
+                    break;
+                default:
+                    break;
             }
-
-            LoadRooms();
+            Listen();
         }
 
-        private void GameLobby_Load(object sender, EventArgs e)
-        {
-            OnRoomDeleted(Room.CurRoomName);
-            Room.CurRoomName = null;
-        }
-
-        private async void JoinRoom(string roomName)
-        {
-            // Thêm người dùng vào phòng
-            try
-            {
-                var response = await client.GetStringAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}");
-                var room = JsonSerializer.Deserialize<Room>(response);
-
-                if (room != null)
-                {
-                    if (room.CurrentPlayers >= 4)
-                    {
-                        Notification.Text = "Phòng đã đầy";
-                        return;
-                    }
-
-                    if (room.RankRoom != User.CurrentUser.Rank)
-                    {
-                        Notification.Text = "Phòng khác bậc hạng của bạn!";
-                        return;
-                    }
-
-                    if (room.Player2 == null)
-                    {
-                        room.Player2 = User.CurrentUser;
-                    }
-                    else if (room.Player3 == null)
-                    {
-                        room.Player3 = User.CurrentUser;
-                    }
-                    else if (room.Player4 == null)
-                    {
-                        room.Player4 = User.CurrentUser;
-                    }
-
-                    room.CurrentPlayers++;
-
-                    var json = JsonSerializer.Serialize(room);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var updateResponse = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
-
-                    if (updateResponse.IsSuccessStatusCode)
-                    {
-                        txtRoomName.Texts = "";
-                        Notification.Text = "";
-                        Room.CurRoomName = roomName;
-                        DialogResult = ContinueToRoomForm;
-                    }
-                    else
-                    {
-                        Notification.Text = "Không thể tham gia phòng";
-                    }
-                }
-                else
-                {
-                    Notification.Text = "Phòng không tồn tại";
-                }
-            }
-            catch (Exception ex)
-            {
-                Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
-            }
-        }
-
-        private async Task<bool> CheckRoomNameExists(string name)
-        {
-            try
-            {
-                var response = await client.GetStringAsync($"{firebaseUrl}Rooms.json?auth={firebaseAuth}");
-                var allRooms = JsonSerializer.Deserialize<Dictionary<string, Room>>(response);
-
-                if (allRooms != null)
-                {
-                    if (allRooms.ContainsKey(name))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Notification.Text = $"Lỗi khi kiểm tra tên phòng: {ex.Message}";
-            }
-
-            return false;
-        }
 
         #endregion
 
         #region Event
 
-        private void RoomPanel_Click(string roomName)
-        {
-            JoinRoom(roomName);
-        }
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
@@ -381,64 +277,43 @@ namespace GameProject
             this.Close();
         }
 
-        private async void btnCreateRoom_Click(object sender, EventArgs e)
+        private void btnCreateRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnCreateRoom);
-            var roomName = txtRoomName.Texts;
-            if (!string.IsNullOrWhiteSpace(roomName))
-            {
-                bool Exist = await CheckRoomNameExists(roomName);
-                if (Exist)
-                {
-                    Notification.Text = "Tên phòng đã tồn tại";
-                    return;
-                }
-
-                var roomData = new Room
-                {
-                    Name = roomName,
-                    CurrentPlayers = 1,
-                    CurrentReady = 1,
-                    RankRoom = User.CurrentUser.Rank,
-                    Owner = User.CurrentUser
-                };
-
-                try
-                {
-                    var json = JsonSerializer.Serialize(roomData);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var response = await client.PutAsync($"{firebaseUrl}Rooms/{roomName}.json?auth={firebaseAuth}", content);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        txtRoomName.Texts = "";
-                        Notification.Text = "";
-                        await LoadRooms(); // Tải lại danh sách phòng
-                        Room.CurRoomName = roomName;
-                        DialogResult = ContinueToRoomForm;
-                    }
-                    else
-                    {
-                        Notification.Text = "Không thể tạo phòng";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Notification.Text = $"Lỗi khi tạo phòng: {ex.Message}";
-                }
-            }
-            else
-            {
-                Notification.Text = "Vui lòng nhập tên phòng muốn tạo";
-            }
+            socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
+            socket.isServer = true;
+            socket.CreateServer();
+            MessageBox.Show("Đã tạo phòng", "Thông báo");
+            game = new GamePlay(NameUser, txtRoomName.Texts, socket);
+            game.Show();
         }
 
+        private void btnJoinRoom_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnJoinRoom);
+            socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
+            socket.isServer = false;
+            socket.ConnectServer();
+            MessageBox.Show("Đã kết nối", "Thông báo");
+            try
+            {
+                socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), "Tôi mới vào"));
+                game = new GamePlay(NameUser, txtRoomName.Texts, socket);
+                game.Show();
+            }
+            catch
+            {
+                MessageBox.Show("Lỏd");
+            }
+            Listen();
+        }
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnRefresh);
-            LoadRooms();
+
         }
 
         #endregion
+
     }
 }

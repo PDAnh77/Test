@@ -30,12 +30,12 @@ namespace GameProject
 
     public enum SocketCommand
     {
-        CREATE_ROOM,
-        JOIN_ROOM,
         SEND_POINT,
         NEW_GAME,
         RQ_NEW_GAME,
         QUIT,
-        START
+        START,
+        CREATE_ROOM,
+        JOIN_ROOM
     }
 }
