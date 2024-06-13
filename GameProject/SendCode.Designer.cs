@@ -39,11 +39,7 @@ namespace GameProject
             this.btnReturn = new GameProject.CustomControls.ButtonDesign();
             this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
             this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Header = new System.Windows.Forms.Label();
             this.btnVerify = new GameProject.CustomControls.ButtonDesign();
-            this.btnSend = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();

@@ -223,4 +223,3 @@ namespace GameProject
         private CustomControls.ButtonDesign btnProfile;
     }
 }
-

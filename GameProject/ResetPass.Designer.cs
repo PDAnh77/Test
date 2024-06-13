@@ -32,7 +32,6 @@ namespace GameProject
         private void InitializeComponent()
         {
             this.Notification = new System.Windows.Forms.Label();
-            this.btnReturn = new GameProject.CustomControls.ButtonDesign();
             this.Header = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -54,26 +53,6 @@ namespace GameProject
             this.Notification.TabIndex = 21;
             this.Notification.Text = "label2";
             this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnReturn
-            // 
-            btnReturn.BackColor = Color.MediumSlateBlue;
-            btnReturn.BackgroundColor = Color.MediumSlateBlue;
-            btnReturn.BackgroundImageLayout = ImageLayout.Stretch;
-            btnReturn.BorderColor = Color.PaleVioletRed;
-            btnReturn.BorderRadius = 0;
-            btnReturn.BorderSize = 0;
-            btnReturn.FlatAppearance.BorderSize = 0;
-            btnReturn.FlatStyle = FlatStyle.Flat;
-            btnReturn.ForeColor = Color.White;
-            btnReturn.Location = new Point(92, 561);
-            btnReturn.Name = "btnReturn";
-            btnReturn.Size = new Size(252, 50);
-            btnReturn.TabIndex = 20;
-            btnReturn.Text = "Return";
-            btnReturn.TextColor = Color.White;
-            btnReturn.UseVisualStyleBackColor = false;
-            btnReturn.Click += btnReturn_Click;
             // 
             // Header
             // 
@@ -104,16 +83,6 @@ namespace GameProject
             this.pictureBox1.Size = new System.Drawing.Size(345, 95);
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.BackColor = Color.Transparent;
-            pictureBox3.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox3.Location = new Point(44, 391);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(344, 95);
-            pictureBox3.TabIndex = 26;
-            pictureBox3.TabStop = false;
             // 
             // textBoxDesign1
             // 
@@ -211,8 +180,6 @@ namespace GameProject
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(432, 673);
-            this.Controls.Add(this.textBoxDesign3);
-            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.textBoxDesign1);
             this.Controls.Add(this.textBoxDesign2);
             this.Controls.Add(this.pictureBox2);
@@ -237,8 +204,6 @@ namespace GameProject
         private CustomControls.ButtonDesign btnReturn;
         private Label Header;
         private CustomControls.ButtonDesign btnReset;
-        private CustomControls.TextBoxDesign textBoxDesign3;
-        private PictureBox pictureBox3;
         private CustomControls.TextBoxDesign textBoxDesign1;
         private CustomControls.TextBoxDesign textBoxDesign2;
         private PictureBox pictureBox2;

@@ -31,14 +31,9 @@ namespace GameProject
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnReturnHome = new GameProject.CustomControls.ButtonDesign();
-            this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
-            this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Header = new System.Windows.Forms.Label();
-            this.btnSignup = new GameProject.CustomControls.ButtonDesign();
-            this.textBoxDesign3 = new GameProject.CustomControls.TextBoxDesign();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.Notification = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();

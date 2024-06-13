@@ -138,7 +138,7 @@ namespace GameProject
                     var wait = new System.Windows.Forms.Timer();
 
                     wait.Tick += delegate
-                    {                      
+                    {
                         if (remainingSeconds == 0)
                         {
                             this.Close();
@@ -166,9 +166,9 @@ namespace GameProject
         {
             FirebaseResponse response = client.Get(@"Information");
             var allUsers = response.ResultAs<Dictionary<string, User>>();
-            if(allUsers != null)
+            if (allUsers != null)
             {
-                foreach(var user in allUsers.Values)
+                foreach (var user in allUsers.Values)
                 {
                     if (user.Email.Equals(email))
                     {

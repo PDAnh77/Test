@@ -88,16 +88,6 @@ namespace GameProject
             BodyConfig();
         }
 
-        private void ResetPass_Load(object sender, EventArgs e)
-        {
-            client = new FireSharp.FirebaseClient(config);
-
-            if (client != null)
-            {
-                /*MessageBox.Show("Kết nối thành công!");*/
-            }
-        }
-
         private async void btnReset_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnReset);
@@ -118,9 +108,6 @@ namespace GameProject
 
             try
             {
-                FirebaseResponse response1 = client.Get(@"Information/" + usrname);
-                if (response1.Body != "null")
-                {
                 if (pass == passconf)
                 {
                     User.ResetpassUser.Password = pass;
@@ -132,25 +119,13 @@ namespace GameProject
                     var wait = new System.Windows.Forms.Timer();
                     wait.Tick += delegate
                     {
-                            remainingSeconds--;
-                            Notification.Text = $"Cập nhật mật khẩu mới thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                            CenterControl(Notification);
-
-                            if (remainingSeconds <= 0)
-                            {
                         Login login = new Login();
                         login.Show();
                         wait.Stop();
                         this.Close();
-                            }
                     };
                     wait.Interval = (int)TimeSpan.FromSeconds(2).TotalMilliseconds;
                     wait.Start();
-                }
-                    else
-                    {
-                        Notification.Text = "Mật khẩu nhập lại không chính xác!";
-                    }
                 }
                 else
                 {
@@ -219,11 +194,9 @@ namespace GameProject
 
             CenterControl(textBoxDesign1);
             CenterControl(textBoxDesign2);
-            CenterControl(textBoxDesign3);
 
             SetControlImage(pictureBox1, Animation.UI_Textbox_02);
             SetControlImage(pictureBox2, Animation.UI_Textbox_02);
-            SetControlImage(pictureBox3, Animation.UI_Textbox_02);
 
             CenterControl(pictureBox1);
             CenterControl(pictureBox2);

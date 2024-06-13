@@ -100,24 +100,11 @@ namespace GameProject
             if (loginForm == null || loginForm.IsDisposed)
             {
                 loginForm = new Login();
-                loginForm.FormClosed += Login_FormClosed;
                 loginForm.Show();
             }
             else // If login menu already opened
             {
                 loginForm.BringToFront();
-            }
-        }
-
-        private void Login_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (loginForm != null && loginForm.DialogResult == DialogResult.OK)
-            {
-                if (WelcomeMessage() == true)
-                {
-                    Notification.Text = "Chào mừng bạn quay trở lại, " + Data.CurrentUser.Username + "!";
-                    CenterControl(Notification);
-                }
             }
         }
 
@@ -179,7 +166,7 @@ namespace GameProject
         private void btnProfile_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnProfile);
-            if(CheckCurrentUser() == true)
+            if (CheckCurrentUser() == true)
             {
                 if (userprofileForm == null || userprofileForm.IsDisposed)
                 {
@@ -226,7 +213,7 @@ namespace GameProject
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            if(button.Name == "btnProfile")
+            if (button.Name == "btnProfile")
             {
                 SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a2);
                 Thread.Sleep(delay);
@@ -274,7 +261,7 @@ namespace GameProject
                 {
                     Color customColor01 = Color.FromArgb(63, 40, 50);
                     Color customColor02 = Color.FromArgb(181, 119, 94);
-                    if(button.Name == "btnProfile")
+                    if (button.Name == "btnProfile")
                     {
                         SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a1);
                         button.BackColor = customColor02;
@@ -286,7 +273,6 @@ namespace GameProject
                         button.BackColor = customColor01;
                     }
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SaddleBrown;
                 }
             }
         }

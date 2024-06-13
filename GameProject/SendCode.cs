@@ -169,7 +169,7 @@ namespace GameProject
                     {
                         User.ResetpassUser = user;
                         return true;
-                    }              
+                    }
                 }
             }
             return false;
@@ -190,15 +190,6 @@ namespace GameProject
                 var wait = new System.Windows.Forms.Timer();
                 wait.Tick += delegate
                 {
-                    /*remainingSeconds--;
-                    Notification.Text = $"Đăng nhập thành công!\n Tự động đóng cửa sổ sau: {remainingSeconds}";
-                    CenterControl(Notification);
-
-                    if (remainingSeconds <= 0)
-                    {
-                        this.Close();
-                    }*/
-
                     ResetPass resetPass = new ResetPass();
                     resetPass.Show();
                     wait.Stop();
@@ -268,7 +259,7 @@ namespace GameProject
             CenterControl(pictureBox2);
 
             textBoxDesign1.BackColor = customColor;
-            textBoxDesign2.BackColor = customColor;      
+            textBoxDesign2.BackColor = customColor;
         }
 
         private void ButtonConfig()

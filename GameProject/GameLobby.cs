@@ -326,21 +326,21 @@ namespace GameProject
                         Room.CurRoomName = roomName;
                         DialogResult = ContinueToRoomForm;
                     }
-                        else
-                        {
-                            Notification.Text = "Không thể tham gia phòng";
-                        }
-                    }
                     else
                     {
-                        Notification.Text = "Phòng không tồn tại";
+                        Notification.Text = "Không thể tham gia phòng";
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
+                    Notification.Text = "Phòng không tồn tại";
                 }
             }
+            catch (Exception ex)
+            {
+                Notification.Text = $"Lỗi khi tham gia phòng: {ex.Message}";
+            }
+        }
 
         private async Task<bool> CheckRoomNameExists(string name)
         {
