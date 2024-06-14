@@ -115,8 +115,8 @@ namespace GameProject
             else
             {
                 to = textBoxDesign1.Texts.Trim();
-                from = "22520067@gm.uit.edu.vn";
-                pass = "1267199463";
+                from = "CoCaNguaVerify@gmail.com";
+                pass = "gidd lexf uytb yrdb";
                 content = "Mã xác minh để đặt lại mật khẩu của bạn là: " + randCode;
 
                 if (!IsValidEmail(to))
