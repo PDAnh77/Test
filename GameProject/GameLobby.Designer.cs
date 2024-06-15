@@ -204,6 +204,7 @@ namespace GameProject
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameLobby";
             this.Text = "GameLobby";
+            this.Shown += new System.EventHandler(this.GameLobby_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);

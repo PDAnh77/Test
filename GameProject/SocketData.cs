@@ -31,8 +31,6 @@ namespace GameProject
     public enum SocketCommand
     {
         SEND_POINT,
-        NEW_GAME,
-        RQ_NEW_GAME,
         QUIT,
         START,
         CREATE_ROOM,

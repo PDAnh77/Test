@@ -37,6 +37,7 @@ namespace GameProject
         SocketManager socket;
         private GamePlay game;
         string NameUser = User.CurrentUser.Username;
+        List<string> ListUser;
         #endregion
 
 
@@ -47,7 +48,14 @@ namespace GameProject
             BodyConfig();
             socket = new SocketManager();           
         }
-
+        private void GameLobby_Shown(object sender, EventArgs e)
+        {
+            txtRoomName.Texts = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+            if (string.IsNullOrEmpty(txtRoomName.Texts))
+            {
+                txtRoomName.Texts = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+            }
+        }
         #region UI
 
         Color customColor01 = Color.FromArgb(234, 212, 172); // Background textbox
@@ -281,37 +289,71 @@ namespace GameProject
         {
             PlayAnimation(btnCreateRoom);
             socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
-            socket.isServer = true;
-            socket.CreateServer();
-            MessageBox.Show("Đã tạo phòng", "Thông báo");
-            game = new GamePlay(NameUser, txtRoomName.Texts, socket);
-            game.Show();
+            if (txtRoomName.Texts != "")
+            {
+                socket.isServer = true;
+                socket.CreateServer();
+                Thread listenThread = new Thread(() =>
+                {
+                    while (true)
+                    {
+                        Thread.Sleep(500);
+                        try
+                        {
+                            Listen();
+                            break;
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show(error.Message);
+                        }
+                    }
+                });
+                listenThread.IsBackground = true;
+                listenThread.Start();
+                game = new GamePlay(NameUser, txtRoomName.Texts, socket);
+                game.Show();
+            }
+            else
+            {
+                Notification.Text = "Vui lòng nhập IP muốn tạo phòng";
+            }
         }
 
         private void btnJoinRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnJoinRoom);
             socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
-            socket.isServer = false;
-            if(!socket.ConnectServer())
+            if (txtRoomName.Texts != "")
             {
-                MessageBox.Show("Phòng đã đầy");
+                socket.isServer = false;
+                if (!socket.ConnectServer())
+                {
+                    MessageBox.Show("Phòng đã đầy");
+                }
+                else
+                {
+                    Thread listenThread = new Thread(() =>
+                    {
+                        Listen();
+                    });
+                    MessageBox.Show("Đã kết nối", "Thông báo");
+                    try
+                    {
+                        socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{NameUser}"));
+                        game = new GamePlay(NameUser, txtRoomName.Texts, socket);
+                        game.Show();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Lỏd");
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Đã kết nối", "Thông báo");
-                try
-                {
-                    socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), "Tôi mới vào"));
-                    game = new GamePlay(NameUser, txtRoomName.Texts, socket);
-                    game.Show();
-                }
-                catch
-                {
-                    MessageBox.Show("Lỏd");
-                }
-                Listen();
-            }         
+                Notification.Text = "Vui lòng nhập IP phòng muốn tham gia";
+            }                   
         }
         private void btnRefresh_Click(object sender, EventArgs e)
         {

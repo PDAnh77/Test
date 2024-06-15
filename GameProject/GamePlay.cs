@@ -18,6 +18,8 @@ namespace GameProject
 {
     public partial class GamePlay : Form
     {
+        #region Properties
+
         public IFirebaseConfig config = new FirebaseConfig
         {
             BasePath = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/",
@@ -25,26 +27,23 @@ namespace GameProject
         };
 
         IFirebaseClient client;
-
+        SocketManager socket;
         private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
-
         public string username;
-
         public string IDphong;
-
 
         private List<string> DSUser = new List<string>();
         //List<string> là một danh sách các chuỗi (string)
         //Dsách này sẽ chứa tên của các user trong phòng chơi
 
         //private GameLogin FrmLogin;
-
-
         private string msg;
         private int counter = 30;
         private int time = 0;
 
-        SocketManager socket;
+        #endregion
+
+        #region Initialize
         public GamePlay()
         {
             InitializeComponent();
@@ -56,24 +55,27 @@ namespace GameProject
         //    InitializeComponent();
         //}
 
-        //public GamePlay(string name, string idPhong, string[] arrU)
-        //{
-        //    InitializeComponent();
-        //    for (int i = 0; i < arrU.Length; i++)
-        //    {
-        //        DSUser.Add(arrU[i]);
-        //    }
-        //    reloadForm();
-        //}
+        public GamePlay(string name, string idPhong, SocketManager socket, string[] arrU) // dùng cho các client khi tham gia vào phòng
+        {
+            InitializeComponent();
+            for (int i = 0; i < arrU.Length; i++)
+            {
+                DSUser.Add(arrU[i]); 
+            }
+            reloadForm();
+        }
+
         public GamePlay(string name, string idPhong, SocketManager socket)
         {
             InitializeComponent();
-
             username = name;
             IDphong = idPhong;
             this.socket = socket;
             DSUser.Add(name);
         }
+        #endregion
+
+        #region Function
         public void Listen()
         {
             Thread listenThread = new Thread(() =>
@@ -94,61 +96,6 @@ namespace GameProject
         {
             switch (data.Command)
             {
-                //    case (int)SocketCommand.NEW_GAME:
-                //        this.Invoke((MethodInvoker)(() =>
-                //        {
-                //            NewGame();
-                //            panelCaroBoard.Enabled = true;
-                //        }));
-                //        if (!socket.isServer)
-                //        {
-                //            CaroBoard.CurrentPlayer = 1;
-                //            CaroBoard.ChangePlayer();
-                //        }
-                //        break;
-                //    case (int)SocketCommand.RQ_NEW_GAME:
-                //        if (MessageBox.Show("Đối thủ muốn chơi ván mới", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
-                //            socket.Send(MessageBox.Show("Chơi tiếp đi :)))"));
-                //        else
-                //        {
-                //            socket.Send(new SocketData((int)SocketCommand.NEW_GAME, new Point(), ""));
-                //            this.Invoke((MethodInvoker)(() =>
-                //            {
-                //                NewGame();
-                //                panelCaroBoard.Enabled = false;
-                //            }));
-                //            if (socket.isServer)
-                //            {
-                //                CaroBoard.CurrentPlayer = 1;
-                //                CaroBoard.ChangePlayer();
-                //            }
-                //        }
-                //        break;
-                //    case (int)SocketCommand.SEND_POINT:
-                //        this.Invoke((MethodInvoker)(() =>   //thay đổi giao diện
-                //        {
-                //            progressClock.Value = 0;
-                //            panelCaroBoard.Enabled = true;
-                //            timerClock.Start();
-                //            CaroBoard.OtherPlayerMark(data.Point);
-                //        }));
-                //        newGameToolStripMenuItem.Enabled = true;
-                //        break;
-                //    case (int)SocketCommand.QUIT:
-                //        timerClock.Stop();
-                //        MessageBox.Show("Đối thủ đã thoát", "Thông báo");
-                //        this.Invoke((MethodInvoker)(() =>
-                //        {
-                //            NewGame();
-                //            panelCaroBoard.Enabled = false;
-                //        }));
-                //        if (socket.isServer)
-                //        {
-                //            socket.CloseConnect();
-                //        }
-                //        buttonLAN.Enabled = true;
-                //        newGameToolStripMenuItem.Enabled = false;
-                //        break;
                 case (int)SocketCommand.START:
                     MessageBox.Show(data.Messege);
                     break;
@@ -156,7 +103,13 @@ namespace GameProject
                     MessageBox.Show(data.Messege);
                     break;
                 case (int)SocketCommand.JOIN_ROOM:
-                    MessageBox.Show(data.Messege);
+                    if (socket.isServer)
+                    {
+                        MessageBox.Show(data.Messege);
+                        DSUser.Add(data.Messege);
+                        List<string> ListUser = new List<string>(DSUser);
+                        socket.Send($"{ListUser}");
+                    }    
                     break;
                 default:
                     break;
@@ -505,6 +458,9 @@ namespace GameProject
             if (ptb.Image != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
                 SendMSGtoFB("6", username, IDphong, x.ToString());
         }
+        #endregion
+
+        #region Events
         private void btnStart_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnStart);
@@ -522,7 +478,7 @@ namespace GameProject
             PlayAnimation(dichD1);
             senDoFrom("5", username, IDphong, textBox1.Text);
         }
-
+        #endregion
         private int timUser()
         {
             for (int i = 0; i < DSUser.Count; i++)
@@ -942,6 +898,7 @@ namespace GameProject
 
 
         ///////////////////////////////////////////////////////////////////////
+        #region UI
         private void PlayAnimation(Control control)
         {
             if (control is Button button)
@@ -951,7 +908,6 @@ namespace GameProject
                 animationThread.Join();
             }
         }
-
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
@@ -963,7 +919,6 @@ namespace GameProject
             Thread.Sleep(delay);
             SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
         }
-
         private void ButtonConfig()
         {
             foreach (Control control in Controls)
@@ -977,9 +932,6 @@ namespace GameProject
                 }
             }
         }
-
-
-
         private void CenterControl(Control control)
         {
             if (control.Parent != null)
@@ -1008,7 +960,7 @@ namespace GameProject
                 }
             }
         }
-
+        #endregion
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         #region CopyTuGameLogin
 
