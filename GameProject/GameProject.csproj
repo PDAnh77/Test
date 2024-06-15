@@ -208,8 +208,6 @@
     <Compile Include="GamePlay.Designer.cs">
       <DependentUpon>GamePlay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs" />
-    <Compile Include="PlayRoom.cs" />
     <Compile Include="SocketData.cs" />
     <Compile Include="SocketManager.cs" />
     <Compile Include="User.cs" />
@@ -239,7 +237,6 @@
     <Compile Include="ResetPass.Designer.cs">
       <DependentUpon>ResetPass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Room.cs" />
     <Compile Include="RoomForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -271,9 +268,6 @@
     <None Include="Resources\UI_Textbox_03.png" />
     <None Include="Resources\calendarWhite.png" />
     <None Include="Resources\calendarDark.png" />
-    <None Include="ltmgame-firebase-adminsdk-nxh4i-82f4327feb.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="protos\google\api\annotations.proto" />
     <None Include="protos\google\api\auth.proto" />
     <None Include="protos\google\api\backend.proto" />

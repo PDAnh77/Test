@@ -55,46 +55,8 @@ namespace GameProject
                 acceptClient.IsBackground = true; //tự ngắt luồng khi ctrinh tắt
                 acceptClient.Start();
             }
-
         }
 
-        private void HandleClient(Socket clientSocket)
-        {
-            byte[] buffer = new byte[1024];
-            try
-            {
-                while (true)
-                {
-                    int receivedDataLength = clientSocket.Receive(buffer);
-                    if (receivedDataLength > 0)
-                    {
-                        string receivedData = Encoding.ASCII.GetString(buffer, 0, receivedDataLength);
-                        Console.WriteLine("Received from client: " + receivedData);
-
-                        // Gửi phản hồi lại client nếu cần
-                        string response = "Hello Client";
-                        byte[] responseData = Encoding.ASCII.GetBytes(response);
-                        clientSocket.Send(responseData);
-                    }
-                    else
-                    {
-                        // Nếu không nhận được dữ liệu, ngắt kết nối
-                        break;
-                    }
-                }
-            }
-            catch (SocketException ex)
-            {
-                Console.WriteLine("SocketException: " + ex.Message);
-            }
-            finally
-            {
-                // Đóng kết nối sau khi xử lý xong
-                clientSocket.Shutdown(SocketShutdown.Both);
-                clientSocket.Close();
-                clientSockets.Remove(clientSocket); // Loại bỏ socket client khỏi danh sách
-            }
-        }
         #endregion
 
         #region Both

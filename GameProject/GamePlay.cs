@@ -71,6 +71,10 @@ namespace GameProject
             username = name;
             IDphong = idPhong;
             this.socket = socket;
+            if (!socket.isServer)
+            {
+                btnOpenRoom.Visible = false;
+            }
             DSUser.Add(name);
         }
         #endregion
@@ -116,6 +120,7 @@ namespace GameProject
             }
             Listen();
         }
+
         public void getNameOtheruser(string name)
         {
             DSUser.Add(name);
@@ -461,6 +466,12 @@ namespace GameProject
         #endregion
 
         #region Events
+        private void btnOpenRoom_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnOpenRoom);
+            Listen();
+        }
+
         private void btnStart_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnStart);
@@ -1103,6 +1114,8 @@ namespace GameProject
 
            // Frm1.sendFormLG(FrmLogin);
         }
+
+
 
         #endregion
 

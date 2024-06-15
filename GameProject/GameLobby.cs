@@ -51,7 +51,7 @@ namespace GameProject
         private void GameLobby_Shown(object sender, EventArgs e)
         {
             txtRoomName.Texts = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
-            if (string.IsNullOrEmpty(txtRoomName.Texts))
+            if (txtRoomName.Texts == "")
             {
                 txtRoomName.Texts = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
             }
@@ -183,80 +183,13 @@ namespace GameProject
 
         public void Listen()
         {
-            Thread listenThread = new Thread(() =>
-            {
-                try //tránh lỗi 1 bên thoát 
-                {
-                    SocketData data = (SocketData)socket.Receive();
-                    ProcessData(data);
-                }
-                catch (Exception e)
-                {
-                }
-            });
-            listenThread.IsBackground = true;
-            listenThread.Start();
-
+            SocketData data = (SocketData)socket.Receive();
+            ProcessData(data);
         }
         public void ProcessData(SocketData data)
         {
             switch (data.Command)
             {
-                //    case (int)SocketCommand.NEW_GAME:
-                //        this.Invoke((MethodInvoker)(() =>
-                //        {
-                //            NewGame();
-                //            panelCaroBoard.Enabled = true;
-                //        }));
-                //        if (!socket.isServer)
-                //        {
-                //            CaroBoard.CurrentPlayer = 1;
-                //            CaroBoard.ChangePlayer();
-                //        }
-                //        break;
-                //    case (int)SocketCommand.RQ_NEW_GAME:
-                //        if (MessageBox.Show("Đối thủ muốn chơi ván mới", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
-                //            socket.Send(MessageBox.Show("Chơi tiếp đi :)))"));
-                //        else
-                //        {
-                //            socket.Send(new SocketData((int)SocketCommand.NEW_GAME, new Point(), ""));
-                //            this.Invoke((MethodInvoker)(() =>
-                //            {
-                //                NewGame();
-                //                panelCaroBoard.Enabled = false;
-                //            }));
-                //            if (socket.isServer)
-                //            {
-                //                CaroBoard.CurrentPlayer = 1;
-                //                CaroBoard.ChangePlayer();
-                //            }
-                //        }
-                //        break;
-                //    case (int)SocketCommand.SEND_POINT:
-                //        this.Invoke((MethodInvoker)(() =>   //thay đổi giao diện
-                //        {
-                //            progressClock.Value = 0;
-                //            panelCaroBoard.Enabled = true;
-                //            timerClock.Start();
-                //            CaroBoard.OtherPlayerMark(data.Point);
-                //        }));
-                //        newGameToolStripMenuItem.Enabled = true;
-                //        break;
-                //    case (int)SocketCommand.QUIT:
-                //        timerClock.Stop();
-                //        MessageBox.Show("Đối thủ đã thoát", "Thông báo");
-                //        this.Invoke((MethodInvoker)(() =>
-                //        {
-                //            NewGame();
-                //            panelCaroBoard.Enabled = false;
-                //        }));
-                //        if (socket.isServer)
-                //        {
-                //            socket.CloseConnect();
-                //        }
-                //        buttonLAN.Enabled = true;
-                //        newGameToolStripMenuItem.Enabled = false;
-                //        break;
                 case (int)SocketCommand.START:
                     MessageBox.Show(data.Messege);
                     break;
@@ -295,18 +228,15 @@ namespace GameProject
                 socket.CreateServer();
                 Thread listenThread = new Thread(() =>
                 {
+                    Thread.Sleep(500);
                     while (true)
                     {
-                        Thread.Sleep(500);
                         try
                         {
                             Listen();
                             break;
                         }
-                        catch (Exception error)
-                        {
-                            MessageBox.Show(error.Message);
-                        }
+                        catch { }
                     }
                 });
                 listenThread.IsBackground = true;
@@ -337,7 +267,8 @@ namespace GameProject
                     {
                         Listen();
                     });
-                    MessageBox.Show("Đã kết nối", "Thông báo");
+                    listenThread.IsBackground = true;
+                    listenThread.Start();   
                     try
                     {
                         socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{NameUser}"));
@@ -353,7 +284,7 @@ namespace GameProject
             else
             {
                 Notification.Text = "Vui lòng nhập IP phòng muốn tham gia";
-            }                   
+            }
         }
         private void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -362,6 +293,5 @@ namespace GameProject
         }
 
         #endregion
-
     }
 }
