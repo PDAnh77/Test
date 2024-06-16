@@ -27,22 +27,11 @@ namespace GameProject
                     {
                         if (gameLobby.ShowDialog() == GameLobby.ContinueToRoomForm)
                         {
-                            RoomForm room = new RoomForm();
-                            while (true)
+                            GamePlay gamePlay = new GamePlay();
+                            if (gamePlay.ShowDialog() != DialogResult.OK)
                             {
-                                if(room.ShowDialog() == RoomForm.ContinueToGamePlayForm)
-                                {
-                                    GamePlay gamePlay = new GamePlay();
-                                    if (gamePlay.ShowDialog() != DialogResult.OK)
-                                    {
-                                        continue;
-                                    }
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }               
+                                continue;
+                            }
                         }
                         else
                         {

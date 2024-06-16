@@ -237,12 +237,6 @@
     <Compile Include="ResetPass.Designer.cs">
       <DependentUpon>ResetPass.cs</DependentUpon>
     </Compile>
-    <Compile Include="RoomForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RoomForm.Designer.cs">
-      <DependentUpon>RoomForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SendCode.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -372,9 +366,6 @@
     </Content>
     <EmbeddedResource Include="ResetPass.resx">
       <DependentUpon>ResetPass.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RoomForm.resx">
-      <DependentUpon>RoomForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SendCode.resx">
       <DependentUpon>SendCode.cs</DependentUpon>
