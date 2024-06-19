@@ -93,6 +93,16 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Defeat_org {
+            get {
+                object obj = ResourceManager.GetObject("Defeat_org", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_Avatar {
             get {
                 object obj = ResourceManager.GetObject("UI_Avatar", resourceCulture);
@@ -423,9 +433,9 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap victoryyyy {
+        internal static System.Drawing.Bitmap victory_org {
             get {
-                object obj = ResourceManager.GetObject("victoryyyy", resourceCulture);
+                object obj = ResourceManager.GetObject("victory_org", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
