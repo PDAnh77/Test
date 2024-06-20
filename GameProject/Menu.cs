@@ -185,6 +185,18 @@ namespace GameProject
             CenterControl(Notification);
         }
 
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnLogout);
+            if (User.CurrentUser != null)
+            {
+                User.CurrentUser = null;
+                lastLoggedInUser = null;
+                ShowNotification("Đăng xuất tài khoản thành công!");
+                CenterControl(Notification);
+            }
+        }
+
         delegate void PrintDelegate(string text);
 
         private void ShowNotification(string text)
@@ -222,6 +234,16 @@ namespace GameProject
                 SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a4);
                 Thread.Sleep(delay);
                 SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a1);
+            }
+            else if (button.Name == "btnLogout")
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_02a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_02a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_02a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_02a1);
             }
             else
             {
@@ -264,6 +286,11 @@ namespace GameProject
                     if (button.Name == "btnProfile")
                     {
                         SetControlImage(button, Animation.UI_Flat_Profile_Button_Press_01a1);
+                        button.BackColor = customColor02;
+                    }
+                    else if (button.Name == "btnLogout")
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Small_Press_02a1);
                         button.BackColor = customColor02;
                     }
                     else // other buttons

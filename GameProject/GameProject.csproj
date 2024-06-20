@@ -256,6 +256,10 @@
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Content Include="Resources\1.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_02a4.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_02a3.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_02a2.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_02a1.png" />
     <None Include="Resources\Defeat_org.png" />
     <None Include="Resources\victory_org.png" />
     <None Include="Resources\UI_Square.png" />

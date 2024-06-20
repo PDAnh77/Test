@@ -233,6 +233,46 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_02a1 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_02a1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_02a2 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_02a2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_02a3 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_02a3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_02a4 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_02a4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_Flat_Profile_Button_Press_01a1 {
             get {
                 object obj = ResourceManager.GetObject("UI_Flat_Profile_Button_Press_01a1", resourceCulture);
