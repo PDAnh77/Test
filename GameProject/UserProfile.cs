@@ -101,7 +101,7 @@ namespace GameProject
             User CurUser = User.CurrentUser;
             textBoxDesign1.Texts = CurUser.Username;
             textBoxDesign2.Texts = CurUser.Email;
-            textBoxDesign3.Texts = CurUser.Age;
+            textBoxDesign3.Texts = CurUser.Age.ToString();
             comboBoxDesign1.Texts = CurUser.Gender;
             textBoxDesign4.Texts = CurUser.Rank;
             textBoxDesign5.Texts = CurUser.Win.ToString();
@@ -143,7 +143,7 @@ namespace GameProject
             foreach (Control ctrl in this.Controls)
             {
                 // Check if the control is a TextBoxDesign
-                if (ctrl is TextBoxDesign txb && ctrl.Name == "textBoxDesign2")
+                if (ctrl is TextBoxDesign txb && (ctrl.Name == "textBoxDesign2" || ctrl.Name == "textBoxDesign3"))
                 {
                     txb.ReadOnly = false;
                 }
@@ -198,7 +198,7 @@ namespace GameProject
             try
             {
                 User.CurrentUser.Email = email;
-                User.CurrentUser.Age = age;
+                User.CurrentUser.Age = Int32.Parse(age);
                 User.CurrentUser.Gender = gender;
                 User data = User.CurrentUser;
 
