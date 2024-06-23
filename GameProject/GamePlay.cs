@@ -76,6 +76,7 @@ namespace GameProject
                 btnOpenRoom.Visible = false;
             }
             DSUser.Add(name);
+            Listen();
         }
         #endregion
 
@@ -84,13 +85,17 @@ namespace GameProject
         {
             Thread listenThread = new Thread(() =>
             {
-                try //tránh lỗi 1 bên thoát 
+                while (true)
                 {
-                    SocketData data = (SocketData)socket.Receive();
-                    ProcessData(data);
-                }
-                catch (Exception e)
-                {
+                    try //tránh lỗi 1 bên thoát 
+                    {
+                        SocketData data = (SocketData)socket.Receive();
+                        ProcessData(data);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
             });
             listenThread.IsBackground = true;
@@ -107,13 +112,24 @@ namespace GameProject
                     MessageBox.Show(data.Messege);
                     break;
                 case (int)SocketCommand.JOIN_ROOM:
-                    if (socket.isServer)
+                    if (socket.isServer) // Trường hợp là server
                     {
-                        MessageBox.Show(data.Messege);
                         DSUser.Add(data.Messege);
-                        List<string> ListUser = new List<string>(DSUser);
-                        socket.Send($"{ListUser}");
-                    }    
+                        reloadForm(); // tải lại UI của GamePlay khi có người mới vào phòng
+                        string userString = string.Join("/", DSUser);
+                        socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString));
+                    }
+                    else // Trường hợp là client
+                    {
+                        string userString = data.Messege;
+                        string[] userArray = userString.Split('/');
+                        DSUser.Clear();
+                        for (int i = 0; i < userArray.Length; i++)
+                        {
+                            DSUser.Add(userArray[i]);
+                        }
+                        reloadForm();
+                    }
                     break;
                 default:
                     break;

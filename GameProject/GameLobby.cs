@@ -226,21 +226,6 @@ namespace GameProject
             {
                 socket.isServer = true;
                 socket.CreateServer();
-                Thread listenThread = new Thread(() =>
-                {
-                    Thread.Sleep(500);
-                    while (true)
-                    {
-                        try
-                        {
-                            Listen();
-                            break;
-                        }
-                        catch { }
-                    }
-                });
-                listenThread.IsBackground = true;
-                listenThread.Start();
                 game = new GamePlay(NameUser, txtRoomName.Texts, socket);
                 game.Show();
             }
@@ -263,12 +248,6 @@ namespace GameProject
                 }
                 else
                 {
-                    Thread listenThread = new Thread(() =>
-                    {
-                        Listen();
-                    });
-                    listenThread.IsBackground = true;
-                    listenThread.Start();   
                     try
                     {
                         socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{NameUser}"));
@@ -279,6 +258,12 @@ namespace GameProject
                     {
                         MessageBox.Show("Lỏd");
                     }
+                    Thread listenThread = new Thread(() =>
+                    {
+                        Listen();
+                    });
+                    listenThread.IsBackground = true;
+                    listenThread.Start();   
                 }
             }
             else
