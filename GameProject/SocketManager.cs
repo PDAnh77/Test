@@ -1,6 +1,8 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -24,6 +26,7 @@ namespace GameProject
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(IP), port);
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
+
             {
                 client.Connect(ipep);
                 return true;
@@ -37,7 +40,8 @@ namespace GameProject
 
         #region Server
         Socket server;
-        List<Socket> clientSockets = new List<Socket>(); // Danh sách các socket client
+        public List<Socket> clientSockets = new List<Socket>(); // Danh sách các socket client
+        int Player = 3;
         public void CreateServer() //bên Server sẽ tạo server để Client connect tới
         {
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(IP), port);
@@ -45,17 +49,19 @@ namespace GameProject
             server.Bind(ipep); //gán Socket server với 1 địa chỉ cụ thể
             server.Listen(10); //lắng nghe kết nối từ Client tới 
 
-            for (int i = 0; i < 2; i++)
+            Thread acceptClient = new Thread(() =>
             {
-                if (i == 1) ++i;
-                Thread acceptClient = new Thread(() =>
+                while (true)
                 {
                     client = server.Accept();
-                });
-                acceptClient.IsBackground = true; //tự ngắt luồng khi ctrinh tắt
-                acceptClient.Start();
-            }
+                    clientSockets.Add(client);
+                }
+            });
+            acceptClient.IsBackground = true; //tự ngắt luồng khi ctrinh tắt
+            acceptClient.Start();
         }
+
+
 
         #endregion
 
@@ -64,7 +70,8 @@ namespace GameProject
         public int port = 1999;
         public const int buffer = 1024;
         public bool isServer = true;
-
+        public bool isPlayer = true;
+     
         public bool Send(object data)
         {
             byte[] sendData = SerializeData(data);
@@ -110,6 +117,16 @@ namespace GameProject
             ms.Position = 0; // vị trí đầu dãy
             return bf.Deserialize(ms);
         }
+
+        public void Broadcast(object data)
+        {
+            byte[] sendData = SerializeData(data);
+            foreach (Socket socket in clientSockets)
+            {
+                SendData(socket, sendData);
+            }
+        }
+
         //lấy IPv4 của card mạng đang dùng
         public string GetLocalIPv4(NetworkInterfaceType type)
         {

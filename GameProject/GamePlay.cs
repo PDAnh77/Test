@@ -12,6 +12,8 @@ using GameProject;
 using FireSharp.Response;
 using FireSharp.Config;
 using FireSharp.Interfaces;
+using System.Net.Sockets;
+using System.Timers;
 
 
 namespace GameProject
@@ -41,6 +43,8 @@ namespace GameProject
         private int counter = 30;
         private int time = 0;
 
+        private System.Timers.Timer listenTimer;
+
         #endregion
 
         #region Initialize
@@ -62,12 +66,12 @@ namespace GameProject
             {
                 DSUser.Add(arrU[i]); 
             }
-            reloadForm();
         }
 
         public GamePlay(string name, string idPhong, SocketManager socket)
         {
             InitializeComponent();
+            InitializeTimer();
             username = name;
             IDphong = idPhong;
             this.socket = socket;
@@ -75,32 +79,38 @@ namespace GameProject
             {
                 btnOpenRoom.Visible = false;
             }
-            DSUser.Add(name);
+            DSUser.Add(username);
+        }
+
+        private void InitializeTimer()
+        {
+            listenTimer = new System.Timers.Timer(500); // thời gian chờ giữa các lần gọi hàm Listen (1000ms = 1 giây)
+            listenTimer.Elapsed += OnTimedEvent;
+            listenTimer.AutoReset = true;
+            listenTimer.Enabled = true;
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
             Listen();
         }
         #endregion
 
         #region Function
+
         public void Listen()
         {
-            Thread listenThread = new Thread(() =>
+            try
             {
-                while (true)
-                {
-                    try //tránh lỗi 1 bên thoát 
-                    {
-                        SocketData data = (SocketData)socket.Receive();
-                        ProcessData(data);
-                        break;
-                    }
-                    catch (Exception e)
-                    {
-                    }
-                }
-            });
-            listenThread.IsBackground = true;
-            listenThread.Start();
+                SocketData data = (SocketData)socket.Receive();
+                ProcessData(data);
+            }
+            catch 
+            {
+
+            }
         }
+
         public void ProcessData(SocketData data)
         {
             switch (data.Command)
@@ -115,9 +125,9 @@ namespace GameProject
                     if (socket.isServer) // Trường hợp là server
                     {
                         DSUser.Add(data.Messege);
-                        reloadForm(); // tải lại UI của GamePlay khi có người mới vào phòng
+                        reloadForm();
                         string userString = string.Join("/", DSUser);
-                        socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString));
+                        socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString));
                     }
                     else // Trường hợp là client
                     {
@@ -129,12 +139,15 @@ namespace GameProject
                             DSUser.Add(userArray[i]);
                         }
                         reloadForm();
+                        if (userArray.Length > 4)
+                        {
+                            MessageBox.Show("Có người vào xem");
+                        }
                     }
                     break;
                 default:
                     break;
             }
-            Listen();
         }
 
         public void getNameOtheruser(string name)
@@ -208,7 +221,7 @@ namespace GameProject
         }
         private void reloadForm()
         {
-            SetButtonEnabledSafe(btnXiNgau, false);//Khóa nút lắc xí ngầu
+            //SetButtonEnabledSafe(btnXiNgau, false);//Khóa nút lắc xí ngầu
             for (int i = 0; i < DSUser.Count; i++)//Duyệt danh sách các user và gán tên + tìm kiếm user "chính mình" rồi gán (you)
             {
                 string name = "lbun";
@@ -485,7 +498,6 @@ namespace GameProject
         private void btnOpenRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnOpenRoom);
-            Listen();
         }
 
         private void btnStart_Click(object sender, EventArgs e)

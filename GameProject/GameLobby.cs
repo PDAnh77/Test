@@ -181,29 +181,7 @@ namespace GameProject
 
         #region Function
 
-        public void Listen()
-        {
-            SocketData data = (SocketData)socket.Receive();
-            ProcessData(data);
-        }
-        public void ProcessData(SocketData data)
-        {
-            switch (data.Command)
-            {
-                case (int)SocketCommand.START:
-                    MessageBox.Show(data.Messege);
-                    break;
-                case (int)SocketCommand.CREATE_ROOM:
-                    MessageBox.Show(data.Messege);
-                    break;
-                case (int)SocketCommand.JOIN_ROOM:
-                    MessageBox.Show(data.Messege);
-                    break;
-                default:
-                    break;
-            }
-            Listen();
-        }
+ 
 
 
         #endregion
@@ -257,13 +235,7 @@ namespace GameProject
                     catch
                     {
                         MessageBox.Show("Lỏd");
-                    }
-                    Thread listenThread = new Thread(() =>
-                    {
-                        Listen();
-                    });
-                    listenThread.IsBackground = true;
-                    listenThread.Start();   
+                    }   
                 }
             }
             else
