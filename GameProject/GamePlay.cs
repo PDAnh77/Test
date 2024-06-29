@@ -101,14 +101,32 @@ namespace GameProject
 
         public void Listen()
         {
-            try
+            if (socket.isServer)
             {
-                SocketData data = (SocketData)socket.Receive();
-                ProcessData(data);
-            }
-            catch 
-            {
+                if (socket.clientSockets.Count > 0)
+                {
+                    try
+                    {
+                        SocketData data = (SocketData)socket.Receive();
+                        ProcessData(data);
+                    }
+                    catch
+                    {
 
+                    }
+                }
+            }
+            else
+            {
+                try
+                {
+                    SocketData data = (SocketData)socket.Receive();
+                    ProcessData(data);
+                }
+                catch
+                {
+
+                }
             }
         }
 
