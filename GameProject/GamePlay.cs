@@ -31,14 +31,11 @@ namespace GameProject
         IFirebaseClient client;
         SocketManager socket;
         private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
-        public string username;
-        public string IDphong;
+        public string username; // Tên người chơi
+        public string IDphong; // Tên phòng
 
-        private List<string> DSUser = new List<string>();
-        //List<string> là một danh sách các chuỗi (string)
-        //Dsách này sẽ chứa tên của các user trong phòng chơi
+        private List<string> DSUser = new List<string>(); // Danh sách người chơi trong phòng
 
-        //private GameLogin FrmLogin;
         private string msg;
         private int counter = 30;
         private int time = 0;
@@ -53,45 +50,30 @@ namespace GameProject
             InitializeComponent();
         }
 
-        //public GamePlay(GameLogin frmLogin)
-        //{
-        //    this.FrmLogin = frmLogin;
-        //    InitializeComponent();
-        //}
-
-        public GamePlay(string name, string idPhong, SocketManager socket, string[] arrU) // dùng cho các client khi tham gia vào phòng
-        {
-            InitializeComponent();
-            for (int i = 0; i < arrU.Length; i++)
-            {
-                DSUser.Add(arrU[i]); 
-            }
-        }
-
-        public GamePlay(string name, string idPhong, SocketManager socket)
+        public GamePlay(string name, string idPhong, SocketManager socket) 
         {
             InitializeComponent();
             InitializeTimer();
             username = name;
             IDphong = idPhong;
-            this.socket = socket;
-            DSUser.Add(username);
+            this.socket = socket; // Truyền socket ở GameLobby vào GamePlay
+            DSUser.Add(username); // Mỗi người chơi sẽ tự có danh sách người chơi của riêng mình, khi có thay đổi server sẽ thông báo để cập nhật
         }
 
-        private void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
+        private void GamePlay_FormClosing(object sender, FormClosingEventArgs e) // Khi đóng form GamePlay thì đóng kết nối socket
         {
             socket.Shutdown();
         }
 
         private void InitializeTimer()
         {
-            listenTimer = new System.Timers.Timer(500); // thời gian chờ giữa các lần gọi hàm Listen (1000ms = 1 giây)
-            listenTimer.Elapsed += OnTimedEvent;
+            listenTimer = new System.Timers.Timer(500); // (1000ms = 1 giây)
+            listenTimer.Elapsed += OnTimedEvent; // Cứ cách 0.5s thì gọi Listen()
             listenTimer.AutoReset = true;
             listenTimer.Enabled = true;
         }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private void OnTimedEvent(Object source, ElapsedEventArgs e) 
         {
             Listen();
         }
@@ -103,7 +85,7 @@ namespace GameProject
         {
             if (socket.isServer)
             {
-                if (socket.clientSockets.Count > 0)
+                if (socket.clientSockets.Count > 0) // Kiểm tra có client nào đang kết nối chưa
                 {
                     try
                     {
@@ -146,7 +128,7 @@ namespace GameProject
                         DSUser.Add(data.Messege);
                         reloadForm();
                         string userString = string.Join("/", DSUser);
-                        socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString));
+                        socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString)); // Xem chi tiết ở SocketData để hiểu
                     }
                     else // Trường hợp là client
                     {
@@ -166,6 +148,18 @@ namespace GameProject
                     break;
                 default:
                     break;
+            }
+        }
+
+        private async Task DeleteRoom(string roomName)
+        {
+            try
+            {
+                await client.DeleteAsync($"Room/{roomName}");
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu cần thiết
             }
         }
 
@@ -514,9 +508,15 @@ namespace GameProject
         #endregion
 
         #region Events
-        private void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
+        private async void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
         {
             PlayAnimation(btnLeave);
+            if (socket.isServer)
+            {
+                await DeleteRoom(IDphong);
+                DialogResult = DialogResult.Cancel; // Quay về GameLobby
+                this.Close();
+            }
             DialogResult = DialogResult.Cancel; // Quay về GameLobby
             this.Close();
         }

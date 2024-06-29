@@ -78,6 +78,7 @@ namespace GameProject
             // 
             // flowLayoutPanelRooms
             // 
+            this.flowLayoutPanelRooms.AutoScroll = true;
             this.flowLayoutPanelRooms.Location = new System.Drawing.Point(22, 24);
             this.flowLayoutPanelRooms.Name = "flowLayoutPanelRooms";
             this.flowLayoutPanelRooms.Size = new System.Drawing.Size(900, 331);

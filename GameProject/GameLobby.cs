@@ -48,7 +48,16 @@ namespace GameProject
             InitializeComponent();
             LoadCustomFont();
             BodyConfig();
-            socket = new SocketManager();           
+            socket = new SocketManager();
+            client = new FirebaseClient(config);
+            if (client == null)
+            {
+                MessageBox.Show("Không thể kết nối tới Firebase, vui lòng kiểm tra lại cấu hình.");
+            }
+            else
+            {
+                LoadRooms(); // Load danh sách phòng khi form được tải
+            }
         }
 
         #region UI
@@ -176,8 +185,88 @@ namespace GameProject
 
         #region Function
 
-    
+        private async Task<bool> CheckPhongTonTai(string name)
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync($"Room/{name}");
+                if (response.Body != "null")
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+        private async Task<string> GetRoomId(string roomName)
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
+                RoomData roomData = response.ResultAs<RoomData>();
 
+                if (roomData != null)
+                {
+                    return roomData.RoomId;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy RoomId: {ex.Message}");
+                return null;
+            }
+        }
+        private async Task<List<RoomData>> GetRooms()
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync("Room");
+
+                if (response.Body == "null")
+                {
+                    return new List<RoomData>();
+                }
+
+                Dictionary<string, RoomData> rooms = response.ResultAs<Dictionary<string, RoomData>>();
+                return rooms?.Values.ToList() ?? new List<RoomData>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy danh sách phòng: {ex.Message}");
+                return new List<RoomData>();
+            }
+        }
+        private Panel CreateRoomPanel(RoomData room)
+        {
+            Panel panel = new Panel();
+            panel.BorderStyle = BorderStyle.Fixed3D;
+            panel.Width = 100;
+            panel.Height = 50;
+
+            Label lblRoomName = new Label();
+            lblRoomName.Font = new Font(lblRoomName.Font.FontFamily, 18, FontStyle.Bold);
+            lblRoomName.Text = $"{room.RoomName}";
+            lblRoomName.Location = new Point(10, 10);
+            lblRoomName.AutoSize = true;
+
+            panel.Controls.Add(lblRoomName);
+
+            return panel;
+        }
+        private async void LoadRooms()
+        {
+            List<RoomData> rooms = await GetRooms();
+            flowLayoutPanelRooms.Controls.Clear();
+            foreach (var room in rooms)
+            {
+                Panel panel = CreateRoomPanel(room);
+                flowLayoutPanelRooms.Controls.Add(panel);
+            }
+        }
 
         #endregion
 
@@ -191,42 +280,51 @@ namespace GameProject
             this.Close();
         }
 
-        private void btnCreateRoom_Click(object sender, EventArgs e)
+        private async void btnCreateRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnCreateRoom);
             if (!string.IsNullOrEmpty(txtRoomName.Texts))
             {
-                string roomName = txtRoomName.Texts;
-                string roomId;
-                try // tự động lấy địa chỉ IP
+                bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
+                if (!Exist)
                 {
-                    roomId = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+                    string roomName = txtRoomName.Texts;
+                    string roomId = await GetRoomId(roomName);
+                    try // tự động lấy địa chỉ IP
+                    {
+                        roomId = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211); 
+                    }
+                    catch
+                    {
+                        roomId = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                    }
+                    try
+                    {
+                        var roomData = new RoomData
+                        {
+                            RoomName = roomName,
+                            RoomId = roomId // IP tạo phòng
+                        };
+                        SetResponse response = await client.SetAsync($"Room/{roomName}", roomData);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    socket.IP = roomId;
+                    socket.isServer = true;
+                    socket.CreateServer();
+
+                    game = new GamePlay(NameUser, roomName, socket); 
+                    this.DialogResult = ContinueToGamePlay; // Mở GamePlay
+
+                    txtRoomName.Texts = "";
+                    Notification.Text = "";
                 }
-                catch
+                else
                 {
-                    roomId = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                    Notification.Text = "Tên phòng đã tồn tại";
                 }
-                socket.IP = roomId;
-                socket.isServer = true;
-                socket.CreateServer();
-                //try
-                //{
-                //    var roomData = new RoomData
-                //    {
-                //        RoomName = roomName,
-                //        RoomId = socket.IP // Sử dụng IP làm RoomId, bạn có thể thay đổi nếu cần
-                //    };
-                //    SetResponse response = await client.SetAsync($"Room/{roomId}", roomData);
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message);
-                //}
-
-                game = new GamePlay(NameUser, roomId, socket);
-                this.DialogResult = ContinueToGamePlay;
-                txtRoomName.Texts = "";
-
             }
             else
             {
@@ -239,30 +337,40 @@ namespace GameProject
             return game;
         }
 
-        private void btnJoinRoom_Click(object sender, EventArgs e)
+        private async void btnJoinRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnJoinRoom);
-            socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
             if (!string.IsNullOrEmpty(txtRoomName.Texts))
             {
-                socket.isServer = false;
-                if (!socket.ConnectServer())
+                bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
+                if (Exist)
                 {
-                    MessageBox.Show("Phòng đã đầy");
+                    socket.isServer = false;
+                    socket.IP = await GetRoomId(txtRoomName.Texts);
+                    if (!socket.ConnectServer())
+                    {
+                        MessageBox.Show("Phòng đã đầy");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{NameUser}"));
+                            game = new GamePlay(NameUser, txtRoomName.Texts, socket);
+                            this.DialogResult = ContinueToGamePlay;
+
+                            txtRoomName.Texts = "";
+                            Notification.Text = "";
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Lỏd");
+                        }
+                    }
                 }
                 else
                 {
-                    try
-                    {
-                        socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{NameUser}"));
-                        game = new GamePlay(NameUser, txtRoomName.Texts, socket);
-                        game.Show();
-                        txtRoomName.Texts = "";
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Lỏd");
-                    }   
+                    Notification.Text = "Phòng không tồn tại";
                 }
             }
             else
@@ -273,7 +381,7 @@ namespace GameProject
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnRefresh);
-
+            LoadRooms();
         }
 
         #endregion
