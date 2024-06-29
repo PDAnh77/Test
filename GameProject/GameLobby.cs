@@ -34,7 +34,7 @@ namespace GameProject
         };
 
         IFirebaseClient client;
-        public static readonly DialogResult ContinueToRoomForm = DialogResult.OK;
+        public static readonly DialogResult ContinueToGamePlay = DialogResult.OK;
 
         SocketManager socket;
         private GamePlay game;
@@ -176,7 +176,7 @@ namespace GameProject
 
         #region Function
 
- 
+    
 
 
         #endregion
@@ -224,7 +224,7 @@ namespace GameProject
                 //}
 
                 game = new GamePlay(NameUser, roomId, socket);
-                game.Show();
+                this.DialogResult = ContinueToGamePlay;
                 txtRoomName.Texts = "";
 
             }
@@ -232,6 +232,11 @@ namespace GameProject
             {
                 Notification.Text = "Vui lòng nhập IP muốn tạo phòng";
             }
+        }
+
+        public GamePlay GetGamePlay()
+        {
+            return game;
         }
 
         private void btnJoinRoom_Click(object sender, EventArgs e)

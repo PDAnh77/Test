@@ -23,11 +23,15 @@ namespace GameProject
                 if (gameMenu.ShowDialog() == DialogResult.OK)
                 {
                     GameLobby gameLobby = new GameLobby();
+                    GamePlay gamePlay = null;
                     while (true) // Loop to return to GameLobby after closing RoomForm
                     {
-                        if (gameLobby.ShowDialog() == GameLobby.ContinueToRoomForm)
+                        if (gameLobby.ShowDialog() == GameLobby.ContinueToGamePlay)
                         {
-                            GamePlay gamePlay = new GamePlay();
+                            if (gamePlay == null) // Ensure only create it once
+                            {
+                                gamePlay = gameLobby.GetGamePlay(); // Retrieve the GamePlay instance from GameLobby
+                            }
                             if (gamePlay.ShowDialog() != DialogResult.OK)
                             {
                                 continue;
