@@ -41,7 +41,8 @@ namespace GameProject
         #region Server
         Socket server;
         public List<Socket> clientSockets = new List<Socket>(); // Danh sách các socket client
-        int Player = 3;
+        public List<Socket> viewSockets = new List<Socket>();
+        int Player = 4;
         public void CreateServer() //bên Server sẽ tạo server để Client connect tới
         {
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(IP), port);
@@ -53,8 +54,19 @@ namespace GameProject
             {
                 while (true)
                 {
-                    client = server.Accept();
-                    clientSockets.Add(client);
+                    try
+                    {
+                        client = server.Accept();
+                        if (clientSockets.Count >= Player) // Phòng đã có đủ người chơi hoặc đã bắt đầu 
+                        {
+                            viewSockets.Add(client);
+                        }
+                        else
+                        {
+                            clientSockets.Add(client);
+                        }
+                    }
+                    catch { }
                 }
             });
             acceptClient.IsBackground = true; //tự ngắt luồng khi ctrinh tắt
@@ -124,6 +136,23 @@ namespace GameProject
             foreach (Socket socket in clientSockets)
             {
                 SendData(socket, sendData);
+            }
+        }
+
+        public void Shutdown()
+        {
+            if (client != null && client.Connected)
+            {
+                client.Shutdown(SocketShutdown.Both);
+                client.Close();
+                client = null;
+            }
+
+            // Đóng socket server
+            if (server != null)
+            {
+                server.Close();
+                server = null;
             }
         }
 

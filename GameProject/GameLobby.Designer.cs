@@ -97,7 +97,7 @@ namespace GameProject
             this.btnJoinRoom.Name = "btnJoinRoom";
             this.btnJoinRoom.Size = new System.Drawing.Size(150, 40);
             this.btnJoinRoom.TabIndex = 20;
-            this.btnJoinRoom.Text = "Join Room";
+            this.btnJoinRoom.Text = "Tham gia";
             this.btnJoinRoom.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnJoinRoom.TextColor = System.Drawing.Color.White;
             this.btnJoinRoom.UseVisualStyleBackColor = false;
@@ -117,7 +117,7 @@ namespace GameProject
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(109, 40);
             this.btnRefresh.TabIndex = 18;
-            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.Text = "Tải lại ";
             this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnRefresh.TextColor = System.Drawing.Color.White;
             this.btnRefresh.UseVisualStyleBackColor = false;
@@ -161,7 +161,7 @@ namespace GameProject
             this.btnCreateRoom.Name = "btnCreateRoom";
             this.btnCreateRoom.Size = new System.Drawing.Size(150, 40);
             this.btnCreateRoom.TabIndex = 10;
-            this.btnCreateRoom.Text = "Create Room";
+            this.btnCreateRoom.Text = "Tạo phòng";
             this.btnCreateRoom.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCreateRoom.TextColor = System.Drawing.Color.White;
             this.btnCreateRoom.UseVisualStyleBackColor = false;
@@ -203,8 +203,7 @@ namespace GameProject
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GameLobby";
-            this.Text = "GameLobby";
-            this.Shown += new System.EventHandler(this.GameLobby_Shown);
+            this.Text = "Sảnh chờ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);

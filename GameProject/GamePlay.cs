@@ -75,11 +75,12 @@ namespace GameProject
             username = name;
             IDphong = idPhong;
             this.socket = socket;
-            if (!socket.isServer)
-            {
-                btnOpenRoom.Visible = false;
-            }
             DSUser.Add(username);
+        }
+
+        private void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            socket.Shutdown();
         }
 
         private void InitializeTimer()
@@ -495,9 +496,11 @@ namespace GameProject
         #endregion
 
         #region Events
-        private void btnOpenRoom_Click(object sender, EventArgs e)
+        private void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
         {
-            PlayAnimation(btnOpenRoom);
+            PlayAnimation(btnLeave);
+            DialogResult = DialogResult.Cancel; // Quay về GameLobby
+            this.Close();
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -517,7 +520,9 @@ namespace GameProject
             PlayAnimation(dichD1);
             senDoFrom("5", username, IDphong, textBox1.Text);
         }
+
         #endregion
+
         private int timUser()
         {
             for (int i = 0; i < DSUser.Count; i++)
@@ -872,14 +877,6 @@ namespace GameProject
         {
             SendBtnBox(56);
         }
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
         private void luotchoitimer_Tick(object sender, EventArgs e)
         {
             counter--;
@@ -1142,6 +1139,8 @@ namespace GameProject
 
            // Frm1.sendFormLG(FrmLogin);
         }
+
+
 
 
 

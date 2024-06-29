@@ -17,6 +17,8 @@ using System.Data.SqlTypes;
 using GameProject.CustomControls;
 using FireSharp.Config;
 using FireSharp.Interfaces;
+using FireSharp.Response;
+using FireSharp;
 
 namespace GameProject
 {
@@ -48,14 +50,7 @@ namespace GameProject
             BodyConfig();
             socket = new SocketManager();           
         }
-        private void GameLobby_Shown(object sender, EventArgs e)
-        {
-            txtRoomName.Texts = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
-            if (txtRoomName.Texts == "")
-            {
-                txtRoomName.Texts = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
-            }
-        }
+
         #region UI
 
         Color customColor01 = Color.FromArgb(234, 212, 172); // Background textbox
@@ -199,13 +194,39 @@ namespace GameProject
         private void btnCreateRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnCreateRoom);
-            socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
-            if (txtRoomName.Texts != "")
+            if (!string.IsNullOrEmpty(txtRoomName.Texts))
             {
+                string roomName = txtRoomName.Texts;
+                string roomId;
+                try // tự động lấy địa chỉ IP
+                {
+                    roomId = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+                }
+                catch
+                {
+                    roomId = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                }
+                socket.IP = roomId;
                 socket.isServer = true;
                 socket.CreateServer();
-                game = new GamePlay(NameUser, txtRoomName.Texts, socket);
+                //try
+                //{
+                //    var roomData = new RoomData
+                //    {
+                //        RoomName = roomName,
+                //        RoomId = socket.IP // Sử dụng IP làm RoomId, bạn có thể thay đổi nếu cần
+                //    };
+                //    SetResponse response = await client.SetAsync($"Room/{roomId}", roomData);
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message);
+                //}
+
+                game = new GamePlay(NameUser, roomId, socket);
                 game.Show();
+                txtRoomName.Texts = "";
+
             }
             else
             {
@@ -217,7 +238,7 @@ namespace GameProject
         {
             PlayAnimation(btnJoinRoom);
             socket.IP = txtRoomName.Texts; //lấy địa chỉ IP ở textbox
-            if (txtRoomName.Texts != "")
+            if (!string.IsNullOrEmpty(txtRoomName.Texts))
             {
                 socket.isServer = false;
                 if (!socket.ConnectServer())
@@ -231,6 +252,7 @@ namespace GameProject
                         socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{NameUser}"));
                         game = new GamePlay(NameUser, txtRoomName.Texts, socket);
                         game.Show();
+                        txtRoomName.Texts = "";
                     }
                     catch
                     {

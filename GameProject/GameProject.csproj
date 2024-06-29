@@ -208,6 +208,7 @@
     <Compile Include="GamePlay.Designer.cs">
       <DependentUpon>GamePlay.cs</DependentUpon>
     </Compile>
+    <Compile Include="RoomData.cs" />
     <Compile Include="SocketData.cs" />
     <Compile Include="SocketManager.cs" />
     <Compile Include="User.cs" />
