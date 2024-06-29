@@ -94,17 +94,25 @@ namespace GameProject
         {
             byte[] receiveData = new byte[buffer];
             bool isOk = ReceiveData(client, receiveData);
-            return DeserializeData(receiveData);
+            if (isOk)
+            {
+                return DeserializeData(receiveData);
+            }
+            else
+            {
+                // Xử lý khi không nhận được dữ liệu hoặc lỗi xảy ra
+                return null;
+            }
         }
 
         public bool SendData(Socket target, byte[] data)
         {
-            return target.Send(data) == 1 ? true : false;
+            return target.Send(data) > 0 ? true : false;
         }
 
         public bool ReceiveData(Socket target, byte[] data)
         {
-            return target.Receive(data) == 1 ? true : false;
+            return target.Receive(data) > 0 ? true : false;
         }
 
         public void CloseConnect()
