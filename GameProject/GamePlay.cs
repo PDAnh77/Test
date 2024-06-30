@@ -127,6 +127,10 @@ namespace GameProject
         {
             Listen();
         }
+        private void timercd_Tick(object sender, EventArgs e)
+        {
+            pgb.PerformStep();
+        }
         #endregion
 
         #region Function
@@ -172,6 +176,16 @@ namespace GameProject
         {
             switch (data.Command)
             {
+                case (int)SocketCommand.SEND_MESSEGE:
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            rtbMSG.AppendText(data.Messege+Environment.NewLine);
+                            rtbMSG.ScrollToCaret(); // Di chuyển con trỏ đến cuối văn bản
+                        });
+
+                        break;
+                    }
                 case (int)SocketCommand.START:
                     MessageBox.Show(data.Messege);
                     break;
@@ -434,7 +448,7 @@ namespace GameProject
                     msg = username + " (you): " + Do[2];
                 else
                     msg = Do[1] + ": " + Do[2];
-                WriteTextSafe(richTextBox1, msg + "\n");
+                WriteTextSafe(rtbMSG, msg + "\n");
             }
             else if (Do[0] == "4")
             {
@@ -621,12 +635,13 @@ namespace GameProject
         {
             PlayAnimation(btnXiNgau);
             SendMSGtoFB("3", username, IDphong, "");
+            timercd.Start();     
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             PlayAnimation(dichD1);
-            senDoFrom("5", username, IDphong, textBox1.Text);
+            senDoFrom("5", username, IDphong, txtSendMSG.Text);
         }
 
         #endregion
@@ -694,6 +709,7 @@ namespace GameProject
         {
             PlayAnimation(btn_BoLuot);
             SendMSGtoFB("7", username, IDphong, "");
+            pgb.Value = 0;
         }
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)
@@ -1039,8 +1055,24 @@ namespace GameProject
                 button.Enabled = status;
             }
         }
+        private void btnSendMSG_Click(object sender, EventArgs e)
+        {
+            rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+"\n");
+            rtbMSG.ScrollToCaret();
+            socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+            txtSendMSG.Text = "";
+        }
 
-
+        private void txtSendMSG_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
+                rtbMSG.ScrollToCaret();
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                txtSendMSG.Text = "";
+            }
+        }
         ///////////////////////////////////////////////////////////////////////
         #region UI
 
@@ -1281,6 +1313,11 @@ namespace GameProject
 
            // Frm1.sendFormLG(FrmLogin);
         }
+
+
+
+
+
 
 
 

@@ -257,6 +257,14 @@
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Content Include="Resources\1.png" />
+    <None Include="Resources\UI_Horse_Unselect_04.png" />
+    <None Include="Resources\UI_Horse_Unselect_03.png" />
+    <None Include="Resources\UI_Horse_Unselect_02.png" />
+    <None Include="Resources\UI_Horse_Unselect_01.png" />
+    <None Include="Resources\UI_Horse_Select_04.png" />
+    <None Include="Resources\UI_Horse_Select_03.png" />
+    <None Include="Resources\UI_Horse_Select_02.png" />
+    <None Include="Resources\UI_Horse_Select_01.png" />
     <None Include="Resources\UI_Chatlog.png" />
     <None Include="Resources\UI_Table.png" />
     <None Include="Resources\UI_Flat_Button_Small_Press_03a4.png" />
