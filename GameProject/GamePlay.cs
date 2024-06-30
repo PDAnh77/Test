@@ -77,6 +77,10 @@ namespace GameProject
         {
             Listen();
         }
+        private void timercd_Tick(object sender, EventArgs e)
+        {
+            pgb.PerformStep();
+        }
         #endregion
 
         #region Function
@@ -531,6 +535,7 @@ namespace GameProject
         {
             PlayAnimation(btnXiNgau);
             SendMSGtoFB("3", username, IDphong, "");
+            timercd.Start();     
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -604,6 +609,7 @@ namespace GameProject
         {
             PlayAnimation(btn_BoLuot);
             SendMSGtoFB("7", username, IDphong, "");
+            pgb.Value = 0;
         }
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)
@@ -1191,6 +1197,8 @@ namespace GameProject
 
            // Frm1.sendFormLG(FrmLogin);
         }
+
+       
 
 
 

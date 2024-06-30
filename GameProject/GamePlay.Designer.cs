@@ -143,7 +143,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.pgb = new System.Windows.Forms.ProgressBar();
             this.btnLeave = new GameProject.CustomControls.ButtonDesign();
+            this.timercd = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.g2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g4)).BeginInit();
@@ -1556,6 +1558,15 @@
             this.richTextBox1.TabIndex = 118;
             this.richTextBox1.Text = "";
             // 
+            // pgb
+            // 
+            this.pgb.Location = new System.Drawing.Point(703, 160);
+            this.pgb.Maximum = 300;
+            this.pgb.Name = "pgb";
+            this.pgb.Size = new System.Drawing.Size(546, 23);
+            this.pgb.Step = 1;
+            this.pgb.TabIndex = 121;
+            // 
             // btnLeave
             // 
             this.btnLeave.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -1575,12 +1586,17 @@
             this.btnLeave.UseVisualStyleBackColor = false;
             this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
             // 
+            // timercd
+            // 
+            this.timercd.Tick += new System.EventHandler(this.timercd_Tick);
+            // 
             // GamePlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(1261, 698);
+            this.Controls.Add(this.pgb);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.richTextBox1);
@@ -1917,6 +1933,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.ProgressBar pgb;
+        private System.Windows.Forms.Timer timercd;
     }
 }
 

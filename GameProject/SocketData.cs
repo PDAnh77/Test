@@ -34,6 +34,7 @@ namespace GameProject
         QUIT,
         START,
         CREATE_ROOM,
-        JOIN_ROOM
+        JOIN_ROOM,
+        SEND_MESSAGE
     }
 }
