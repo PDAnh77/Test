@@ -363,6 +363,86 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Select_01 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Select_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Select_02 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Select_02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Select_03 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Select_03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Select_04 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Select_04", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Unselect_01 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Unselect_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Unselect_02 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Unselect_02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Unselect_03 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Unselect_03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Horse_Unselect_04 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Horse_Unselect_04", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_InfoBox {
             get {
                 object obj = ResourceManager.GetObject("UI_InfoBox", resourceCulture);
