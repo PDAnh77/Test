@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -26,7 +27,6 @@ namespace GameProject
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(IP), port);
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
-
             {
                 client.Connect(ipep);
                 return true;
@@ -42,6 +42,8 @@ namespace GameProject
         Socket server;
         public List<Socket> clientSockets = new List<Socket>(); // Danh sách các socket client
         public List<Socket> viewSockets = new List<Socket>();
+        private Thread acceptClient;
+        private Thread checkClients;
         int Player = 4;
         public void CreateServer() //bên Server sẽ tạo server để Client connect tới
         {
@@ -50,9 +52,9 @@ namespace GameProject
             server.Bind(ipep); //gán Socket server với 1 địa chỉ cụ thể
             server.Listen(10); //lắng nghe kết nối từ Client tới 
 
-            Thread acceptClient = new Thread(() =>
+            acceptClient = new Thread(() =>
             {
-                while (true)
+                while (isServerRun)
                 {
                     try
                     {
@@ -66,14 +68,41 @@ namespace GameProject
                             clientSockets.Add(client);
                         }
                     }
-                    catch { }
+                    catch
+                    {
+                        break;
+                    }
                 }
             });
             acceptClient.IsBackground = true; //tự ngắt luồng khi ctrinh tắt
             acceptClient.Start();
+
+            checkClients = new Thread(CheckClientConnections);
+            checkClients.IsBackground = true;
+            checkClients.Start();
         }
 
-
+        private void CheckClientConnections()
+        {
+            while (isServerRun)
+            {
+                lock (clientSockets)
+                {
+                    for (int i = clientSockets.Count - 1; i >= 0; i--)
+                    {
+                        Socket client = clientSockets[i];
+                        if (client.Poll(1000, SelectMode.SelectRead) && client.Available == 0)
+                        {
+                            // Client has disconnected
+                            clientSockets.RemoveAt(i);
+                            client.Shutdown(SocketShutdown.Both);
+                            client.Close();
+                        }
+                    }
+                }
+                Thread.Sleep(1000); // Check every 1 seconds
+            }
+        }
 
         #endregion
 
@@ -83,7 +112,25 @@ namespace GameProject
         public const int buffer = 1024;
         public bool isServer = true;
         public bool isPlayer = true;
-     
+        public bool isServerRun = true;
+
+        public bool ClientAlive() // Kiểm tra client có còn tồn tại không
+        {
+            if (client != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool ServerAlive() // Kiểm tra server có còn tồn tại không
+        {
+            if (server != null)
+            {
+                return true;
+            }
+            return false;
+        }
         public bool Send(object data)
         {
             byte[] sendData = SerializeData(data);
@@ -115,11 +162,6 @@ namespace GameProject
             return target.Receive(data) > 0 ? true : false;
         }
 
-        public void CloseConnect()
-        {
-            server.Close();
-        }
-
         // Nén Object ob thành 1 mảng byte[]
         public byte[] SerializeData(Object ob)
         {
@@ -147,21 +189,10 @@ namespace GameProject
             }
         }
 
-        public void Shutdown()
+        public void CloseConnect()
         {
-            if (client != null && client.Connected)
-            {
-                client.Shutdown(SocketShutdown.Both);
-                client.Close();
-                client = null;
-            }
-
-            // Đóng socket server
-            if (server != null)
-            {
-                server.Close();
-                server = null;
-            }
+            server.Close();
+            isServerRun = false;
         }
 
         //lấy IPv4 của card mạng đang dùng

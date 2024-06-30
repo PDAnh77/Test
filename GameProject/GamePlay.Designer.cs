@@ -1697,7 +1697,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GamePlay";
-            this.Load += new System.EventHandler(this.frmPlay_Load);
+            this.Load += new System.EventHandler(this.GamePlay_Load);
             ((System.ComponentModel.ISupportInitialize)(this.g2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g4)).EndInit();

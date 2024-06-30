@@ -10,5 +10,7 @@ namespace GameProject
     {
         public string RoomName { get; set; }
         public string RoomId { get; set; }
+        public int RoomPlayer { get; set; }
+        public int RoomView { get; set; }
     }
 }

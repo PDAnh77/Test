@@ -14,6 +14,9 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using System.Net.Sockets;
 using System.Timers;
+using System.Net.NetworkInformation;
+using FirebaseAdmin.Messaging;
+using FireSharp;
 
 
 namespace GameProject
@@ -33,6 +36,7 @@ namespace GameProject
         private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
         public string username; // Tên người chơi
         public string IDphong; // Tên phòng
+        public string IP;
 
         private List<string> DSUser = new List<string>(); // Danh sách người chơi trong phòng
 
@@ -50,25 +54,71 @@ namespace GameProject
             InitializeComponent();
         }
 
-        public GamePlay(string name, string idPhong, SocketManager socket) 
+        public GamePlay(string name, string idPhong, string ip, bool server) 
         {
             InitializeComponent();
             InitializeTimer();
+            client = new FirebaseClient(config);
+            socket = new SocketManager();
             username = name;
             IDphong = idPhong;
-            this.socket = socket; // Truyền socket ở GameLobby vào GamePlay
+            IP = ip;
             DSUser.Add(username); // Mỗi người chơi sẽ tự có danh sách người chơi của riêng mình, khi có thay đổi server sẽ thông báo để cập nhật
+            CreateOrConnect(server);
         }
 
-        private void GamePlay_FormClosing(object sender, FormClosingEventArgs e) // Khi đóng form GamePlay thì đóng kết nối socket
+        public async void CreateOrConnect(bool server)
         {
-            socket.Shutdown();
+            if (server)
+            {
+                string roomName = IDphong;
+                string roomId = IP;
+               
+                try
+                {
+                    var roomData = new RoomData
+                    {
+                        RoomName = roomName,
+                        RoomId = roomId // IP tạo phòng
+                    };
+                    SetResponse response = await client.SetAsync($"Room/{roomName}", roomData);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                socket.IP = roomId;
+                socket.isServer = true;
+                socket.CreateServer();
+            }
+            else
+            {
+                socket.isServer = false;
+                socket.IP = IP;
+                if (!socket.ConnectServer())
+                {
+                    MessageBox.Show("Không thể kết nối");
+                }
+                else
+                {
+                    try
+                    {
+                        socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{username}"));
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Lỏd");
+                    }
+                }
+            }
         }
+
+       
 
         private void InitializeTimer()
         {
-            listenTimer = new System.Timers.Timer(500); // (1000ms = 1 giây)
-            listenTimer.Elapsed += OnTimedEvent; // Cứ cách 0.5s thì gọi Listen()
+            listenTimer = new System.Timers.Timer(2000); // (1000ms = 1 giây)
+            listenTimer.Elapsed += OnTimedEvent; // Cứ cách 1.5s thì gọi Listen()
             listenTimer.AutoReset = true;
             listenTimer.Enabled = true;
         }
@@ -85,16 +135,19 @@ namespace GameProject
         {
             if (socket.isServer)
             {
-                if (socket.clientSockets.Count > 0) // Kiểm tra có client nào đang kết nối chưa
+                if (socket.ServerAlive()) // Kiểm tra server có đang bật chưa
                 {
-                    try
+                    if (socket.clientSockets.Count > 0)
                     {
-                        SocketData data = (SocketData)socket.Receive();
-                        ProcessData(data);
-                    }
-                    catch
-                    {
+                        try
+                        {
+                            SocketData data = (SocketData)socket.Receive();
+                            ProcessData(data);
+                        }
+                        catch
+                        {
 
+                        }
                     }
                 }
             }
@@ -102,8 +155,11 @@ namespace GameProject
             {
                 try
                 {
-                    SocketData data = (SocketData)socket.Receive();
-                    ProcessData(data);
+                    if (socket.ClientAlive())
+                    {
+                        SocketData data = (SocketData)socket.Receive();
+                        ProcessData(data);
+                    }
                 }
                 catch
                 {
@@ -146,6 +202,27 @@ namespace GameProject
                         }
                     }
                     break;
+                case (int)SocketCommand.QUIT:
+                    if (socket.isServer)
+                    {
+                        string name = data.Messege;
+                        DSUser.Remove(name);
+                        reloadForm();
+                        string StringQuit = string.Join("/", DSUser);
+                        socket.Broadcast(new SocketData((int)SocketCommand.QUIT, new Point(), StringQuit));
+                    }
+                    else
+                    {
+                        string userString = data.Messege;
+                        string[] userArray = userString.Split('/');
+                        DSUser.Clear();
+                        for (int i = 0; i < userArray.Length; i++)
+                        {
+                            DSUser.Add(userArray[i]);
+                        }
+                        reloadForm();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -157,7 +234,7 @@ namespace GameProject
             {
                 await client.DeleteAsync($"Room/{roomName}");
             }
-            catch (Exception ex)
+            catch 
             {
                 // Xử lý lỗi nếu cần thiết
             }
@@ -180,7 +257,7 @@ namespace GameProject
 
         private void addUsserInForm(string name)// Hàm viết tên lên label của frmPlay
         {
-            Invoke(new Action(() =>
+            Invoke(new System.Action(() =>
             {
                 string lbname = "lbun";
                 Label lb = (Label)this.Controls.Find(lbname + DSUser.Count, false).FirstOrDefault() as Label;
@@ -217,7 +294,7 @@ namespace GameProject
         }
 
 
-        private void frmPlay_Load(object sender, EventArgs e) //LoadForm chinh
+        private void GamePlay_Load(object sender, EventArgs e) //LoadForm chinh
         {
             client = new FireSharp.FirebaseClient(config);
 
@@ -225,7 +302,7 @@ namespace GameProject
             BodyConfig();
             //SetControlImage(lbID, Animation.UI_Textbox_02);
             //Cập nhật ngay mã id phòng là IDphong
-            Invoke(new Action(() =>
+            Invoke(new System.Action(() =>
             {
                 WriteTextSafe(lbID, IDphong);
             }));
@@ -235,18 +312,25 @@ namespace GameProject
         private void reloadForm()
         {
             //SetButtonEnabledSafe(btnXiNgau, false);//Khóa nút lắc xí ngầu
-            for (int i = 0; i < DSUser.Count; i++)//Duyệt danh sách các user và gán tên + tìm kiếm user "chính mình" rồi gán (you)
+            int totalLabels = 4; // Số lượng nhãn tối đa (giả sử có lbun1, lbun2, lbun3, lbun4)
+            for (int i = 0; i < totalLabels; i++)
             {
                 string name = "lbun";
                 Label lb = (Label)this.Controls.Find(name + (i + 1), false).FirstOrDefault() as Label;
 
-                //có các lbun1 2 3 4 đc tạo sẵn nhưng .Text chưa có gì. Lệnh trên có tác dụng tạo 1 label mới và cho nó bằng với label đag xét
-                //.FirstOrDefault() được gọi để trả về phần tử đầu tiên trong mảng hoặc null nếu không tìm thấy phần tử nào.
-                //as Label được sử dụng để ép kiểu phần tử tìm thấy là một Label. Nếu không tìm thấy Label, giá trị của lb sẽ là null.
-                if (DSUser[i] == username)
-                    WriteTextSafe(lb, DSUser[i] + " (you)");
+                if (i < DSUser.Count)
+                {
+                    // Cập nhật nhãn với tên người chơi
+                    if (DSUser[i] == username)
+                        WriteTextSafe(lb, DSUser[i] + " (you)");
+                    else
+                        WriteTextSafe(lb, DSUser[i]);
+                }
                 else
-                    WriteTextSafe(lb, DSUser[i]);
+                {
+                    // Xóa bỏ nội dung của nhãn không còn cần thiết
+                    WriteTextSafe(lb, "");
+                }
             }
         }
 
@@ -514,11 +598,17 @@ namespace GameProject
             if (socket.isServer)
             {
                 await DeleteRoom(IDphong);
+                socket.CloseConnect();
                 DialogResult = DialogResult.Cancel; // Quay về GameLobby
                 this.Close();
             }
-            DialogResult = DialogResult.Cancel; // Quay về GameLobby
-            this.Close();
+            else
+            {
+                socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
+
+                DialogResult = DialogResult.Cancel; // Quay về GameLobby
+                this.Close();
+            }
         }
 
         private void btnStart_Click(object sender, EventArgs e)

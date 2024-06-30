@@ -39,7 +39,7 @@ namespace GameProject
         SocketManager socket;
         private GamePlay game;
         string NameUser = User.CurrentUser.Username;
-        List<string> ListUser;
+
         #endregion
 
 
@@ -201,25 +201,7 @@ namespace GameProject
                 return false;
             }
         }
-        private async Task<string> GetRoomId(string roomName)
-        {
-            try
-            {
-                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
-                RoomData roomData = response.ResultAs<RoomData>();
-
-                if (roomData != null)
-                {
-                    return roomData.RoomId;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi lấy RoomId: {ex.Message}");
-                return null;
-            }
-        }
+       
         private async Task<List<RoomData>> GetRooms()
         {
             try
@@ -267,6 +249,25 @@ namespace GameProject
                 flowLayoutPanelRooms.Controls.Add(panel);
             }
         }
+        private async Task<string> GetRoomId(string roomName)
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
+                RoomData roomData = response.ResultAs<RoomData>();
+
+                if (roomData != null)
+                {
+                    return roomData.RoomId;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy RoomId: {ex.Message}");
+                return null;
+            }
+        }
 
         #endregion
 
@@ -288,34 +289,16 @@ namespace GameProject
                 bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
                 if (!Exist)
                 {
-                    string roomName = txtRoomName.Texts;
-                    string roomId = await GetRoomId(roomName);
+                    string ip;
                     try // tự động lấy địa chỉ IP
                     {
-                        roomId = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211); 
+                        ip = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
                     }
                     catch
                     {
-                        roomId = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                        ip = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
                     }
-                    try
-                    {
-                        var roomData = new RoomData
-                        {
-                            RoomName = roomName,
-                            RoomId = roomId // IP tạo phòng
-                        };
-                        SetResponse response = await client.SetAsync($"Room/{roomName}", roomData);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                    socket.IP = roomId;
-                    socket.isServer = true;
-                    socket.CreateServer();
-
-                    game = new GamePlay(NameUser, roomName, socket); 
+                    game = new GamePlay(NameUser, txtRoomName.Texts, ip, true); 
                     this.DialogResult = ContinueToGamePlay; // Mở GamePlay
 
                     txtRoomName.Texts = "";
@@ -345,28 +328,16 @@ namespace GameProject
                 bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
                 if (Exist)
                 {
-                    socket.isServer = false;
-                    socket.IP = await GetRoomId(txtRoomName.Texts);
-                    if (!socket.ConnectServer())
+                    string ip = await GetRoomId(txtRoomName.Texts);
+                    try
                     {
-                        MessageBox.Show("Phòng đã đầy");
-                    }
-                    else
-                    {
-                        try
-                        {
-                            socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{NameUser}"));
-                            game = new GamePlay(NameUser, txtRoomName.Texts, socket);
-                            this.DialogResult = ContinueToGamePlay;
+                        game = new GamePlay(NameUser, txtRoomName.Texts, ip, false);
+                        this.DialogResult = ContinueToGamePlay;
 
-                            txtRoomName.Texts = "";
-                            Notification.Text = "";
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Lỏd");
-                        }
+                        txtRoomName.Texts = "";
+                        Notification.Text = "";
                     }
+                    catch { }
                 }
                 else
                 {
