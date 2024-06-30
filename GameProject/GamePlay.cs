@@ -122,9 +122,12 @@ namespace GameProject
             {
                 case (int)SocketCommand.SEND_MESSEGE:
                     {
-                        //rtbMSG.AppendText(data.Messege+Environment.NewLine);
-                        //rtbMSG.ScrollToCaret();
-                        MessageBox.Show(data.Messege);
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            rtbMSG.AppendText(data.Messege+Environment.NewLine);
+                            rtbMSG.ScrollToCaret(); // Di chuyển con trỏ đến cuối văn bản
+                        });
+
                         break;
                     }
                 case (int)SocketCommand.START:
@@ -964,9 +967,9 @@ namespace GameProject
         }
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
-            rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+ Environment.NewLine);
-            socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text.Trim()}"));
+            rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+"\n");
             rtbMSG.ScrollToCaret();
+            socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
             txtSendMSG.Text = "";
         }
 
