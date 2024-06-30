@@ -67,13 +67,66 @@ namespace GameProject
             CreateOrConnect(server);
         }
 
+        private void GamePlay_Load(object sender, EventArgs e) //LoadForm chinh
+        {
+            client = new FireSharp.FirebaseClient(config);
+
+            Setptbimage();
+            BodyConfig();
+            //SetControlImage(lbID, Animation.UI_Textbox_02);
+            //Cập nhật ngay mã id phòng là IDphong
+            Invoke(new System.Action(() =>
+            {
+                WriteTextSafe(lbID, IDphong);
+            }));
+            reloadForm();
+            SetControlImage(this, Animation.UI_Menu);
+        }
+        private async void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (socket.isServer)
+            {
+                await DeleteRoom(IDphong);
+                socket.CloseConnect();
+                DialogResult = DialogResult.Cancel; // Quay về GameLobby
+            }
+            else
+            {
+                try
+                {
+                    socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
+                }
+                catch { }
+                DialogResult = DialogResult.Cancel; // Quay về GameLobby
+            }
+        }
+        private void InitializeTimer()
+        {
+            listenTimer = new System.Timers.Timer(2000); // (1000ms = 1 giây)
+            listenTimer.Elapsed += OnTimedEvent; // Cứ cách 1.5s thì gọi Listen()
+            listenTimer.AutoReset = true;
+            listenTimer.Enabled = true;
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e) 
+        {
+            Listen();
+        }
+        private void timercd_Tick(object sender, EventArgs e)
+        {
+            pgb.PerformStep();
+        }
+        #endregion
+
+        #region Function
+
         public async void CreateOrConnect(bool server)
         {
             if (server)
             {
                 string roomName = IDphong;
                 string roomId = IP;
-               
+
                 try
                 {
                     var roomData = new RoomData
@@ -112,29 +165,6 @@ namespace GameProject
                 }
             }
         }
-
-       
-
-        private void InitializeTimer()
-        {
-            listenTimer = new System.Timers.Timer(2000); // (1000ms = 1 giây)
-            listenTimer.Elapsed += OnTimedEvent; // Cứ cách 1.5s thì gọi Listen()
-            listenTimer.AutoReset = true;
-            listenTimer.Enabled = true;
-        }
-
-        private void OnTimedEvent(Object source, ElapsedEventArgs e) 
-        {
-            Listen();
-        }
-        private void timercd_Tick(object sender, EventArgs e)
-        {
-            pgb.PerformStep();
-        }
-        #endregion
-
-        #region Function
-
         public void Listen()
         {
             if (socket.isServer)
@@ -308,21 +338,7 @@ namespace GameProject
         }
 
 
-        private void GamePlay_Load(object sender, EventArgs e) //LoadForm chinh
-        {
-            client = new FireSharp.FirebaseClient(config);
-
-            Setptbimage();
-            BodyConfig();
-            //SetControlImage(lbID, Animation.UI_Textbox_02);
-            //Cập nhật ngay mã id phòng là IDphong
-            Invoke(new System.Action(() =>
-            {
-                WriteTextSafe(lbID, IDphong);
-            }));
-            reloadForm();
-            SetControlImage(this, Animation.UI_Menu);
-        }
+        
         private void reloadForm()
         {
             //SetButtonEnabledSafe(btnXiNgau, false);//Khóa nút lắc xí ngầu
