@@ -973,7 +973,16 @@ namespace GameProject
             txtSendMSG.Text = "";
         }
 
-
+        private void txtSendMSG_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
+                rtbMSG.ScrollToCaret();
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                txtSendMSG.Text = "";
+            }
+        }
         ///////////////////////////////////////////////////////////////////////
         #region UI
 
@@ -1214,6 +1223,8 @@ namespace GameProject
 
            // Frm1.sendFormLG(FrmLogin);
         }
+
+
 
 
 

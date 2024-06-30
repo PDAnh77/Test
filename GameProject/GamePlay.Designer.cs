@@ -144,8 +144,8 @@
             this.txtSendMSG = new System.Windows.Forms.TextBox();
             this.rtbMSG = new System.Windows.Forms.RichTextBox();
             this.pgb = new System.Windows.Forms.ProgressBar();
-            this.btnLeave = new GameProject.CustomControls.ButtonDesign();
             this.timercd = new System.Windows.Forms.Timer(this.components);
+            this.btnLeave = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.g2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g4)).BeginInit();
@@ -1546,6 +1546,7 @@
             this.txtSendMSG.Name = "txtSendMSG";
             this.txtSendMSG.Size = new System.Drawing.Size(341, 30);
             this.txtSendMSG.TabIndex = 119;
+            this.txtSendMSG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSendMSG_KeyDown);
             // 
             // rtbMSG
             // 
@@ -1568,6 +1569,10 @@
             this.pgb.Step = 1;
             this.pgb.TabIndex = 121;
             // 
+            // timercd
+            // 
+            this.timercd.Tick += new System.EventHandler(this.timercd_Tick);
+            // 
             // btnLeave
             // 
             this.btnLeave.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -1586,10 +1591,6 @@
             this.btnLeave.TextColor = System.Drawing.Color.White;
             this.btnLeave.UseVisualStyleBackColor = false;
             this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
-            // 
-            // timercd
-            // 
-            this.timercd.Tick += new System.EventHandler(this.timercd_Tick);
             // 
             // GamePlay
             // 
