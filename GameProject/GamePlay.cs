@@ -120,6 +120,13 @@ namespace GameProject
         {
             switch (data.Command)
             {
+                case (int)SocketCommand.SEND_MESSEGE:
+                    {
+                        //rtbMSG.AppendText(data.Messege+Environment.NewLine);
+                        //rtbMSG.ScrollToCaret();
+                        MessageBox.Show(data.Messege);
+                        break;
+                    }
                 case (int)SocketCommand.START:
                     MessageBox.Show(data.Messege);
                     break;
@@ -354,7 +361,7 @@ namespace GameProject
                     msg = username + " (you): " + Do[2];
                 else
                     msg = Do[1] + ": " + Do[2];
-                WriteTextSafe(rtcMSG, msg + "\n");
+                WriteTextSafe(rtbMSG, msg + "\n");
             }
             else if (Do[0] == "4")
             {
@@ -955,6 +962,13 @@ namespace GameProject
                 button.Enabled = status;
             }
         }
+        private void btnSendMSG_Click(object sender, EventArgs e)
+        {
+            rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+ Environment.NewLine);
+            socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text.Trim()}"));
+            rtbMSG.ScrollToCaret();
+            txtSendMSG.Text = "";
+        }
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -1198,7 +1212,8 @@ namespace GameProject
            // Frm1.sendFormLG(FrmLogin);
         }
 
-       
+
+
 
 
 

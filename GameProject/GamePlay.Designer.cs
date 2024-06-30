@@ -142,7 +142,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnSendMSG = new System.Windows.Forms.Button();
             this.txtSendMSG = new System.Windows.Forms.TextBox();
-            this.rtcMSG = new System.Windows.Forms.RichTextBox();
+            this.rtbMSG = new System.Windows.Forms.RichTextBox();
             this.pgb = new System.Windows.Forms.ProgressBar();
             this.btnLeave = new GameProject.CustomControls.ButtonDesign();
             this.timercd = new System.Windows.Forms.Timer(this.components);
@@ -1536,6 +1536,7 @@
             this.btnSendMSG.TabIndex = 120;
             this.btnSendMSG.Text = "Send";
             this.btnSendMSG.UseVisualStyleBackColor = true;
+            this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
             // 
             // txtSendMSG
             // 
@@ -1546,17 +1547,17 @@
             this.txtSendMSG.Size = new System.Drawing.Size(341, 30);
             this.txtSendMSG.TabIndex = 119;
             // 
-            // rtcMSG
+            // rtbMSG
             // 
-            this.rtcMSG.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.rtcMSG.Enabled = false;
-            this.rtcMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtcMSG.Location = new System.Drawing.Point(728, 199);
-            this.rtcMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.rtcMSG.Name = "rtcMSG";
-            this.rtcMSG.Size = new System.Drawing.Size(494, 468);
-            this.rtcMSG.TabIndex = 118;
-            this.rtcMSG.Text = "";
+            this.rtbMSG.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.rtbMSG.Enabled = false;
+            this.rtbMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbMSG.Location = new System.Drawing.Point(728, 199);
+            this.rtbMSG.Margin = new System.Windows.Forms.Padding(4);
+            this.rtbMSG.Name = "rtbMSG";
+            this.rtbMSG.Size = new System.Drawing.Size(494, 468);
+            this.rtbMSG.TabIndex = 118;
+            this.rtbMSG.Text = "";
             // 
             // pgb
             // 
@@ -1599,7 +1600,7 @@
             this.Controls.Add(this.pgb);
             this.Controls.Add(this.btnSendMSG);
             this.Controls.Add(this.txtSendMSG);
-            this.Controls.Add(this.rtcMSG);
+            this.Controls.Add(this.rtbMSG);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.btn_BoLuot);
@@ -1932,7 +1933,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button btnSendMSG;
         private System.Windows.Forms.TextBox txtSendMSG;
-        private System.Windows.Forms.RichTextBox rtcMSG;
+        private System.Windows.Forms.RichTextBox rtbMSG;
         private System.Windows.Forms.ProgressBar pgb;
         private System.Windows.Forms.Timer timercd;
     }
