@@ -354,7 +354,7 @@ namespace GameProject
                     msg = username + " (you): " + Do[2];
                 else
                     msg = Do[1] + ": " + Do[2];
-                WriteTextSafe(richTextBox1, msg + "\n");
+                WriteTextSafe(rtcMSG, msg + "\n");
             }
             else if (Do[0] == "4")
             {
@@ -541,7 +541,7 @@ namespace GameProject
         private void button1_Click(object sender, EventArgs e)
         {
             PlayAnimation(dichD1);
-            senDoFrom("5", username, IDphong, textBox1.Text);
+            senDoFrom("5", username, IDphong, txtSendMSG.Text);
         }
 
         #endregion
