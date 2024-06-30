@@ -113,6 +113,16 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI_Chatlog {
+            get {
+                object obj = ResourceManager.GetObject("UI_Chatlog", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_Flat_Banner_02 {
             get {
                 object obj = ResourceManager.GetObject("UI_Flat_Banner_02", resourceCulture);
@@ -273,6 +283,46 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_03a1 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_03a1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_03a2 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_03a2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_03a3 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_03a3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Flat_Button_Small_Press_03a4 {
+            get {
+                object obj = ResourceManager.GetObject("UI_Flat_Button_Small_Press_03a4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_Flat_Profile_Button_Press_01a1 {
             get {
                 object obj = ResourceManager.GetObject("UI_Flat_Profile_Button_Press_01a1", resourceCulture);
@@ -416,6 +466,16 @@ namespace GameProject {
         internal static System.Drawing.Bitmap UI_Square {
             get {
                 object obj = ResourceManager.GetObject("UI_Square", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Table {
+            get {
+                object obj = ResourceManager.GetObject("UI_Table", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

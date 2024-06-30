@@ -222,7 +222,7 @@ namespace GameProject
             client = new FireSharp.FirebaseClient(config);
 
             Setptbimage();
-            ButtonConfig();
+            BodyConfig();
             //SetControlImage(lbID, Animation.UI_Textbox_02);
             //Cập nhật ngay mã id phòng là IDphong
             Invoke(new Action(() =>
@@ -953,6 +953,15 @@ namespace GameProject
 
         ///////////////////////////////////////////////////////////////////////
         #region UI
+
+        private void BodyConfig()
+        {
+            ButtonConfig();
+
+            SetControlImage(pictureBox2, Animation.UI_Chatlog);
+            SetControlImage(pictureBox1, Animation.UI_Table);
+        }
+
         private void PlayAnimation(Control control)
         {
             if (control is Button button)
@@ -962,30 +971,54 @@ namespace GameProject
                 animationThread.Join();
             }
         }
+
         private void ButtonAnimation(Button button)
         {
             int delay = 70;
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
-            Thread.Sleep(delay);
-            SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            if (button.Name == "btnLeave")
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_03a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_03a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_03a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Small_Press_03a1);
+            }
+            else
+            {
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a2);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a3);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a4);
+                Thread.Sleep(delay);
+                SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+            }
         }
+
+        Color customColor = Color.FromArgb(181, 119, 94); // Background form
+
         private void ButtonConfig()
         {
             foreach (Control control in Controls)
             {
                 if (control is Button button)
                 {
-                    /*CenterControl(button);*/
-                    SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    if (button.Name == "btnLeave")
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Small_Press_03a1);
+                    }
+                    else
+                    {
+                        SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
+                    }
                     button.ForeColor = Color.Black;
-                    button.BackColor = Color.SaddleBrown;
+                    button.BackColor = customColor;
                 }
             }
         }
+
         private void CenterControl(Control control)
         {
             if (control.Parent != null)
@@ -1014,6 +1047,7 @@ namespace GameProject
                 }
             }
         }
+
         #endregion
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         #region CopyTuGameLogin

@@ -257,6 +257,12 @@
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Content Include="Resources\1.png" />
+    <None Include="Resources\UI_Chatlog.png" />
+    <None Include="Resources\UI_Table.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_03a4.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_03a3.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_03a2.png" />
+    <None Include="Resources\UI_Flat_Button_Small_Press_03a1.png" />
     <None Include="Resources\UI_Flat_Button_Small_Press_02a4.png" />
     <None Include="Resources\UI_Flat_Button_Small_Press_02a3.png" />
     <None Include="Resources\UI_Flat_Button_Small_Press_02a2.png" />
