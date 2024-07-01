@@ -47,7 +47,7 @@ namespace GameProject
 
         private System.Timers.Timer listenTimer;
 
-        private int xingau = 1;
+        private int xingau;
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace GameProject
         {
             InitializeComponent();
         }
-        public GamePlay(string name, string idPhong, string ip, bool server) 
+        public GamePlay(string name, string idPhong, bool server) 
         {
             InitializeComponent();
             InitializeTimer();
@@ -64,7 +64,6 @@ namespace GameProject
             socket = new SocketManager();
             username = name;
             IDphong = idPhong;
-            IP = ip;
             DSUser.Add(username); // Mỗi người chơi sẽ tự có danh sách người chơi của riêng mình, khi có thay đổi server sẽ thông báo để cập nhật
             CreateOrConnect(server);
         }
@@ -87,28 +86,10 @@ namespace GameProject
             /*SetControlImage(b4, Animation.UI_Horse_Select_04);
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
         }
-        private async void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (socket.isServer)
-            {
-                await DeleteRoom(IDphong);
-                socket.CloseConnect();
-                DialogResult = DialogResult.Cancel; // Quay về GameLobby
-            }
-            else
-            {
-                try
-                {
-                    socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
-                }
-                catch { }
-                DialogResult = DialogResult.Cancel; // Quay về GameLobby
-            }
-        }
         private void InitializeTimer()
         {
-            listenTimer = new System.Timers.Timer(2000); // (1000ms = 1 giây)
-            listenTimer.Elapsed += OnTimedEvent; // Cứ cách 1.5s thì gọi Listen()
+            listenTimer = new System.Timers.Timer(500); // (1000ms = 1 giây)
+            listenTimer.Elapsed += OnTimedEvent; // Cứ cách 0.5s thì gọi Listen()
             listenTimer.AutoReset = true;
             listenTimer.Enabled = true;
         }
@@ -124,13 +105,31 @@ namespace GameProject
         #endregion
 
         #region Function
+        private async Task<string> GetRoomId(string roomName)
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
+                RoomData roomData = response.ResultAs<RoomData>();
 
+                if (roomData != null)
+                {
+                    return roomData.RoomId;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy RoomId: {ex.Message}");
+                return null;
+            }
+        }
         public async void CreateOrConnect(bool server)
         {
             if (server)
             {
                 string roomName = IDphong;
-                string roomId = IP;
+                string roomId = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
 
                 try
                 {
@@ -151,8 +150,9 @@ namespace GameProject
             }
             else
             {
+                string ip = await GetRoomId(IDphong);
                 socket.isServer = false;
-                socket.IP = IP;
+                socket.IP = ip;
                 if (!socket.ConnectServer())
                 {
                     MessageBox.Show("Không thể kết nối");
@@ -290,17 +290,17 @@ namespace GameProject
                         DSUser.Remove(name);
                         reloadForm();
                         string StringQuit = string.Join("/", DSUser);
-                        socket.Broadcast(new SocketData((int)SocketCommand.QUIT, new Point(), StringQuit));
+                        socket.Broadcast(new SocketData((int)SocketCommand.QUIT, new Point(), data.Message));
                     }
                     else
                     {
                         string userString = data.Message;
-                        string[] userArray = userString.Split('/');
-                        DSUser.Clear();
-                        for (int i = 0; i < userArray.Length; i++)
-                        {
-                            DSUser.Add(userArray[i]);
-                        }
+                        //string[] userArray = userString.Split('/');
+                        DSUser.Remove(data.Message);
+                        //for (int i = 0; i < userArray.Length; i++)
+                        //{
+                        //    DSUser.Add(userArray[i]);
+                        //}
                         reloadForm();
                     }
                     break;
@@ -676,7 +676,7 @@ namespace GameProject
             else
             {
                 socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
-
+                socket.CloseClient();
                 DialogResult = DialogResult.Cancel; // Quay về GameLobby
                 this.Close();
             }

@@ -189,10 +189,22 @@ namespace GameProject
             }
         }
 
+        public void CloseClient()
+        {
+            if (client != null)
+            {
+                client.Close();
+                MessageBox.Show("Client");
+            }
+        }
         public void CloseConnect()
         {
-            server.Close();
-            isServerRun = false;
+            if (server != null)
+            {
+                server.Close();
+                isServerRun = false;
+                MessageBox.Show("Server");
+            }
         }
 
         //lấy IPv4 của card mạng đang dùng

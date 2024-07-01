@@ -249,25 +249,7 @@ namespace GameProject
                 flowLayoutPanelRooms.Controls.Add(panel);
             }
         }
-        private async Task<string> GetRoomId(string roomName)
-        {
-            try
-            {
-                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
-                RoomData roomData = response.ResultAs<RoomData>();
-
-                if (roomData != null)
-                {
-                    return roomData.RoomId;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi lấy RoomId: {ex.Message}");
-                return null;
-            }
-        }
+     
 
         #endregion
 
@@ -288,17 +270,8 @@ namespace GameProject
             {
                 bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
                 if (!Exist)
-                {
-                    string ip;
-                    try // tự động lấy địa chỉ IP
-                    {
-                        ip = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
-                    }
-                    catch
-                    {
-                        ip = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
-                    }
-                    game = new GamePlay(NameUser, txtRoomName.Texts, ip, true); 
+                { 
+                    game = new GamePlay(NameUser, txtRoomName.Texts, true); 
                     this.DialogResult = ContinueToGamePlay; // Mở GamePlay
 
                     txtRoomName.Texts = "";
@@ -328,16 +301,8 @@ namespace GameProject
                 bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
                 if (Exist)
                 {
-                    string ip = await GetRoomId(txtRoomName.Texts);
-                    try
-                    {
-                        game = new GamePlay(NameUser, txtRoomName.Texts, ip, false);
-                        this.DialogResult = ContinueToGamePlay;
-
-                        txtRoomName.Texts = "";
-                        Notification.Text = "";
-                    }
-                    catch { }
+                    game = new GamePlay(NameUser, txtRoomName.Texts, false);
+                    this.DialogResult = ContinueToGamePlay;
                 }
                 else
                 {
