@@ -80,7 +80,7 @@ namespace GameProject
             }));
             reloadForm();
             SetControlImage(this, Animation.UI_Menu);
-
+            SetControlImage(imgXiNgau, Animation.XiNgau_1);
             /*SetControlImage(b4, Animation.UI_Horse_Select_04);
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
         }

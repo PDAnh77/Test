@@ -41,6 +41,12 @@
             this.lbWork = new System.Windows.Forms.Label();
             this.btn_BoLuot = new System.Windows.Forms.Button();
             this.luotchoitimer = new System.Windows.Forms.Timer(this.components);
+            this.btnSendMSG = new System.Windows.Forms.Button();
+            this.txtSendMSG = new System.Windows.Forms.TextBox();
+            this.rtbMSG = new System.Windows.Forms.RichTextBox();
+            this.pgb = new System.Windows.Forms.ProgressBar();
+            this.timercd = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.g2 = new System.Windows.Forms.PictureBox();
             this.g1 = new System.Windows.Forms.PictureBox();
             this.g4 = new System.Windows.Forms.PictureBox();
@@ -103,6 +109,7 @@
             this.btn30 = new System.Windows.Forms.PictureBox();
             this.btn31 = new System.Windows.Forms.PictureBox();
             this.btn32 = new System.Windows.Forms.PictureBox();
+            this.btn33 = new System.Windows.Forms.PictureBox();
             this.btn34 = new System.Windows.Forms.PictureBox();
             this.btn35 = new System.Windows.Forms.PictureBox();
             this.btn29 = new System.Windows.Forms.PictureBox();
@@ -136,16 +143,10 @@
             this.btn55 = new System.Windows.Forms.PictureBox();
             this.btn56 = new System.Windows.Forms.PictureBox();
             this.btn1 = new System.Windows.Forms.PictureBox();
-            this.imgXiNgau = new System.Windows.Forms.PictureBox();
-            this.btn33 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.btnSendMSG = new System.Windows.Forms.Button();
-            this.txtSendMSG = new System.Windows.Forms.TextBox();
-            this.rtbMSG = new System.Windows.Forms.RichTextBox();
-            this.pgb = new System.Windows.Forms.ProgressBar();
-            this.timercd = new System.Windows.Forms.Timer(this.components);
+            this.imgXiNgau = new System.Windows.Forms.PictureBox();
             this.btnLeave = new GameProject.CustomControls.ButtonDesign();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g4)).BeginInit();
@@ -208,6 +209,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.btn30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn31)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn32)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btn33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn34)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn35)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn29)).BeginInit();
@@ -241,10 +243,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.btn55)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn56)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgXiNgau)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btn33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgXiNgau)).BeginInit();
             this.SuspendLayout();
             // 
             // lbluotchoi
@@ -366,6 +366,61 @@
             // 
             this.luotchoitimer.Interval = 1000;
             this.luotchoitimer.Tick += new System.EventHandler(this.luotchoitimer_Tick);
+            // 
+            // btnSendMSG
+            // 
+            this.btnSendMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSendMSG.Location = new System.Drawing.Point(1088, 628);
+            this.btnSendMSG.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSendMSG.Name = "btnSendMSG";
+            this.btnSendMSG.Size = new System.Drawing.Size(125, 30);
+            this.btnSendMSG.TabIndex = 120;
+            this.btnSendMSG.Text = "Send";
+            this.btnSendMSG.UseVisualStyleBackColor = true;
+            this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
+            // 
+            // txtSendMSG
+            // 
+            this.txtSendMSG.Location = new System.Drawing.Point(739, 628);
+            this.txtSendMSG.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSendMSG.Multiline = true;
+            this.txtSendMSG.Name = "txtSendMSG";
+            this.txtSendMSG.Size = new System.Drawing.Size(341, 30);
+            this.txtSendMSG.TabIndex = 119;
+            this.txtSendMSG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSendMSG_KeyDown);
+            // 
+            // rtbMSG
+            // 
+            this.rtbMSG.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.rtbMSG.Enabled = false;
+            this.rtbMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbMSG.Location = new System.Drawing.Point(728, 199);
+            this.rtbMSG.Margin = new System.Windows.Forms.Padding(4);
+            this.rtbMSG.Name = "rtbMSG";
+            this.rtbMSG.Size = new System.Drawing.Size(494, 468);
+            this.rtbMSG.TabIndex = 118;
+            this.rtbMSG.Text = "";
+            // 
+            // pgb
+            // 
+            this.pgb.Location = new System.Drawing.Point(703, 160);
+            this.pgb.Maximum = 300;
+            this.pgb.Name = "pgb";
+            this.pgb.Size = new System.Drawing.Size(546, 23);
+            this.pgb.Step = 1;
+            this.pgb.TabIndex = 121;
+            // 
+            // timercd
+            // 
+            this.timercd.Tick += new System.EventHandler(this.timercd_Tick);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(703, 184);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(546, 502);
+            this.pictureBox2.TabIndex = 117;
+            this.pictureBox2.TabStop = false;
             // 
             // g2
             // 
@@ -1087,6 +1142,18 @@
             this.btn32.TabStop = false;
             this.btn32.Click += new System.EventHandler(this.btn32_Click);
             // 
+            // btn33
+            // 
+            this.btn33.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.btn33.Location = new System.Drawing.Point(369, 420);
+            this.btn33.Margin = new System.Windows.Forms.Padding(4);
+            this.btn33.Name = "btn33";
+            this.btn33.Size = new System.Drawing.Size(33, 31);
+            this.btn33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btn33.TabIndex = 39;
+            this.btn33.TabStop = false;
+            this.btn33.Click += new System.EventHandler(this.btn33_Click);
+            // 
             // btn34
             // 
             this.btn34.BackColor = System.Drawing.SystemColors.WindowFrame;
@@ -1483,30 +1550,6 @@
             this.btn1.TabStop = false;
             this.btn1.Click += new System.EventHandler(this.btn1_Click);
             // 
-            // imgXiNgau
-            // 
-            this.imgXiNgau.BackColor = System.Drawing.Color.Transparent;
-            this.imgXiNgau.Image = ((System.Drawing.Image)(resources.GetObject("imgXiNgau.Image")));
-            this.imgXiNgau.Location = new System.Drawing.Point(715, 66);
-            this.imgXiNgau.Margin = new System.Windows.Forms.Padding(4);
-            this.imgXiNgau.Name = "imgXiNgau";
-            this.imgXiNgau.Size = new System.Drawing.Size(99, 89);
-            this.imgXiNgau.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.imgXiNgau.TabIndex = 1;
-            this.imgXiNgau.TabStop = false;
-            // 
-            // btn33
-            // 
-            this.btn33.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.btn33.Location = new System.Drawing.Point(369, 420);
-            this.btn33.Margin = new System.Windows.Forms.Padding(4);
-            this.btn33.Name = "btn33";
-            this.btn33.Size = new System.Drawing.Size(33, 31);
-            this.btn33.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btn33.TabIndex = 39;
-            this.btn33.TabStop = false;
-            this.btn33.Click += new System.EventHandler(this.btn33_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Desktop;
@@ -1518,60 +1561,16 @@
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
-            // pictureBox2
+            // imgXiNgau
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(703, 184);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(546, 502);
-            this.pictureBox2.TabIndex = 117;
-            this.pictureBox2.TabStop = false;
-            // 
-            // btnSendMSG
-            // 
-            this.btnSendMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendMSG.Location = new System.Drawing.Point(1088, 628);
-            this.btnSendMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSendMSG.Name = "btnSendMSG";
-            this.btnSendMSG.Size = new System.Drawing.Size(125, 30);
-            this.btnSendMSG.TabIndex = 120;
-            this.btnSendMSG.Text = "Send";
-            this.btnSendMSG.UseVisualStyleBackColor = true;
-            this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
-            // 
-            // txtSendMSG
-            // 
-            this.txtSendMSG.Location = new System.Drawing.Point(739, 628);
-            this.txtSendMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSendMSG.Multiline = true;
-            this.txtSendMSG.Name = "txtSendMSG";
-            this.txtSendMSG.Size = new System.Drawing.Size(341, 30);
-            this.txtSendMSG.TabIndex = 119;
-            this.txtSendMSG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSendMSG_KeyDown);
-            // 
-            // rtbMSG
-            // 
-            this.rtbMSG.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.rtbMSG.Enabled = false;
-            this.rtbMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbMSG.Location = new System.Drawing.Point(728, 199);
-            this.rtbMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.rtbMSG.Name = "rtbMSG";
-            this.rtbMSG.Size = new System.Drawing.Size(494, 468);
-            this.rtbMSG.TabIndex = 118;
-            this.rtbMSG.Text = "";
-            // 
-            // pgb
-            // 
-            this.pgb.Location = new System.Drawing.Point(703, 160);
-            this.pgb.Maximum = 300;
-            this.pgb.Name = "pgb";
-            this.pgb.Size = new System.Drawing.Size(546, 23);
-            this.pgb.Step = 1;
-            this.pgb.TabIndex = 121;
-            // 
-            // timercd
-            // 
-            this.timercd.Tick += new System.EventHandler(this.timercd_Tick);
+            this.imgXiNgau.BackColor = System.Drawing.Color.Transparent;
+            this.imgXiNgau.Location = new System.Drawing.Point(715, 66);
+            this.imgXiNgau.Margin = new System.Windows.Forms.Padding(4);
+            this.imgXiNgau.Name = "imgXiNgau";
+            this.imgXiNgau.Size = new System.Drawing.Size(99, 89);
+            this.imgXiNgau.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imgXiNgau.TabIndex = 1;
+            this.imgXiNgau.TabStop = false;
             // 
             // btnLeave
             // 
@@ -1717,6 +1716,7 @@
             this.Name = "GamePlay";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GamePlay_FormClosing);
             this.Load += new System.EventHandler(this.GamePlay_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g4)).EndInit();
@@ -1779,6 +1779,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.btn30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn31)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn32)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btn33)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn34)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn35)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn29)).EndInit();
@@ -1812,10 +1813,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.btn55)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn56)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btn1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgXiNgau)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btn33)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgXiNgau)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

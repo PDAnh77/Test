@@ -256,7 +256,6 @@
     <Compile Include="UserProfile.Designer.cs">
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
-    <Content Include="Resources\1.png" />
     <None Include="Resources\XiNgau_6.png" />
     <None Include="Resources\XiNgau_5.png" />
     <None Include="Resources\XiNgau_4.png" />
