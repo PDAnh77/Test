@@ -115,11 +115,11 @@ namespace GameProject
                         Password = pass
                     };
 
-                    if (ResUser.isLogin == true)
-                    {
-                        ShowNotification("Tài khoản đã đăng nhập ở nơi khác!");
-                        return;
-                    }
+                    //if (ResUser.isLogin == true)
+                    //{
+                    //    ShowNotification("Tài khoản đã đăng nhập ở nơi khác!");
+                    //    return;
+                    //}
 
                     if (User.IsEqual(ResUser, CurUser))
                     {

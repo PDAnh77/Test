@@ -1156,10 +1156,17 @@ namespace GameProject
         }
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
-            //rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+"\n");
-            //rtbMSG.ScrollToCaret();
-            socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
-            txtSendMSG.Text = "";
+            if (socket.isServer)
+            {
+                rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
+                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                //rtbMSG.ScrollToCaret();
+            }
+            else
+            {
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                txtSendMSG.Text = "";
+            }
         }
 
         private void txtSendMSG_KeyDown(object sender, KeyEventArgs e)
