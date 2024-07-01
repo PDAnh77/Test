@@ -1,4 +1,7 @@
 ﻿using FirebaseAdmin.Messaging;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +19,14 @@ namespace GameProject
 {
     public partial class Menu : Form
     {
+        public IFirebaseConfig config = new FirebaseConfig
+        {
+            BasePath = "https://player-data-a58e3-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            AuthSecret = "YuoYsOBrBJXPMJzVMCTK3eZen1kA9ouzjZ0U616i"
+        };
+
+        IFirebaseClient client;
+
         PrivateFontCollection privateFonts = new PrivateFontCollection();
 
         private void LoadCustomFont()
@@ -49,7 +60,6 @@ namespace GameProject
         }
 
         System.Windows.Forms.Timer userCheckTimer;
-        string lastLoggedInUser = null;
 
         private void InitializeUserCheckTimer()
         {
@@ -69,11 +79,11 @@ namespace GameProject
         {
             if (CheckCurrentUser())
             {
-                if (User.CurrentUser.Username != lastLoggedInUser)
+                if (User.CurrentUser != null)
                 {
-                    lastLoggedInUser = User.CurrentUser.Username;
                     ShowNotification("Chào mừng bạn quay trở lại, " + User.CurrentUser.Username + "!");
                     CenterControl(Notification);
+                    userCheckTimer.Stop();
                 }
             }
         }
@@ -90,6 +100,13 @@ namespace GameProject
             BodyConfig();
 
             InitializeUserCheckTimer();
+
+            client = new FireSharp.FirebaseClient(config);
+
+            if (client != null)
+            {
+                /*MessageBox.Show("Kết nối thành công!");*/
+            }
         }
 
         Login loginForm;
@@ -97,6 +114,13 @@ namespace GameProject
         private void btnLogin_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnLogin);
+            if (User.CurrentUser != null)
+            {
+                ShowNotification("Vui lòng đăng xuất tài khoản trước!");
+                CenterControl(Notification);
+                return;
+            }
+
             if (loginForm == null || loginForm.IsDisposed)
             {
                 loginForm = new Login();
@@ -155,9 +179,14 @@ namespace GameProject
             CenterControl(Notification);
         }
 
-        private void btnQuit_Click(object sender, EventArgs e)
+        private async void btnQuit_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnQuit);
+            if (User.CurrentUser != null)
+            {
+                User.CurrentUser.isLogin = false;
+                SetResponse request = await client.SetAsync("Information/" + User.CurrentUser.Username, User.CurrentUser);
+            }
             Application.Exit();
         }
 
@@ -185,15 +214,17 @@ namespace GameProject
             CenterControl(Notification);
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private async void btnLogout_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnLogout);
             if (User.CurrentUser != null)
             {
+                User.CurrentUser.isLogin = false;
+                SetResponse request = await client.SetAsync("Information/" + User.CurrentUser.Username, User.CurrentUser);
                 User.CurrentUser = null;
-                lastLoggedInUser = null;
                 ShowNotification("Đăng xuất tài khoản thành công!");
                 CenterControl(Notification);
+                userCheckTimer.Start();
             }
         }
 

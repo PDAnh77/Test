@@ -35,8 +35,11 @@ namespace GameProject
         START,
         CREATE_ROOM,
         JOIN_ROOM,
-        SEND_MESSAGE,
+
         XUAT_QUAN,
         SAN_SANG
+        SEND_MESSEGE,
+        SEND_DICE,
+        STARTTIMER
     }
 }

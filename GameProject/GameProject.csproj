@@ -256,6 +256,7 @@
     <Compile Include="UserProfile.Designer.cs">
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\UI_Table.png" />
     <None Include="Resources\XiNgau_6.png" />
     <None Include="Resources\XiNgau_5.png" />
     <None Include="Resources\XiNgau_4.png" />
@@ -271,7 +272,6 @@
     <None Include="Resources\UI_Horse_Select_02.png" />
     <None Include="Resources\UI_Horse_Select_01.png" />
     <None Include="Resources\UI_Chatlog.png" />
-    <None Include="Resources\UI_Table.png" />
     <None Include="Resources\UI_Flat_Button_Small_Press_03a4.png" />
     <None Include="Resources\UI_Flat_Button_Small_Press_03a3.png" />
     <None Include="Resources\UI_Flat_Button_Small_Press_03a2.png" />
