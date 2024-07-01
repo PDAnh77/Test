@@ -46,6 +46,8 @@ namespace GameProject
 
         private System.Timers.Timer listenTimer;
 
+        private int xingau = 1;
+
         #endregion
 
         #region Initialize
@@ -208,10 +210,29 @@ namespace GameProject
         {
             switch (data.Command)
             {
-                case (int)SocketCommand.SEND_MESSAGE:
+                case (int)SocketCommand.SEND_DICE:
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
+                            if (socket.isServer)
+                            {
+                                socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), data.Message));
+                            }    
+                            string[] mes = data.Message.Split('/');
+                            xingau = Int32.Parse(mes[1]);
+                            diceimg(xingau);
+
+                        });
+                        break;
+                    }
+                case (int)SocketCommand.SEND_MESSEGE:
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            if (socket.isServer)
+                            {
+                                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), data.Message));
+                            }
                             rtbMSG.AppendText(data.Message+Environment.NewLine);
                             rtbMSG.ScrollToCaret(); // Di chuyển con trỏ đến cuối văn bản
                         });
@@ -652,8 +673,10 @@ namespace GameProject
         private void btnXiNgau_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnXiNgau);
-            SendMSGtoFB("3", username, IDphong, "");
-            timercd.Start();     
+            Random random = new Random();
+            xingau = random.Next(1, 7);
+            diceimg(xingau);
+            socket.Send(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{User.CurrentUser.Username}/{xingau}"));
         }
 
        /* private void button1_Click(object sender, EventArgs e)
@@ -662,6 +685,45 @@ namespace GameProject
             senDoFrom("5", username, IDphong, txtSendMSG.Text);
         }
 */
+       private void diceimg (int dice)
+        { 
+            switch (dice)
+                {
+                case 1:
+                    {
+                        SetControlImage(imgXiNgau,Animation.XiNgau_1);
+                        break;
+                    }
+                case 2:
+                    {
+                        SetControlImage(imgXiNgau, Animation.XiNgau_2);
+                        break;
+                    }
+                case 3:
+                    {
+                        SetControlImage(imgXiNgau, Animation.XiNgau_3);
+                        break;
+                    }
+                case 4:
+                    {
+                        SetControlImage(imgXiNgau, Animation.XiNgau_4);
+                        break;
+                    }
+                case 5:
+                    {
+                        SetControlImage(imgXiNgau, Animation.XiNgau_5);
+                        break;
+                    }
+                case 6:
+                    {
+                        SetControlImage(imgXiNgau, Animation.XiNgau_6);
+                        break;
+                    }
+
+                default:
+                    break;
+                }
+        }
         #endregion
 
         private int Tim_User_ThucHien()
@@ -1075,9 +1137,9 @@ namespace GameProject
         }
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
-            rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+"\n");
-            rtbMSG.ScrollToCaret();
-            socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+            //rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+"\n");
+            //rtbMSG.ScrollToCaret();
+            socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
             txtSendMSG.Text = "";
         }
 
@@ -1085,9 +1147,9 @@ namespace GameProject
         {
             if (e.KeyCode == Keys.Enter)
             {
-                rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
-                rtbMSG.ScrollToCaret();
-                socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                //rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
+                //rtbMSG.ScrollToCaret();
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
                 txtSendMSG.Text = "";
             }
         }
