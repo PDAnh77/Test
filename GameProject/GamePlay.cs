@@ -373,24 +373,28 @@ namespace GameProject
                             string nameCtrol = "b";
                             PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb, Animation.UI_Horse_Select_04);
+                            ptb.BackColor = customColor02;
                         }
                         else if (j == 1)
                         {
                             string nameCtrol = "r";
                             PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb, Animation.UI_Horse_Select_01);
+                            ptb.BackColor = customColor02;
                         }
                         else if (j == 2)
                         {
                             string nameCtrol = "y";
                             PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb, Animation.UI_Horse_Select_02);
+                            ptb.BackColor = customColor02;
                         }
                         else if (j == 3)
                         {
                             string nameCtrol = "g";
                             PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb, Animation.UI_Horse_Select_03);
+                            ptb.BackColor = customColor02;
                         }
                     }
                 }
@@ -1137,7 +1141,8 @@ namespace GameProject
             }
         }
 
-        Color customColor = Color.FromArgb(181, 119, 94); // Background form
+        Color customColor01 = Color.FromArgb(181, 119, 94); // Background form
+        Color customColor02 = Color.FromArgb(234, 212, 170); // Horse back color
 
         private void ButtonConfig()
         {
@@ -1154,7 +1159,7 @@ namespace GameProject
                         SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     }
                     button.ForeColor = Color.Black;
-                    button.BackColor = customColor;
+                    button.BackColor = customColor01;
                 }
             }
         }

@@ -115,20 +115,21 @@ namespace GameProject
                         Password = pass
                     };
 
+                    if (ResUser.isLogin == true)
+                    {
+                        ShowNotification("Tài khoản đã đăng nhập ở nơi khác!");
+                        return;
+                    }
+
                     if (User.IsEqual(ResUser, CurUser))
                     {
                         ShowNotification("Đăng nhập thành công!");
+                        CenterControl(Notification);
+                        ResUser.isLogin = true;
+                        SetResponse request = await client.SetAsync("Information/" + usrname, ResUser);
                         User.CurrentUser = ResUser;
                         DialogResult = DialogResult.OK;
                         this.Close();
-
-                        /*var wait = new System.Windows.Forms.Timer();
-                        wait.Tick += delegate
-                        {
-                            this.Close();
-                        };
-                        wait.Interval = (int)TimeSpan.FromSeconds(1.5).TotalMilliseconds;
-                        wait.Start();*/
                     }
                     else
                     {
