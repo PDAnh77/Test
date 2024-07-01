@@ -37,6 +37,7 @@ namespace GameProject
         public string username; // Tên người chơi
         public string IDphong; // Tên phòng
         public string IP;
+        public int num_Ready = 0;
 
         private List<string> DSUser = new List<string>(); // Danh sách người chơi trong phòng
 
@@ -81,6 +82,7 @@ namespace GameProject
             reloadForm();
             SetControlImage(this, Animation.UI_Menu);
             SetControlImage(imgXiNgau, Animation.XiNgau_1);
+            LockCacNut();
             /*SetControlImage(b4, Animation.UI_Horse_Select_04);
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
         }
@@ -269,9 +271,60 @@ namespace GameProject
                         reloadForm();
                     }
                     break;
+                case (int)SocketCommand.XUAT_QUAN:
+                    if (socket.isServer)
+                    {
+                        string NuocDi = data.Message;
+                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), NuocDi));
+
+                        string[] temp = NuocDi.Split('/');
+
+                        string QuanCo = temp[0];
+
+                        PictureBox ptb_BatDau = (PictureBox)this.Controls.Find(QuanCo, false).FirstOrDefault() as PictureBox;
+                        PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
+                        ptb_KetThuc.Image = ptb_BatDau.Image;
+                        ptb_BatDau.Image = null;
+                    }
+                    else
+                    {
+                        string userString = data.Message;
+                        string[] temp = userString.Split('/');
+
+                        string QuanCo = temp[0];
+                        
+                        PictureBox ptb_BatDau = (PictureBox)this.Controls.Find(QuanCo, false).FirstOrDefault() as PictureBox;
+                        PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
+                        ptb_KetThuc.Image = ptb_BatDau.Image;
+                        ptb_BatDau.Image = null;
+                        
+                    }
+                    break;
+                case (int)SocketCommand.SAN_SANG:
+                    if (socket.isServer)
+                    {
+                        //int temp = Int32.Parse(data.Message);
+                        //string GuiSoLuongIsReady = data.Message;
+                        num_Ready++;
+                        socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
+
+                    }
+                    else
+                    {
+                        //int temp = Int32.Parse(data.Message);
+                        num_Ready++;
+                        
+                    }
+                    break;
                 default:
                     break;
             }
+                if (num_Ready == DSUser.Count)
+                {
+                    ChuanBiCacQuanCo();
+                    UnlockCacNut();
+                }
+            
         }
 
         private async Task DeleteRoom(string roomName)
@@ -363,37 +416,7 @@ namespace GameProject
                 }
 
             }
-                for (int j = 0; j < DSUser.Count; j++)//Duyệt qua danh sách các user để tạo cho mỗi 
-                                                      //user một bộ cờ ngựa màu 4 con tương ứng
-                {
-                    for (int m = 0; m < 4; m++)
-                    {
-                        if (j == 0)
-                        {
-                            string nameCtrol = "b";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            SetControlImage(ptb, Animation.UI_Horse_Select_04);
-                        }
-                        else if (j == 1)
-                        {
-                            string nameCtrol = "r";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            SetControlImage(ptb, Animation.UI_Horse_Select_01);
-                        }
-                        else if (j == 2)
-                        {
-                            string nameCtrol = "y";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            SetControlImage(ptb, Animation.UI_Horse_Select_02);
-                        }
-                        else if (j == 3)
-                        {
-                            string nameCtrol = "g";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            SetControlImage(ptb, Animation.UI_Horse_Select_03);
-                        }
-                    }
-                }
+                
         }
 
         public void getMSG(string Msg)  //tạo tin nhắn gữi đi
@@ -642,11 +665,198 @@ namespace GameProject
                 this.Close();
             }
         }
-
+        
         private void btnStart_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnStart);
-            Listen();
+            //num_Ready++;
+            btnStart.Enabled = false;
+
+            if (socket.isServer)
+            {
+                num_Ready++;
+                socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
+                if (num_Ready == DSUser.Count)
+                {
+                    ChuanBiCacQuanCo();
+                    UnlockCacNut();
+                }
+            }
+            else
+                socket.Send(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
+        }
+
+        void ChuanBiCacQuanCo()
+        {
+            for (int j = 0; j < DSUser.Count; j++)//Duyệt qua danh sách các user để tạo cho mỗi 
+                                                  //user một bộ cờ ngựa màu 4 con tương ứng
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    if (j == 0)
+                    {
+                        string nameCtrol = "b";
+                        PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                        SetControlImage(ptb, Animation.UI_Horse_Select_04);
+                    }
+                    else if (j == 1)
+                    {
+                        string nameCtrol = "r";
+                        PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                        SetControlImage(ptb, Animation.UI_Horse_Select_01);
+                    }
+                    else if (j == 2)
+                    {
+                        string nameCtrol = "y";
+                        PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                        SetControlImage(ptb, Animation.UI_Horse_Select_02);
+                    }
+                    else if (j == 3)
+                    {
+                        string nameCtrol = "g";
+                        PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                        SetControlImage(ptb, Animation.UI_Horse_Select_03);
+                    }
+                }
+            }
+        }
+
+        public void UnlockCacNut()
+        {
+            BeginInvoke(new System.Action(() =>
+            {
+                btn_BoLuot.Enabled = true;
+            }));
+
+            BeginInvoke(new System.Action(() =>
+            {
+            btnXiNgau.Enabled = true;
+            }));
+
+            int i = 1;
+            int j = 1;
+
+            for (int k = 1; k <= 4; k++)
+            {
+                foreach (Control c in Controls)
+                {
+                    if (!(c is PictureBox))
+                        continue;
+                    if (c.Name.Contains($"r{k}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+                    if (c.Name.Contains($"g{k}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+                    if (c.Name.Contains($"y{k}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+                    if (c.Name.Contains($"b{k}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+
+                }
+                
+            }
+
+
+                foreach (Control c in Controls)
+                {
+                if (i <= 56)
+                {
+                    if (c is PictureBox && c.Name.Contains($"btn{i}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                        i++;
+                    }
+                }
+                if (j <= 6)
+                {
+                    if (c is PictureBox && c.Name.Contains($"dichXD{j}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+                    if (c is PictureBox && c.Name.Contains($"dichD{j}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+                    if (c is PictureBox && c.Name.Contains($"dichV{j}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+                    if (c is PictureBox && c.Name.Contains($"dichXL{j}"))
+                    {
+                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                    }
+                    j++;
+                }
+               
+            }
+        }
+
+        public void LockCacNut()
+        {
+            btn_BoLuot.Enabled = false;
+            btnXiNgau.Enabled = false;
+
+            int i = 1;
+            int j = 1;
+            int k = 1;
+            foreach (Control c in Controls)
+            {
+                if (i <= 56)
+                {
+                    if (c is PictureBox && c.Name.Contains($"btn{i}"))
+                    {
+                        c.Enabled = false;
+                        i++;
+                    }
+                }
+                if (j <= 6)
+                {
+                    if (c is PictureBox && c.Name.Contains($"dichXD{j}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    if (c is PictureBox && c.Name.Contains($"dichD{j}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    if (c is PictureBox && c.Name.Contains($"dichV{j}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    if (c is PictureBox && c.Name.Contains($"dichXL{j}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    j++;
+                }
+                if (k <= 4)
+                {
+                    if (c is PictureBox && c.Name.Contains($"r{k}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    if (c is PictureBox && c.Name.Contains($"g{k}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    if (c is PictureBox && c.Name.Contains($"y{k}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    if (c is PictureBox && c.Name.Contains($"b{k}"))
+                    {
+                        c.Enabled = false;
+                    }
+                    k++;
+                }
+            }
         }
 
         private void btnXiNgau_Click(object sender, EventArgs e)
@@ -673,7 +883,7 @@ namespace GameProject
             }
             return -1;
         }
-        private void SendPTBox(string co) //Gui thong diep xuat quan co 
+        private void Send_XuatQuanCo(string co) //Gui thong diep xuat quan co 
         {
             PictureBox ptb = (PictureBox)this.Controls.Find(co, false).FirstOrDefault() as PictureBox;
             int numUser = Tim_User_ThucHien();
@@ -687,7 +897,8 @@ namespace GameProject
                     if (numUser == 0)
                     {
                         if (ptb.Image != null)
-                            SendMSGtoFB("4", username, IDphong, co);
+                            //SendMSGtoFB("4", username, IDphong, co);
+                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
                     }
                     break;
                 case "r1":
@@ -697,7 +908,7 @@ namespace GameProject
                     if (numUser == 1)
                     {
                         if (ptb.Image != null)
-                            SendMSGtoFB("4", username, IDphong, co);
+                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     }
                     break;
                 case "y1":
@@ -707,7 +918,7 @@ namespace GameProject
                     if (numUser == 2)
                     {
                         if (ptb.Image != null)
-                            SendMSGtoFB("4", username, IDphong, co);
+                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
                     }
                     break;
                 case "g1":
@@ -717,7 +928,7 @@ namespace GameProject
                     if (numUser == 3)
                     {
                         if (ptb.Image != null)
-                            SendMSGtoFB("4", username, IDphong, co);
+                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
                     }
                     break;
 
@@ -726,73 +937,74 @@ namespace GameProject
         private void btn_BoLuot_Click(object sender, EventArgs e)
         {
             PlayAnimation(btn_BoLuot);
-            SendMSGtoFB("7", username, IDphong, "");
-            pgb.Value = 0;
+            /*SendMSGtoFB("7", username, IDphong, "");
+            pgb.Value = 0;*/
+            MessageBox.Show("Bạn đã bỏ lượt");
         }
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)
         {
-            SendPTBox("b1");
+            Send_XuatQuanCo("b1");
         }
         private void b2_Click(object sender, EventArgs e)
         {
-            SendPTBox("b2");
+            Send_XuatQuanCo("b2");
         }
         private void b3_Click(object sender, EventArgs e)
         {
-            SendPTBox("b3");
+            Send_XuatQuanCo("b3");
         }
         private void b4_Click(object sender, EventArgs e)
         {
-            SendPTBox("b4");
+            Send_XuatQuanCo("b4");
         }
         private void r1_Click(object sender, EventArgs e)
         {
-            SendPTBox("r1");
+            Send_XuatQuanCo("r1");
         }
         private void r2_Click(object sender, EventArgs e)
         {
-            SendPTBox("r2");
+            Send_XuatQuanCo("r2");
         }
         private void r3_Click(object sender, EventArgs e)
         {
-            SendPTBox("r3");
+            Send_XuatQuanCo("r3");
         }
         private void r4_Click(object sender, EventArgs e)
         {
-            SendPTBox("r4");
+            Send_XuatQuanCo("r4");
         }
         private void y1_Click(object sender, EventArgs e)
         {
-            SendPTBox("y1");
+            Send_XuatQuanCo("y1");
         }
         private void y2_Click(object sender, EventArgs e)
         {
-            SendPTBox("y2");
+            Send_XuatQuanCo("y2");
         }
         private void y3_Click(object sender, EventArgs e)
         {
-            SendPTBox("y3");
+            Send_XuatQuanCo("y3");
         }
         private void y4_Click(object sender, EventArgs e)
         {
-            SendPTBox("y4");
+            Send_XuatQuanCo("y4");
         }
         private void g1_Click(object sender, EventArgs e)
         {
-            SendPTBox("g1");
+            Send_XuatQuanCo("g1");
         }
         private void g2_Click(object sender, EventArgs e)
         {
-            SendPTBox("g2");
+            Send_XuatQuanCo("g2");
         }
         private void g3_Click(object sender, EventArgs e)
         {
-            SendPTBox("g3");
+            Send_XuatQuanCo("g3");
         }
         private void g4_Click(object sender, EventArgs e)
         {
-            SendPTBox("g4");
+            Send_XuatQuanCo("g4");
         }
 
         private void btn29_Click(object sender, EventArgs e)
@@ -1195,6 +1407,7 @@ namespace GameProject
         private async void SendMSGtoFB (string code, string username, string idphong, string MSG)
         {
             
+
             string data = code + "/" + username + "/" + idphong + "/" + MSG;
             SetResponse response = await client.SetAsync("Messages/" , data);
         }
