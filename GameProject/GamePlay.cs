@@ -19,6 +19,7 @@ using FirebaseAdmin.Messaging;
 using FireSharp;
 
 
+
 namespace GameProject
 {
     public partial class GamePlay : Form
@@ -232,8 +233,7 @@ namespace GameProject
                             {
                                 socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), data.Message));
                             }    
-                            string[] mes = data.Message.Split('/');
-                            xingau = Int32.Parse(mes[1]);
+                            xingau = Int32.Parse(data.Message);
                             diceimg(xingau);
 
                         });
@@ -693,8 +693,15 @@ namespace GameProject
             PlayAnimation(btnXiNgau);
             Random random = new Random();
             xingau = random.Next(1, 7);
-            diceimg(xingau);
-            socket.Send(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{User.CurrentUser.Username}/{xingau}"));
+            if (socket.isServer)
+            {
+                diceimg(xingau);
+                socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}"));
+            }
+            else
+            {
+                socket.Send(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}"));
+            }
         }
 
        /* private void button1_Click(object sender, EventArgs e)
@@ -807,7 +814,10 @@ namespace GameProject
         {
             PlayAnimation(btn_BoLuot);
             pgb.Value= 0;
-            socket.Send(new SocketData((int)SocketCommand.STARTTIMER, new Point(), ""));
+            if (socket.isServer)
+                { socket.Broadcast(new SocketData((int)SocketCommand.STARTTIMER, new Point(), "")); }
+            else 
+                { socket.Send(new SocketData((int)SocketCommand.STARTTIMER, new Point(), "")); }
 
         }
         ///////////////////////////////////////////////////////////////////////
@@ -1160,6 +1170,7 @@ namespace GameProject
             {
                 rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
                 socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                txtSendMSG.Text = "";
                 //rtbMSG.ScrollToCaret();
             }
             else
