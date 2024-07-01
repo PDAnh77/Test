@@ -257,6 +257,12 @@
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Content Include="Resources\1.png" />
+    <None Include="Resources\XiNgau_6.png" />
+    <None Include="Resources\XiNgau_5.png" />
+    <None Include="Resources\XiNgau_4.png" />
+    <None Include="Resources\XiNgau_3.png" />
+    <None Include="Resources\XiNgau_2.png" />
+    <None Include="Resources\XiNgau_1.png" />
     <None Include="Resources\UI_Horse_Unselect_04.png" />
     <None Include="Resources\UI_Horse_Unselect_03.png" />
     <None Include="Resources\UI_Horse_Unselect_02.png" />

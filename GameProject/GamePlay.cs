@@ -1332,15 +1332,6 @@ namespace GameProject
            // Frm1.sendFormLG(FrmLogin);
         }
 
-
-
-
-
-
-
-
-
-
         #endregion
 
 
