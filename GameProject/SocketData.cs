@@ -17,14 +17,14 @@ namespace GameProject
         public Point Point { get => point; set => point = value; }
 
 
-        private String messege;
-        public string Messege { get => messege; set => messege = value; }
+        private String message;
+        public string Message { get => message; set => message = value; }
 
         public SocketData(int command, Point point, String messege)
         {
             this.Command = command;
             this.Point = point;
-            this.Messege = messege;
+            this.Message = messege;
         }
     }
 
@@ -35,6 +35,6 @@ namespace GameProject
         START,
         CREATE_ROOM,
         JOIN_ROOM,
-        SEND_MESSEGE
+        SEND_MESSAGE
     }
 }

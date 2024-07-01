@@ -53,7 +53,6 @@ namespace GameProject
         {
             InitializeComponent();
         }
-
         public GamePlay(string name, string idPhong, string ip, bool server) 
         {
             InitializeComponent();
@@ -81,6 +80,9 @@ namespace GameProject
             }));
             reloadForm();
             SetControlImage(this, Animation.UI_Menu);
+
+            /*SetControlImage(b4, Animation.UI_Horse_Select_04);
+            SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
         }
         private async void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -206,33 +208,33 @@ namespace GameProject
         {
             switch (data.Command)
             {
-                case (int)SocketCommand.SEND_MESSEGE:
+                case (int)SocketCommand.SEND_MESSAGE:
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
-                            rtbMSG.AppendText(data.Messege+Environment.NewLine);
+                            rtbMSG.AppendText(data.Message+Environment.NewLine);
                             rtbMSG.ScrollToCaret(); // Di chuyển con trỏ đến cuối văn bản
                         });
 
                         break;
                     }
                 case (int)SocketCommand.START:
-                    MessageBox.Show(data.Messege);
+                    MessageBox.Show(data.Message);
                     break;
                 case (int)SocketCommand.CREATE_ROOM:
-                    MessageBox.Show(data.Messege);
+                    MessageBox.Show(data.Message);
                     break;
                 case (int)SocketCommand.JOIN_ROOM:
                     if (socket.isServer) // Trường hợp là server
                     {
-                        DSUser.Add(data.Messege);
+                        DSUser.Add(data.Message);
                         reloadForm();
                         string userString = string.Join("/", DSUser);
                         socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString)); // Xem chi tiết ở SocketData để hiểu
                     }
                     else // Trường hợp là client
                     {
-                        string userString = data.Messege;
+                        string userString = data.Message;
                         string[] userArray = userString.Split('/');
                         DSUser.Clear();
                         for (int i = 0; i < userArray.Length; i++)
@@ -249,7 +251,7 @@ namespace GameProject
                 case (int)SocketCommand.QUIT:
                     if (socket.isServer)
                     {
-                        string name = data.Messege;
+                        string name = data.Message;
                         DSUser.Remove(name);
                         reloadForm();
                         string StringQuit = string.Join("/", DSUser);
@@ -257,7 +259,7 @@ namespace GameProject
                     }
                     else
                     {
-                        string userString = data.Messege;
+                        string userString = data.Message;
                         string[] userArray = userString.Split('/');
                         DSUser.Clear();
                         for (int i = 0; i < userArray.Length; i++)
@@ -337,8 +339,6 @@ namespace GameProject
             DSUser.Add(uname);
         }
 
-
-        
         private void reloadForm()
         {
             //SetButtonEnabledSafe(btnXiNgau, false);//Khóa nút lắc xí ngầu
@@ -361,7 +361,39 @@ namespace GameProject
                     // Xóa bỏ nội dung của nhãn không còn cần thiết
                     WriteTextSafe(lb, "");
                 }
+
             }
+                for (int j = 0; j < DSUser.Count; j++)//Duyệt qua danh sách các user để tạo cho mỗi 
+                                                      //user một bộ cờ ngựa màu 4 con tương ứng
+                {
+                    for (int m = 0; m < 4; m++)
+                    {
+                        if (j == 0)
+                        {
+                            string nameCtrol = "b";
+                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb, Animation.UI_Horse_Select_04);
+                        }
+                        else if (j == 1)
+                        {
+                            string nameCtrol = "r";
+                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb, Animation.UI_Horse_Select_01);
+                        }
+                        else if (j == 2)
+                        {
+                            string nameCtrol = "y";
+                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb, Animation.UI_Horse_Select_02);
+                        }
+                        else if (j == 3)
+                        {
+                            string nameCtrol = "g";
+                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb, Animation.UI_Horse_Select_03);
+                        }
+                    }
+                }
         }
 
         public void getMSG(string Msg)  //tạo tin nhắn gữi đi
@@ -379,37 +411,7 @@ namespace GameProject
                 {
                     SetButtonEnabledSafe(btnXiNgau, true);// bỏ khóa nút thảy xí ngầu
                 }
-                for (int i = 0; i < DSUser.Count; i++)//Duyệt qua danh sách các user để tạo cho mỗi 
-                                                      //user một bộ cờ ngựa màu 4 con tương ứng
-                {
-                    for (int m = 0; m < 4; m++)
-                    {
-                        if (i == 0)
-                        {
-                            string nameCtrol = "b";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            ptb.Image = new Bitmap(Application.StartupPath + "/HinhNgua/" + "xanhduong" + ".png");
-                        }
-                        else if (i == 1)
-                        {
-                            string nameCtrol = "r";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            ptb.Image = new Bitmap(Application.StartupPath + "/HinhNgua/" + "do" + ".png");
-                        }
-                        else if (i == 2)
-                        {
-                            string nameCtrol = "y";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            ptb.Image = new Bitmap(Application.StartupPath + "/HinhNgua/" + "vang" + ".png");
-                        }
-                        else if (i == 3)
-                        {
-                            string nameCtrol = "g";
-                            PictureBox ptb = (PictureBox)this.Controls.Find(nameCtrol + (m + 1), false).FirstOrDefault() as PictureBox;
-                            ptb.Image = new Bitmap(Application.StartupPath + "/HinhNgua/" + "xanhla" + ".png");
-                        }
-                    }
-                }
+                
             }
             else if (Do[0] == "3")
             {
@@ -654,15 +656,15 @@ namespace GameProject
             timercd.Start();     
         }
 
-        private void button1_Click(object sender, EventArgs e)
+       /* private void button1_Click(object sender, EventArgs e)
         {
             PlayAnimation(dichD1);
             senDoFrom("5", username, IDphong, txtSendMSG.Text);
         }
-
+*/
         #endregion
 
-        private int timUser()
+        private int Tim_User_ThucHien()
         {
             for (int i = 0; i < DSUser.Count; i++)
             {
@@ -671,10 +673,10 @@ namespace GameProject
             }
             return -1;
         }
-        private void SendPTBox(string co)
+        private void SendPTBox(string co) //Gui thong diep xuat quan co 
         {
             PictureBox ptb = (PictureBox)this.Controls.Find(co, false).FirstOrDefault() as PictureBox;
-            int numUser = timUser();
+            int numUser = Tim_User_ThucHien();
 
             switch (co)
             {
@@ -1075,7 +1077,7 @@ namespace GameProject
         {
             rtbMSG.AppendText(User.CurrentUser.Username+": "+txtSendMSG.Text+"\n");
             rtbMSG.ScrollToCaret();
-            socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+            socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(),$"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
             txtSendMSG.Text = "";
         }
 
@@ -1085,7 +1087,7 @@ namespace GameProject
             {
                 rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
                 rtbMSG.ScrollToCaret();
-                socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
                 txtSendMSG.Text = "";
             }
         }

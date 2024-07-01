@@ -369,11 +369,11 @@
             // 
             // g2
             // 
-            this.g2.BackColor = System.Drawing.Color.White;
-            this.g2.Location = new System.Drawing.Point(115, 545);
+            this.g2.BackColor = System.Drawing.Color.Transparent;
+            this.g2.Location = new System.Drawing.Point(131, 524);
             this.g2.Margin = new System.Windows.Forms.Padding(4);
             this.g2.Name = "g2";
-            this.g2.Size = new System.Drawing.Size(32, 30);
+            this.g2.Size = new System.Drawing.Size(54, 67);
             this.g2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.g2.TabIndex = 109;
             this.g2.TabStop = false;
@@ -381,11 +381,11 @@
             // 
             // g1
             // 
-            this.g1.BackColor = System.Drawing.Color.White;
-            this.g1.Location = new System.Drawing.Point(75, 546);
+            this.g1.BackColor = System.Drawing.Color.Transparent;
+            this.g1.Location = new System.Drawing.Point(52, 524);
             this.g1.Margin = new System.Windows.Forms.Padding(4);
             this.g1.Name = "g1";
-            this.g1.Size = new System.Drawing.Size(32, 30);
+            this.g1.Size = new System.Drawing.Size(54, 67);
             this.g1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.g1.TabIndex = 108;
             this.g1.TabStop = false;
@@ -393,11 +393,11 @@
             // 
             // g4
             // 
-            this.g4.BackColor = System.Drawing.Color.White;
-            this.g4.Location = new System.Drawing.Point(115, 507);
+            this.g4.BackColor = System.Drawing.Color.Transparent;
+            this.g4.Location = new System.Drawing.Point(131, 438);
             this.g4.Margin = new System.Windows.Forms.Padding(4);
             this.g4.Name = "g4";
-            this.g4.Size = new System.Drawing.Size(32, 30);
+            this.g4.Size = new System.Drawing.Size(54, 67);
             this.g4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.g4.TabIndex = 107;
             this.g4.TabStop = false;
@@ -405,11 +405,11 @@
             // 
             // g3
             // 
-            this.g3.BackColor = System.Drawing.Color.White;
-            this.g3.Location = new System.Drawing.Point(75, 508);
+            this.g3.BackColor = System.Drawing.Color.Transparent;
+            this.g3.Location = new System.Drawing.Point(53, 438);
             this.g3.Margin = new System.Windows.Forms.Padding(4);
             this.g3.Name = "g3";
-            this.g3.Size = new System.Drawing.Size(32, 30);
+            this.g3.Size = new System.Drawing.Size(54, 67);
             this.g3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.g3.TabIndex = 106;
             this.g3.TabStop = false;
@@ -417,11 +417,11 @@
             // 
             // b1
             // 
-            this.b1.BackColor = System.Drawing.Color.White;
-            this.b1.Location = new System.Drawing.Point(587, 546);
+            this.b1.BackColor = System.Drawing.Color.Transparent;
+            this.b1.Location = new System.Drawing.Point(583, 524);
             this.b1.Margin = new System.Windows.Forms.Padding(4);
             this.b1.Name = "b1";
-            this.b1.Size = new System.Drawing.Size(32, 30);
+            this.b1.Size = new System.Drawing.Size(54, 67);
             this.b1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.b1.TabIndex = 105;
             this.b1.TabStop = false;
@@ -429,11 +429,11 @@
             // 
             // b2
             // 
-            this.b2.BackColor = System.Drawing.Color.White;
-            this.b2.Location = new System.Drawing.Point(547, 545);
+            this.b2.BackColor = System.Drawing.Color.Transparent;
+            this.b2.Location = new System.Drawing.Point(503, 524);
             this.b2.Margin = new System.Windows.Forms.Padding(4);
             this.b2.Name = "b2";
-            this.b2.Size = new System.Drawing.Size(32, 30);
+            this.b2.Size = new System.Drawing.Size(54, 67);
             this.b2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.b2.TabIndex = 104;
             this.b2.TabStop = false;
@@ -441,11 +441,11 @@
             // 
             // b4
             // 
-            this.b4.BackColor = System.Drawing.Color.White;
-            this.b4.Location = new System.Drawing.Point(547, 507);
+            this.b4.BackColor = System.Drawing.Color.Transparent;
+            this.b4.Location = new System.Drawing.Point(503, 438);
             this.b4.Margin = new System.Windows.Forms.Padding(4);
             this.b4.Name = "b4";
-            this.b4.Size = new System.Drawing.Size(32, 30);
+            this.b4.Size = new System.Drawing.Size(54, 67);
             this.b4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.b4.TabIndex = 103;
             this.b4.TabStop = false;
@@ -453,11 +453,11 @@
             // 
             // b3
             // 
-            this.b3.BackColor = System.Drawing.Color.White;
-            this.b3.Location = new System.Drawing.Point(587, 508);
+            this.b3.BackColor = System.Drawing.Color.Transparent;
+            this.b3.Location = new System.Drawing.Point(583, 438);
             this.b3.Margin = new System.Windows.Forms.Padding(4);
             this.b3.Name = "b3";
-            this.b3.Size = new System.Drawing.Size(32, 30);
+            this.b3.Size = new System.Drawing.Size(54, 67);
             this.b3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.b3.TabIndex = 102;
             this.b3.TabStop = false;
@@ -465,11 +465,11 @@
             // 
             // r4
             // 
-            this.r4.BackColor = System.Drawing.Color.White;
-            this.r4.Location = new System.Drawing.Point(547, 103);
+            this.r4.BackColor = System.Drawing.Color.Transparent;
+            this.r4.Location = new System.Drawing.Point(503, 135);
             this.r4.Margin = new System.Windows.Forms.Padding(4);
             this.r4.Name = "r4";
-            this.r4.Size = new System.Drawing.Size(32, 30);
+            this.r4.Size = new System.Drawing.Size(54, 67);
             this.r4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.r4.TabIndex = 101;
             this.r4.TabStop = false;
@@ -477,11 +477,11 @@
             // 
             // r3
             // 
-            this.r3.BackColor = System.Drawing.Color.White;
-            this.r3.Location = new System.Drawing.Point(587, 103);
+            this.r3.BackColor = System.Drawing.Color.Transparent;
+            this.r3.Location = new System.Drawing.Point(583, 135);
             this.r3.Margin = new System.Windows.Forms.Padding(4);
             this.r3.Name = "r3";
-            this.r3.Size = new System.Drawing.Size(32, 30);
+            this.r3.Size = new System.Drawing.Size(54, 67);
             this.r3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.r3.TabIndex = 100;
             this.r3.TabStop = false;
@@ -489,11 +489,11 @@
             // 
             // r1
             // 
-            this.r1.BackColor = System.Drawing.Color.White;
-            this.r1.Location = new System.Drawing.Point(587, 66);
+            this.r1.BackColor = System.Drawing.Color.Transparent;
+            this.r1.Location = new System.Drawing.Point(583, 48);
             this.r1.Margin = new System.Windows.Forms.Padding(4);
             this.r1.Name = "r1";
-            this.r1.Size = new System.Drawing.Size(32, 30);
+            this.r1.Size = new System.Drawing.Size(54, 67);
             this.r1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.r1.TabIndex = 99;
             this.r1.TabStop = false;
@@ -501,11 +501,11 @@
             // 
             // r2
             // 
-            this.r2.BackColor = System.Drawing.Color.White;
-            this.r2.Location = new System.Drawing.Point(547, 66);
+            this.r2.BackColor = System.Drawing.Color.Transparent;
+            this.r2.Location = new System.Drawing.Point(503, 48);
             this.r2.Margin = new System.Windows.Forms.Padding(4);
             this.r2.Name = "r2";
-            this.r2.Size = new System.Drawing.Size(32, 30);
+            this.r2.Size = new System.Drawing.Size(54, 67);
             this.r2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.r2.TabIndex = 98;
             this.r2.TabStop = false;
@@ -513,11 +513,11 @@
             // 
             // y4
             // 
-            this.y4.BackColor = System.Drawing.Color.White;
-            this.y4.Location = new System.Drawing.Point(115, 103);
+            this.y4.BackColor = System.Drawing.Color.Transparent;
+            this.y4.Location = new System.Drawing.Point(131, 135);
             this.y4.Margin = new System.Windows.Forms.Padding(4);
             this.y4.Name = "y4";
-            this.y4.Size = new System.Drawing.Size(32, 30);
+            this.y4.Size = new System.Drawing.Size(54, 67);
             this.y4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.y4.TabIndex = 97;
             this.y4.TabStop = false;
@@ -525,11 +525,11 @@
             // 
             // y3
             // 
-            this.y3.BackColor = System.Drawing.Color.White;
-            this.y3.Location = new System.Drawing.Point(75, 103);
+            this.y3.BackColor = System.Drawing.Color.Transparent;
+            this.y3.Location = new System.Drawing.Point(53, 135);
             this.y3.Margin = new System.Windows.Forms.Padding(4);
             this.y3.Name = "y3";
-            this.y3.Size = new System.Drawing.Size(32, 30);
+            this.y3.Size = new System.Drawing.Size(54, 67);
             this.y3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.y3.TabIndex = 96;
             this.y3.TabStop = false;
@@ -537,11 +537,11 @@
             // 
             // y2
             // 
-            this.y2.BackColor = System.Drawing.Color.White;
-            this.y2.Location = new System.Drawing.Point(115, 66);
+            this.y2.BackColor = System.Drawing.Color.Transparent;
+            this.y2.Location = new System.Drawing.Point(131, 48);
             this.y2.Margin = new System.Windows.Forms.Padding(4);
             this.y2.Name = "y2";
-            this.y2.Size = new System.Drawing.Size(32, 30);
+            this.y2.Size = new System.Drawing.Size(54, 67);
             this.y2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.y2.TabIndex = 95;
             this.y2.TabStop = false;
@@ -549,11 +549,11 @@
             // 
             // y1
             // 
-            this.y1.BackColor = System.Drawing.Color.White;
-            this.y1.Location = new System.Drawing.Point(75, 66);
+            this.y1.BackColor = System.Drawing.Color.Transparent;
+            this.y1.Location = new System.Drawing.Point(52, 48);
             this.y1.Margin = new System.Windows.Forms.Padding(4);
             this.y1.Name = "y1";
-            this.y1.Size = new System.Drawing.Size(32, 30);
+            this.y1.Size = new System.Drawing.Size(54, 67);
             this.y1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.y1.TabIndex = 94;
             this.y1.TabStop = false;
@@ -1465,7 +1465,7 @@
             this.btn56.Location = new System.Drawing.Point(327, 44);
             this.btn56.Margin = new System.Windows.Forms.Padding(4);
             this.btn56.Name = "btn56";
-            this.btn56.Size = new System.Drawing.Size(40, 31);
+            this.btn56.Size = new System.Drawing.Size(37, 31);
             this.btn56.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btn56.TabIndex = 7;
             this.btn56.TabStop = false;
@@ -1715,8 +1715,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GamePlay";
-            this.Load += new System.EventHandler(this.GamePlay_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GamePlay_FormClosing);
+            this.Load += new System.EventHandler(this.GamePlay_Load);
             ((System.ComponentModel.ISupportInitialize)(this.g2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.g4)).EndInit();
