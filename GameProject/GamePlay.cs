@@ -33,22 +33,22 @@ namespace GameProject
         };
 
         IFirebaseClient client;
-        SocketManager socket;
-        private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
-        public string username; // Tên người chơi
-        public string IDphong; // Tên phòng
-        public string IP;
-        public int num_Ready = 0;
 
-        private List<string> DSUser = new List<string>(); // Danh sách người chơi trong phòng
+        SocketManager socket; 
+        private System.Windows.Forms.Timer aTimer = new System.Windows.Forms.Timer();
+        private System.Timers.Timer listenTimer;
+        
+        // Các thành phần cơ bản nhất của GamePlay
+        private List<string> DSUser = new List<string>();   // Danh sách người chơi trong phòng
+        private string username;                             // Tên người chơi
+        private string IDphong;                              // Tên phòng
+        public int num_Ready = 0;                           // Số lượng người chơi đã sẵn sàng
+        private int xingau;                                 // Số xí ngầu đỗ ra được
+        private int ThuTuLuotChoi = 0;                           // Đại diện cho chỉ số lượt  của người chơi
 
         private string msg;
         private int counter = 30;
         private int time = 0;
-
-        private System.Timers.Timer listenTimer;
-
-        private int xingau;
 
         #endregion
 
@@ -229,18 +229,36 @@ namespace GameProject
                     }
                 case (int)SocketCommand.SEND_DICE:
                     {
-                        this.Invoke((MethodInvoker)delegate
+                        Invoke(new System.Action(() =>
                         {
+                            string[] userArrayXiNgau = (data.Message).Split('/');
                             if (socket.isServer)
                             {
+                                diceimg(Int32.Parse(userArrayXiNgau[0]));
+                                ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
+                                if (ThuTuLuotChoi == 0)
+                                {
+                                    btnXiNgau.Enabled = true;
+                                }
+                                else
+                                {
+                                    btnXiNgau.Enabled = false;
+                                }
                                 socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), data.Message));
-                            }    
-                            xingau = Int32.Parse(data.Message);
-                            diceimg(xingau);
-
-                        });
-                        break;
+                            }
+                            else
+                            {
+                                xingau = Int32.Parse(userArrayXiNgau[0]);             // userArray[0] là giá trị của xí ngầu
+                                diceimg(xingau);
+                                ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
+                                if (username == DSUser[ThuTuLuotChoi])
+                                {
+                                    btnXiNgau.Enabled = true;
+                                }
+                            }
+                        }));
                     }
+                    break;
                 case (int)SocketCommand.SEND_MESSEGE:
                     {
                         this.Invoke((MethodInvoker)delegate
@@ -262,14 +280,14 @@ namespace GameProject
                     MessageBox.Show(data.Message);
                     break;
                 case (int)SocketCommand.JOIN_ROOM:
-                    if (socket.isServer) // Trường hợp là server
+                    if (socket.isServer)            // Trường hợp là server
                     {
                         DSUser.Add(data.Message);
                         reloadForm();
                         string userString = string.Join("/", DSUser);
                         socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString)); // Xem chi tiết ở SocketData để hiểu
                     }
-                    else // Trường hợp là client
+                    else                            // Trường hợp là client
                     {
                         string userString = data.Message;
                         string[] userArray = userString.Split('/');
@@ -297,12 +315,7 @@ namespace GameProject
                     else
                     {
                         string userString = data.Message;
-                        //string[] userArray = userString.Split('/');
                         DSUser.Remove(data.Message);
-                        //for (int i = 0; i < userArray.Length; i++)
-                        //{
-                        //    DSUser.Add(userArray[i]);
-                        //}
                         reloadForm();
                     }
                     break;
@@ -765,7 +778,10 @@ namespace GameProject
 
             BeginInvoke(new System.Action(() =>
             {
-            btnXiNgau.Enabled = true;
+                if (username == DSUser[0])
+                {
+                    btnXiNgau.Enabled = true;
+                }
             }));
 
             int i = 1;
@@ -894,20 +910,22 @@ namespace GameProject
             }
         }
 
-        private void btnXiNgau_Click(object sender, EventArgs e)
+        private void btnXiNgau_Click(object sender, EventArgs e)               // Button thảy xí ngầu
         {
             PlayAnimation(btnXiNgau);
             Random random = new Random();
             xingau = random.Next(1, 7);
+            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; 
             if (socket.isServer)
             {
                 diceimg(xingau);
-                socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}"));
+                socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
             }
             else
             {
-                socket.Send(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}"));
+                socket.Send(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
             }
+            btnXiNgau.Enabled = false;
         }
 
        /* private void button1_Click(object sender, EventArgs e)
