@@ -210,6 +210,20 @@ namespace GameProject
         {
             switch (data.Command)
             {
+                case (int)SocketCommand.STARTTIMER:
+                    {
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                        if (socket.isServer)
+                        {
+                            socket.Broadcast(new SocketData((int)SocketCommand.STARTTIMER, new Point(), data.Message));
+                        }
+                        timercd.Start();
+                            
+
+                        });
+                        break;
+                    }
                 case (int)SocketCommand.SEND_DICE:
                     {
                         this.Invoke((MethodInvoker)delegate
@@ -788,8 +802,9 @@ namespace GameProject
         private void btn_BoLuot_Click(object sender, EventArgs e)
         {
             PlayAnimation(btn_BoLuot);
-            SendMSGtoFB("7", username, IDphong, "");
-            pgb.Value = 0;
+            pgb.Value= 0;
+            socket.Send(new SocketData((int)SocketCommand.STARTTIMER, new Point(), ""));
+
         }
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)

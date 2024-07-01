@@ -36,6 +36,7 @@ namespace GameProject
         CREATE_ROOM,
         JOIN_ROOM,
         SEND_MESSEGE,
-        SEND_DICE
+        SEND_DICE,
+        STARTTIMER
     }
 }
