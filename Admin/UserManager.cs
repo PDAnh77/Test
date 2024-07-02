@@ -68,8 +68,12 @@ namespace Admin
                 if (e.RowIndex >= 0) // Đảm bảo các hàng có giá trị hợp lệ
                 {
                     DataGridViewRow row = dgvShow.Rows[e.RowIndex];
-                    string username = row.Cells["Username"].Value.ToString();
-                    await FetchUserData(username);
+                    try
+                    {
+                        string username = row.Cells["Username"].Value.ToString();
+                        await FetchUserData(username);
+                    }
+                    catch { }   
                 }
             }
             catch

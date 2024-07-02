@@ -35,5 +35,15 @@ namespace Admin
                 }           
             }    
         }
+
+        private void AdminLogin_Load(object sender, EventArgs e)
+        {
+            this.AcceptButton = btnLogin;
+        }
+
+        private void txtPass_TextChanged(object sender, EventArgs e)
+        {
+            txtPass.PasswordChar = '*';
+        }
     }
 }
