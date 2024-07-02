@@ -93,6 +93,30 @@ namespace GameProject
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
         }
 
+        private async void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (socket.isServer)
+            {
+                await DeleteRoom(IDphong);
+                socket.CloseConnect();
+                DialogResult = DialogResult.Cancel; // Quay về GameLobby
+            }
+            else
+            {
+                socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
+                if (!NguoiXem)
+                {
+                    UpdateRoomPlayer(IDphong, false);
+                }
+                else
+                {
+                    UpdateRoomViewer(IDphong, false);
+                }
+                socket.CloseClient();
+                DialogResult = DialogResult.Cancel; // Quay về GameLobby
+            }
+        }
+
         private void InitializeTimer()
         {
             listenTimer = new System.Timers.Timer(500); // (1000ms = 1 giây)
@@ -1813,6 +1837,7 @@ namespace GameProject
         }
 
         #endregion
+
 
     }
 }

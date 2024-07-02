@@ -15,7 +15,11 @@ namespace Admin
         public Dashboard()
         {
             InitializeComponent();
-            this.Dock = DockStyle.Fill; 
+            this.Dock = DockStyle.Fill;
+            Home home = new Home();
+            pnShow.Controls.Clear();
+            pnShow.Controls.Add(home);
+            home.Show();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -29,6 +33,22 @@ namespace Admin
             pnShow.Controls.Clear();
             pnShow.Controls.Add(usr);
             usr.Show();
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            Home home = new Home();
+            pnShow.Controls.Clear();
+            pnShow.Controls.Add(home);
+            home.Show();
+        }
+
+        private void btnHistory_Click(object sender, EventArgs e)
+        {
+            RoomManager room = new RoomManager();
+            pnShow.Controls.Clear();
+            pnShow.Controls.Add(room);
+            room.Show();    
         }
     }
 }
