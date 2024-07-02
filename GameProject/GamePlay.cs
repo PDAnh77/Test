@@ -811,7 +811,7 @@ namespace GameProject
         {
             BeginInvoke(new System.Action(() =>
             {
-                btn_BoLuot.Enabled = true;
+                btnBoLuot.Enabled = true;
             }));
 
             BeginInvoke(new System.Action(() =>
@@ -888,7 +888,7 @@ namespace GameProject
 
         public void LockCacNut()
         {
-            btn_BoLuot.Enabled = false;
+            btnBoLuot.Enabled = false;
             btnXiNgau.Enabled = false;
 
             int i = 1;
@@ -1072,9 +1072,10 @@ namespace GameProject
 
             }
         }
-        private void btn_BoLuot_Click(object sender, EventArgs e)
+
+        private void btnBoLuot_Click(object sender, EventArgs e)
         {
-            PlayAnimation(btn_BoLuot);
+            PlayAnimation(btnBoLuot);
             pgb.Value= 0;
             if (socket.isServer)
                 { socket.Broadcast(new SocketData((int)SocketCommand.STARTTIMER, new Point(), "")); }
@@ -1428,6 +1429,7 @@ namespace GameProject
         }
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
+            PlayAnimation(btnSendMSG);
             if (socket.isServer)
             {
                 rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
@@ -1464,6 +1466,7 @@ namespace GameProject
         };
         Color customColor01 = Color.FromArgb(181, 119, 94); // Background form
         Color customColor02 = Color.FromArgb(234, 212, 170); // Horse back color
+        Color customColor03 = Color.FromArgb(255, 253, 245); // Button white color
 
         private void BodyConfig()
         {
@@ -1479,6 +1482,8 @@ namespace GameProject
                     pictureBox.BackColor = customColor02;
                 }
             }
+
+            this.rtbMSG.BackColor = customColor03;
         }
 
         private void PlayAnimation(Control control)

@@ -31,17 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GamePlay));
             this.lbluotchoi = new System.Windows.Forms.Label();
-            this.btnXiNgau = new System.Windows.Forms.Button();
             this.lbun1 = new System.Windows.Forms.Label();
             this.lbID = new System.Windows.Forms.Label();
-            this.btnStart = new System.Windows.Forms.Button();
             this.lbun4 = new System.Windows.Forms.Label();
             this.lbun3 = new System.Windows.Forms.Label();
             this.lbun2 = new System.Windows.Forms.Label();
             this.lbWork = new System.Windows.Forms.Label();
-            this.btn_BoLuot = new System.Windows.Forms.Button();
             this.luotchoitimer = new System.Windows.Forms.Timer(this.components);
-            this.btnSendMSG = new System.Windows.Forms.Button();
             this.txtSendMSG = new System.Windows.Forms.TextBox();
             this.rtbMSG = new System.Windows.Forms.RichTextBox();
             this.pgb = new System.Windows.Forms.ProgressBar();
@@ -145,6 +141,10 @@
             this.btn1 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imgXiNgau = new System.Windows.Forms.PictureBox();
+            this.btnBoLuot = new GameProject.CustomControls.ButtonDesign();
+            this.btnXiNgau = new GameProject.CustomControls.ButtonDesign();
+            this.btnSendMSG = new GameProject.CustomControls.ButtonDesign();
+            this.btnStart = new GameProject.CustomControls.ButtonDesign();
             this.btnLeave = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g2)).BeginInit();
@@ -260,17 +260,6 @@
             this.lbluotchoi.TabIndex = 2;
             this.lbluotchoi.Text = "...";
             // 
-            // btnXiNgau
-            // 
-            this.btnXiNgau.Location = new System.Drawing.Point(859, 112);
-            this.btnXiNgau.Margin = new System.Windows.Forms.Padding(4);
-            this.btnXiNgau.Name = "btnXiNgau";
-            this.btnXiNgau.Size = new System.Drawing.Size(132, 43);
-            this.btnXiNgau.TabIndex = 4;
-            this.btnXiNgau.Text = "Thảy xí ngầu";
-            this.btnXiNgau.UseVisualStyleBackColor = true;
-            this.btnXiNgau.Click += new System.EventHandler(this.btnXiNgau_Click);
-            // 
             // lbun1
             // 
             this.lbun1.AutoSize = true;
@@ -293,17 +282,6 @@
             this.lbID.Size = new System.Drawing.Size(99, 25);
             this.lbID.TabIndex = 92;
             this.lbID.Text = "ID Phòng:";
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(273, 638);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(4);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(153, 49);
-            this.btnStart.TabIndex = 93;
-            this.btnStart.Text = "Sẫn sàng";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // lbun4
             // 
@@ -351,33 +329,10 @@
             this.lbWork.TabIndex = 114;
             this.lbWork.Text = "...";
             // 
-            // btn_BoLuot
-            // 
-            this.btn_BoLuot.Location = new System.Drawing.Point(1012, 112);
-            this.btn_BoLuot.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_BoLuot.Name = "btn_BoLuot";
-            this.btn_BoLuot.Size = new System.Drawing.Size(132, 43);
-            this.btn_BoLuot.TabIndex = 115;
-            this.btn_BoLuot.Text = "Bỏ lượt";
-            this.btn_BoLuot.UseVisualStyleBackColor = true;
-            this.btn_BoLuot.Click += new System.EventHandler(this.btn_BoLuot_Click);
-            // 
             // luotchoitimer
             // 
             this.luotchoitimer.Interval = 1000;
             this.luotchoitimer.Tick += new System.EventHandler(this.luotchoitimer_Tick);
-            // 
-            // btnSendMSG
-            // 
-            this.btnSendMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSendMSG.Location = new System.Drawing.Point(1088, 628);
-            this.btnSendMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSendMSG.Name = "btnSendMSG";
-            this.btnSendMSG.Size = new System.Drawing.Size(125, 30);
-            this.btnSendMSG.TabIndex = 120;
-            this.btnSendMSG.Text = "Send";
-            this.btnSendMSG.UseVisualStyleBackColor = true;
-            this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
             // 
             // txtSendMSG
             // 
@@ -1572,6 +1527,82 @@
             this.imgXiNgau.TabIndex = 1;
             this.imgXiNgau.TabStop = false;
             // 
+            // btnBoLuot
+            // 
+            this.btnBoLuot.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnBoLuot.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnBoLuot.BorderColor = System.Drawing.Color.Transparent;
+            this.btnBoLuot.BorderRadius = 0;
+            this.btnBoLuot.BorderSize = 0;
+            this.btnBoLuot.FlatAppearance.BorderSize = 0;
+            this.btnBoLuot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBoLuot.ForeColor = System.Drawing.Color.White;
+            this.btnBoLuot.Location = new System.Drawing.Point(1012, 112);
+            this.btnBoLuot.Name = "btnBoLuot";
+            this.btnBoLuot.Size = new System.Drawing.Size(132, 43);
+            this.btnBoLuot.TabIndex = 127;
+            this.btnBoLuot.Text = "Bỏ lượt";
+            this.btnBoLuot.TextColor = System.Drawing.Color.White;
+            this.btnBoLuot.UseVisualStyleBackColor = false;
+            this.btnBoLuot.Click += new System.EventHandler(this.btnBoLuot_Click);
+            // 
+            // btnXiNgau
+            // 
+            this.btnXiNgau.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnXiNgau.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnXiNgau.BorderColor = System.Drawing.Color.Transparent;
+            this.btnXiNgau.BorderRadius = 0;
+            this.btnXiNgau.BorderSize = 0;
+            this.btnXiNgau.FlatAppearance.BorderSize = 0;
+            this.btnXiNgau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnXiNgau.ForeColor = System.Drawing.Color.White;
+            this.btnXiNgau.Location = new System.Drawing.Point(859, 112);
+            this.btnXiNgau.Name = "btnXiNgau";
+            this.btnXiNgau.Size = new System.Drawing.Size(132, 43);
+            this.btnXiNgau.TabIndex = 126;
+            this.btnXiNgau.Text = "Thảy xí ngầu";
+            this.btnXiNgau.TextColor = System.Drawing.Color.White;
+            this.btnXiNgau.UseVisualStyleBackColor = false;
+            this.btnXiNgau.Click += new System.EventHandler(this.btnXiNgau_Click);
+            // 
+            // btnSendMSG
+            // 
+            this.btnSendMSG.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSendMSG.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSendMSG.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSendMSG.BorderRadius = 0;
+            this.btnSendMSG.BorderSize = 0;
+            this.btnSendMSG.FlatAppearance.BorderSize = 0;
+            this.btnSendMSG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSendMSG.ForeColor = System.Drawing.Color.White;
+            this.btnSendMSG.Location = new System.Drawing.Point(1088, 628);
+            this.btnSendMSG.Name = "btnSendMSG";
+            this.btnSendMSG.Size = new System.Drawing.Size(125, 30);
+            this.btnSendMSG.TabIndex = 125;
+            this.btnSendMSG.Text = "SEND";
+            this.btnSendMSG.TextColor = System.Drawing.Color.White;
+            this.btnSendMSG.UseVisualStyleBackColor = false;
+            this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
+            // 
+            // btnStart
+            // 
+            this.btnStart.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnStart.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnStart.BorderColor = System.Drawing.Color.Transparent;
+            this.btnStart.BorderRadius = 0;
+            this.btnStart.BorderSize = 0;
+            this.btnStart.FlatAppearance.BorderSize = 0;
+            this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStart.ForeColor = System.Drawing.Color.White;
+            this.btnStart.Location = new System.Drawing.Point(273, 638);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(154, 50);
+            this.btnStart.TabIndex = 122;
+            this.btnStart.Text = "Sẵn sàng";
+            this.btnStart.TextColor = System.Drawing.Color.White;
+            this.btnStart.UseVisualStyleBackColor = false;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
             // btnLeave
             // 
             this.btnLeave.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -1597,13 +1628,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(1261, 698);
-            this.Controls.Add(this.pgb);
+            this.Controls.Add(this.btnBoLuot);
+            this.Controls.Add(this.btnXiNgau);
             this.Controls.Add(this.btnSendMSG);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.pgb);
             this.Controls.Add(this.txtSendMSG);
             this.Controls.Add(this.rtbMSG);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnLeave);
-            this.Controls.Add(this.btn_BoLuot);
             this.Controls.Add(this.lbWork);
             this.Controls.Add(this.lbun2);
             this.Controls.Add(this.lbun3);
@@ -1624,7 +1657,6 @@
             this.Controls.Add(this.y3);
             this.Controls.Add(this.y2);
             this.Controls.Add(this.y1);
-            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.lbID);
             this.Controls.Add(this.lbun1);
             this.Controls.Add(this.pictureBox20);
@@ -1708,7 +1740,6 @@
             this.Controls.Add(this.btn56);
             this.Controls.Add(this.btn1);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnXiNgau);
             this.Controls.Add(this.lbluotchoi);
             this.Controls.Add(this.imgXiNgau);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1822,7 +1853,6 @@
         #endregion
         private System.Windows.Forms.PictureBox imgXiNgau;
         private System.Windows.Forms.Label lbluotchoi;
-        private System.Windows.Forms.Button btnXiNgau;
         private System.Windows.Forms.PictureBox btn1;
         private System.Windows.Forms.PictureBox btn56;
         private System.Windows.Forms.PictureBox btn55;
@@ -1904,7 +1934,6 @@
         private System.Windows.Forms.PictureBox dichD1;
         private System.Windows.Forms.Label lbun1;
         private System.Windows.Forms.Label lbID;
-        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.PictureBox y1;
         private System.Windows.Forms.PictureBox y2;
         private System.Windows.Forms.PictureBox y3;
@@ -1925,17 +1954,19 @@
         private System.Windows.Forms.Label lbun3;
         private System.Windows.Forms.Label lbun2;
         private System.Windows.Forms.Label lbWork;
-        private System.Windows.Forms.Button btn_BoLuot;
         private System.Windows.Forms.Timer luotchoitimer;
         private CustomControls.ButtonDesign btnLeave;
         private System.Windows.Forms.PictureBox btn33;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Button btnSendMSG;
         private System.Windows.Forms.TextBox txtSendMSG;
         private System.Windows.Forms.RichTextBox rtbMSG;
         private System.Windows.Forms.ProgressBar pgb;
         private System.Windows.Forms.Timer timercd;
+        private CustomControls.ButtonDesign btnStart;
+        private CustomControls.ButtonDesign btnSendMSG;
+        private CustomControls.ButtonDesign btnXiNgau;
+        private CustomControls.ButtonDesign btnBoLuot;
     }
 }
 
