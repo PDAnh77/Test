@@ -24,7 +24,7 @@ namespace GameProject
                 {
                     GameLobby gameLobby = new GameLobby();
                     GamePlay gamePlay = null;
-                    while (true) // Loop to return to GameLobby after closing RoomForm
+                    while (true) // Loop to return to GameLobby after closing GamePlay
                     {
                         if (gameLobby.ShowDialog() == GameLobby.ContinueToGamePlay)
                         {
@@ -34,6 +34,7 @@ namespace GameProject
                             }
                             if (gamePlay.ShowDialog() != DialogResult.OK)
                             {
+                                gamePlay = null;
                                 continue;
                             }
                         }

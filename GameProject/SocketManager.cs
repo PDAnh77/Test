@@ -131,6 +131,7 @@ namespace GameProject
             }
             return false;
         }
+
         public bool Send(object data)
         {
             byte[] sendData = SerializeData(data);
@@ -197,12 +198,13 @@ namespace GameProject
                 MessageBox.Show("Client");
             }
         }
+
         public void CloseConnect()
         {
             if (server != null)
             {
                 server.Close();
-                isServerRun = false;
+                isServerRun = false;                
                 MessageBox.Show("Server");
             }
         }
@@ -210,7 +212,7 @@ namespace GameProject
         //lấy IPv4 của card mạng đang dùng
         public string GetLocalIPv4(NetworkInterfaceType type)
         {
-            string output = "";
+            string output = null;
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (item.NetworkInterfaceType == type && item.OperationalStatus == OperationalStatus.Up) //nhận kiểu giao diện && bật giao diện mạng để truyền dữ liệu

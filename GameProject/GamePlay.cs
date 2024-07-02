@@ -53,10 +53,12 @@ namespace GameProject
         #endregion
 
         #region Initialize
+
         public GamePlay()
         {
             InitializeComponent();
         }
+
         public GamePlay(string name, string idPhong, bool server) 
         {
             InitializeComponent();
@@ -88,6 +90,7 @@ namespace GameProject
             /*SetControlImage(b4, Animation.UI_Horse_Select_04);
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
         }
+
         private void InitializeTimer()
         {
             listenTimer = new System.Timers.Timer(500); // (1000ms = 1 giây)
@@ -100,13 +103,16 @@ namespace GameProject
         {
             Listen();
         }
+
         private void timercd_Tick(object sender, EventArgs e)
         {
             pgb.PerformStep();
         }
+
         #endregion
 
         #region Function
+
         private async Task<string> GetRoomId(string roomName)
         {
             try
@@ -126,19 +132,25 @@ namespace GameProject
                 return null;
             }
         }
+
         public async void CreateOrConnect(bool server)
         {
             if (server)
             {
                 string roomName = IDphong;
-                string roomId = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+                string roomIP = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+                
+                if (roomIP == null)
+                {
+                    roomIP = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
+                }
 
                 try
                 {
                     var roomData = new RoomData
                     {
                         RoomName = roomName,
-                        RoomId = roomId // IP tạo phòng
+                        RoomId = roomIP // IP tạo phòng
                     };
                     SetResponse response = await client.SetAsync($"Room/{roomName}", roomData);
                 }
@@ -146,7 +158,7 @@ namespace GameProject
                 {
                     MessageBox.Show(ex.Message);
                 }
-                socket.IP = roomId;
+                socket.IP = roomIP;
                 socket.isServer = true;
                 socket.CreateServer();
             }
@@ -172,6 +184,7 @@ namespace GameProject
                 }
             }
         }
+
         public void Listen()
         {
             if (socket.isServer)
@@ -241,13 +254,13 @@ namespace GameProject
                         });
                         break;
                     }
-                case (int)SocketCommand.SEND_MESSEGE:
+                case (int)SocketCommand.SEND_MESSAGE:
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
                             if (socket.isServer)
                             {
-                                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), data.Message));
+                                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), data.Message));
                             }
                             rtbMSG.AppendText(data.Message+Environment.NewLine);
                             rtbMSG.ScrollToCaret(); // Di chuyển con trỏ đến cuối văn bản
@@ -342,24 +355,21 @@ namespace GameProject
                         //string GuiSoLuongIsReady = data.Message;
                         num_Ready++;
                         socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
-
                     }
                     else
                     {
                         //int temp = Int32.Parse(data.Message);
                         num_Ready++;
-                        
                     }
                     break;
                 default:
                     break;
             }
-                if (num_Ready == DSUser.Count)
-                {
-                    ChuanBiCacQuanCo();
-                    UnlockCacNut();
-                }
-            
+            if (num_Ready == DSUser.Count)
+            {
+                ChuanBiCacQuanCo();
+                UnlockCacNut();
+            }
         }
 
         private async Task DeleteRoom(string roomName)
@@ -451,7 +461,6 @@ namespace GameProject
                 }
 
             }
-                
         }
 
         public void getMSG(string Msg)  //tạo tin nhắn gữi đi
@@ -1376,13 +1385,13 @@ namespace GameProject
             if (socket.isServer)
             {
                 rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
-                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
                 txtSendMSG.Text = "";
                 //rtbMSG.ScrollToCaret();
             }
             else
             {
-                socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
                 txtSendMSG.Text = "";
             }
         }
@@ -1393,12 +1402,22 @@ namespace GameProject
             {
                 //rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
                 //rtbMSG.ScrollToCaret();
-                socket.Send(new SocketData((int)SocketCommand.SEND_MESSEGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
                 txtSendMSG.Text = "";
             }
         }
         ///////////////////////////////////////////////////////////////////////
         #region UI
+
+        readonly List<string> ptbStable = new List<string> // Các ô chuồng chứa quân cờ
+        {
+            "r1", "r2", "r3", "r4",
+            "g1", "g2", "g3", "g4",
+            "y1", "y2", "y3", "y4",
+            "b1", "b2", "b3", "b4"
+        };
+        Color customColor01 = Color.FromArgb(181, 119, 94); // Background form
+        Color customColor02 = Color.FromArgb(234, 212, 170); // Horse back color
 
         private void BodyConfig()
         {
@@ -1406,6 +1425,14 @@ namespace GameProject
 
             SetControlImage(pictureBox2, Animation.UI_Chatlog);
             SetControlImage(pictureBox1, Animation.UI_Table);
+
+            foreach (Control control in this.Controls)
+            {
+                if (control is PictureBox pictureBox && ptbStable.Contains(pictureBox.Name))
+                {
+                    pictureBox.BackColor = customColor02;
+                }
+            }
         }
 
         private void PlayAnimation(Control control)
@@ -1442,9 +1469,6 @@ namespace GameProject
                 SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
             }
         }
-
-        Color customColor01 = Color.FromArgb(181, 119, 94); // Background form
-        Color customColor02 = Color.FromArgb(234, 212, 170); // Horse back color
 
         private void ButtonConfig()
         {
@@ -1642,9 +1666,6 @@ namespace GameProject
 
         #endregion
 
-
-        //FirebaseResponse response = await client.GetAsync("Messages/" );
-        //string msg = response.ResultAs<string>();
     }
 }
 

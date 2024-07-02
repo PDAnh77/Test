@@ -42,7 +42,6 @@ namespace GameProject
 
         #endregion
 
-
         public GameLobby()
         {
             InitializeComponent();
@@ -222,6 +221,7 @@ namespace GameProject
                 return new List<RoomData>();
             }
         }
+
         private Panel CreateRoomPanel(RoomData room)
         {
             Panel panel = new Panel();
@@ -239,6 +239,7 @@ namespace GameProject
 
             return panel;
         }
+
         private async void LoadRooms()
         {
             List<RoomData> rooms = await GetRooms();
@@ -249,12 +250,10 @@ namespace GameProject
                 flowLayoutPanelRooms.Controls.Add(panel);
             }
         }
-     
 
         #endregion
 
         #region Event
-
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
@@ -268,8 +267,8 @@ namespace GameProject
             PlayAnimation(btnCreateRoom);
             if (!string.IsNullOrEmpty(txtRoomName.Texts))
             {
-                bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
-                if (!Exist)
+                bool Exists = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
+                if (!Exists)
                 { 
                     game = new GamePlay(NameUser, txtRoomName.Texts, true); 
                     this.DialogResult = ContinueToGamePlay; // Mở GamePlay
@@ -298,8 +297,8 @@ namespace GameProject
             PlayAnimation(btnJoinRoom);
             if (!string.IsNullOrEmpty(txtRoomName.Texts))
             {
-                bool Exist = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
-                if (Exist)
+                bool Exists = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
+                if (Exists)
                 {
                     game = new GamePlay(NameUser, txtRoomName.Texts, false);
                     this.DialogResult = ContinueToGamePlay;
@@ -314,6 +313,7 @@ namespace GameProject
                 Notification.Text = "Vui lòng nhập IP phòng muốn tham gia";
             }
         }
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnRefresh);
