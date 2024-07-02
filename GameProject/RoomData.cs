@@ -13,5 +13,6 @@ namespace GameProject
         public int RoomPlayer { get; set; }
         public int RoomViewer { get; set; }
         public string RoomRank { get; set; }
+        public bool isPlaying { get; set; }
     }
 }

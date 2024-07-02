@@ -244,7 +244,7 @@ namespace GameProject
         {
             Panel panel = new Panel();
             panel.BorderStyle = BorderStyle.Fixed3D;
-            panel.Width = 300;
+            panel.Width = 290;
             panel.Height = 120;
 
             Label lblRoomName = new Label();
@@ -287,6 +287,29 @@ namespace GameProject
             {
                 Panel panel = CreateRoomPanel(room);
                 flowLayoutPanelRooms.Controls.Add(panel);
+            }
+        }
+        private async Task<bool> GetTrangThaiRoom(string roomName)
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
+                RoomData roomData = response.ResultAs<RoomData>();
+
+                if (roomData != null)
+                {
+                    if (roomData.isPlaying)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy IP phòng: {ex.Message}");
+                return false;
             }
         }
 
@@ -339,15 +362,24 @@ namespace GameProject
                 bool Exists = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
                 if (Exists)
                 {
-                    string rank = await GetRoomRank(txtRoomName.Texts);
-                    if (rank == User.CurrentUser.Rank)
+                    bool isPlay = await GetTrangThaiRoom(txtRoomName.Texts);
+                    if (isPlay)                                         // Phòng đang chơi thì không cần xét bậc hạng, cho vào luôn
                     {
                         game = new GamePlay(NameUser, txtRoomName.Texts, false);
                         this.DialogResult = ContinueToGamePlay;
                     }
                     else
                     {
-                        Notification.Text = "Bạn không cùng bậc hạng với phòng";
+                        string rank = await GetRoomRank(txtRoomName.Texts);
+                        if (rank == User.CurrentUser.Rank)
+                        {
+                            game = new GamePlay(NameUser, txtRoomName.Texts, false);
+                            this.DialogResult = ContinueToGamePlay;
+                        }
+                        else
+                        {
+                            Notification.Text = "Bạn không cùng bậc hạng với phòng";
+                        }
                     }
                 }
                 else

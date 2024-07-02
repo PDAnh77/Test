@@ -41,7 +41,6 @@ namespace GameProject
         #region Server
         Socket server;
         public List<Socket> clientSockets = new List<Socket>(); // Danh sách các socket client
-        public List<Socket> viewSockets = new List<Socket>();
         private Thread acceptClient;
         private Thread checkClients;
         int Player = 4;
@@ -59,14 +58,7 @@ namespace GameProject
                     try
                     {
                         client = server.Accept();
-                        if (clientSockets.Count >= Player) // Phòng đã có đủ người chơi hoặc đã bắt đầu 
-                        {
-                            viewSockets.Add(client);
-                        }
-                        else
-                        {
-                            clientSockets.Add(client);
-                        }
+                        clientSockets.Add(client);
                     }
                     catch
                     {

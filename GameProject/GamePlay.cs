@@ -45,6 +45,8 @@ namespace GameProject
         public int num_Ready = 0;                           // Số lượng người chơi đã sẵn sàng
         private int xingau;                                 // Số xí ngầu đỗ ra được
         private int ThuTuLuotChoi = 0;                           // Đại diện cho chỉ số lượt  của người chơi
+        private bool TrangThaiChoi = false;
+        private bool NguoiXem = false;
 
         private string msg;
         private int counter = 30;
@@ -112,6 +114,39 @@ namespace GameProject
         #endregion
 
         #region Function
+        private async void UpdateTrangThaiRoom(string roomName)
+        {
+            FirebaseResponse response = await client.GetAsync("Room/" + roomName);
+            RoomData roomData = response.ResultAs<RoomData>();
+
+            if (roomData != null)
+            {
+                roomData.isPlaying = true;
+                // Đẩy dữ liệu cập nhật lên Firebase
+                SetResponse setResponse = await client.SetAsync("Room/" + roomName, roomData);
+            }
+        }
+        private async void UpdateRoomViewer(string roomName, bool join)
+        {
+            // Lấy dữ liệu hiện tại của phòng
+            FirebaseResponse response = await client.GetAsync("Room/" + roomName);
+            RoomData roomData = response.ResultAs<RoomData>();
+
+            if (roomData != null)
+            {
+                if (join)
+                {
+                    // Cập nhật RoomViewer
+                    roomData.RoomViewer++;
+                }
+                else
+                {
+                    roomData.RoomViewer--;
+                }
+                // Đẩy dữ liệu cập nhật lên Firebase
+                SetResponse setResponse = await client.SetAsync("Room/" + roomName, roomData);
+            }
+        }
         private async void UpdateRoomPlayer(string roomName, bool join)
         {
             // Lấy dữ liệu hiện tại của phòng
@@ -132,11 +167,8 @@ namespace GameProject
                 // Đẩy dữ liệu cập nhật lên Firebase
                 SetResponse setResponse = await client.SetAsync("Room/" + roomName, roomData);
             }
-            else
-            {
-                MessageBox.Show("Không tìm được phòng");
-            }
         }
+       
         private async Task<string> GetRoomIP(string roomName)
         {
             try
@@ -156,9 +188,32 @@ namespace GameProject
                 return null;
             }
         }
+        private async Task<bool> GetTrangThaiRoom(string roomName)
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
+                RoomData roomData = response.ResultAs<RoomData>();
+
+                if (roomData != null)
+                {
+                    if (roomData.isPlaying)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy IP phòng: {ex.Message}");
+                return false;
+            }
+        }
         public async void CreateOrConnect(bool server)
         {
-            if (server)
+            if (server)                         // Tạo phòng
             {
                 string roomName = IDphong;
                 string roomIP = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
@@ -177,7 +232,8 @@ namespace GameProject
                         RoomId = roomIP,        // IP tạo phòng
                         RoomRank = rank,
                         RoomPlayer = 1,
-                        RoomViewer = 0
+                        RoomViewer = 0,
+                        isPlaying = false
                     };
                     SetResponse response = await client.SetAsync($"Room/{roomName}", roomData);
                 }
@@ -189,11 +245,13 @@ namespace GameProject
                 socket.isServer = true;
                 socket.CreateServer();
             }
-            else
+            else                                // Tham gia phòng
             {
+                bool Choi = await GetTrangThaiRoom(IDphong);
                 string ip = await GetRoomIP(IDphong);
                 socket.isServer = false;
                 socket.IP = ip;
+
                 if (!socket.ConnectServer())
                 {
                     MessageBox.Show("Không thể kết nối");
@@ -202,8 +260,17 @@ namespace GameProject
                 {
                     try
                     {
+                        if (Choi)
+                        {
+                            NguoiXem = true;
+                            UpdateRoomViewer(IDphong, true);
+                        }
+                        else
+                        {
+
+                            UpdateRoomPlayer(IDphong, true);
+                        }
                         socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{username}"));
-                        UpdateRoomPlayer(IDphong, true);
                     }
                     catch
                     {
@@ -323,10 +390,18 @@ namespace GameProject
                 case (int)SocketCommand.JOIN_ROOM:
                     if (socket.isServer)            // Trường hợp là server
                     {
-                        DSUser.Add(data.Message);
-                        reloadForm();
-                        string userString = string.Join("/", DSUser);
-                        socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString)); // Xem chi tiết ở SocketData để hiểu
+                        if (!TrangThaiChoi)         // Trường hợp phòng chưa vào chế độ chơi
+                        {
+                            DSUser.Add(data.Message);
+                            reloadForm();
+                            string userString = string.Join("/", DSUser);
+                            socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userString)); // Xem chi tiết ở SocketData để hiểu
+                        }
+                        else
+                        {
+                            string userStringPlay = string.Join("/", DSUser);
+                            socket.Broadcast(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), userStringPlay));
+                        }
                     }
                     else                            // Trường hợp là client
                     {
@@ -338,9 +413,9 @@ namespace GameProject
                             DSUser.Add(userArray[i]);
                         }
                         reloadForm();
-                        if (userArray.Length > 4)
+                        if (NguoiXem)
                         {
-                            MessageBox.Show("Có người vào xem");
+                            num_Ready = DSUser.Count;
                         }
                     }
                     break;
@@ -745,14 +820,21 @@ namespace GameProject
             else
             {
                 socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
-                UpdateRoomPlayer(IDphong, false);
+                if (!NguoiXem)
+                {
+                    UpdateRoomPlayer(IDphong, false);
+                }
+                else
+                {
+                    UpdateRoomViewer(IDphong, false);
+                }
                 socket.CloseClient();
                 DialogResult = DialogResult.Cancel; // Quay về GameLobby
                 this.Close();
             }
         }
         
-        private void btnStart_Click(object sender, EventArgs e)
+        private void btnStart_Click(object sender, EventArgs e)                 // Button sẵn sàng
         {
             PlayAnimation(btnStart);
             //num_Ready++;
@@ -767,6 +849,8 @@ namespace GameProject
                 {
                     ChuanBiCacQuanCo();
                     UnlockCacNut();
+                    UpdateTrangThaiRoom(IDphong);
+                    TrangThaiChoi = true;
                 }
             }
             else
@@ -883,7 +967,6 @@ namespace GameProject
                     }
                     j++;
                 }
-
             }
         }
 
