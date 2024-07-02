@@ -38,8 +38,6 @@
             this.lbun2 = new System.Windows.Forms.Label();
             this.lbWork = new System.Windows.Forms.Label();
             this.luotchoitimer = new System.Windows.Forms.Timer(this.components);
-            this.txtSendMSG = new System.Windows.Forms.TextBox();
-            this.rtbMSG = new System.Windows.Forms.RichTextBox();
             this.pgb = new System.Windows.Forms.ProgressBar();
             this.timercd = new System.Windows.Forms.Timer(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -141,9 +139,11 @@
             this.btn1 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.imgXiNgau = new System.Windows.Forms.PictureBox();
+            this.rtbMSG = new System.Windows.Forms.RichTextBox();
+            this.txtSendMSG = new System.Windows.Forms.TextBox();
+            this.btnSendMSG = new GameProject.CustomControls.ButtonDesign();
             this.btnBoLuot = new GameProject.CustomControls.ButtonDesign();
             this.btnXiNgau = new GameProject.CustomControls.ButtonDesign();
-            this.btnSendMSG = new GameProject.CustomControls.ButtonDesign();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
             this.btnLeave = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -253,7 +253,7 @@
             this.lbluotchoi.BackColor = System.Drawing.Color.Transparent;
             this.lbluotchoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbluotchoi.ForeColor = System.Drawing.Color.Transparent;
-            this.lbluotchoi.Location = new System.Drawing.Point(873, 44);
+            this.lbluotchoi.Location = new System.Drawing.Point(699, 209);
             this.lbluotchoi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbluotchoi.Name = "lbluotchoi";
             this.lbluotchoi.Size = new System.Drawing.Size(21, 20);
@@ -322,7 +322,7 @@
             this.lbWork.BackColor = System.Drawing.Color.Transparent;
             this.lbWork.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbWork.ForeColor = System.Drawing.Color.Transparent;
-            this.lbWork.Location = new System.Drawing.Point(873, 85);
+            this.lbWork.Location = new System.Drawing.Point(699, 250);
             this.lbWork.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbWork.Name = "lbWork";
             this.lbWork.Size = new System.Drawing.Size(21, 20);
@@ -333,28 +333,6 @@
             // 
             this.luotchoitimer.Interval = 1000;
             this.luotchoitimer.Tick += new System.EventHandler(this.luotchoitimer_Tick);
-            // 
-            // txtSendMSG
-            // 
-            this.txtSendMSG.Location = new System.Drawing.Point(739, 628);
-            this.txtSendMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSendMSG.Multiline = true;
-            this.txtSendMSG.Name = "txtSendMSG";
-            this.txtSendMSG.Size = new System.Drawing.Size(341, 30);
-            this.txtSendMSG.TabIndex = 119;
-            this.txtSendMSG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSendMSG_KeyDown);
-            // 
-            // rtbMSG
-            // 
-            this.rtbMSG.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.rtbMSG.Enabled = false;
-            this.rtbMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbMSG.Location = new System.Drawing.Point(728, 199);
-            this.rtbMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.rtbMSG.Name = "rtbMSG";
-            this.rtbMSG.Size = new System.Drawing.Size(494, 468);
-            this.rtbMSG.TabIndex = 118;
-            this.rtbMSG.Text = "";
             // 
             // pgb
             // 
@@ -371,9 +349,9 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(703, 184);
+            this.pictureBox2.Location = new System.Drawing.Point(770, 387);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(546, 502);
+            this.pictureBox2.Size = new System.Drawing.Size(478, 244);
             this.pictureBox2.TabIndex = 117;
             this.pictureBox2.TabStop = false;
             // 
@@ -1527,6 +1505,44 @@
             this.imgXiNgau.TabIndex = 1;
             this.imgXiNgau.TabStop = false;
             // 
+            // rtbMSG
+            // 
+            this.rtbMSG.Location = new System.Drawing.Point(782, 395);
+            this.rtbMSG.Name = "rtbMSG";
+            this.rtbMSG.ReadOnly = true;
+            this.rtbMSG.Size = new System.Drawing.Size(453, 196);
+            this.rtbMSG.TabIndex = 128;
+            this.rtbMSG.Text = "";
+            // 
+            // txtSendMSG
+            // 
+            this.txtSendMSG.Location = new System.Drawing.Point(782, 591);
+            this.txtSendMSG.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSendMSG.Multiline = true;
+            this.txtSendMSG.Name = "txtSendMSG";
+            this.txtSendMSG.Size = new System.Drawing.Size(323, 30);
+            this.txtSendMSG.TabIndex = 129;
+            this.txtSendMSG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSendMSG_KeyDown);
+            // 
+            // btnSendMSG
+            // 
+            this.btnSendMSG.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSendMSG.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSendMSG.BorderColor = System.Drawing.Color.Transparent;
+            this.btnSendMSG.BorderRadius = 0;
+            this.btnSendMSG.BorderSize = 0;
+            this.btnSendMSG.FlatAppearance.BorderSize = 0;
+            this.btnSendMSG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSendMSG.ForeColor = System.Drawing.Color.White;
+            this.btnSendMSG.Location = new System.Drawing.Point(1104, 591);
+            this.btnSendMSG.Name = "btnSendMSG";
+            this.btnSendMSG.Size = new System.Drawing.Size(134, 31);
+            this.btnSendMSG.TabIndex = 130;
+            this.btnSendMSG.Text = "SEND";
+            this.btnSendMSG.TextColor = System.Drawing.Color.White;
+            this.btnSendMSG.UseVisualStyleBackColor = false;
+            this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
+            // 
             // btnBoLuot
             // 
             this.btnBoLuot.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -1537,7 +1553,7 @@
             this.btnBoLuot.FlatAppearance.BorderSize = 0;
             this.btnBoLuot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBoLuot.ForeColor = System.Drawing.Color.White;
-            this.btnBoLuot.Location = new System.Drawing.Point(1012, 112);
+            this.btnBoLuot.Location = new System.Drawing.Point(858, 111);
             this.btnBoLuot.Name = "btnBoLuot";
             this.btnBoLuot.Size = new System.Drawing.Size(132, 43);
             this.btnBoLuot.TabIndex = 127;
@@ -1556,7 +1572,7 @@
             this.btnXiNgau.FlatAppearance.BorderSize = 0;
             this.btnXiNgau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnXiNgau.ForeColor = System.Drawing.Color.White;
-            this.btnXiNgau.Location = new System.Drawing.Point(859, 112);
+            this.btnXiNgau.Location = new System.Drawing.Point(858, 62);
             this.btnXiNgau.Name = "btnXiNgau";
             this.btnXiNgau.Size = new System.Drawing.Size(132, 43);
             this.btnXiNgau.TabIndex = 126;
@@ -1564,25 +1580,6 @@
             this.btnXiNgau.TextColor = System.Drawing.Color.White;
             this.btnXiNgau.UseVisualStyleBackColor = false;
             this.btnXiNgau.Click += new System.EventHandler(this.btnXiNgau_Click);
-            // 
-            // btnSendMSG
-            // 
-            this.btnSendMSG.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnSendMSG.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnSendMSG.BorderColor = System.Drawing.Color.Transparent;
-            this.btnSendMSG.BorderRadius = 0;
-            this.btnSendMSG.BorderSize = 0;
-            this.btnSendMSG.FlatAppearance.BorderSize = 0;
-            this.btnSendMSG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSendMSG.ForeColor = System.Drawing.Color.White;
-            this.btnSendMSG.Location = new System.Drawing.Point(1088, 628);
-            this.btnSendMSG.Name = "btnSendMSG";
-            this.btnSendMSG.Size = new System.Drawing.Size(125, 30);
-            this.btnSendMSG.TabIndex = 125;
-            this.btnSendMSG.Text = "SEND";
-            this.btnSendMSG.TextColor = System.Drawing.Color.White;
-            this.btnSendMSG.UseVisualStyleBackColor = false;
-            this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
             // 
             // btnStart
             // 
@@ -1628,13 +1625,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(1261, 698);
-            this.Controls.Add(this.btnBoLuot);
-            this.Controls.Add(this.btnXiNgau);
             this.Controls.Add(this.btnSendMSG);
-            this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.pgb);
             this.Controls.Add(this.txtSendMSG);
             this.Controls.Add(this.rtbMSG);
+            this.Controls.Add(this.btnBoLuot);
+            this.Controls.Add(this.btnXiNgau);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.pgb);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.lbWork);
@@ -1959,14 +1956,14 @@
         private System.Windows.Forms.PictureBox btn33;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.TextBox txtSendMSG;
-        private System.Windows.Forms.RichTextBox rtbMSG;
         private System.Windows.Forms.ProgressBar pgb;
         private System.Windows.Forms.Timer timercd;
         private CustomControls.ButtonDesign btnStart;
-        private CustomControls.ButtonDesign btnSendMSG;
         private CustomControls.ButtonDesign btnXiNgau;
         private CustomControls.ButtonDesign btnBoLuot;
+        private System.Windows.Forms.RichTextBox rtbMSG;
+        private CustomControls.ButtonDesign btnSendMSG;
+        private System.Windows.Forms.TextBox txtSendMSG;
     }
 }
 

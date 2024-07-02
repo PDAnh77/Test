@@ -1513,6 +1513,7 @@ namespace GameProject
                 button.Enabled = status;
             }
         }
+
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnSendMSG);
@@ -1571,7 +1572,10 @@ namespace GameProject
                 }
             }
 
-            this.rtbMSG.BackColor = customColor03;
+            rtbMSG.BackColor = customColor03;
+            txtSendMSG.BackColor = customColor02;
+            txtSendMSG.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox2.BackColor = customColor03;
         }
 
         private void PlayAnimation(Control control)
@@ -1624,7 +1628,12 @@ namespace GameProject
                         SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     }
                     button.ForeColor = Color.Black;
+
                     button.BackColor = customColor01;
+                    if (button.Name == "btnSendMSG")
+                    {
+                        button.BackColor = customColor03;
+                    }
                 }
             }
         }
