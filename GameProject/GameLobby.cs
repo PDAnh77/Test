@@ -183,7 +183,25 @@ namespace GameProject
         #endregion
 
         #region Function
+        private async Task<string> GetRoomRank(string roomName)
+        {
+            try
+            {
+                FirebaseResponse response = await client.GetAsync($"Room/{roomName}");
+                RoomData roomData = response.ResultAs<RoomData>();
 
+                if (roomData != null)
+                {
+                    return roomData.RoomRank;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi lấy hạng phòng: {ex.Message}");
+                return null;
+            }
+        }
         private async Task<bool> CheckPhongTonTai(string name)
         {
             try
@@ -226,16 +244,37 @@ namespace GameProject
         {
             Panel panel = new Panel();
             panel.BorderStyle = BorderStyle.Fixed3D;
-            panel.Width = 100;
-            panel.Height = 50;
+            panel.Width = 300;
+            panel.Height = 120;
 
             Label lblRoomName = new Label();
-            lblRoomName.Font = new Font(lblRoomName.Font.FontFamily, 18, FontStyle.Bold);
-            lblRoomName.Text = $"{room.RoomName}";
+            lblRoomName.Font = new Font(lblRoomName.Font.FontFamily, 16, FontStyle.Bold);
+            lblRoomName.Text = $"Tên phòng: {room.RoomName}";
             lblRoomName.Location = new Point(10, 10);
             lblRoomName.AutoSize = true;
 
+            Label lblRoomRank = new Label();
+            lblRoomRank.Font = new Font(lblRoomRank.Font.FontFamily, 10, FontStyle.Regular);
+            lblRoomRank.Text = $"Hạng: {room.RoomRank}";
+            lblRoomRank.Location = new Point(10, 50);
+            lblRoomRank.AutoSize = true;
+
+            Label lblRoomPlayer = new Label();
+            lblRoomPlayer.Font = new Font(lblRoomPlayer.Font.FontFamily, 10, FontStyle.Regular);
+            lblRoomPlayer.Text = $"Số người chơi: {room.RoomPlayer}";
+            lblRoomPlayer.Location = new Point(10, 70);
+            lblRoomPlayer .AutoSize = true;
+
+            Label lblRoomViewer = new Label();
+            lblRoomViewer.Font = new Font(lblRoomViewer.Font.FontFamily, 10, FontStyle.Regular);
+            lblRoomViewer.Text = $"Số người xem: {room.RoomViewer}";
+            lblRoomViewer.Location = new Point(10, 90);
+            lblRoomViewer .AutoSize = true;
+
             panel.Controls.Add(lblRoomName);
+            panel.Controls.Add(lblRoomRank);
+            panel.Controls.Add(lblRoomPlayer);
+            panel.Controls.Add(lblRoomViewer);
 
             return panel;
         }
@@ -300,8 +339,16 @@ namespace GameProject
                 bool Exists = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
                 if (Exists)
                 {
-                    game = new GamePlay(NameUser, txtRoomName.Texts, false);
-                    this.DialogResult = ContinueToGamePlay;
+                    string rank = await GetRoomRank(txtRoomName.Texts);
+                    if (rank == User.CurrentUser.Rank)
+                    {
+                        game = new GamePlay(NameUser, txtRoomName.Texts, false);
+                        this.DialogResult = ContinueToGamePlay;
+                    }
+                    else
+                    {
+                        Notification.Text = "Bạn không cùng bậc hạng với phòng";
+                    }
                 }
                 else
                 {
