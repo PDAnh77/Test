@@ -292,7 +292,6 @@ namespace GameProject
             Panel panel = sender as Panel;
             if (panel != null)
             {
-                panel.BackColor = Color.LightGray; // Thay đổi màu nền khi di chuột vào
                 panel.BorderStyle = BorderStyle.FixedSingle; // Thay đổi kiểu viền
             }
         }
@@ -302,7 +301,6 @@ namespace GameProject
             Panel panel = sender as Panel;
             if (panel != null)
             {
-                panel.BackColor = SystemColors.Control; // Trả lại màu nền mặc định khi di chuột ra
                 panel.BorderStyle = BorderStyle.Fixed3D; // Trả lại kiểu viền mặc định
             }
         }

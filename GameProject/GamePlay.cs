@@ -832,31 +832,10 @@ namespace GameProject
         #endregion
 
         #region Events
-        private async void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
+        private void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
         {
             PlayAnimation(btnLeave);
-            if (socket.isServer)
-            {
-                await DeleteRoom(IDphong);
-                socket.CloseConnect();
-                DialogResult = DialogResult.Cancel; // Quay về GameLobby
-                this.Close();
-            }
-            else
-            {
-                socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
-                if (!NguoiXem)
-                {
-                    UpdateRoomPlayer(IDphong, false);
-                }
-                else
-                {
-                    UpdateRoomViewer(IDphong, false);
-                }
-                socket.CloseClient();
-                DialogResult = DialogResult.Cancel; // Quay về GameLobby
-                this.Close();
-            }
+            this.Close();
         }
         
         private void btnStart_Click(object sender, EventArgs e)                 // Button sẵn sàng
