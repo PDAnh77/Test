@@ -183,6 +183,7 @@ namespace GameProject
         #endregion
 
         #region Function
+
         private async Task<string> GetRoomRank(string roomName)
         {
             try
@@ -202,6 +203,7 @@ namespace GameProject
                 return null;
             }
         }
+
         private async Task<bool> CheckPhongTonTai(string name)
         {
             try
@@ -246,6 +248,7 @@ namespace GameProject
             panel.BorderStyle = BorderStyle.Fixed3D;
             panel.Width = 290;
             panel.Height = 120;
+            panel.Tag = room.RoomName; // Gán tên phòng vào thuộc tính Tag của Panel
 
             Label lblRoomName = new Label();
             lblRoomName.Font = new Font(lblRoomName.Font.FontFamily, 16, FontStyle.Bold);
@@ -271,6 +274,11 @@ namespace GameProject
             lblRoomViewer.Location = new Point(10, 90);
             lblRoomViewer .AutoSize = true;
 
+            // Thêm các sự kiện
+            panel.MouseEnter += new EventHandler(Panel_MouseEnter);
+            panel.MouseLeave += new EventHandler(Panel_MouseLeave);
+            panel.MouseClick += new MouseEventHandler(Panel_MouseClick);
+
             panel.Controls.Add(lblRoomName);
             panel.Controls.Add(lblRoomRank);
             panel.Controls.Add(lblRoomPlayer);
@@ -279,6 +287,35 @@ namespace GameProject
             return panel;
         }
 
+        private void Panel_MouseEnter(object sender, EventArgs e)
+        {
+            Panel panel = sender as Panel;
+            if (panel != null)
+            {
+                panel.BackColor = Color.LightGray; // Thay đổi màu nền khi di chuột vào
+                panel.BorderStyle = BorderStyle.FixedSingle; // Thay đổi kiểu viền
+            }
+        }
+
+        private void Panel_MouseLeave(object sender, EventArgs e)
+        {
+            Panel panel = sender as Panel;
+            if (panel != null)
+            {
+                panel.BackColor = SystemColors.Control; // Trả lại màu nền mặc định khi di chuột ra
+                panel.BorderStyle = BorderStyle.Fixed3D; // Trả lại kiểu viền mặc định
+            }
+        }
+
+        private void Panel_MouseClick(object sender, MouseEventArgs e)
+        {
+            Panel panel = sender as Panel;
+            if (panel != null)
+            {
+                string roomName = panel.Tag as string;
+                JoinRoom(roomName);
+            }
+        }
         private async void LoadRooms()
         {
             List<RoomData> rooms = await GetRooms();
@@ -312,11 +349,46 @@ namespace GameProject
                 return false;
             }
         }
-
+        private async void JoinRoom(string roomName)
+        {
+            if (!string.IsNullOrEmpty(roomName))
+            {
+                bool Exists = await CheckPhongTonTai(roomName); // Kiểm tra xem phòng có tồn tại chưa
+                if (Exists)
+                {
+                    bool isPlay = await GetTrangThaiRoom(roomName);
+                    if (isPlay)                                 // Phòng đang chơi thì không cần xét bậc hạng, cho vào luôn
+                    {
+                        game = new GamePlay(NameUser, roomName, false);
+                        this.DialogResult = ContinueToGamePlay;
+                    }
+                    else
+                    {
+                        string rank = await GetRoomRank(roomName);
+                        if (rank == User.CurrentUser.Rank)
+                        {
+                            game = new GamePlay(NameUser, roomName, false);
+                            this.DialogResult = ContinueToGamePlay;
+                        }
+                        else
+                        {
+                            Notification.Text = "Bạn không cùng bậc hạng với phòng";
+                        }
+                    }
+                }
+                else
+                {
+                    Notification.Text = "Phòng không tồn tại";
+                }
+            }
+            else
+            {
+                Notification.Text = "Vui lòng nhập IP phòng muốn tham gia";
+            }
+        }
         #endregion
 
         #region Event
-
         private void btnReturn_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnReturn);
@@ -354,43 +426,10 @@ namespace GameProject
             return game;
         }
 
-        private async void btnJoinRoom_Click(object sender, EventArgs e)
+        private void btnJoinRoom_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnJoinRoom);
-            if (!string.IsNullOrEmpty(txtRoomName.Texts))
-            {
-                bool Exists = await CheckPhongTonTai(txtRoomName.Texts); // Kiểm tra xem phòng có tồn tại chưa
-                if (Exists)
-                {
-                    bool isPlay = await GetTrangThaiRoom(txtRoomName.Texts);
-                    if (isPlay)                                         // Phòng đang chơi thì không cần xét bậc hạng, cho vào luôn
-                    {
-                        game = new GamePlay(NameUser, txtRoomName.Texts, false);
-                        this.DialogResult = ContinueToGamePlay;
-                    }
-                    else
-                    {
-                        string rank = await GetRoomRank(txtRoomName.Texts);
-                        if (rank == User.CurrentUser.Rank)
-                        {
-                            game = new GamePlay(NameUser, txtRoomName.Texts, false);
-                            this.DialogResult = ContinueToGamePlay;
-                        }
-                        else
-                        {
-                            Notification.Text = "Bạn không cùng bậc hạng với phòng";
-                        }
-                    }
-                }
-                else
-                {
-                    Notification.Text = "Phòng không tồn tại";
-                }
-            }
-            else
-            {
-                Notification.Text = "Vui lòng nhập IP phòng muốn tham gia";
-            }
+            JoinRoom(txtRoomName.Texts);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

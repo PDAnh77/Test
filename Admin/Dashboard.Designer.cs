@@ -30,6 +30,7 @@
         {
             this.pnTitle = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
+            this.btnHistory = new System.Windows.Forms.Button();
             this.btnUser = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
             this.pnShow = new System.Windows.Forms.Panel();
@@ -39,6 +40,7 @@
             // pnTitle
             // 
             this.pnTitle.Controls.Add(this.btnLogout);
+            this.pnTitle.Controls.Add(this.btnHistory);
             this.pnTitle.Controls.Add(this.btnUser);
             this.pnTitle.Controls.Add(this.btnHome);
             this.pnTitle.Dock = System.Windows.Forms.DockStyle.Top;
@@ -56,6 +58,16 @@
             this.btnLogout.Text = "Logout";
             this.btnLogout.UseVisualStyleBackColor = true;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // btnHistory
+            // 
+            this.btnHistory.Location = new System.Drawing.Point(341, -1);
+            this.btnHistory.Name = "btnHistory";
+            this.btnHistory.Size = new System.Drawing.Size(175, 43);
+            this.btnHistory.TabIndex = 2;
+            this.btnHistory.Text = "Match History";
+            this.btnHistory.UseVisualStyleBackColor = true;
+            this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
             // btnUser
             // 
@@ -75,6 +87,7 @@
             this.btnHome.TabIndex = 3;
             this.btnHome.Text = "Home";
             this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // pnShow
             // 
@@ -105,5 +118,6 @@
         private System.Windows.Forms.Button btnUser;
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Panel pnShow;
+        private System.Windows.Forms.Button btnHistory;
     }
 }

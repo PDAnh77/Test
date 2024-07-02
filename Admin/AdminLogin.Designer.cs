@@ -79,6 +79,7 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(317, 20);
             this.txtPass.TabIndex = 4;
+            this.txtPass.TextChanged += new System.EventHandler(this.txtPass_TextChanged);
             // 
             // AdminLogin
             // 
@@ -92,6 +93,7 @@
             this.Controls.Add(this.btnLogin);
             this.Name = "AdminLogin";
             this.Text = "Admin";
+            this.Load += new System.EventHandler(this.AdminLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
