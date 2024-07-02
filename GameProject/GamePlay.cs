@@ -112,8 +112,32 @@ namespace GameProject
         #endregion
 
         #region Function
+        private async void UpdateRoomPlayer(string roomName, bool join)
+        {
+            // Lấy dữ liệu hiện tại của phòng
+            FirebaseResponse response = await client.GetAsync("Room/" + roomName);
+            RoomData roomData = response.ResultAs<RoomData>();
 
-        private async Task<string> GetRoomId(string roomName)
+            if (roomData != null)
+            {
+                if (join)
+                {
+                    // Cập nhật RoomPlayer
+                    roomData.RoomPlayer++;
+                }
+                else
+                {
+                    roomData.RoomPlayer--;
+                }
+                // Đẩy dữ liệu cập nhật lên Firebase
+                SetResponse setResponse = await client.SetAsync("Room/" + roomName, roomData);
+            }
+            else
+            {
+                MessageBox.Show("Không tìm được phòng");
+            }
+        }
+        private async Task<string> GetRoomIP(string roomName)
         {
             try
             {
@@ -128,17 +152,17 @@ namespace GameProject
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi lấy RoomId: {ex.Message}");
+                MessageBox.Show($"Lỗi lấy IP phòng: {ex.Message}");
                 return null;
             }
         }
-
         public async void CreateOrConnect(bool server)
         {
             if (server)
             {
                 string roomName = IDphong;
                 string roomIP = socket.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+                string rank = User.CurrentUser.Rank;
                 
                 if (roomIP == null)
                 {
@@ -150,7 +174,10 @@ namespace GameProject
                     var roomData = new RoomData
                     {
                         RoomName = roomName,
-                        RoomId = roomIP // IP tạo phòng
+                        RoomId = roomIP,        // IP tạo phòng
+                        RoomRank = rank,
+                        RoomPlayer = 1,
+                        RoomViewer = 0
                     };
                     SetResponse response = await client.SetAsync($"Room/{roomName}", roomData);
                 }
@@ -164,7 +191,7 @@ namespace GameProject
             }
             else
             {
-                string ip = await GetRoomId(IDphong);
+                string ip = await GetRoomIP(IDphong);
                 socket.isServer = false;
                 socket.IP = ip;
                 if (!socket.ConnectServer())
@@ -176,6 +203,7 @@ namespace GameProject
                     try
                     {
                         socket.Send(new SocketData((int)SocketCommand.JOIN_ROOM, new Point(), $"{username}"));
+                        UpdateRoomPlayer(IDphong, true);
                     }
                     catch
                     {
@@ -717,6 +745,7 @@ namespace GameProject
             else
             {
                 socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
+                UpdateRoomPlayer(IDphong, false);
                 socket.CloseClient();
                 DialogResult = DialogResult.Cancel; // Quay về GameLobby
                 this.Close();

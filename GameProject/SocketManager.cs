@@ -195,7 +195,6 @@ namespace GameProject
             if (client != null)
             {
                 client.Close();
-                MessageBox.Show("Client");
             }
         }
 
@@ -205,7 +204,6 @@ namespace GameProject
             {
                 server.Close();
                 isServerRun = false;                
-                MessageBox.Show("Server");
             }
         }
 
