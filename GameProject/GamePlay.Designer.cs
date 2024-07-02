@@ -1516,9 +1516,9 @@
             // 
             // txtSendMSG
             // 
-            this.txtSendMSG.Location = new System.Drawing.Point(782, 591);
+            this.txtSendMSG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSendMSG.Location = new System.Drawing.Point(782, 590);
             this.txtSendMSG.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSendMSG.Multiline = true;
             this.txtSendMSG.Name = "txtSendMSG";
             this.txtSendMSG.Size = new System.Drawing.Size(323, 30);
             this.txtSendMSG.TabIndex = 129;
@@ -1534,9 +1534,9 @@
             this.btnSendMSG.FlatAppearance.BorderSize = 0;
             this.btnSendMSG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendMSG.ForeColor = System.Drawing.Color.White;
-            this.btnSendMSG.Location = new System.Drawing.Point(1104, 591);
+            this.btnSendMSG.Location = new System.Drawing.Point(1104, 590);
             this.btnSendMSG.Name = "btnSendMSG";
-            this.btnSendMSG.Size = new System.Drawing.Size(134, 31);
+            this.btnSendMSG.Size = new System.Drawing.Size(134, 32);
             this.btnSendMSG.TabIndex = 130;
             this.btnSendMSG.Text = "SEND";
             this.btnSendMSG.TextColor = System.Drawing.Color.White;

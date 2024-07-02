@@ -91,6 +91,7 @@ namespace GameProject
             LockCacNut();
             /*SetControlImage(b4, Animation.UI_Horse_Select_04);
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
+            this.AcceptButton = btnSendMSG;
         }
 
         private async void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
@@ -1837,7 +1838,6 @@ namespace GameProject
         }
 
         #endregion
-
 
     }
 }
