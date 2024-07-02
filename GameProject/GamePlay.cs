@@ -523,9 +523,9 @@ namespace GameProject
             }
             else if (Do[0] == "3")
             {
-                string imagePath;
+                //string imagePath;
                 switch (Do[2])
-                {
+                /*{
                     case "1":
                         //imagePath =
                         imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "1" + ".png");
@@ -545,7 +545,7 @@ namespace GameProject
                     case "6":
                         imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "6" + ".png");
                         break;
-                }
+                }*/
                 if (Do[3] == "y")
                 {
                     WriteTextSafe(lbluotchoi, "Lượt chơi: " + Do[1]);
@@ -581,7 +581,7 @@ namespace GameProject
                 if (Do[2] != "")
                 {
                     string s = "";
-                    switch (Do[2])
+                    /*switch (Do[2])
                     {
                         case "b1":
                         case "b2":
@@ -607,7 +607,7 @@ namespace GameProject
                         case "g4":
                             s = "15";
                             break;
-                    }
+                    }*/
                     PictureBox ptb = (PictureBox)this.Controls.Find(Do[2], false).FirstOrDefault() as PictureBox;
                     PictureBox btn = (PictureBox)this.Controls.Find("btn" + s, false).FirstOrDefault() as PictureBox;
                     btn.Image = ptb.Image;
@@ -757,6 +757,7 @@ namespace GameProject
             PlayAnimation(btnStart);
             //num_Ready++;
             btnStart.Enabled = false;
+            btnStart.Visible = false;
 
             if (socket.isServer)
             {
@@ -1148,7 +1149,9 @@ namespace GameProject
         {
             Send_XuatQuanCo("g4");
         }
-
+        
+        /// ///////////////////////////////////////////////////////////////////////////////////
+        
         private void btn29_Click(object sender, EventArgs e)
         {
             SendBtnBox(29);
