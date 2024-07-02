@@ -524,7 +524,7 @@ namespace GameProject
             else if (Do[0] == "3")
             {
                 //string imagePath;
-                switch (Do[2])
+                //switch (Do[2])
                 /*{
                     case "1":
                         //imagePath =

@@ -543,6 +543,46 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI_Square_B {
+            get {
+                object obj = ResourceManager.GetObject("UI_Square_B", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Square_G {
+            get {
+                object obj = ResourceManager.GetObject("UI_Square_G", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Square_R {
+            get {
+                object obj = ResourceManager.GetObject("UI_Square_R", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_Square_Y {
+            get {
+                object obj = ResourceManager.GetObject("UI_Square_Y", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_Table {
             get {
                 object obj = ResourceManager.GetObject("UI_Table", resourceCulture);
