@@ -1516,6 +1516,8 @@ namespace GameProject
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnSendMSG);
+            if (txtSendMSG.Text == "")
+                return;
             if (socket.isServer)
             {
                 rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
