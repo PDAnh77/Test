@@ -208,6 +208,12 @@
     <Compile Include="GamePlay.Designer.cs">
       <DependentUpon>GamePlay.cs</DependentUpon>
     </Compile>
+    <Compile Include="History.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="History.Designer.cs">
+      <DependentUpon>History.cs</DependentUpon>
+    </Compile>
     <Compile Include="RoomData.cs" />
     <Compile Include="SocketData.cs" />
     <Compile Include="SocketManager.cs" />
@@ -368,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GameLobby.resx">
       <DependentUpon>GameLobby.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="History.resx">
+      <DependentUpon>History.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
