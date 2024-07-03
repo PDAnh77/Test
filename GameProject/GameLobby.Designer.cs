@@ -41,6 +41,7 @@ namespace GameProject
             this.txtRoomName = new GameProject.CustomControls.TextBoxDesign();
             this.btnCreateRoom = new GameProject.CustomControls.ButtonDesign();
             this.btnReturn = new GameProject.CustomControls.ButtonDesign();
+            this.btnLuatChoi = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -80,7 +81,7 @@ namespace GameProject
             // 
             this.flowLayoutPanelRooms.AutoScroll = true;
             this.flowLayoutPanelRooms.Location = new System.Drawing.Point(29, 30);
-            this.flowLayoutPanelRooms.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanelRooms.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanelRooms.Name = "flowLayoutPanelRooms";
             this.flowLayoutPanelRooms.Size = new System.Drawing.Size(1200, 407);
             this.flowLayoutPanelRooms.TabIndex = 19;
@@ -96,7 +97,7 @@ namespace GameProject
             this.btnJoinRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnJoinRoom.ForeColor = System.Drawing.Color.White;
             this.btnJoinRoom.Location = new System.Drawing.Point(824, 597);
-            this.btnJoinRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnJoinRoom.Margin = new System.Windows.Forms.Padding(4);
             this.btnJoinRoom.Name = "btnJoinRoom";
             this.btnJoinRoom.Size = new System.Drawing.Size(200, 49);
             this.btnJoinRoom.TabIndex = 20;
@@ -117,7 +118,7 @@ namespace GameProject
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.ForeColor = System.Drawing.Color.White;
             this.btnRefresh.Location = new System.Drawing.Point(29, 454);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(145, 49);
             this.btnRefresh.TabIndex = 18;
@@ -137,10 +138,10 @@ namespace GameProject
             this.txtRoomName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtRoomName.ForeColor = System.Drawing.Color.Black;
             this.txtRoomName.Location = new System.Drawing.Point(856, 535);
-            this.txtRoomName.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtRoomName.Margin = new System.Windows.Forms.Padding(5);
             this.txtRoomName.Multiline = false;
             this.txtRoomName.Name = "txtRoomName";
-            this.txtRoomName.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.txtRoomName.Padding = new System.Windows.Forms.Padding(9);
             this.txtRoomName.PasswordChar = false;
             this.txtRoomName.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtRoomName.PlaceholderText = "Tên phòng";
@@ -162,7 +163,7 @@ namespace GameProject
             this.btnCreateRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateRoom.ForeColor = System.Drawing.Color.White;
             this.btnCreateRoom.Location = new System.Drawing.Point(1045, 598);
-            this.btnCreateRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreateRoom.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateRoom.Name = "btnCreateRoom";
             this.btnCreateRoom.Size = new System.Drawing.Size(200, 49);
             this.btnCreateRoom.TabIndex = 10;
@@ -191,11 +192,33 @@ namespace GameProject
             this.btnReturn.UseVisualStyleBackColor = false;
             this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
+            // btnLuatChoi
+            // 
+            this.btnLuatChoi.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLuatChoi.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLuatChoi.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnLuatChoi.BorderRadius = 0;
+            this.btnLuatChoi.BorderSize = 0;
+            this.btnLuatChoi.FlatAppearance.BorderSize = 0;
+            this.btnLuatChoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuatChoi.ForeColor = System.Drawing.Color.White;
+            this.btnLuatChoi.Location = new System.Drawing.Point(237, 454);
+            this.btnLuatChoi.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLuatChoi.Name = "btnLuatChoi";
+            this.btnLuatChoi.Size = new System.Drawing.Size(145, 49);
+            this.btnLuatChoi.TabIndex = 21;
+            this.btnLuatChoi.Text = "Luật chơi";
+            this.btnLuatChoi.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLuatChoi.TextColor = System.Drawing.Color.White;
+            this.btnLuatChoi.UseVisualStyleBackColor = false;
+            this.btnLuatChoi.Click += new System.EventHandler(this.btnLuatChoi_Click);
+            // 
             // GameLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1261, 673);
+            this.Controls.Add(this.btnLuatChoi);
             this.Controls.Add(this.btnJoinRoom);
             this.Controls.Add(this.flowLayoutPanelRooms);
             this.Controls.Add(this.btnRefresh);
@@ -227,5 +250,6 @@ namespace GameProject
         private CustomControls.ButtonDesign btnRefresh;
         private FlowLayoutPanel flowLayoutPanelRooms;
         private CustomControls.ButtonDesign btnJoinRoom;
+        private CustomControls.ButtonDesign btnLuatChoi;
     }
 }
