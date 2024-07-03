@@ -269,6 +269,7 @@ namespace GameProject
                 socket.IP = roomIP;
                 socket.isServer = true;
                 socket.CreateServer();
+
             }
             else                                // Tham gia phòng
             {
@@ -360,36 +361,49 @@ namespace GameProject
                         });
                         break;
                     }
-                case (int)SocketCommand.SEND_DICE:
+                case (int)SocketCommand.LUOT_CHOI:
                     {
-                        Invoke(new System.Action(() =>
-                        {
-                            string[] userArrayXiNgau = (data.Message).Split('/');
-                            if (socket.isServer)
+                        string[] userArrayXiNgau = (data.Message).Split('/');
+                        if (userArrayXiNgau.Length == 2)
+                        { 
+                            Invoke(new System.Action(() =>
                             {
-                                diceimg(Int32.Parse(userArrayXiNgau[0]));
-                                ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
-                                if (ThuTuLuotChoi == 0)
+                                if (socket.isServer)
                                 {
-                                    btnXiNgau.Enabled = true;
+                                    diceimg(Int32.Parse(userArrayXiNgau[0]));
+                                    ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
+                                    if (ThuTuLuotChoi == 0)
+                                    {
+                                        btnXiNgau.Enabled = true;
+
+                                        MoChuong(ThuTuLuotChoi);
+                                    }
+                                    else
+                                    {
+                                        btnXiNgau.Enabled = false;
+                                    }
+                                    socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), data.Message));
                                 }
                                 else
                                 {
-                                    btnXiNgau.Enabled = false;
+                                    xingau = Int32.Parse(userArrayXiNgau[0]);             // userArray[0] là giá trị của xí ngầu
+                                    diceimg(xingau);
+                                    ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
+                                    if (username == DSUser[ThuTuLuotChoi])
+                                    {
+                                        btnXiNgau.Enabled = true;
+
+                                        MoChuong(ThuTuLuotChoi);
+                                    }
                                 }
-                                socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), data.Message));
-                            }
-                            else
-                            {
-                                xingau = Int32.Parse(userArrayXiNgau[0]);             // userArray[0] là giá trị của xí ngầu
-                                diceimg(xingau);
-                                ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
-                                if (username == DSUser[ThuTuLuotChoi])
-                                {
-                                    btnXiNgau.Enabled = true;
-                                }
-                            }
-                        }));
+                            }));
+                        }
+                        else
+                        {
+                            ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[0]);
+                            string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
+                            WriteTextSafe(lbluotchoi, tmp);
+                        }
                     }
                     break;
                 case (int)SocketCommand.SEND_MESSAGE:
@@ -460,7 +474,7 @@ namespace GameProject
                         reloadForm();
                     }
                     break;
-                case (int)SocketCommand.XUAT_QUAN:
+                case (int)SocketCommand.XUAT_QUAN: ///////LOI KO CHAY DC
                     if (socket.isServer)
                     {
                         string NuocDi = data.Message;
@@ -502,15 +516,17 @@ namespace GameProject
                         //int temp = Int32.Parse(data.Message);
                         num_Ready++;
                     }
+                    if (num_Ready == DSUser.Count)
+                    {
+                        ChuanBiCacQuanCo();
+
+                        UnlockCacNut();
+                    }
                     break;
                 default:
                     break;
             }
-            if (num_Ready == DSUser.Count)
-            {
-                ChuanBiCacQuanCo();
-                UnlockCacNut();
-            }
+           
         }
 
         private async Task DeleteRoom(string roomName)
@@ -838,7 +854,7 @@ namespace GameProject
             this.Close();
         }
         
-        private void btnStart_Click(object sender, EventArgs e)                 // Button sẵn sàng
+        private void btnStart_Click(object sender, EventArgs e)     // Button sẵn sàng
         {
             PlayAnimation(btnStart);
             //num_Ready++;
@@ -847,8 +863,15 @@ namespace GameProject
 
             if (socket.isServer)
             {
+                Random random = new Random();
+                ThuTuLuotChoi = random.Next(0, DSUser.Count);
+                socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
+                WriteTextSafe(lbluotchoi, tmp);
+
                 num_Ready++;
                 socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
+
                 if (num_Ready == DSUser.Count)
                 {
                     ChuanBiCacQuanCo();
@@ -913,34 +936,6 @@ namespace GameProject
 
             int i = 1;
             int j = 1;
-
-            for (int k = 1; k <= 4; k++)
-            {
-                foreach (Control c in Controls)
-                {
-                    if (!(c is PictureBox))
-                        continue;
-                    if (c.Name.Contains($"r{k}"))
-                    {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
-                    }
-                    if (c.Name.Contains($"g{k}"))
-                    {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
-                    }
-                    if (c.Name.Contains($"y{k}"))
-                    {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
-                    }
-                    if (c.Name.Contains($"b{k}"))
-                    {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
-                    }
-
-                }
-                
-            }
-
             foreach (Control c in Controls)
             {
                 if (i <= 56)
@@ -974,6 +969,41 @@ namespace GameProject
             }
         }
 
+        private void MoChuong(int Luot)
+        {
+            if (Luot == 0)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    PictureBox ptb = (PictureBox)this.Controls.Find("b" + i, false).FirstOrDefault() as PictureBox;
+                    ptb.Enabled = true;
+                }
+            }
+            else if (Luot == 1)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    PictureBox ptb = (PictureBox)this.Controls.Find("r" + i, false).FirstOrDefault() as PictureBox;
+                    ptb.Enabled = true;
+                }
+            }
+            else if (Luot == 2)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    PictureBox ptb = (PictureBox)this.Controls.Find("y" + i, false).FirstOrDefault() as PictureBox;
+                    ptb.Enabled = true;
+                }
+            }
+            else if (Luot == 3)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    PictureBox ptb = (PictureBox)this.Controls.Find("g" + i, false).FirstOrDefault() as PictureBox;
+                    ptb.Enabled = true;
+                }
+            }
+        }
         public void LockCacNut()
         {
             btnBoLuot.Enabled = false;
@@ -1012,26 +1042,7 @@ namespace GameProject
                     }
                     j++;
                 }
-                if (k <= 4)
-                {
-                    if (c is PictureBox && c.Name.Contains($"r{k}"))
-                    {
-                        c.Enabled = false;
-                    }
-                    if (c is PictureBox && c.Name.Contains($"g{k}"))
-                    {
-                        c.Enabled = false;
-                    }
-                    if (c is PictureBox && c.Name.Contains($"y{k}"))
-                    {
-                        c.Enabled = false;
-                    }
-                    if (c is PictureBox && c.Name.Contains($"b{k}"))
-                    {
-                        c.Enabled = false;
-                    }
-                    k++;
-                }
+                
             }
         }
 
@@ -1040,15 +1051,15 @@ namespace GameProject
             PlayAnimation(btnXiNgau);
             Random random = new Random();
             xingau = random.Next(1, 7);
-            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; 
+            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
             if (socket.isServer)
             {
                 diceimg(xingau);
-                socket.Broadcast(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
+                socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
             }
             else
             {
-                socket.Send(new SocketData((int)SocketCommand.SEND_DICE, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
+                socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
             }
             btnXiNgau.Enabled = false;
         }
@@ -1112,7 +1123,7 @@ namespace GameProject
         private void Send_XuatQuanCo(string co) //Gui thong diep xuat quan co 
         {
             PictureBox ptb = (PictureBox)this.Controls.Find(co, false).FirstOrDefault() as PictureBox;
-            int numUser = Tim_User_ThucHien();
+            //int numUser = Tim_User_ThucHien();
 
             switch (co)
             {
@@ -1120,42 +1131,45 @@ namespace GameProject
                 case "b2":
                 case "b3":
                 case "b4":
-                    if (numUser == 0)
-                    {
-                        if (ptb.Image != null)
+                    //if (numUser == 0)
+                    //{
+                    SetControlImage(btn29, Animation.UI_Horse_Select_04);
+                        //if (ptb.Image != null)
                             //SendMSGtoFB("4", username, IDphong, co);
-                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
-                    }
+                           // socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
+                    //}
                     break;
                 case "r1":
                 case "r2":
                 case "r3":
                 case "r4":
-                    if (numUser == 1)
-                    {
-                        if (ptb.Image != null)
-                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
-                    }
+                    //if (numUser == 1)
+                    //{
+                        //if (ptb.Image != null)
+                        SetControlImage(btn43, Animation.UI_Horse_Select_01);
+                        
+                            //socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
+                   // }
                     break;
                 case "y1":
                 case "y2":
                 case "y3":
                 case "y4":
-                    if (numUser == 2)
-                    {
+                   // if (numUser == 2)
+                   // {
                         if (ptb.Image != null)
                             socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
-                    }
+                   // }
                     break;
                 case "g1":
                 case "g2":
                 case "g3":
                 case "g4":
-                    if (numUser == 3)
-                    {
+                    //if (numUser == 3)
+                   // {
                         if (ptb.Image != null)
                             socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
-                    }
+                  //  }
                     break;
 
             }
@@ -1573,6 +1587,7 @@ namespace GameProject
                 if (control is PictureBox pictureBox && ptbStable.Contains(pictureBox.Name))
                 {
                     pictureBox.BackColor = customColor02;
+                    pictureBox.Enabled = false;
                 }
             }
 

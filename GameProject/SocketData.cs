@@ -38,7 +38,7 @@ namespace GameProject
         XUAT_QUAN,
         SAN_SANG,
         SEND_MESSAGE,
-        SEND_DICE,
+        LUOT_CHOI,
         STARTTIMER
     }
 }
