@@ -524,7 +524,7 @@ namespace GameProject
                         PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
                         ptb_KetThuc.Image = ptb_BatDau.Image;
                         ptb_BatDau.Image = null;
-                        
+                        ////đang viết dỡ
                     }
                     break;
                 case (int)SocketCommand.SAN_SANG:
