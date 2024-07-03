@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserProfile));
             this.TextHolder03 = new System.Windows.Forms.PictureBox();
             this.TextHolder02 = new System.Windows.Forms.PictureBox();
             this.TextHolder01 = new System.Windows.Forms.PictureBox();
@@ -537,8 +538,8 @@
             this.Controls.Add(this.Header);
             this.Controls.Add(this.ProfilePic);
             this.Controls.Add(this.InfoBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UserProfile";
-            this.Text = "UserProfile";
             this.Load += new System.EventHandler(this.UserProfile_Load);
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder03)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TextHolder02)).EndInit();
