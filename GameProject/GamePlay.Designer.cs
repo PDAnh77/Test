@@ -38,7 +38,6 @@
             this.lbun2 = new System.Windows.Forms.Label();
             this.lbWork = new System.Windows.Forms.Label();
             this.luotchoitimer = new System.Windows.Forms.Timer(this.components);
-            this.pgb = new System.Windows.Forms.ProgressBar();
             this.timercd = new System.Windows.Forms.Timer(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.g2 = new System.Windows.Forms.PictureBox();
@@ -333,15 +332,6 @@
             // 
             this.luotchoitimer.Interval = 1000;
             this.luotchoitimer.Tick += new System.EventHandler(this.luotchoitimer_Tick);
-            // 
-            // pgb
-            // 
-            this.pgb.Location = new System.Drawing.Point(703, 160);
-            this.pgb.Maximum = 300;
-            this.pgb.Name = "pgb";
-            this.pgb.Size = new System.Drawing.Size(546, 23);
-            this.pgb.Step = 1;
-            this.pgb.TabIndex = 121;
             // 
             // timercd
             // 
@@ -1631,7 +1621,6 @@
             this.Controls.Add(this.btnBoLuot);
             this.Controls.Add(this.btnXiNgau);
             this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.pgb);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.lbWork);
@@ -1957,7 +1946,6 @@
         private System.Windows.Forms.PictureBox btn33;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.ProgressBar pgb;
         private System.Windows.Forms.Timer timercd;
         private CustomControls.ButtonDesign btnStart;
         private CustomControls.ButtonDesign btnXiNgau;
