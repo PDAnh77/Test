@@ -31,6 +31,7 @@ namespace GameProject
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Signup));
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Header = new System.Windows.Forms.Label();
@@ -128,8 +129,10 @@ namespace GameProject
             this.textBoxDesign4.PasswordChar = true;
             this.textBoxDesign4.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign4.PlaceholderText = "Nhập lại mật khẩu";
+            this.textBoxDesign4.ReadOnly = false;
             this.textBoxDesign4.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign4.TabIndex = 24;
+            this.textBoxDesign4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign4.Texts = "";
             this.textBoxDesign4.UnderlinedStyle = false;
             // 
@@ -151,8 +154,10 @@ namespace GameProject
             this.textBoxDesign3.PasswordChar = true;
             this.textBoxDesign3.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign3.PlaceholderText = "Mật khẩu";
+            this.textBoxDesign3.ReadOnly = false;
             this.textBoxDesign3.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign3.TabIndex = 20;
+            this.textBoxDesign3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign3.Texts = "";
             this.textBoxDesign3.UnderlinedStyle = false;
             // 
@@ -194,8 +199,10 @@ namespace GameProject
             this.textBoxDesign1.PasswordChar = false;
             this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign1.PlaceholderText = "Tên đăng nhập";
+            this.textBoxDesign1.ReadOnly = false;
             this.textBoxDesign1.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign1.TabIndex = 17;
+            this.textBoxDesign1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign1.Texts = "";
             this.textBoxDesign1.UnderlinedStyle = false;
             // 
@@ -217,8 +224,10 @@ namespace GameProject
             this.textBoxDesign2.PasswordChar = false;
             this.textBoxDesign2.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign2.PlaceholderText = "Email";
+            this.textBoxDesign2.ReadOnly = false;
             this.textBoxDesign2.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign2.TabIndex = 16;
+            this.textBoxDesign2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign2.Texts = "";
             this.textBoxDesign2.UnderlinedStyle = false;
             // 
@@ -260,9 +269,9 @@ namespace GameProject
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Header);
             this.Controls.Add(this.btnSignup);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Signup";
-            this.Text = "Signup";
             this.Load += new System.EventHandler(this.Signup_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -31,17 +31,18 @@ namespace GameProject
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.btnLogin = new GameProject.CustomControls.ButtonDesign();
             this.Header = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.textBoxDesign2 = new GameProject.CustomControls.TextBoxDesign();
             this.textBoxDesign1 = new GameProject.CustomControls.TextBoxDesign();
             this.btnReturnHome = new GameProject.CustomControls.ButtonDesign();
             this.Notification = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -74,26 +75,6 @@ namespace GameProject
             this.Header.TabIndex = 4;
             this.Header.Text = "LOGIN";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(30, 329);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(345, 95);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(31, 218);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(344, 95);
-            this.pictureBox2.TabIndex = 8;
-            this.pictureBox2.TabStop = false;
-            // 
             // textBoxDesign2
             // 
             this.textBoxDesign2.BackColor = System.Drawing.Color.Moccasin;
@@ -112,8 +93,10 @@ namespace GameProject
             this.textBoxDesign2.PasswordChar = true;
             this.textBoxDesign2.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign2.PlaceholderText = "Mật khẩu";
+            this.textBoxDesign2.ReadOnly = false;
             this.textBoxDesign2.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign2.TabIndex = 9;
+            this.textBoxDesign2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign2.Texts = "";
             this.textBoxDesign2.UnderlinedStyle = false;
             // 
@@ -135,8 +118,10 @@ namespace GameProject
             this.textBoxDesign1.PasswordChar = false;
             this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign1.PlaceholderText = "Tên đăng nhập";
+            this.textBoxDesign1.ReadOnly = false;
             this.textBoxDesign1.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign1.TabIndex = 10;
+            this.textBoxDesign1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign1.Texts = "";
             this.textBoxDesign1.UnderlinedStyle = false;
             // 
@@ -184,6 +169,26 @@ namespace GameProject
             this.linkLabel1.Text = "Forget password?";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(31, 218);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(344, 95);
+            this.pictureBox2.TabIndex = 8;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(30, 329);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(345, 95);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -199,15 +204,15 @@ namespace GameProject
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Header);
             this.Controls.Add(this.btnLogin);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Login";
-            this.Text = "Login";
             this.Load += new System.EventHandler(this.Login_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            Load += Login_Load;
+
         }
 
         #endregion

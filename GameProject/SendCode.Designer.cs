@@ -31,6 +31,7 @@ namespace GameProject
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SendCode));
             this.Notification = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -143,8 +144,10 @@ namespace GameProject
             this.textBoxDesign1.PasswordChar = false;
             this.textBoxDesign1.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign1.PlaceholderText = "Nhập email";
+            this.textBoxDesign1.ReadOnly = false;
             this.textBoxDesign1.Size = new System.Drawing.Size(287, 36);
             this.textBoxDesign1.TabIndex = 18;
+            this.textBoxDesign1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign1.Texts = "";
             this.textBoxDesign1.UnderlinedStyle = false;
             // 
@@ -166,8 +169,10 @@ namespace GameProject
             this.textBoxDesign2.PasswordChar = true;
             this.textBoxDesign2.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.textBoxDesign2.PlaceholderText = "Nhập mã";
+            this.textBoxDesign2.ReadOnly = false;
             this.textBoxDesign2.Size = new System.Drawing.Size(286, 36);
             this.textBoxDesign2.TabIndex = 17;
+            this.textBoxDesign2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBoxDesign2.Texts = "";
             this.textBoxDesign2.UnderlinedStyle = false;
             // 
@@ -206,9 +211,9 @@ namespace GameProject
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Header);
             this.Controls.Add(this.btnVerify);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SendCode";
-            this.Text = "SendCode";
             this.Load += new System.EventHandler(this.SendCode_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

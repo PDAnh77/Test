@@ -31,6 +31,7 @@ namespace GameProject
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameLobby));
             this.Notification = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -48,10 +49,9 @@ namespace GameProject
             // 
             this.Notification.AutoSize = true;
             this.Notification.ForeColor = System.Drawing.Color.Black;
-            this.Notification.Location = new System.Drawing.Point(616, 396);
-            this.Notification.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Notification.Location = new System.Drawing.Point(821, 487);
             this.Notification.Name = "Notification";
-            this.Notification.Size = new System.Drawing.Size(35, 13);
+            this.Notification.Size = new System.Drawing.Size(44, 16);
             this.Notification.TabIndex = 13;
             this.Notification.Text = "label2";
             this.Notification.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -59,29 +59,30 @@ namespace GameProject
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(618, 425);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Location = new System.Drawing.Point(824, 523);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(315, 56);
+            this.pictureBox1.Size = new System.Drawing.Size(420, 69);
             this.pictureBox1.TabIndex = 14;
             this.pictureBox1.TabStop = false;
             // 
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Location = new System.Drawing.Point(9, 4);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox2.Location = new System.Drawing.Point(12, 5);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(928, 360);
+            this.pictureBox2.Size = new System.Drawing.Size(1237, 443);
             this.pictureBox2.TabIndex = 16;
             this.pictureBox2.TabStop = false;
             // 
             // flowLayoutPanelRooms
             // 
             this.flowLayoutPanelRooms.AutoScroll = true;
-            this.flowLayoutPanelRooms.Location = new System.Drawing.Point(22, 24);
+            this.flowLayoutPanelRooms.Location = new System.Drawing.Point(29, 30);
+            this.flowLayoutPanelRooms.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.flowLayoutPanelRooms.Name = "flowLayoutPanelRooms";
-            this.flowLayoutPanelRooms.Size = new System.Drawing.Size(900, 331);
+            this.flowLayoutPanelRooms.Size = new System.Drawing.Size(1200, 407);
             this.flowLayoutPanelRooms.TabIndex = 19;
             // 
             // btnJoinRoom
@@ -94,9 +95,10 @@ namespace GameProject
             this.btnJoinRoom.FlatAppearance.BorderSize = 0;
             this.btnJoinRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnJoinRoom.ForeColor = System.Drawing.Color.White;
-            this.btnJoinRoom.Location = new System.Drawing.Point(618, 485);
+            this.btnJoinRoom.Location = new System.Drawing.Point(824, 597);
+            this.btnJoinRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnJoinRoom.Name = "btnJoinRoom";
-            this.btnJoinRoom.Size = new System.Drawing.Size(150, 40);
+            this.btnJoinRoom.Size = new System.Drawing.Size(200, 49);
             this.btnJoinRoom.TabIndex = 20;
             this.btnJoinRoom.Text = "Tham gia";
             this.btnJoinRoom.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -114,9 +116,10 @@ namespace GameProject
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh.Location = new System.Drawing.Point(22, 369);
+            this.btnRefresh.Location = new System.Drawing.Point(29, 454);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(109, 40);
+            this.btnRefresh.Size = new System.Drawing.Size(145, 49);
             this.btnRefresh.TabIndex = 18;
             this.btnRefresh.Text = "Tải lại ";
             this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -133,16 +136,16 @@ namespace GameProject
             this.txtRoomName.BorderSize = 2;
             this.txtRoomName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.txtRoomName.ForeColor = System.Drawing.Color.Black;
-            this.txtRoomName.Location = new System.Drawing.Point(642, 435);
-            this.txtRoomName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtRoomName.Location = new System.Drawing.Point(856, 535);
+            this.txtRoomName.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtRoomName.Multiline = false;
             this.txtRoomName.Name = "txtRoomName";
-            this.txtRoomName.Padding = new System.Windows.Forms.Padding(7);
+            this.txtRoomName.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
             this.txtRoomName.PasswordChar = false;
             this.txtRoomName.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtRoomName.PlaceholderText = "Tên phòng";
             this.txtRoomName.ReadOnly = false;
-            this.txtRoomName.Size = new System.Drawing.Size(265, 32);
+            this.txtRoomName.Size = new System.Drawing.Size(353, 40);
             this.txtRoomName.TabIndex = 15;
             this.txtRoomName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtRoomName.Texts = "";
@@ -158,9 +161,10 @@ namespace GameProject
             this.btnCreateRoom.FlatAppearance.BorderSize = 0;
             this.btnCreateRoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreateRoom.ForeColor = System.Drawing.Color.White;
-            this.btnCreateRoom.Location = new System.Drawing.Point(784, 486);
+            this.btnCreateRoom.Location = new System.Drawing.Point(1045, 598);
+            this.btnCreateRoom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreateRoom.Name = "btnCreateRoom";
-            this.btnCreateRoom.Size = new System.Drawing.Size(150, 40);
+            this.btnCreateRoom.Size = new System.Drawing.Size(200, 49);
             this.btnCreateRoom.TabIndex = 10;
             this.btnCreateRoom.Text = "Tạo phòng";
             this.btnCreateRoom.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -178,10 +182,10 @@ namespace GameProject
             this.btnReturn.FlatAppearance.BorderSize = 0;
             this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReturn.ForeColor = System.Drawing.Color.White;
-            this.btnReturn.Location = new System.Drawing.Point(12, 487);
-            this.btnReturn.Margin = new System.Windows.Forms.Padding(2);
+            this.btnReturn.Location = new System.Drawing.Point(16, 599);
+            this.btnReturn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnReturn.Name = "btnReturn";
-            this.btnReturn.Size = new System.Drawing.Size(52, 49);
+            this.btnReturn.Size = new System.Drawing.Size(69, 60);
             this.btnReturn.TabIndex = 2;
             this.btnReturn.TextColor = System.Drawing.Color.White;
             this.btnReturn.UseVisualStyleBackColor = false;
@@ -189,9 +193,9 @@ namespace GameProject
             // 
             // GameLobby
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(946, 547);
+            this.ClientSize = new System.Drawing.Size(1261, 673);
             this.Controls.Add(this.btnJoinRoom);
             this.Controls.Add(this.flowLayoutPanelRooms);
             this.Controls.Add(this.btnRefresh);
@@ -202,7 +206,8 @@ namespace GameProject
             this.Controls.Add(this.btnCreateRoom);
             this.Controls.Add(this.btnReturn);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "GameLobby";
             this.Text = "Sảnh chờ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

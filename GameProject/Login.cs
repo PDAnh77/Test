@@ -82,6 +82,7 @@ namespace GameProject
         {
             client = new FireSharp.FirebaseClient(config);
 
+            
             if (client != null)
             {
                 /*MessageBox.Show("Kết nối thành công!");*/

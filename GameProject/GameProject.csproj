@@ -262,6 +262,7 @@
     <Compile Include="UserProfile.Designer.cs">
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\icon-_1_.ico" />
     <None Include="Resources\UI_Square_R.png" />
     <None Include="Resources\UI_Square_G.png" />
     <None Include="Resources\UI_Square_B.png" />

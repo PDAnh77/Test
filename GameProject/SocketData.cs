@@ -32,7 +32,6 @@ namespace GameProject
     {
         SEND_POINT,
         QUIT,
-        START,
         CREATE_ROOM,
         JOIN_ROOM,
         XUAT_QUAN,

@@ -89,6 +89,8 @@ namespace GameProject
             SetControlImage(this, Animation.UI_Menu);
             SetControlImage(imgXiNgau, Animation.XiNgau_1);
             LockCacNut();
+
+            
             /*SetControlImage(b4, Animation.UI_Horse_Select_04);
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
             this.AcceptButton = btnSendMSG;
@@ -249,6 +251,8 @@ namespace GameProject
                     roomIP = socket.GetLocalIPv4(NetworkInterfaceType.Ethernet);
                 }
 
+                btnStart.Visible = true;
+
                 try
                 {
                     var roomData = new RoomData
@@ -355,23 +359,21 @@ namespace GameProject
                         {
                             socket.Broadcast(new SocketData((int)SocketCommand.STARTTIMER, new Point(), data.Message));
                         }
-                       
-                            
 
                         });
                         break;
                     }
                 case (int)SocketCommand.LUOT_CHOI:
                     {
-                        string[] userArrayXiNgau = (data.Message).Split('/');
-                        if (userArrayXiNgau.Length == 2)
+                        string[] userArrayLuotChoi = (data.Message).Split('/');
+                        if (userArrayLuotChoi.Length == 2)
                         { 
                             Invoke(new System.Action(() =>
                             {
                                 if (socket.isServer)
                                 {
-                                    diceimg(Int32.Parse(userArrayXiNgau[0]));
-                                    ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
+                                    diceimg(Int32.Parse(userArrayLuotChoi[0]));
+                                    ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
                                     if (ThuTuLuotChoi == 0)
                                     {
                                         btnXiNgau.Enabled = true;
@@ -386,9 +388,9 @@ namespace GameProject
                                 }
                                 else
                                 {
-                                    xingau = Int32.Parse(userArrayXiNgau[0]);             // userArray[0] là giá trị của xí ngầu
+                                    xingau = Int32.Parse(userArrayLuotChoi[0]);             // userArray[0] là giá trị của xí ngầu
                                     diceimg(xingau);
-                                    ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[1]);
+                                    ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
                                     if (username == DSUser[ThuTuLuotChoi])
                                     {
                                         btnXiNgau.Enabled = true;
@@ -400,9 +402,14 @@ namespace GameProject
                         }
                         else
                         {
-                            ThuTuLuotChoi = Int32.Parse(userArrayXiNgau[0]);
+                            ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[0]);
                             string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
                             WriteTextSafe(lbluotchoi, tmp);
+
+                            if (username == DSUser[ThuTuLuotChoi])
+                            {
+                                MoChuong(ThuTuLuotChoi);
+                            }
                         }
                     }
                     break;
@@ -420,9 +427,6 @@ namespace GameProject
 
                         break;
                     }
-                case (int)SocketCommand.START:
-                    MessageBox.Show(data.Message);
-                    break;
                 case (int)SocketCommand.CREATE_ROOM:
                     MessageBox.Show(data.Message);
                     break;
@@ -474,20 +478,40 @@ namespace GameProject
                         reloadForm();
                     }
                     break;
+
                 case (int)SocketCommand.XUAT_QUAN: ///////LOI KO CHAY DC
                     if (socket.isServer)
                     {
                         string NuocDi = data.Message;
-                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), NuocDi));
+                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), data.Message));
 
                         string[] temp = NuocDi.Split('/');
 
                         string QuanCo = temp[0];
 
+                        if (QuanCo[0] == 'b')
+                        {
+                            PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_04);
+                        }
+                        else if (QuanCo[0] == 'r')
+                        {
+                            PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_01);
+                        }
+                        else if (QuanCo[0] == 'y')
+                        {
+                            PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_02);
+                        }
+                        else if (QuanCo[0] == 'g')
+                        {
+                            PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
+                            SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_03);
+                        }
                         PictureBox ptb_BatDau = (PictureBox)this.Controls.Find(QuanCo, false).FirstOrDefault() as PictureBox;
-                        PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(temp[1], false).FirstOrDefault() as PictureBox;
-                        ptb_KetThuc.Image = ptb_BatDau.Image;
                         ptb_BatDau.Image = null;
+
                     }
                     else
                     {
@@ -504,24 +528,11 @@ namespace GameProject
                     }
                     break;
                 case (int)SocketCommand.SAN_SANG:
-                    if (socket.isServer)
-                    {
+                   
                         //int temp = Int32.Parse(data.Message);
-                        //string GuiSoLuongIsReady = data.Message;
-                        num_Ready++;
-                        socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
-                    }
-                    else
-                    {
-                        //int temp = Int32.Parse(data.Message);
-                        num_Ready++;
-                    }
-                    if (num_Ready == DSUser.Count)
-                    {
-                        ChuanBiCacQuanCo();
-
-                        UnlockCacNut();
-                    }
+                    ChuanBiCacQuanCo();
+                    UnlockCacNut();
+                    
                     break;
                 default:
                     break;
@@ -858,30 +869,25 @@ namespace GameProject
         {
             PlayAnimation(btnStart);
             //num_Ready++;
-            btnStart.Enabled = false;
+            //btnStart.Enabled = false;
             btnStart.Visible = false;
+                
+                socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
+                ChuanBiCacQuanCo();
+                UnlockCacNut();
+                UpdateTrangThaiRoom(IDphong);
+                TrangThaiChoi = true;
 
-            if (socket.isServer)
-            {
+
                 Random random = new Random();
                 ThuTuLuotChoi = random.Next(0, DSUser.Count);
                 socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
                 string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
                 WriteTextSafe(lbluotchoi, tmp);
-
-                num_Ready++;
-                socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
-
-                if (num_Ready == DSUser.Count)
-                {
-                    ChuanBiCacQuanCo();
-                    UnlockCacNut();
-                    UpdateTrangThaiRoom(IDphong);
-                    TrangThaiChoi = true;
-                }
+            if (username == DSUser[ThuTuLuotChoi])
+            {
+                MoChuong(ThuTuLuotChoi);
             }
-            else
-                socket.Send(new SocketData((int)SocketCommand.SAN_SANG, new Point(), ""));
         }
 
         void ChuanBiCacQuanCo()
@@ -1011,7 +1017,6 @@ namespace GameProject
 
             int i = 1;
             int j = 1;
-            int k = 1;
             foreach (Control c in Controls)
             {
                 if (i <= 56)
@@ -1134,9 +1139,9 @@ namespace GameProject
                     //if (numUser == 0)
                     //{
                     SetControlImage(btn29, Animation.UI_Horse_Select_04);
-                        //if (ptb.Image != null)
-                            //SendMSGtoFB("4", username, IDphong, co);
-                           // socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
+                    ptb.Image = null;
+
+                    socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
                     //}
                     break;
                 case "r1":

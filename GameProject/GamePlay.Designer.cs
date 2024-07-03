@@ -1588,6 +1588,7 @@
             this.btnStart.Text = "Sẵn sàng";
             this.btnStart.TextColor = System.Drawing.Color.White;
             this.btnStart.UseVisualStyleBackColor = false;
+            this.btnStart.Visible = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // btnLeave

@@ -31,6 +31,7 @@ namespace GameProject
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResetPass));
             this.Notification = new System.Windows.Forms.Label();
             this.Header = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -188,9 +189,9 @@ namespace GameProject
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.Header);
             this.Controls.Add(this.btnReset);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ResetPass";
-            this.Text = "ResetPass";
             this.Load += new System.EventHandler(this.ResetPass_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
