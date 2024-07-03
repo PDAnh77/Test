@@ -149,6 +149,7 @@
             this.btnXiNgau = new GameProject.CustomControls.ButtonDesign();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
             this.btnLeave = new GameProject.CustomControls.ButtonDesign();
+            this.btnLuatChoi = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).BeginInit();
@@ -1654,12 +1655,34 @@
             this.btnLeave.UseVisualStyleBackColor = false;
             this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
             // 
+            // btnLuatChoi
+            // 
+            this.btnLuatChoi.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLuatChoi.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLuatChoi.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnLuatChoi.BorderRadius = 0;
+            this.btnLuatChoi.BorderSize = 0;
+            this.btnLuatChoi.FlatAppearance.BorderSize = 0;
+            this.btnLuatChoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuatChoi.ForeColor = System.Drawing.Color.White;
+            this.btnLuatChoi.Location = new System.Drawing.Point(1093, 331);
+            this.btnLuatChoi.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLuatChoi.Name = "btnLuatChoi";
+            this.btnLuatChoi.Size = new System.Drawing.Size(145, 49);
+            this.btnLuatChoi.TabIndex = 135;
+            this.btnLuatChoi.Text = "Luật chơi";
+            this.btnLuatChoi.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLuatChoi.TextColor = System.Drawing.Color.White;
+            this.btnLuatChoi.UseVisualStyleBackColor = false;
+            this.btnLuatChoi.Click += new System.EventHandler(this.btnLuatChoi_Click);
+            // 
             // GamePlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(1261, 698);
+            this.Controls.Add(this.btnLuatChoi);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox4);
@@ -2010,6 +2033,7 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox6;
+        private CustomControls.ButtonDesign btnLuatChoi;
     }
 }
 

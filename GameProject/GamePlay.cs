@@ -1889,6 +1889,12 @@ namespace GameProject
 
         #endregion
 
+        private void btnLuatChoi_Click(object sender, EventArgs e)
+        {
+            PlayAnimation(btnLuatChoi);
+            LuatChoi luatChoi = new LuatChoi();
+            luatChoi.ShowDialog();
+        }
     }
 }
 
