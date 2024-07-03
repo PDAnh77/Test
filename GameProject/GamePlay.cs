@@ -91,6 +91,7 @@ namespace GameProject
             LockCacNut();
             /*SetControlImage(b4, Animation.UI_Horse_Select_04);
             SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
+            this.AcceptButton = btnSendMSG;
         }
 
         private async void GamePlay_FormClosing(object sender, FormClosingEventArgs e)
@@ -831,31 +832,10 @@ namespace GameProject
         #endregion
 
         #region Events
-        private async void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
+        private void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
         {
             PlayAnimation(btnLeave);
-            if (socket.isServer)
-            {
-                await DeleteRoom(IDphong);
-                socket.CloseConnect();
-                DialogResult = DialogResult.Cancel; // Quay về GameLobby
-                this.Close();
-            }
-            else
-            {
-                socket.Send(new SocketData((int)SocketCommand.QUIT, new Point(), $"{username}"));
-                if (!NguoiXem)
-                {
-                    UpdateRoomPlayer(IDphong, false);
-                }
-                else
-                {
-                    UpdateRoomViewer(IDphong, false);
-                }
-                socket.CloseClient();
-                DialogResult = DialogResult.Cancel; // Quay về GameLobby
-                this.Close();
-            }
+            this.Close();
         }
         
         private void btnStart_Click(object sender, EventArgs e)                 // Button sẵn sàng
@@ -1537,6 +1517,7 @@ namespace GameProject
                 button.Enabled = status;
             }
         }
+
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnSendMSG);
@@ -1595,7 +1576,10 @@ namespace GameProject
                 }
             }
 
-            this.rtbMSG.BackColor = customColor03;
+            rtbMSG.BackColor = customColor03;
+            txtSendMSG.BackColor = customColor02;
+            txtSendMSG.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox2.BackColor = customColor03;
         }
 
         private void PlayAnimation(Control control)
@@ -1648,7 +1632,12 @@ namespace GameProject
                         SetControlImage(button, Animation.UI_Flat_Button_Large_Press_01a1);
                     }
                     button.ForeColor = Color.Black;
+
                     button.BackColor = customColor01;
+                    if (button.Name == "btnSendMSG")
+                    {
+                        button.BackColor = customColor03;
+                    }
                 }
             }
         }
@@ -1828,7 +1817,6 @@ namespace GameProject
         }
 
         #endregion
-
 
     }
 }

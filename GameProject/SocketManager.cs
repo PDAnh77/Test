@@ -176,9 +176,28 @@ namespace GameProject
         public void Broadcast(object data)
         {
             byte[] sendData = SerializeData(data);
+            List<Socket> closedSockets = new List<Socket>(); // Danh sách socket đã đóng
+
             foreach (Socket socket in clientSockets)
             {
-                SendData(socket, sendData);
+                if (socket.Connected) // Kiểm tra socket và loại bỏ socket đã đóng
+                {
+                    try
+                    {
+                        bool isSent = SendData(socket, sendData);
+                    }
+                    catch
+                    {
+                        // Socket đã đóng, thêm vào danh sách closedSockets
+                        closedSockets.Add(socket);
+                    }
+                }
+            }
+
+            // Loại bỏ các socket đã đóng khỏi clientSockets
+            foreach (Socket closedSocket in closedSockets)
+            {
+                clientSockets.Remove(closedSocket);
             }
         }
 
