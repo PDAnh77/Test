@@ -133,7 +133,7 @@ namespace GameProject
 
         private void timercd_Tick(object sender, EventArgs e)
         {
-            pgb.PerformStep();
+           
         }
 
         #endregion
@@ -355,7 +355,7 @@ namespace GameProject
                         {
                             socket.Broadcast(new SocketData((int)SocketCommand.STARTTIMER, new Point(), data.Message));
                         }
-                        timercd.Start();
+                       
                             
 
                         });
@@ -1178,7 +1178,7 @@ namespace GameProject
         private void btnBoLuot_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnBoLuot);
-            pgb.Value= 0;
+            
             if (socket.isServer)
                 { socket.Broadcast(new SocketData((int)SocketCommand.STARTTIMER, new Point(), "")); }
             else 
@@ -1833,6 +1833,7 @@ namespace GameProject
 
         #endregion
 
+        
     }
 }
 
