@@ -533,6 +533,86 @@ namespace GameProject {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerB_Icon {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerB_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerB_Icon_Turn {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerB_Icon_Turn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerG_Icon {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerG_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerG_Icon_Turn {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerG_Icon_Turn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerR_Icon {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerR_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerR_Icon_Turn {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerR_Icon_Turn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerY_Icon {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerY_Icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UI_PlayerY_Icon_Turn {
+            get {
+                object obj = ResourceManager.GetObject("UI_PlayerY_Icon_Turn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap UI_Profile_Banner {
             get {
                 object obj = ResourceManager.GetObject("UI_Profile_Banner", resourceCulture);

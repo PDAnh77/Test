@@ -140,6 +140,10 @@
             this.imgXiNgau = new System.Windows.Forms.PictureBox();
             this.rtbMSG = new System.Windows.Forms.RichTextBox();
             this.txtSendMSG = new System.Windows.Forms.TextBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.btnSendMSG = new GameProject.CustomControls.ButtonDesign();
             this.btnBoLuot = new GameProject.CustomControls.ButtonDesign();
             this.btnXiNgau = new GameProject.CustomControls.ButtonDesign();
@@ -244,6 +248,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.btn1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgXiNgau)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.SuspendLayout();
             // 
             // lbluotchoi
@@ -264,7 +272,7 @@
             this.lbun1.AutoSize = true;
             this.lbun1.BackColor = System.Drawing.Color.Thistle;
             this.lbun1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbun1.Location = new System.Drawing.Point(560, 586);
+            this.lbun1.Location = new System.Drawing.Point(1060, 48);
             this.lbun1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbun1.Name = "lbun1";
             this.lbun1.Size = new System.Drawing.Size(0, 25);
@@ -287,7 +295,7 @@
             this.lbun4.AutoSize = true;
             this.lbun4.BackColor = System.Drawing.Color.Thistle;
             this.lbun4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbun4.Location = new System.Drawing.Point(44, 593);
+            this.lbun4.Location = new System.Drawing.Point(1060, 261);
             this.lbun4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbun4.Name = "lbun4";
             this.lbun4.Size = new System.Drawing.Size(0, 25);
@@ -298,7 +306,7 @@
             this.lbun3.AutoSize = true;
             this.lbun3.BackColor = System.Drawing.Color.Thistle;
             this.lbun3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbun3.Location = new System.Drawing.Point(44, 31);
+            this.lbun3.Location = new System.Drawing.Point(1060, 190);
             this.lbun3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbun3.Name = "lbun3";
             this.lbun3.Size = new System.Drawing.Size(0, 25);
@@ -309,7 +317,7 @@
             this.lbun2.AutoSize = true;
             this.lbun2.BackColor = System.Drawing.Color.Thistle;
             this.lbun2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbun2.Location = new System.Drawing.Point(581, 31);
+            this.lbun2.Location = new System.Drawing.Point(1060, 119);
             this.lbun2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbun2.Name = "lbun2";
             this.lbun2.Size = new System.Drawing.Size(0, 25);
@@ -1514,6 +1522,42 @@
             this.txtSendMSG.TabIndex = 129;
             this.txtSendMSG.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSendMSG_KeyDown);
             // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox3.Location = new System.Drawing.Point(1029, 34);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(229, 65);
+            this.pictureBox3.TabIndex = 131;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox4.Location = new System.Drawing.Point(1029, 105);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(229, 65);
+            this.pictureBox4.TabIndex = 132;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox5.Location = new System.Drawing.Point(1029, 176);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(229, 65);
+            this.pictureBox5.TabIndex = 133;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox6.Location = new System.Drawing.Point(1029, 247);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(229, 65);
+            this.pictureBox6.TabIndex = 134;
+            this.pictureBox6.TabStop = false;
+            // 
             // btnSendMSG
             // 
             this.btnSendMSG.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -1543,7 +1587,7 @@
             this.btnBoLuot.FlatAppearance.BorderSize = 0;
             this.btnBoLuot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBoLuot.ForeColor = System.Drawing.Color.White;
-            this.btnBoLuot.Location = new System.Drawing.Point(858, 111);
+            this.btnBoLuot.Location = new System.Drawing.Point(835, 115);
             this.btnBoLuot.Name = "btnBoLuot";
             this.btnBoLuot.Size = new System.Drawing.Size(132, 43);
             this.btnBoLuot.TabIndex = 127;
@@ -1562,7 +1606,7 @@
             this.btnXiNgau.FlatAppearance.BorderSize = 0;
             this.btnXiNgau.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnXiNgau.ForeColor = System.Drawing.Color.White;
-            this.btnXiNgau.Location = new System.Drawing.Point(858, 62);
+            this.btnXiNgau.Location = new System.Drawing.Point(835, 66);
             this.btnXiNgau.Name = "btnXiNgau";
             this.btnXiNgau.Size = new System.Drawing.Size(132, 43);
             this.btnXiNgau.TabIndex = 126;
@@ -1616,6 +1660,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(1261, 698);
+            this.Controls.Add(this.pictureBox6);
+            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.btnSendMSG);
             this.Controls.Add(this.txtSendMSG);
             this.Controls.Add(this.rtbMSG);
@@ -1833,6 +1881,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.btn1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgXiNgau)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1954,6 +2006,10 @@
         private System.Windows.Forms.RichTextBox rtbMSG;
         private CustomControls.ButtonDesign btnSendMSG;
         private System.Windows.Forms.TextBox txtSendMSG;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox6;
     }
 }
 

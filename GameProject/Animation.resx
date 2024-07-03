@@ -259,6 +259,30 @@
   <data name="UI_Menu_Welcome_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\UI_Menu_Welcome_02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UI_PlayerB_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerB_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI_PlayerB_Icon_Turn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerB_Icon_Turn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI_PlayerG_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerG_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI_PlayerG_Icon_Turn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerG_Icon_Turn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI_PlayerR_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerR_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI_PlayerR_Icon_Turn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerR_Icon_Turn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI_PlayerY_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerY_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UI_PlayerY_Icon_Turn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\UI_PlayerY_Icon_Turn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="UI_Profile_Banner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\UI_Profile_Banner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

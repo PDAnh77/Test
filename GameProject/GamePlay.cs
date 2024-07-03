@@ -567,7 +567,7 @@ namespace GameProject
         //    FrmLogin = frm;
         //}
 
-        private void addUsserInForm(string name)// Hàm viết tên lên label của frmPlay
+        private void addUsserInForm(string name)// Hàm viết tên lên label của GamePlay
         {
             Invoke(new System.Action(() =>
             {
@@ -1586,6 +1586,20 @@ namespace GameProject
 
             SetControlImage(pictureBox2, Animation.UI_Chatlog);
             SetControlImage(pictureBox1, Animation.UI_Table);
+            SetControlImage(pictureBox3, Animation.UI_PlayerB_Icon);
+            SetControlImage(pictureBox4, Animation.UI_PlayerR_Icon);
+            SetControlImage(pictureBox5, Animation.UI_PlayerY_Icon);
+            SetControlImage(pictureBox6, Animation.UI_PlayerG_Icon);
+
+            lbun1.BringToFront();
+            lbun2.BringToFront();
+            lbun3.BringToFront();
+            lbun4.BringToFront();
+
+            lbun1.BackColor = customColor03;
+            lbun2.BackColor = customColor03;
+            lbun3.BackColor = customColor03;
+            lbun4.BackColor = customColor03;
 
             foreach (Control control in this.Controls)
             {
@@ -1838,7 +1852,6 @@ namespace GameProject
 
         #endregion
 
-        
     }
 }
 

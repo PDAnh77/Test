@@ -262,6 +262,14 @@
     <Compile Include="UserProfile.Designer.cs">
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\UI_PlayerB_Icon_Turn.png" />
+    <None Include="Resources\UI_PlayerB_Icon.png" />
+    <None Include="Resources\UI_PlayerY_Icon_Turn.png" />
+    <None Include="Resources\UI_PlayerY_Icon.png" />
+    <None Include="Resources\UI_PlayerR_Icon_Turn.png" />
+    <None Include="Resources\UI_PlayerR_Icon.png" />
+    <None Include="Resources\UI_PlayerG_Icon_Turn.png" />
+    <None Include="Resources\UI_PlayerG_Icon.png" />
     <None Include="Resources\icon-_1_.ico" />
     <None Include="Resources\UI_Square_R.png" />
     <None Include="Resources\UI_Square_G.png" />
