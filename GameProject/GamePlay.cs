@@ -373,30 +373,30 @@ namespace GameProject
                             {
                                 if (socket.isServer)
                                 {
+
                                     diceimg(Int32.Parse(userArrayLuotChoi[0]));
                                     ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
                                     if (ThuTuLuotChoi == 0)
                                     {
-                                        btnXiNgau.Enabled = true;
-
-                                        MoChuong(ThuTuLuotChoi);
+                                        SetButtonEnabledSafe(btnXiNgau, true);
+                                        WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}");
                                     }
                                     else
                                     {
-                                        btnXiNgau.Enabled = false;
+                                        SetButtonEnabledSafe(btnXiNgau, false);
                                     }
                                     socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), data.Message));
                                 }
                                 else
                                 {
+                                    
                                     xingau = Int32.Parse(userArrayLuotChoi[0]);             // userArray[0] là giá trị của xí ngầu
                                     diceimg(xingau);
                                     ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
                                     if (username == DSUser[ThuTuLuotChoi])
                                     {
-                                        btnXiNgau.Enabled = true;
-
-                                        MoChuong(ThuTuLuotChoi);
+                                        SetButtonEnabledSafe(btnXiNgau, true);
+                                        WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}");
                                     }
                                 }
                             }));
@@ -897,11 +897,6 @@ namespace GameProject
             //socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
             string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
             WriteTextSafe(lbluotchoi, tmp);
-
-            if (username == DSUser[ThuTuLuotChoi])
-            {
-                MoChuong(ThuTuLuotChoi);
-            }
         }
 
         void ChuanBiCacQuanCo()
@@ -941,10 +936,7 @@ namespace GameProject
 
         public void UnlockCacNut()
         {
-            BeginInvoke(new System.Action(() =>
-            {
-                btnBoLuot.Enabled = true;
-            }));
+            SetButtonEnabledSafe(btnBoLuot, true);
 
             BeginInvoke(new System.Action(() =>
             {
@@ -1026,10 +1018,35 @@ namespace GameProject
                 }
             }
         }
+
+        private void KhoaChuong()
+        {
+            for (int i = 1; i <= 4; i++)
+            {
+                PictureBox ptb = (PictureBox)this.Controls.Find("b" + i, false).FirstOrDefault() as PictureBox;
+                SetPictureBoxEnabledSafe(ptb, false);
+            }
+            for (int i = 1; i <= 4; i++)
+            {
+                PictureBox ptb = (PictureBox)this.Controls.Find("r" + i, false).FirstOrDefault() as PictureBox;
+                SetPictureBoxEnabledSafe(ptb, false);
+            }
+            for(int i = 1; i <= 4; i++)
+            {
+                PictureBox ptb = (PictureBox)this.Controls.Find("y" + i, false).FirstOrDefault() as PictureBox;
+                SetPictureBoxEnabledSafe(ptb, false);
+            }
+            for (int i = 1; i <= 4; i++)
+            {
+                PictureBox ptb = (PictureBox)this.Controls.Find("g" + i, false).FirstOrDefault() as PictureBox;
+                SetPictureBoxEnabledSafe(ptb, false);
+            }
+        }
+
         public void LockCacNut()
         {
-            btnBoLuot.Enabled = false;
-            btnXiNgau.Enabled = false;
+            SetButtonEnabledSafe(btnBoLuot, false);
+            SetButtonEnabledSafe(btnXiNgau, false);  
 
             int i = 1;
             int j = 1;
@@ -1072,6 +1089,10 @@ namespace GameProject
             PlayAnimation(btnXiNgau);
             Random random = new Random();
             xingau = random.Next(1, 7);
+            if (xingau == 1 || xingau == 6)
+            {
+                MoChuong(ThuTuLuotChoi);
+            }
             ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
             if (socket.isServer)
             {
@@ -1082,7 +1103,7 @@ namespace GameProject
             {
                 socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
             }
-            btnXiNgau.Enabled = false;
+            SetButtonEnabledSafe(btnXiNgau, false);
         }
 
        /* private void button1_Click(object sender, EventArgs e)
@@ -1165,6 +1186,7 @@ namespace GameProject
                     {
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
                     }
+                    KhoaChuong();
                     //}
                     break;
                 case "r1":
@@ -1182,7 +1204,7 @@ namespace GameProject
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     else 
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
-
+                    KhoaChuong();
                    // }
                     break;
 
@@ -1224,34 +1246,42 @@ namespace GameProject
         private void b1_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b1");
+            MessageBox.Show("bấm b1");
         }
         private void b2_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b2");
+            MessageBox.Show("bấm b2");
         }
         private void b3_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b3");
+            MessageBox.Show("bấm b3");
         }
         private void b4_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b4");
+            MessageBox.Show("bấm b4");
         }
         private void r1_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r1");
+            MessageBox.Show("bấm r1");
         }
         private void r2_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r2");
+            MessageBox.Show("bấm r2");
         }
         private void r3_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r3");
+            MessageBox.Show("bấm r3");
         }
         private void r4_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r4");
+            MessageBox.Show("bấm r4");
         }
         private void y1_Click(object sender, EventArgs e)
         {
