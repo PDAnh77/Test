@@ -1243,6 +1243,7 @@ namespace GameProject
         private void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
         {
             PlayAnimation(btnLeave);
+            timercd.Stop();
             this.Close();
         }
         
