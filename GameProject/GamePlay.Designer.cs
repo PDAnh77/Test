@@ -144,12 +144,12 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.btnLuatChoi = new GameProject.CustomControls.ButtonDesign();
             this.btnSendMSG = new GameProject.CustomControls.ButtonDesign();
             this.btnBoLuot = new GameProject.CustomControls.ButtonDesign();
             this.btnXiNgau = new GameProject.CustomControls.ButtonDesign();
             this.btnStart = new GameProject.CustomControls.ButtonDesign();
             this.btnLeave = new GameProject.CustomControls.ButtonDesign();
-            this.btnLuatChoi = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.g1)).BeginInit();
@@ -1559,6 +1559,27 @@
             this.pictureBox6.TabIndex = 134;
             this.pictureBox6.TabStop = false;
             // 
+            // btnLuatChoi
+            // 
+            this.btnLuatChoi.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLuatChoi.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLuatChoi.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnLuatChoi.BorderRadius = 0;
+            this.btnLuatChoi.BorderSize = 0;
+            this.btnLuatChoi.FlatAppearance.BorderSize = 0;
+            this.btnLuatChoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLuatChoi.ForeColor = System.Drawing.Color.White;
+            this.btnLuatChoi.Location = new System.Drawing.Point(1093, 331);
+            this.btnLuatChoi.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLuatChoi.Name = "btnLuatChoi";
+            this.btnLuatChoi.Size = new System.Drawing.Size(145, 49);
+            this.btnLuatChoi.TabIndex = 135;
+            this.btnLuatChoi.Text = "Luật chơi";
+            this.btnLuatChoi.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLuatChoi.TextColor = System.Drawing.Color.White;
+            this.btnLuatChoi.UseVisualStyleBackColor = false;
+            this.btnLuatChoi.Click += new System.EventHandler(this.btnLuatChoi_Click);
+            // 
             // btnSendMSG
             // 
             this.btnSendMSG.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -1654,27 +1675,6 @@
             this.btnLeave.TextColor = System.Drawing.Color.White;
             this.btnLeave.UseVisualStyleBackColor = false;
             this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
-            // 
-            // btnLuatChoi
-            // 
-            this.btnLuatChoi.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnLuatChoi.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnLuatChoi.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnLuatChoi.BorderRadius = 0;
-            this.btnLuatChoi.BorderSize = 0;
-            this.btnLuatChoi.FlatAppearance.BorderSize = 0;
-            this.btnLuatChoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLuatChoi.ForeColor = System.Drawing.Color.White;
-            this.btnLuatChoi.Location = new System.Drawing.Point(1093, 331);
-            this.btnLuatChoi.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLuatChoi.Name = "btnLuatChoi";
-            this.btnLuatChoi.Size = new System.Drawing.Size(145, 49);
-            this.btnLuatChoi.TabIndex = 135;
-            this.btnLuatChoi.Text = "Luật chơi";
-            this.btnLuatChoi.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnLuatChoi.TextColor = System.Drawing.Color.White;
-            this.btnLuatChoi.UseVisualStyleBackColor = false;
-            this.btnLuatChoi.Click += new System.EventHandler(this.btnLuatChoi_Click);
             // 
             // GamePlay
             // 
