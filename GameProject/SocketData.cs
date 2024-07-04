@@ -39,6 +39,7 @@ namespace GameProject
         SEND_MESSAGE,
         LUOT_CHOI,
         STARTTIMER,
-        DI_CHUYEN
+        DI_CHUYEN,
+        XUC_XAC
     }
 }
