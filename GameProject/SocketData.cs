@@ -38,6 +38,7 @@ namespace GameProject
         SAN_SANG,
         SEND_MESSAGE,
         LUOT_CHOI,
-        STARTTIMER
+        STARTTIMER,
+        DI_CHUYEN
     }
 }

@@ -46,6 +46,7 @@ namespace GameProject
         private int xingau;                                 // Số xí ngầu đỗ ra được
         private int ThuTuLuotChoi = 0;                      // Đại diện cho chỉ số lượt  của người chơi
                                                             //Người chơi tạo phòng sẽ có lượt chơi đầu tiên
+        private int ThuTuTiepTheo;                         // Đại diện cho chỉ số lượt của người chơi tiếp theo
         private bool TrangThaiChoi = false;
         private bool NguoiXem = false;
 
@@ -367,41 +368,39 @@ namespace GameProject
                 case (int)SocketCommand.LUOT_CHOI: ///CHUA CHINH LAI THEO LUOT CHOI DUNG
                     {
                         string[] userArrayLuotChoi = (data.Message).Split('/');
-                        if (userArrayLuotChoi.Length == 2)
-                        { 
-                            Invoke(new System.Action(() =>
+                        if (userArrayLuotChoi.Length != 2)
+                        {
+                            return;
+                        }
+                        Invoke(new System.Action(() =>
+                        {
+                            if (socket.isServer)
                             {
-                                if (socket.isServer)
+                                diceimg(Int32.Parse(userArrayLuotChoi[0]));
+                                ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
+                                WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}\n");
+                                if (ThuTuLuotChoi == 0)
                                 {
-
-                                    diceimg(Int32.Parse(userArrayLuotChoi[0]));
-                                    ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
-                                    if (ThuTuLuotChoi == 0)
-                                    {
-                                        SetButtonEnabledSafe(btnXiNgau, true);
-                                        WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}");
-                                    }
-                                    else
-                                    {
-                                        SetButtonEnabledSafe(btnXiNgau, false);
-                                    }
-                                    socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), data.Message));
+                                    SetButtonEnabledSafe(btnXiNgau, true);
                                 }
                                 else
                                 {
-                                    
-                                    xingau = Int32.Parse(userArrayLuotChoi[0]);             // userArray[0] là giá trị của xí ngầu
-                                    diceimg(xingau);
-                                    ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
-                                    if (username == DSUser[ThuTuLuotChoi])
-                                    {
-                                        SetButtonEnabledSafe(btnXiNgau, true);
-                                        WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}");
-                                    }
+                                    SetButtonEnabledSafe(btnXiNgau, false);
                                 }
-                            }));
-                        }
-                        
+                                socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), data.Message));
+                            }
+                            else
+                            {
+                                xingau = Int32.Parse(userArrayLuotChoi[0]);             // userArray[0] là giá trị của xí ngầu
+                                diceimg(xingau);
+                                ThuTuLuotChoi = Int32.Parse(userArrayLuotChoi[1]);
+                                WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}\n");
+                                if (username == DSUser[ThuTuLuotChoi])
+                                {
+                                    SetButtonEnabledSafe(btnXiNgau, true);
+                                }
+                            }
+                        }));
                     }
                     break;
                 case (int)SocketCommand.SEND_MESSAGE:
@@ -547,6 +546,21 @@ namespace GameProject
 
                     break;
 
+                case (int)SocketCommand.DI_CHUYEN:
+                    string[] NhanMsg = data.Message.Split('/');
+
+                    PictureBox ptb_co = (PictureBox)this.Controls.Find(NhanMsg[0], false).FirstOrDefault() as PictureBox;
+                    PictureBox ptb_dich = (PictureBox)this.Controls.Find(NhanMsg[1], false).FirstOrDefault() as PictureBox;
+
+                    SetControlImage(ptb_dich, ptb_co.Image);
+                    SetControlImage(ptb_co, Animation.UI_Square);
+
+                    if (socket.isServer)
+                    {
+                        socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, new Point(), data.Message));
+                    }
+
+                    break;
                 default:
                     break;
             }
@@ -865,9 +879,37 @@ namespace GameProject
 
         private void SendBtnBox(int x)
         {
-            PictureBox ptb = (PictureBox)this.Controls.Find("btn" + x, false).FirstOrDefault() as PictureBox;
-            if (ptb.Image != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
-                SendMSGtoFB("6", username, IDphong, x.ToString());
+            string tmp = x.ToString();
+            PictureBox ptb_co = (PictureBox)this.Controls.Find("btn" + tmp, false).FirstOrDefault() as PictureBox;
+
+            if (username == DSUser[ThuTuLuotChoi] && ptb_co.BackgroundImage != Animation.UI_Square)
+            {
+                //////Kiểm tra xem ô đó có chứa quân cờ của người chơi đó không 
+                if (ptb_co.BackgroundImage != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
+                { }
+
+                int y = x + xingau;
+                string co = "btn" + x;
+                string dich = "btn" + y;
+
+                if (socket.isServer)
+                {
+                    string tmp2 = y.ToString();
+                    PictureBox ptb_dich = (PictureBox)this.Controls.Find("btn" + tmp2, false).FirstOrDefault() as PictureBox;
+
+                    SetControlImage(ptb_dich, ptb_co.BackgroundImage);
+                    SetControlImage(ptb_co, Animation.UI_Square);
+                    socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, new Point(), $"{co}/{dich}"));
+                }
+                else
+                    socket.Send(new SocketData((int)SocketCommand.DI_CHUYEN, new Point(), $"{co}/{dich}"));
+
+            }
+
+
+            /* PictureBox ptb = (PictureBox)this.Controls.Find("btn" + x, false).FirstOrDefault() as PictureBox;
+             if (ptb.Image != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
+                 SendMSGtoFB("6", username, IDphong, x.ToString());*/
         }
         #endregion
 
@@ -954,7 +996,7 @@ namespace GameProject
                 {
                     if (c is PictureBox && c.Name.Contains($"btn{i}"))
                     {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                        Invoke(new System.Action(() => { c.Enabled = true; }));
                         i++;
                     }
                 }
@@ -962,19 +1004,19 @@ namespace GameProject
                 {
                     if (c is PictureBox && c.Name.Contains($"dichXD{j}"))
                     {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                        Invoke(new System.Action(() => { c.Enabled = true; }));
                     }
                     if (c is PictureBox && c.Name.Contains($"dichD{j}"))
                     {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                        Invoke(new System.Action(() => { c.Enabled = true; }));
                     }
                     if (c is PictureBox && c.Name.Contains($"dichV{j}"))
                     {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                        Invoke(new System.Action(() => { c.Enabled = true; }));
                     }
                     if (c is PictureBox && c.Name.Contains($"dichXL{j}"))
                     {
-                        BeginInvoke(new System.Action(() => { c.Enabled = true; }));
+                        Invoke(new System.Action(() => { c.Enabled = true; }));
                     }
                     j++;
                 }
@@ -1080,7 +1122,6 @@ namespace GameProject
                     }
                     j++;
                 }
-                
             }
         }
 
@@ -1093,15 +1134,16 @@ namespace GameProject
             {
                 MoChuong(ThuTuLuotChoi);
             }
-            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
+            ThuTuTiepTheo = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
+
             if (socket.isServer)
             {
                 diceimg(xingau);
-                socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
+                socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{xingau}/{ThuTuTiepTheo}"));
             }
             else
             {
-                socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{xingau}/{ThuTuLuotChoi}"));
+                socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{xingau}/{ThuTuTiepTheo}"));
             }
             SetButtonEnabledSafe(btnXiNgau, false);
         }
@@ -1321,10 +1363,12 @@ namespace GameProject
         private void btn29_Click(object sender, EventArgs e)
         {
             SendBtnBox(29);
+            //MessageBox.Show("bấm 29");
         }
         private void btn43_Click(object sender, EventArgs e)
         {
             SendBtnBox(43);
+            MessageBox.Show("bấm 43");
         }
         private void btn1_Click(object sender, EventArgs e)
         {
