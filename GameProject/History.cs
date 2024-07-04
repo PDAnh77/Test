@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    public partial class History : Form
+    public partial class History: Form
     {
         public History()
         {
