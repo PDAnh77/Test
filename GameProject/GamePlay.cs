@@ -1672,11 +1672,11 @@ namespace GameProject
                 case "r2":
                 case "r3":
                 case "r4":
-                    SetControlImage(btn43, Animation.UI_Horse_Select_01);
+                    /*SetControlImage(btn43, Animation.UI_Horse_Select_01);
                     Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
                     if (socket.isServer)
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
-                    else 
+                    else */
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     KhoaChuong();
                     break;
@@ -1685,11 +1685,11 @@ namespace GameProject
                 case "y2":
                 case "y3":
                 case "y4":
-                    SetControlImage(btn1, Animation.UI_Horse_Select_02);
+                    /*SetControlImage(btn1, Animation.UI_Horse_Select_02);
                     Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
                     if (socket.isServer)
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
-                    else
+                    else*/
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
                     KhoaChuong();
                     break;
@@ -1697,11 +1697,11 @@ namespace GameProject
                 case "g2":
                 case "g3":
                 case "g4":
-                    SetControlImage(btn15, Animation.UI_Horse_Select_03);
+                    /*SetControlImage(btn15, Animation.UI_Horse_Select_03);
                     Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
                     if (socket.isServer)
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
-                    else
+                    else*/
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
                     KhoaChuong();
                     break;
