@@ -57,6 +57,9 @@ namespace GameProject
         private Color green = Color.Green;
         private Color mau = new Color();
 
+        //cooldown
+        private int cd = 30;
+
         private string msg;
         private int counter = 30;
         private int time = 0;
@@ -80,6 +83,7 @@ namespace GameProject
             IDphong = idPhong;
             DSUser.Add(username); // Mỗi người chơi sẽ tự có danh sách người chơi của riêng mình, khi có thay đổi server sẽ thông báo để cập nhật
             CreateOrConnect(server);
+            lbCD.Text=cd.ToString();
         }
 
         private void GamePlay_Load(object sender, EventArgs e) //LoadForm chinh
@@ -144,7 +148,32 @@ namespace GameProject
 
         private void timercd_Tick(object sender, EventArgs e)
         {
-           
+            if (cd > 0)
+            {
+                cd--;
+                lbCD.Text= cd.ToString();
+                
+            }
+            else
+            {
+                if (User.CurrentUser.Username == DSUser[ThuTuLuotChoi])
+                {
+                    int ThuTuTiepTheo = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
+
+                    if (socket.isServer)
+                    {
+                        ThuTuLuotChoi = ThuTuTiepTheo;
+                        socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                    }
+                    else
+                    {
+                        socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuTiepTheo}"));
+                    }
+                }
+                cd = 30;
+                lbCD.Text = cd.ToString();
+                
+            }
         }
 
         #endregion
@@ -487,6 +516,8 @@ namespace GameProject
                             {
                                 MessageBox.Show("Error receiving player turn");
                             }
+                            cd = 30;
+                            lbCD.Text = cd.ToString();
                         }));
                     }
                     break;
@@ -627,6 +658,7 @@ namespace GameProject
                         PictureBox ptb_BatDau = (PictureBox)this.Controls.Find(QuanCo, false).FirstOrDefault() as PictureBox;
                         Invoke(new System.Action(() => { ptb_BatDau.BackgroundImage = null; }));
 
+                        
                     }
                     else
                     {
@@ -658,8 +690,14 @@ namespace GameProject
                         PictureBox ptb_BatDau = (PictureBox)this.Controls.Find(QuanCo, false).FirstOrDefault() as PictureBox;
                         Invoke(new System.Action(() => { ptb_BatDau.BackgroundImage = null; }));
                     }
+                    cd = 30;
+                    lbCD.Text = cd.ToString();
                     break;
                 case (int)SocketCommand.SAN_SANG:
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        timercd.Start();
+                    });
                     string Luot = data.Message;
 
                     ThuTuLuotChoi = Int32.Parse(Luot);
@@ -667,6 +705,7 @@ namespace GameProject
                     WriteTextSafe(lbluotchoi, tmp);
 
                     string nameSanSang = "lbun";
+                    timercd.Start();
                     for (int i = 1; i <= 4; i++)
                     {
                         string labelName = nameSanSang + i;
@@ -681,8 +720,11 @@ namespace GameProject
                             ResetKhungLuot(lb);
                         }
                     }
+                    
                     ChuanBiCacQuanCo();
                     UnlockCacNut();
+
+                    
 
                     break;
                 case (int)SocketCommand.DI_CHUYEN:
@@ -1117,12 +1159,15 @@ namespace GameProject
                             }
 
                             socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                            cd = 30;
+                            lbCD.Text = cd.ToString();
                         }
                         else
                         {
                             socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
                         }
-                        SetButtonEnabledSafe(btnXiNgau, false);                        
+                        SetButtonEnabledSafe(btnXiNgau, false);      
+                        
                     }
                 }    
             }
@@ -1148,6 +1193,7 @@ namespace GameProject
             btnStart.Visible = false;
             
             socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), "0"));
+            timercd.Start();
             ChuanBiCacQuanCo();
             UnlockCacNut();
 
@@ -1168,6 +1214,7 @@ namespace GameProject
                 {
                     ResetKhungLuot(lb);
                 }
+                
             }
             //Random random = new Random();
             //ThuTuLuotChoi = random.Next(0, DSUser.Count);
@@ -1454,6 +1501,8 @@ namespace GameProject
                     if (socket.isServer)
                     {
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
+                        cd = 30;
+                        lbCD.Text = cd.ToString();
                     }
                     else
                     {
@@ -1524,12 +1573,15 @@ namespace GameProject
             {
                 ThuTuLuotChoi = ThuTuTiepTheo;
                 socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                cd = 30;
+                lbCD.Text = cd.ToString();
                 WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}\n");
             }
             else
             {
                 socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuTiepTheo}"));
             }
+           
         }
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)
@@ -1915,7 +1967,7 @@ namespace GameProject
                 return;
             if (socket.isServer)
             {
-                rtbMSG.SelectionColor = Color.Blue;
+                rtbMSG.SelectionColor = Color.Cyan;
                 rtbMSG.SelectedText = User.CurrentUser.Username;
                 rtbMSG.SelectionColor = Color.Black;
                 rtbMSG.AppendText($": {txtSendMSG.Text}" + Environment.NewLine);
