@@ -723,9 +723,7 @@ namespace GameProject
                     
                     ChuanBiCacQuanCo();
                     UnlockCacNut();
-
                     
-
                     break;
                 case (int)SocketCommand.DI_CHUYEN:
                     int from = data.Point.X;
@@ -770,6 +768,30 @@ namespace GameProject
             }
             else
             {
+                if (label.Name == "lbun1")
+                {
+                    /*pictureBox3.Location = new Point(pictureBox3.Location.X - 30, pictureBox3.Location.Y);
+                    pictureBox3.Size = new Size (pictureBox3.Width + 29, pictureBox3.Height);*/
+                    SetControlImage (pictureBox3, Animation.UI_PlayerB_Icon_Turn);
+                }
+                if (label.Name == "lbun2")
+                {
+                    /*pictureBox4.Location = new Point(pictureBox4.Location.X - 30, pictureBox4.Location.Y);
+                    pictureBox4.Size = new Size(pictureBox4.Width + 29, pictureBox4.Height);*/
+                    SetControlImage(pictureBox4, Animation.UI_PlayerR_Icon_Turn);
+                }
+                if (label.Name == "lbun3")
+                {
+                    /*pictureBox5.Location = new Point(pictureBox5.Location.X - 30, pictureBox5.Location.Y);
+                    pictureBox5.Size = new Size(pictureBox5.Width + 29, pictureBox5.Height);*/
+                    SetControlImage(pictureBox5, Animation.UI_PlayerY_Icon_Turn);
+                }
+                if (label.Name == "lbun4")
+                {
+                    /*pictureBox6.Location = new Point(pictureBox6.Location.X - 30, pictureBox6.Location.Y);
+                    pictureBox6.Size = new Size(pictureBox6.Width + 29, pictureBox6.Height);*/
+                    SetControlImage(pictureBox6, Animation.UI_PlayerG_Icon_Turn);
+                }
                 label.ForeColor = Color.Red;
             }
         }
@@ -782,6 +804,46 @@ namespace GameProject
             }
             else
             {
+                if (label.Name == "lbun1")
+                {
+                    /*if (pictureBox3.Size.Width == 229)
+                    {
+                        return;
+                    }
+                    pictureBox3.Size = new Size(pictureBox3.Width - 29, pictureBox3.Height);
+                    pictureBox3.Location = new Point(pictureBox3.Location.X + 30, pictureBox3.Location.Y);*/
+                    SetControlImage(pictureBox3, Animation.UI_PlayerB_Icon);
+                }
+                if (label.Name == "lbun2")
+                {
+                    /*if (pictureBox4.Size.Width == 229)
+                    {
+                        return;
+                    }
+                    pictureBox4.Size = new Size(pictureBox4.Width - 29, pictureBox4.Height);
+                    pictureBox4.Location = new Point(pictureBox4.Location.X + 30, pictureBox4.Location.Y);*/
+                    SetControlImage(pictureBox4, Animation.UI_PlayerR_Icon);
+                }
+                if (label.Name == "lbun3")
+                {
+                    /*if (pictureBox5.Size.Width == 229)
+                    {
+                        return;
+                    }
+                    pictureBox5.Size = new Size(pictureBox5.Width - 29, pictureBox5.Height);
+                    pictureBox5.Location = new Point(pictureBox5.Location.X + 30, pictureBox5.Location.Y);*/
+                    SetControlImage(pictureBox5, Animation.UI_PlayerY_Icon);
+                }
+                if (label.Name == "lbun4")
+                {
+                    /*if (pictureBox6.Size.Width == 229)
+                    {
+                        return;
+                    }
+                    pictureBox6.Size = new Size(pictureBox6.Width - 29, pictureBox6.Height);
+                    pictureBox6.Location = new Point(pictureBox6.Location.X + 30, pictureBox6.Location.Y);*/
+                    SetControlImage(pictureBox6, Animation.UI_PlayerG_Icon);
+                }
                 label.ForeColor = Color.Black;
             }
         }
@@ -1419,10 +1481,115 @@ namespace GameProject
             {
                 diceimg(xingau);
                 socket.Broadcast(new SocketData((int)SocketCommand.XUC_XAC, new Point(), $"{xingau}"));
+                if (xingau != 1)
+                {
+                    if (xingau != 6)
+                    {
+                        bool allNotNull = true;
+
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            PictureBox ptb = (PictureBox)this.Controls.Find("b" + i, false).FirstOrDefault() as PictureBox;
+                            if (ptb.BackgroundImage == null)
+                            {
+                                allNotNull = false;
+                                break;
+                            }
+                        }
+
+                        if (allNotNull)
+                        {
+                            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
+                            socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                            SetButtonEnabledSafe(btnXiNgau, false);
+                        }
+
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            string labelName = "lbun" + i;
+                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                            if (lb.Text == DSUser[ThuTuLuotChoi])
+                            {
+                                SetKhungLuot(lb);
+                            }
+                            else
+                            {
+                                ResetKhungLuot(lb);
+                            }
+                        }
+                    }
+                }
             }
             else
             {
                 socket.Send(new SocketData((int)SocketCommand.XUC_XAC, new Point(), $"{xingau}"));
+                if (xingau != 1)
+                {
+                    if (xingau != 6)
+                    {
+                        bool allNotNull = true;
+
+                        if (ThuTuLuotChoi == 1)
+                        {
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                PictureBox ptb = (PictureBox)this.Controls.Find("r" + i, false).FirstOrDefault() as PictureBox;
+                                if (ptb.BackgroundImage == null)
+                                {
+                                    allNotNull = false;
+                                    break;
+                                }
+                            }
+                        }
+                        else if (ThuTuLuotChoi == 2)
+                        {
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                PictureBox ptb = (PictureBox)this.Controls.Find("y" + i, false).FirstOrDefault() as PictureBox;
+                                if (ptb.BackgroundImage == null)
+                                {
+                                    allNotNull = false;
+                                    break;
+                                }
+                            }
+                        }
+                        else if (ThuTuLuotChoi == 3)
+                        {
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                PictureBox ptb = (PictureBox)this.Controls.Find("g" + i, false).FirstOrDefault() as PictureBox;
+                                if (ptb.BackgroundImage == null)
+                                {
+                                    allNotNull = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (allNotNull)
+                        {
+                            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
+                            socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                            SetButtonEnabledSafe(btnXiNgau, false);
+                        }
+
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            string labelName = "lbun" + i;
+                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                            if (lb.Text == DSUser[ThuTuLuotChoi])
+                            {
+                                SetKhungLuot(lb);
+                            }
+                            else
+                            {
+                                ResetKhungLuot(lb);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -1567,11 +1734,10 @@ namespace GameProject
             {
                 return;
             }
-            int ThuTuTiepTheo = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
+            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
 
             if (socket.isServer)
             {
-                ThuTuLuotChoi = ThuTuTiepTheo;
                 socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
                 cd = 30;
                 lbCD.Text = cd.ToString();
@@ -1579,7 +1745,7 @@ namespace GameProject
             }
             else
             {
-                socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuTiepTheo}"));
+                socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
             }
            
         }
