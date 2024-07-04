@@ -660,6 +660,7 @@ namespace GameProject
                     }
                     break;
                 case (int)SocketCommand.SAN_SANG:
+                    MessageBox.Show("sansang");
                     string Luot = data.Message;
 
                     ThuTuLuotChoi = Int32.Parse(Luot);
@@ -683,7 +684,7 @@ namespace GameProject
                     }
                     ChuanBiCacQuanCo();
                     UnlockCacNut();
-
+                    
                     break;
                 case (int)SocketCommand.DI_CHUYEN:
                     int from = data.Point.X;
@@ -1372,10 +1373,115 @@ namespace GameProject
             {
                 diceimg(xingau);
                 socket.Broadcast(new SocketData((int)SocketCommand.XUC_XAC, new Point(), $"{xingau}"));
+                if (xingau != 1)
+                {
+                    if (xingau != 6)
+                    {
+                        bool allNotNull = true;
+
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            PictureBox ptb = (PictureBox)this.Controls.Find("b" + i, false).FirstOrDefault() as PictureBox;
+                            if (ptb.BackgroundImage == null)
+                            {
+                                allNotNull = false;
+                                break;
+                            }
+                        }
+
+                        if (allNotNull)
+                        {
+                            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
+                            socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                            SetButtonEnabledSafe(btnXiNgau, false);
+                        }
+
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            string labelName = "lbun" + i;
+                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                            if (lb.Text == DSUser[ThuTuLuotChoi])
+                            {
+                                SetKhungLuot(lb);
+                            }
+                            else
+                            {
+                                ResetKhungLuot(lb);
+                            }
+                        }
+                    }
+                }
             }
             else
             {
                 socket.Send(new SocketData((int)SocketCommand.XUC_XAC, new Point(), $"{xingau}"));
+                if (xingau != 1)
+                {
+                    if (xingau != 6)
+                    {
+                        bool allNotNull = true;
+
+                        if (ThuTuLuotChoi == 1)
+                        {
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                PictureBox ptb = (PictureBox)this.Controls.Find("r" + i, false).FirstOrDefault() as PictureBox;
+                                if (ptb.BackgroundImage == null)
+                                {
+                                    allNotNull = false;
+                                    break;
+                                }
+                            }
+                        }
+                        else if (ThuTuLuotChoi == 2)
+                        {
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                PictureBox ptb = (PictureBox)this.Controls.Find("y" + i, false).FirstOrDefault() as PictureBox;
+                                if (ptb.BackgroundImage == null)
+                                {
+                                    allNotNull = false;
+                                    break;
+                                }
+                            }
+                        }
+                        else if (ThuTuLuotChoi == 3)
+                        {
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                PictureBox ptb = (PictureBox)this.Controls.Find("g" + i, false).FirstOrDefault() as PictureBox;
+                                if (ptb.BackgroundImage == null)
+                                {
+                                    allNotNull = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (allNotNull)
+                        {
+                            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
+                            socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                            SetButtonEnabledSafe(btnXiNgau, false);
+                        }
+
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            string labelName = "lbun" + i;
+                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                            if (lb.Text == DSUser[ThuTuLuotChoi])
+                            {
+                                SetKhungLuot(lb);
+                            }
+                            else
+                            {
+                                ResetKhungLuot(lb);
+                            }
+                        }
+                    }
+                }
             }
         }
 
