@@ -530,10 +530,9 @@ namespace GameProject
                                     }
                                     break;
                                 }
-                                
-
                             }
                             rtbMSG.SelectionColor = mau;
+                            rtbMSG.AppendText(" ");
                             rtbMSG.SelectedText = mes[0];
                             rtbMSG.SelectionColor = Color.Black;
                             rtbMSG.AppendText($": {mes[1]}" + Environment.NewLine);
@@ -2084,7 +2083,8 @@ namespace GameProject
                 return;
             if (socket.isServer)
             {
-                rtbMSG.SelectionColor = Color.Blue;
+                rtbMSG.SelectionColor = Color.Cyan;
+                rtbMSG.AppendText(" ");
                 rtbMSG.SelectedText = User.CurrentUser.Username;
                 rtbMSG.SelectionColor = Color.Black;
                 rtbMSG.AppendText($": {txtSendMSG.Text}" + Environment.NewLine);
