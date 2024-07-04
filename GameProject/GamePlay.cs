@@ -1241,6 +1241,7 @@ namespace GameProject
         private void btnLeave_Click(object sender, EventArgs e) // Thoát phòng
         {
             PlayAnimation(btnLeave);
+            timercd.Stop();
             this.Close();
         }
         
@@ -1492,23 +1493,25 @@ namespace GameProject
                         {
                             ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
                             socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                string labelName = "lbun" + i;
+                                Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                if (lb.Text == DSUser[ThuTuLuotChoi])
+                                {
+                                    SetKhungLuot(lb);
+                                }
+                                else
+                                {
+                                    ResetKhungLuot(lb);
+                                }
+                            }
+
                             SetButtonEnabledSafe(btnXiNgau, false);
                         }
 
-                        for (int i = 1; i <= 4; i++)
-                        {
-                            string labelName = "lbun" + i;
-                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
-
-                            if (lb.Text == DSUser[ThuTuLuotChoi])
-                            {
-                                SetKhungLuot(lb);
-                            }
-                            else
-                            {
-                                ResetKhungLuot(lb);
-                            }
-                        }
                     }
                 }
             }
@@ -1561,24 +1564,25 @@ namespace GameProject
                         if (allNotNull)
                         {
                             ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
-                            socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                            socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                string labelName = "lbun" + i;
+                                Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                if (lb.Text == DSUser[ThuTuLuotChoi])
+                                {
+                                    SetKhungLuot(lb);
+                                }
+                                else
+                                {
+                                    ResetKhungLuot(lb);
+                                }
+                            }
                             SetButtonEnabledSafe(btnXiNgau, false);
                         }
 
-                        for (int i = 1; i <= 4; i++)
-                        {
-                            string labelName = "lbun" + i;
-                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
-
-                            if (lb.Text == DSUser[ThuTuLuotChoi])
-                            {
-                                SetKhungLuot(lb);
-                            }
-                            else
-                            {
-                                ResetKhungLuot(lb);
-                            }
-                        }
+                        
                     }
                 }
             }
