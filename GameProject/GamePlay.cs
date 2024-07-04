@@ -1665,9 +1665,7 @@ namespace GameProject
                         lbCD.Text = cd.ToString();
                     }
                     else
-                    {
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
-                    }
                     KhoaChuong();
                     break;
                 case "r1":
@@ -1676,7 +1674,6 @@ namespace GameProject
                 case "r4":
                     SetControlImage(btn43, Animation.UI_Horse_Select_01);
                     Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
-
                     if (socket.isServer)
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     else 
