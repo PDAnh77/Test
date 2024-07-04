@@ -144,6 +144,7 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.lbCD = new System.Windows.Forms.Label();
             this.btnLuatChoi = new GameProject.CustomControls.ButtonDesign();
             this.btnSendMSG = new GameProject.CustomControls.ButtonDesign();
             this.btnBoLuot = new GameProject.CustomControls.ButtonDesign();
@@ -344,6 +345,7 @@
             // 
             // timercd
             // 
+            this.timercd.Interval = 1000;
             this.timercd.Tick += new System.EventHandler(this.timercd_Tick);
             // 
             // pictureBox2
@@ -1559,6 +1561,17 @@
             this.pictureBox6.TabIndex = 134;
             this.pictureBox6.TabStop = false;
             // 
+            // lbCD
+            // 
+            this.lbCD.AutoSize = true;
+            this.lbCD.BackColor = System.Drawing.Color.Lavender;
+            this.lbCD.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lbCD.Location = new System.Drawing.Point(723, 306);
+            this.lbCD.Name = "lbCD";
+            this.lbCD.Size = new System.Drawing.Size(27, 25);
+            this.lbCD.TabIndex = 136;
+            this.lbCD.Text = "...";
+            // 
             // btnLuatChoi
             // 
             this.btnLuatChoi.BackColor = System.Drawing.Color.MediumSlateBlue;
@@ -1682,6 +1695,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.ClientSize = new System.Drawing.Size(1261, 698);
+            this.Controls.Add(this.lbCD);
             this.Controls.Add(this.btnLuatChoi);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox5);
@@ -2034,6 +2048,7 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox6;
         private CustomControls.ButtonDesign btnLuatChoi;
+        private System.Windows.Forms.Label lbCD;
     }
 }
 
