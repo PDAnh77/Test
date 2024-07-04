@@ -17,6 +17,7 @@ using System.Timers;
 using System.Net.NetworkInformation;
 using FirebaseAdmin.Messaging;
 using FireSharp;
+//using static System.Net.Mime.MediaTypeNames;
 
 
 
@@ -48,6 +49,13 @@ namespace GameProject
                                                             //Người chơi tạo phòng sẽ có lượt chơi đầu tiên
         private bool TrangThaiChoi = false;
         private bool NguoiXem = false;
+
+        //mau cho chat
+        private Color blue = Color.Cyan;
+        private Color red = Color.Red;
+        private Color yellow = Color.Gold;
+        private Color green = Color.Green;
+        private Color mau = new Color();
 
         private string msg;
         private int counter = 30;
@@ -421,7 +429,45 @@ namespace GameProject
                             {
                                 socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), data.Message));
                             }
-                            rtbMSG.AppendText(data.Message+Environment.NewLine);
+                            string[] mes=data.Message.Split('/');
+                            for (int i = 0; i < DSUser.Count; i++) 
+                            {
+                                if (mes[0] == DSUser[i]) 
+                                {
+                                    switch (i)
+                                    {
+                                        case 0:
+                                            {
+                                                mau = blue;
+                                                break;
+                                            }
+                                        case 1:
+                                            {
+                                                mau = red;
+                                                break;
+                                            }
+                                        case 2:
+                                            {
+                                                mau = yellow;
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                mau = green;
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                                    break;
+                                }
+                                
+
+                            }
+                            rtbMSG.SelectionColor = mau;
+                            rtbMSG.SelectedText = mes[0];
+                            rtbMSG.SelectionColor = Color.Black;
+                            rtbMSG.AppendText($": {mes[1]}" + Environment.NewLine);
                             rtbMSG.ScrollToCaret(); // Di chuyển con trỏ đến cuối văn bản
                         });
 
@@ -1693,14 +1739,17 @@ namespace GameProject
                 return;
             if (socket.isServer)
             {
-                rtbMSG.AppendText(User.CurrentUser.Username + ": " + txtSendMSG.Text + "\n");
-                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                rtbMSG.SelectionColor = Color.Blue;
+                rtbMSG.SelectedText = User.CurrentUser.Username;
+                rtbMSG.SelectionColor = Color.Black;
+                rtbMSG.AppendText($": {txtSendMSG.Text}" + Environment.NewLine);
+                socket.Broadcast(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}/{txtSendMSG.Text}"));
                 txtSendMSG.Text = "";
                 //rtbMSG.ScrollToCaret();
             }
             else
             {
-                socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}: {txtSendMSG.Text}"));
+                socket.Send(new SocketData((int)SocketCommand.SEND_MESSAGE, new Point(), $"{User.CurrentUser.Username}/{txtSendMSG.Text}"));
                 txtSendMSG.Text = "";
             }
         }
