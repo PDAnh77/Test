@@ -624,7 +624,7 @@ namespace GameProject
                     }
                     break;
 
-                case (int)SocketCommand.XUAT_QUAN: ///////CHUA KIEM TRA DC 10:18 3/7
+                case (int)SocketCommand.XUAT_QUAN: 
                     if (socket.isServer)
                     {
                         string NuocDi = data.Message;
@@ -656,8 +656,6 @@ namespace GameProject
                         }
                         PictureBox ptb_BatDau = (PictureBox)this.Controls.Find(QuanCo, false).FirstOrDefault() as PictureBox;
                         Invoke(new System.Action(() => { ptb_BatDau.BackgroundImage = null; }));
-
-                        
                     }
                     else
                     {
@@ -692,6 +690,7 @@ namespace GameProject
                     cd = 30;
                     lbCD.Text = cd.ToString();
                     break;
+
                 case (int)SocketCommand.SAN_SANG:
                     this.Invoke((MethodInvoker)delegate
                     {
@@ -922,7 +921,6 @@ namespace GameProject
                     // Xóa bỏ nội dung của nhãn không còn cần thiết
                     WriteTextSafe(lb, "");
                 }
-
             }
         }
 
@@ -1249,8 +1247,6 @@ namespace GameProject
         private void btnStart_Click(object sender, EventArgs e)     // Button sẵn sàng
         {
             PlayAnimation(btnStart);
-            //num_Ready++;
-            //btnStart.Enabled = false;
             btnStart.Visible = false;
             
             socket.Broadcast(new SocketData((int)SocketCommand.SAN_SANG, new Point(), "0"));
@@ -1275,11 +1271,7 @@ namespace GameProject
                 {
                     ResetKhungLuot(lb);
                 }
-                
             }
-            //Random random = new Random();
-            //ThuTuLuotChoi = random.Next(0, DSUser.Count);
-            //socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
         }
 
         void ChuanBiCacQuanCo()
@@ -1659,8 +1651,6 @@ namespace GameProject
                 case "b2":
                 case "b3":
                 case "b4":
-                    //if (numUser == 0)
-                    //{
                     SetControlImage(btn29, Animation.UI_Horse_Select_04);
                     Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
 
@@ -1675,48 +1665,45 @@ namespace GameProject
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
                     }
                     KhoaChuong();
-                    //}
                     break;
                 case "r1":
                 case "r2":
                 case "r3":
                 case "r4":
-                    //if (numUser == 1)
-                    //{
-                        //if (ptb.Image != null)
                     SetControlImage(btn43, Animation.UI_Horse_Select_01);
                     Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
 
                     if (socket.isServer)
-
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     else 
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     KhoaChuong();
-                   // }
                     break;
 
                 case "y1":
                 case "y2":
                 case "y3":
                 case "y4":
-                   // if (numUser == 2)
-                   // {
-                        //if (ptb.Image != null)
-                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
-                   // }
+                    SetControlImage(btn1, Animation.UI_Horse_Select_02);
+                    Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
+                    if (socket.isServer)
+                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
+                    else
+                        socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
+                    KhoaChuong();
                     break;
                 case "g1":
                 case "g2":
                 case "g3":
                 case "g4":
-                    //if (numUser == 3)
-                   // {
-                        //if (ptb.Image != null)
-                            socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
-                  //  }
+                    SetControlImage(btn15, Animation.UI_Horse_Select_03);
+                    Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
+                    if (socket.isServer)
+                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
+                    else
+                        socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
+                    KhoaChuong();
                     break;
-
             }
         }
 
@@ -1752,42 +1739,34 @@ namespace GameProject
         private void b1_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b1");
-            MessageBox.Show("bấm b1");
         }
         private void b2_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b2");
-            MessageBox.Show("bấm b2");
         }
         private void b3_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b3");
-            MessageBox.Show("bấm b3");
         }
         private void b4_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("b4");
-            MessageBox.Show("bấm b4");
         }
         private void r1_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r1");
-            MessageBox.Show("bấm r1");
         }
         private void r2_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r2");
-            MessageBox.Show("bấm r2");
         }
         private void r3_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r3");
-            MessageBox.Show("bấm r3");
         }
         private void r4_Click(object sender, EventArgs e)
         {
             Send_XuatQuanCo("r4");
-            MessageBox.Show("bấm r4");
         }
         private void y1_Click(object sender, EventArgs e)
         {
@@ -1827,12 +1806,10 @@ namespace GameProject
         private void btn29_Click(object sender, EventArgs e)
         {
             SendBtnBox(29);
-            //MessageBox.Show("bấm 29");
         }
         private void btn43_Click(object sender, EventArgs e)
         {
             SendBtnBox(43);
-            MessageBox.Show("bấm 43");
         }
         private void btn1_Click(object sender, EventArgs e)
         {
@@ -2119,11 +2096,7 @@ namespace GameProject
             {
                 picturebox.Enabled = status;
             }
-            // MessageBox.Show("Đã chạy");
         }
-
-
-
 
         private void btnSendMSG_Click(object sender, EventArgs e)
         {
