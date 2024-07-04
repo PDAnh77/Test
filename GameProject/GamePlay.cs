@@ -17,7 +17,7 @@ using System.Timers;
 using System.Net.NetworkInformation;
 using FirebaseAdmin.Messaging;
 using FireSharp;
-//using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 
 
@@ -401,24 +401,93 @@ namespace GameProject
                         {
                             if (Int32.TryParse(data.Message, out ThuTuLuotChoi))
                             {
-                                if (socket.isServer)
-                                {                                  
+                                string name = "lbun";
+                                if (socket.isServer)                                // Trường hợp server
+                                { 
+                                    if (ThuTuLuotChoi == 0)
+                                    {
+                                        for (int i = 1; i <= 4; i++)
+                                        {
+                                            string labelName = name + i;
+                                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                            if (lb.Text == username + " (you)")
+                                            {
+                                                SetKhungLuot(lb);
+                                            }
+                                            else
+                                            {
+                                                ResetKhungLuot(lb);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for (int i = 1; i <= 4; i++)
+                                        {
+                                            string labelName = name + i;
+                                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                            if (lb.Text == DSUser[ThuTuLuotChoi])
+                                            {
+                                                SetKhungLuot(lb);
+                                            }
+                                            else
+                                            {
+                                                ResetKhungLuot(lb);
+                                            }
+                                        }
+                                    }
                                     socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), data.Message));
+                                }
+                                else                        // Trường hợp là client
+                                {
+                                    if (username == DSUser[ThuTuLuotChoi])
+                                    {
+                                        for (int i = 1; i <= 4; i++)
+                                        {
+                                            string labelName = name + i;
+                                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                            if (lb.Text == username + " (you)")
+                                            {
+                                                SetKhungLuot(lb);
+                                            }
+                                            else
+                                            {
+                                                ResetKhungLuot(lb);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for (int i = 1; i <= 4; i++)
+                                        {
+                                            string labelName = name + i;
+                                            Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                            if (lb.Text == DSUser[ThuTuLuotChoi])
+                                            {
+                                                SetKhungLuot(lb);
+                                            }
+                                            else
+                                            {
+                                                ResetKhungLuot(lb);
+                                            }
+                                        }
+                                    }
                                 }
 
                                 if (username == DSUser[ThuTuLuotChoi])
                                 {
                                     SetButtonEnabledSafe(btnXiNgau, true);
                                 }
-                                WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}\n");
                             }
                             else
                             {
                                 MessageBox.Show("Error receiving player turn");
                             }
                         }));
-
-
                     }
                     break;
                 case (int)SocketCommand.SEND_MESSAGE:
@@ -596,7 +665,22 @@ namespace GameProject
                     ThuTuLuotChoi = Int32.Parse(Luot);
                     string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
                     WriteTextSafe(lbluotchoi, tmp);
-                
+
+                    string nameSanSang = "lbun";
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        string labelName = nameSanSang + i;
+                        Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                        if (lb.Text == DSUser[ThuTuLuotChoi])
+                        {
+                            SetKhungLuot(lb);
+                        }
+                        else
+                        {
+                            ResetKhungLuot(lb);
+                        }
+                    }
                     ChuanBiCacQuanCo();
                     UnlockCacNut();
 
@@ -631,6 +715,32 @@ namespace GameProject
             catch 
             {
                 // Xử lý lỗi nếu cần thiết
+            }
+        }
+
+        private delegate void SetKhungDelegate(Label label);
+
+        private void SetKhungLuot(Label label)                          // Khi là lượt của mình thì thay đổi khung hiển thị
+        {
+            if (label.InvokeRequired)                                   // Kiểm tra thực hiện thay đổi có cần gọi invoke không, có thì gọi, không thì thực hiện trực tiếp
+            {
+                label.Invoke(new SetKhungDelegate(SetKhungLuot), label);
+            }
+            else
+            {
+                label.ForeColor = Color.Red;
+            }
+        }
+
+        private void ResetKhungLuot(Label label)                        // Đặt lại khung hiển thị về mặc định
+        {
+            if (label.InvokeRequired)
+            {
+                label.Invoke(new System.Action(() => label.ForeColor = Color.Black));
+            }
+            else
+            {
+                label.ForeColor = Color.Black;
             }
         }
 
@@ -961,6 +1071,60 @@ namespace GameProject
                 {
                     socket.Send(new SocketData((int)SocketCommand.DI_CHUYEN, point, null));
                 }
+
+                if (xingau != 1)                // Kiểm tra xem xí ngầu lắc ra được có phải 1 hay 6 không, nếu không thì kết thúc lượt 
+                {
+                    if (xingau != 6)
+                    {
+                        ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
+                        if (socket.isServer)
+                        {
+                            string name = "lbun";
+
+                            if (ThuTuLuotChoi == 0)
+                            {    
+                                for (int i = 1; i <= 4; i++)
+                                {
+                                    string labelName = name + i;
+                                    Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                    if (lb.Text == username + " (you)")
+                                    {
+                                        SetKhungLuot(lb);
+                                    }
+                                    else
+                                    {
+                                        ResetKhungLuot(lb);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 1; i <= 4; i++)
+                                {
+                                    string labelName = name + i;
+                                    Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                                    if (lb.Text == DSUser[ThuTuLuotChoi])
+                                    {
+                                        SetKhungLuot(lb);
+                                    }
+                                    else
+                                    {
+                                        ResetKhungLuot(lb);
+                                    }
+                                }
+                            }
+
+                            socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                        }
+                        else
+                        {
+                            socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                        }
+                        SetButtonEnabledSafe(btnXiNgau, false);                        
+                    }
+                }    
             }
 
             /* PictureBox ptb = (PictureBox)this.Controls.Find("btn" + x, false).FirstOrDefault() as PictureBox;
@@ -990,11 +1154,24 @@ namespace GameProject
             UpdateTrangThaiRoom(IDphong);
             TrangThaiChoi = true;
 
+            string name = "lbun";
+            for (int i = 1; i <= 4; i++)
+            {
+                string labelName = name + i;
+                Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                if (lb.Text == username + " (you)")
+                {
+                    SetKhungLuot(lb);
+                }
+                else
+                {
+                    ResetKhungLuot(lb);
+                }
+            }
             //Random random = new Random();
             //ThuTuLuotChoi = random.Next(0, DSUser.Count);
             //socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
-            string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
-            WriteTextSafe(lbluotchoi, tmp);
         }
 
         void ChuanBiCacQuanCo()
@@ -1200,7 +1377,6 @@ namespace GameProject
             {
                 socket.Send(new SocketData((int)SocketCommand.XUC_XAC, new Point(), $"{xingau}"));
             }
-            SetButtonEnabledSafe(btnXiNgau, false);
         }
 
        /* private void button1_Click(object sender, EventArgs e)
