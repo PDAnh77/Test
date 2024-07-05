@@ -789,26 +789,26 @@ namespace GameProject
             {
                 if (label.Name == "lbun1")
                 {
-                    /*pictureBox3.Location = new Point(pictureBox3.Location.X - 30, pictureBox3.Location.Y);
-                    pictureBox3.Size = new Size (pictureBox3.Width + 29, pictureBox3.Height);*/
-                    SetControlImage (pictureBox3, Animation.UI_PlayerB_Icon_Turn);
+                    pictureBox3.Location = new Point(pictureBox3.Location.X - 30, pictureBox3.Location.Y);
+                    pictureBox3.Size = new Size(pictureBox3.Width + 29, pictureBox3.Height);
+                    SetControlImage(pictureBox3, Animation.UI_PlayerB_Icon_Turn);
                 }
                 if (label.Name == "lbun2")
                 {
-                    /*pictureBox4.Location = new Point(pictureBox4.Location.X - 30, pictureBox4.Location.Y);
-                    pictureBox4.Size = new Size(pictureBox4.Width + 29, pictureBox4.Height);*/
+                    pictureBox4.Location = new Point(pictureBox4.Location.X - 30, pictureBox4.Location.Y);
+                    pictureBox4.Size = new Size(pictureBox4.Width + 29, pictureBox4.Height);
                     SetControlImage(pictureBox4, Animation.UI_PlayerR_Icon_Turn);
                 }
                 if (label.Name == "lbun3")
                 {
-                    /*pictureBox5.Location = new Point(pictureBox5.Location.X - 30, pictureBox5.Location.Y);
-                    pictureBox5.Size = new Size(pictureBox5.Width + 29, pictureBox5.Height);*/
+                    pictureBox5.Location = new Point(pictureBox5.Location.X - 30, pictureBox5.Location.Y);
+                    pictureBox5.Size = new Size(pictureBox5.Width + 29, pictureBox5.Height);
                     SetControlImage(pictureBox5, Animation.UI_PlayerY_Icon_Turn);
                 }
                 if (label.Name == "lbun4")
                 {
-                    /*pictureBox6.Location = new Point(pictureBox6.Location.X - 30, pictureBox6.Location.Y);
-                    pictureBox6.Size = new Size(pictureBox6.Width + 29, pictureBox6.Height);*/
+                    pictureBox6.Location = new Point(pictureBox6.Location.X - 30, pictureBox6.Location.Y);
+                    pictureBox6.Size = new Size(pictureBox6.Width + 29, pictureBox6.Height);
                     SetControlImage(pictureBox6, Animation.UI_PlayerG_Icon_Turn);
                 }
                 label.ForeColor = Color.Red;
@@ -823,44 +823,29 @@ namespace GameProject
             }
             else
             {
+                if (label.ForeColor != Color.Red) return;
                 if (label.Name == "lbun1")
                 {
-                    /*if (pictureBox3.Size.Width == 229)
-                    {
-                        return;
-                    }
                     pictureBox3.Size = new Size(pictureBox3.Width - 29, pictureBox3.Height);
-                    pictureBox3.Location = new Point(pictureBox3.Location.X + 30, pictureBox3.Location.Y);*/
+                    pictureBox3.Location = new Point(pictureBox3.Location.X + 30, pictureBox3.Location.Y);
                     SetControlImage(pictureBox3, Animation.UI_PlayerB_Icon);
                 }
                 if (label.Name == "lbun2")
                 {
-                    /*if (pictureBox4.Size.Width == 229)
-                    {
-                        return;
-                    }
                     pictureBox4.Size = new Size(pictureBox4.Width - 29, pictureBox4.Height);
-                    pictureBox4.Location = new Point(pictureBox4.Location.X + 30, pictureBox4.Location.Y);*/
+                    pictureBox4.Location = new Point(pictureBox4.Location.X + 30, pictureBox4.Location.Y);
                     SetControlImage(pictureBox4, Animation.UI_PlayerR_Icon);
                 }
                 if (label.Name == "lbun3")
                 {
-                    /*if (pictureBox5.Size.Width == 229)
-                    {
-                        return;
-                    }
                     pictureBox5.Size = new Size(pictureBox5.Width - 29, pictureBox5.Height);
-                    pictureBox5.Location = new Point(pictureBox5.Location.X + 30, pictureBox5.Location.Y);*/
+                    pictureBox5.Location = new Point(pictureBox5.Location.X + 30, pictureBox5.Location.Y);
                     SetControlImage(pictureBox5, Animation.UI_PlayerY_Icon);
                 }
                 if (label.Name == "lbun4")
                 {
-                    /*if (pictureBox6.Size.Width == 229)
-                    {
-                        return;
-                    }
                     pictureBox6.Size = new Size(pictureBox6.Width - 29, pictureBox6.Height);
-                    pictureBox6.Location = new Point(pictureBox6.Location.X + 30, pictureBox6.Location.Y);*/
+                    pictureBox6.Location = new Point(pictureBox6.Location.X + 30, pictureBox6.Location.Y);
                     SetControlImage(pictureBox6, Animation.UI_PlayerG_Icon);
                 }
                 label.ForeColor = Color.Black;
