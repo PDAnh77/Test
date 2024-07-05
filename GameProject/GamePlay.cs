@@ -112,6 +112,7 @@ namespace GameProject
             {
                 await DeleteRoom(IDphong);
                 socket.CloseConnect();
+                timercd.Stop();
                 DialogResult = DialogResult.Cancel; // Quay về GameLobby
             }
             else
@@ -126,6 +127,7 @@ namespace GameProject
                     UpdateRoomViewer(IDphong, false);
                 }
                 socket.CloseClient();
+                timercd.Stop();
                 DialogResult = DialogResult.Cancel; // Quay về GameLobby
             }
         }
