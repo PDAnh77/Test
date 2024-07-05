@@ -1155,6 +1155,11 @@ namespace GameProject
                 { }
 
                 int y = x + xingau;
+
+                if( y > 56 )
+                {
+                    y -= 56;
+                }    
                 string co = "btn" + x;
                 string dich = "btn" + y;
 
