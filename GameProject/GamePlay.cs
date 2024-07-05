@@ -494,6 +494,7 @@ namespace GameProject
                                                 ResetKhungLuot(lb);
                                             }
                                         }
+                                        UnlockCacNut();
                                     }
                                     else
                                     {
@@ -532,6 +533,7 @@ namespace GameProject
                                                 ResetKhungLuot(lb);
                                             }
                                         }
+                                        UnlockCacNut();
                                     }
                                     else
                                     {
@@ -550,11 +552,6 @@ namespace GameProject
                                             }
                                         }
                                     }
-                                }
-
-                                if (username == DSUser[ThuTuLuotChoi])
-                                {
-                                    SetButtonEnabledSafe(btnXiNgau, true);
                                 }
                             }
                             else
@@ -752,8 +749,6 @@ namespace GameProject
                     string Luot = data.Message;
 
                     ThuTuLuotChoi = Int32.Parse(Luot);
-                    string tmp = $"Đến lượt: {DSUser[ThuTuLuotChoi]}";
-                    WriteTextSafe(lbluotchoi, tmp);
 
                     string nameSanSang = "lbun";
                     timercd.Start();
@@ -1154,14 +1149,7 @@ namespace GameProject
         public void UnlockCacNut()
         {
             SetButtonEnabledSafe(btnBoLuot, true);
-
-            BeginInvoke(new System.Action(() =>
-            {
-                if (username == DSUser[0])
-                {
-                    btnXiNgau.Enabled = true;
-                }
-            }));
+            SetButtonEnabledSafe(btnXiNgau, true);
 
             int i = 1;
             int j = 1;
@@ -1349,7 +1337,7 @@ namespace GameProject
                                 }
                             }
 
-                            SetButtonEnabledSafe(btnXiNgau, false);
+                            LockCacNut();
                         }
 
                     }
@@ -1405,7 +1393,7 @@ namespace GameProject
                         {
                             ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count;
                             socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
-                            SetButtonEnabledSafe(btnXiNgau, false);
+                            LockCacNut();
                         }
                     }
                 }
@@ -1518,29 +1506,38 @@ namespace GameProject
         {
             PlayAnimation(btnBoLuot);
 
-            if (socket.isServer)
-            { socket.Broadcast(new SocketData((int)SocketCommand.STARTTIMER, new Point(), "")); }
-            else
-            { socket.Send(new SocketData((int)SocketCommand.STARTTIMER, new Point(), "")); }
-
-            if (username != DSUser[ThuTuLuotChoi])
+            if (username != DSUser[ThuTuLuotChoi])              // Không phải lượt của nó thì bỏ qua
             {
                 return;
             }
-            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; //Tính lượt chơi của ng tiếp theo 
+
+            ThuTuLuotChoi = (ThuTuLuotChoi + 1) % DSUser.Count; // Tính lượt chơi của ng tiếp theo 
 
             if (socket.isServer)
             {
                 socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                for (int i = 1; i <= 4; i++)
+                {
+                    string labelName = "lbun" + i;
+                    Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+
+                    if (lb.Text == DSUser[ThuTuLuotChoi])
+                    {
+                        SetKhungLuot(lb);
+                    }
+                    else
+                    {
+                        ResetKhungLuot(lb);
+                    }
+                }
                 cd = 30;
                 lbCD.Text = cd.ToString();
-                WriteTextSafe(rtbMSG, $"Lượt của {DSUser[ThuTuLuotChoi]}\n");
             }
             else
             {
                 socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
             }
-           
+            LockCacNut();
         }
         ///////////////////////////////////////////////////////////////////////
         private void b1_Click(object sender, EventArgs e)
