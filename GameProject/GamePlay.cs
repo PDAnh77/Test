@@ -1013,7 +1013,16 @@ namespace GameProject
                         SetButtonEnabledSafe(btnXiNgau, false);      
                         
                     }
-                }    
+                    else
+                    {
+                        SetButtonEnabledSafe(btnXiNgau, true);
+                    }
+                }
+                else
+                {
+                    SetButtonEnabledSafe(btnXiNgau, true);
+                }
+                
             }
         }
         #endregion
@@ -1248,6 +1257,7 @@ namespace GameProject
                 MoChuong(ThuTuLuotChoi);
             }
 
+            SetButtonEnabledSafe(btnXiNgau, false);
             if (socket.isServer)
             {
                 diceimg(xingau);
@@ -1449,6 +1459,7 @@ namespace GameProject
                     KhoaChuong();
                     break;
             }
+            SetButtonEnabledSafe(btnXiNgau, true);
         }
 
         private void btnBoLuot_Click(object sender, EventArgs e)
