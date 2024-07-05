@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.buttonDesign1 = new GameProject.CustomControls.ButtonDesign();
-            this.buttonDesign2 = new GameProject.CustomControls.ButtonDesign();
             this.colDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResult = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPlayer = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.buttonDesign1 = new GameProject.CustomControls.ButtonDesign();
+            this.buttonDesign2 = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,6 +53,37 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(776, 361);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // colDate
+            // 
+            this.colDate.HeaderText = "Diễn ra";
+            this.colDate.MinimumWidth = 6;
+            this.colDate.Name = "colDate";
+            this.colDate.ReadOnly = true;
+            this.colDate.Width = 125;
+            // 
+            // colTime
+            // 
+            this.colTime.HeaderText = "Thời gian";
+            this.colTime.MinimumWidth = 6;
+            this.colTime.Name = "colTime";
+            this.colTime.ReadOnly = true;
+            this.colTime.Width = 125;
+            // 
+            // colResult
+            // 
+            this.colResult.HeaderText = "Kết quả";
+            this.colResult.MinimumWidth = 6;
+            this.colResult.Name = "colResult";
+            this.colResult.ReadOnly = true;
+            this.colResult.Width = 125;
+            // 
+            // colPlayer
+            // 
+            this.colPlayer.HeaderText = "Người tham gia";
+            this.colPlayer.MinimumWidth = 6;
+            this.colPlayer.Name = "colPlayer";
+            this.colPlayer.Width = 125;
             // 
             // buttonDesign1
             // 
@@ -90,37 +121,6 @@
             this.buttonDesign2.TextColor = System.Drawing.Color.White;
             this.buttonDesign2.UseVisualStyleBackColor = false;
             // 
-            // colDate
-            // 
-            this.colDate.HeaderText = "Diễn ra";
-            this.colDate.MinimumWidth = 6;
-            this.colDate.Name = "colDate";
-            this.colDate.ReadOnly = true;
-            this.colDate.Width = 125;
-            // 
-            // colTime
-            // 
-            this.colTime.HeaderText = "Thời gian";
-            this.colTime.MinimumWidth = 6;
-            this.colTime.Name = "colTime";
-            this.colTime.ReadOnly = true;
-            this.colTime.Width = 125;
-            // 
-            // colResult
-            // 
-            this.colResult.HeaderText = "Kết quả";
-            this.colResult.MinimumWidth = 6;
-            this.colResult.Name = "colResult";
-            this.colResult.ReadOnly = true;
-            this.colResult.Width = 125;
-            // 
-            // colPlayer
-            // 
-            this.colPlayer.HeaderText = "Người tham gia";
-            this.colPlayer.MinimumWidth = 6;
-            this.colPlayer.Name = "colPlayer";
-            this.colPlayer.Width = 125;
-            // 
             // History
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -131,6 +131,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "History";
             this.Text = "History";
+            this.Load += new System.EventHandler(this.History_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
