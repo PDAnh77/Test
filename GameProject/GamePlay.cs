@@ -1976,6 +1976,26 @@ namespace GameProject
                     pictureBox.BackColor = customColor02;
                     pictureBox.Enabled = false;
                 }
+
+                if (control is PictureBox)
+                {
+                    if (control.Name.Contains("dichV"))
+                    {
+                        SetControlImage(control, Animation.UI_Square_Y);
+                    }
+                    if (control.Name.Contains("dichD"))
+                    {
+                        SetControlImage(control, Animation.UI_Square_R);
+                    }
+                    if (control.Name.Contains("dichXL"))
+                    {
+                        SetControlImage(control, Animation.UI_Square_G);
+                    }
+                    if (control.Name.Contains("dichXD"))
+                    {
+                        SetControlImage(control, Animation.UI_Square_B);
+                    }
+                }
             }
 
             rtbMSG.BackColor = customColor03;
@@ -2068,8 +2088,6 @@ namespace GameProject
 
         private async void SendMSGtoFB (string code, string username, string idphong, string MSG)
         {
-            
-
             string data = code + "/" + username + "/" + idphong + "/" + MSG;
             SetResponse response = await client.SetAsync("Messages/" , data);
         }

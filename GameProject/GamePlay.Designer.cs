@@ -56,8 +56,8 @@
             this.y3 = new System.Windows.Forms.PictureBox();
             this.y2 = new System.Windows.Forms.PictureBox();
             this.y1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox20 = new System.Windows.Forms.PictureBox();
-            this.pictureBox21 = new System.Windows.Forms.PictureBox();
+            this.dichD6 = new System.Windows.Forms.PictureBox();
+            this.dichD5 = new System.Windows.Forms.PictureBox();
             this.dichD4 = new System.Windows.Forms.PictureBox();
             this.dichD3 = new System.Windows.Forms.PictureBox();
             this.dichD2 = new System.Windows.Forms.PictureBox();
@@ -66,10 +66,10 @@
             this.dichXL2 = new System.Windows.Forms.PictureBox();
             this.dichXL3 = new System.Windows.Forms.PictureBox();
             this.dichXL4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox15 = new System.Windows.Forms.PictureBox();
-            this.pictureBox14 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.dichXL5 = new System.Windows.Forms.PictureBox();
+            this.dichXL6 = new System.Windows.Forms.PictureBox();
+            this.dichXD6 = new System.Windows.Forms.PictureBox();
+            this.dichXD5 = new System.Windows.Forms.PictureBox();
             this.dichXD4 = new System.Windows.Forms.PictureBox();
             this.dichXD3 = new System.Windows.Forms.PictureBox();
             this.dichXD2 = new System.Windows.Forms.PictureBox();
@@ -168,8 +168,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.y3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.y2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.y1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichD6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichD5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichD4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichD3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichD2)).BeginInit();
@@ -178,10 +178,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dichXL2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXL3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXL4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXL5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXL6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXD6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXD5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXD4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXD3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXD2)).BeginInit();
@@ -548,27 +548,27 @@
             this.y1.TabStop = false;
             this.y1.Click += new System.EventHandler(this.y1_Click);
             // 
-            // pictureBox20
+            // dichD6
             // 
-            this.pictureBox20.BackColor = System.Drawing.Color.Red;
-            this.pictureBox20.Location = new System.Drawing.Point(563, 305);
-            this.pictureBox20.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox20.Name = "pictureBox20";
-            this.pictureBox20.Size = new System.Drawing.Size(35, 37);
-            this.pictureBox20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox20.TabIndex = 87;
-            this.pictureBox20.TabStop = false;
+            this.dichD6.BackColor = System.Drawing.Color.Red;
+            this.dichD6.Location = new System.Drawing.Point(563, 305);
+            this.dichD6.Margin = new System.Windows.Forms.Padding(4);
+            this.dichD6.Name = "dichD6";
+            this.dichD6.Size = new System.Drawing.Size(35, 37);
+            this.dichD6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dichD6.TabIndex = 87;
+            this.dichD6.TabStop = false;
             // 
-            // pictureBox21
+            // dichD5
             // 
-            this.pictureBox21.BackColor = System.Drawing.Color.Red;
-            this.pictureBox21.Location = new System.Drawing.Point(525, 305);
-            this.pictureBox21.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox21.Name = "pictureBox21";
-            this.pictureBox21.Size = new System.Drawing.Size(35, 37);
-            this.pictureBox21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox21.TabIndex = 86;
-            this.pictureBox21.TabStop = false;
+            this.dichD5.BackColor = System.Drawing.Color.Red;
+            this.dichD5.Location = new System.Drawing.Point(525, 305);
+            this.dichD5.Margin = new System.Windows.Forms.Padding(4);
+            this.dichD5.Name = "dichD5";
+            this.dichD5.Size = new System.Drawing.Size(35, 37);
+            this.dichD5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dichD5.TabIndex = 86;
+            this.dichD5.TabStop = false;
             // 
             // dichD4
             // 
@@ -658,49 +658,49 @@
             this.dichXL4.TabIndex = 78;
             this.dichXL4.TabStop = false;
             // 
-            // pictureBox15
+            // dichXL5
             // 
-            this.pictureBox15.BackColor = System.Drawing.Color.ForestGreen;
-            this.pictureBox15.Location = new System.Drawing.Point(133, 305);
-            this.pictureBox15.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox15.Name = "pictureBox15";
-            this.pictureBox15.Size = new System.Drawing.Size(35, 37);
-            this.pictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox15.TabIndex = 77;
-            this.pictureBox15.TabStop = false;
+            this.dichXL5.BackColor = System.Drawing.Color.ForestGreen;
+            this.dichXL5.Location = new System.Drawing.Point(133, 305);
+            this.dichXL5.Margin = new System.Windows.Forms.Padding(4);
+            this.dichXL5.Name = "dichXL5";
+            this.dichXL5.Size = new System.Drawing.Size(35, 37);
+            this.dichXL5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dichXL5.TabIndex = 77;
+            this.dichXL5.TabStop = false;
             // 
-            // pictureBox14
+            // dichXL6
             // 
-            this.pictureBox14.BackColor = System.Drawing.Color.ForestGreen;
-            this.pictureBox14.Location = new System.Drawing.Point(91, 305);
-            this.pictureBox14.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox14.Name = "pictureBox14";
-            this.pictureBox14.Size = new System.Drawing.Size(35, 37);
-            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox14.TabIndex = 76;
-            this.pictureBox14.TabStop = false;
+            this.dichXL6.BackColor = System.Drawing.Color.ForestGreen;
+            this.dichXL6.Location = new System.Drawing.Point(91, 305);
+            this.dichXL6.Margin = new System.Windows.Forms.Padding(4);
+            this.dichXL6.Name = "dichXL6";
+            this.dichXL6.Size = new System.Drawing.Size(35, 37);
+            this.dichXL6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dichXL6.TabIndex = 76;
+            this.dichXL6.TabStop = false;
             // 
-            // pictureBox8
+            // dichXD6
             // 
-            this.pictureBox8.BackColor = System.Drawing.Color.Blue;
-            this.pictureBox8.Location = new System.Drawing.Point(327, 533);
-            this.pictureBox8.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(37, 32);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox8.TabIndex = 75;
-            this.pictureBox8.TabStop = false;
+            this.dichXD6.BackColor = System.Drawing.Color.Blue;
+            this.dichXD6.Location = new System.Drawing.Point(327, 533);
+            this.dichXD6.Margin = new System.Windows.Forms.Padding(4);
+            this.dichXD6.Name = "dichXD6";
+            this.dichXD6.Size = new System.Drawing.Size(37, 32);
+            this.dichXD6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dichXD6.TabIndex = 75;
+            this.dichXD6.TabStop = false;
             // 
-            // pictureBox9
+            // dichXD5
             // 
-            this.pictureBox9.BackColor = System.Drawing.Color.Blue;
-            this.pictureBox9.Location = new System.Drawing.Point(327, 495);
-            this.pictureBox9.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(37, 32);
-            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox9.TabIndex = 74;
-            this.pictureBox9.TabStop = false;
+            this.dichXD5.BackColor = System.Drawing.Color.Blue;
+            this.dichXD5.Location = new System.Drawing.Point(327, 495);
+            this.dichXD5.Margin = new System.Windows.Forms.Padding(4);
+            this.dichXD5.Name = "dichXD5";
+            this.dichXD5.Size = new System.Drawing.Size(37, 32);
+            this.dichXD5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.dichXD5.TabIndex = 74;
+            this.dichXD5.TabStop = false;
             // 
             // dichXD4
             // 
@@ -1731,8 +1731,8 @@
             this.Controls.Add(this.y1);
             this.Controls.Add(this.lbID);
             this.Controls.Add(this.lbun1);
-            this.Controls.Add(this.pictureBox20);
-            this.Controls.Add(this.pictureBox21);
+            this.Controls.Add(this.dichD6);
+            this.Controls.Add(this.dichD5);
             this.Controls.Add(this.dichD4);
             this.Controls.Add(this.dichD3);
             this.Controls.Add(this.dichD2);
@@ -1741,10 +1741,10 @@
             this.Controls.Add(this.dichXL2);
             this.Controls.Add(this.dichXL3);
             this.Controls.Add(this.dichXL4);
-            this.Controls.Add(this.pictureBox15);
-            this.Controls.Add(this.pictureBox14);
-            this.Controls.Add(this.pictureBox8);
-            this.Controls.Add(this.pictureBox9);
+            this.Controls.Add(this.dichXL5);
+            this.Controls.Add(this.dichXL6);
+            this.Controls.Add(this.dichXD6);
+            this.Controls.Add(this.dichXD5);
             this.Controls.Add(this.dichXD4);
             this.Controls.Add(this.dichXD3);
             this.Controls.Add(this.dichXD2);
@@ -1836,8 +1836,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.y3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.y2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.y1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichD6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichD5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichD4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichD3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichD2)).EndInit();
@@ -1846,10 +1846,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dichXL2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXL3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXL4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXL5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXL6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXD6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dichXD5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXD4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXD3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dichXD2)).EndInit();
@@ -1991,20 +1991,20 @@
         private System.Windows.Forms.PictureBox dichV3;
         private System.Windows.Forms.PictureBox dichV2;
         private System.Windows.Forms.PictureBox dichV1;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.PictureBox dichXD6;
+        private System.Windows.Forms.PictureBox dichXD5;
         private System.Windows.Forms.PictureBox dichXD4;
         private System.Windows.Forms.PictureBox dichXD3;
         private System.Windows.Forms.PictureBox dichXD2;
         private System.Windows.Forms.PictureBox dichXD1;
-        private System.Windows.Forms.PictureBox pictureBox14;
-        private System.Windows.Forms.PictureBox pictureBox15;
+        private System.Windows.Forms.PictureBox dichXL6;
+        private System.Windows.Forms.PictureBox dichXL5;
         private System.Windows.Forms.PictureBox dichXL4;
         private System.Windows.Forms.PictureBox dichXL3;
         private System.Windows.Forms.PictureBox dichXL2;
         private System.Windows.Forms.PictureBox dichXL1;
-        private System.Windows.Forms.PictureBox pictureBox20;
-        private System.Windows.Forms.PictureBox pictureBox21;
+        private System.Windows.Forms.PictureBox dichD6;
+        private System.Windows.Forms.PictureBox dichD5;
         private System.Windows.Forms.PictureBox dichD4;
         private System.Windows.Forms.PictureBox dichD3;
         private System.Windows.Forms.PictureBox dichD2;

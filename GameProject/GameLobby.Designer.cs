@@ -42,6 +42,7 @@ namespace GameProject
             this.btnCreateRoom = new GameProject.CustomControls.ButtonDesign();
             this.btnReturn = new GameProject.CustomControls.ButtonDesign();
             this.btnLuatChoi = new GameProject.CustomControls.ButtonDesign();
+            this.btnHistory = new GameProject.CustomControls.ButtonDesign();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -202,7 +203,7 @@ namespace GameProject
             this.btnLuatChoi.FlatAppearance.BorderSize = 0;
             this.btnLuatChoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLuatChoi.ForeColor = System.Drawing.Color.White;
-            this.btnLuatChoi.Location = new System.Drawing.Point(237, 454);
+            this.btnLuatChoi.Location = new System.Drawing.Point(182, 454);
             this.btnLuatChoi.Margin = new System.Windows.Forms.Padding(4);
             this.btnLuatChoi.Name = "btnLuatChoi";
             this.btnLuatChoi.Size = new System.Drawing.Size(145, 49);
@@ -213,11 +214,32 @@ namespace GameProject
             this.btnLuatChoi.UseVisualStyleBackColor = false;
             this.btnLuatChoi.Click += new System.EventHandler(this.btnLuatChoi_Click);
             // 
+            // btnHistory
+            // 
+            this.btnHistory.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnHistory.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnHistory.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnHistory.BorderRadius = 0;
+            this.btnHistory.BorderSize = 0;
+            this.btnHistory.FlatAppearance.BorderSize = 0;
+            this.btnHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHistory.ForeColor = System.Drawing.Color.White;
+            this.btnHistory.Location = new System.Drawing.Point(335, 454);
+            this.btnHistory.Margin = new System.Windows.Forms.Padding(4);
+            this.btnHistory.Name = "btnHistory";
+            this.btnHistory.Size = new System.Drawing.Size(145, 49);
+            this.btnHistory.TabIndex = 22;
+            this.btnHistory.Text = "Lịch sử đấu";
+            this.btnHistory.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnHistory.TextColor = System.Drawing.Color.White;
+            this.btnHistory.UseVisualStyleBackColor = false;
+            // 
             // GameLobby
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1261, 673);
+            this.Controls.Add(this.btnHistory);
             this.Controls.Add(this.btnLuatChoi);
             this.Controls.Add(this.btnJoinRoom);
             this.Controls.Add(this.flowLayoutPanelRooms);
@@ -251,5 +273,6 @@ namespace GameProject
         private FlowLayoutPanel flowLayoutPanelRooms;
         private CustomControls.ButtonDesign btnJoinRoom;
         private CustomControls.ButtonDesign btnLuatChoi;
+        private CustomControls.ButtonDesign btnHistory;
     }
 }

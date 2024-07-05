@@ -52,7 +52,7 @@ namespace GameProject
 
             // Test form
 
-            /*GamePlay roomForm = new GamePlay();
+            /*LuatChoi roomForm = new LuatChoi();
             Application.Run(roomForm);*/
 
             Application.Exit();
