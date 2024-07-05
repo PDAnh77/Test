@@ -954,14 +954,45 @@ namespace GameProject
                 { }
 
                 int y = x + xingau;
+
+                int solanCheck = 1;
+                int oCheck = x + 1;
+
+                while (true)
+                {
+                    if (xingau == 1)
+                    {
+                        break;
+                    }
+
+                    if (oCheck > 56)
+                    {
+                        oCheck -= 56;
+                    }
+
+                    string quan_o_vitriCheck = null;
+                    quan_o_vitriCheck = dsViTri.FirstOrDefault(source => source.Value == "btn" + oCheck).Key;
+                    if (quan_o_vitriCheck != null)
+                    {
+                        return;
+                    }
+
+                    if (solanCheck == xingau - 1)
+                    {
+                        break;
+                    }
+                    solanCheck++;
+                    oCheck++;
+                }
+
                 if (y > 56)
                 {
                     y -= 56;
-                }    
+                }
                 string co = "btn" + x;
                 string dich = "btn" + y;
 
-                Point point = new Point(x,y);
+                Point point = new Point(x, y);
                 if (socket.isServer)
                 {
                     string quanco = dsViTri.FirstOrDefault(source => source.Value == co).Key;
@@ -988,7 +1019,7 @@ namespace GameProject
                             string name = "lbun";
 
                             if (ThuTuLuotChoi == 0)
-                            {    
+                            {
                                 for (int i = 1; i <= 4; i++)
                                 {
                                     string labelName = name + i;
@@ -1030,8 +1061,8 @@ namespace GameProject
                         {
                             socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
                         }
-                        SetButtonEnabledSafe(btnXiNgau, false);      
-                        
+                        SetButtonEnabledSafe(btnXiNgau, false);
+
                     }
                     else
                     {
@@ -1042,9 +1073,9 @@ namespace GameProject
                 {
                     SetButtonEnabledSafe(btnXiNgau, true);
                 }
-                
             }
         }
+
         #endregion
 
         #region Events
