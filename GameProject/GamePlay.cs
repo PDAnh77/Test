@@ -780,6 +780,33 @@ namespace GameProject
                     SetControlImage(ptb_co, Animation.UI_Square);
                     dsViTri[$"{quanco}"] = $"btn" + to;
                     break;
+
+                case (int)SocketCommand.DA_QUAN:
+                    string quancobida = data.Message;
+                    if (socket.isServer)
+                    {
+                        socket.Broadcast(new SocketData((int)SocketCommand.DA_QUAN, new Point(), data.Message));
+                    }
+                    dsViTri[$"{quancobida}"] = null;
+
+                    Invoke(new System.Action(() => {
+                        switch (quancobida[0])
+                        {
+                            case 'b':
+                                SetControlImage((PictureBox)this.Controls.Find(quancobida, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                                break;
+                            case 'r':
+                                SetControlImage((PictureBox)this.Controls.Find(quancobida, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                                break;
+                            case 'y':
+                                SetControlImage((PictureBox)this.Controls.Find(quancobida, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                                break;
+                            case 'g':
+                                SetControlImage((PictureBox)this.Controls.Find(quancobida, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                                break;
+                        }
+                    }));               
+                    break;
                 default:
                     break;
             }
@@ -931,14 +958,20 @@ namespace GameProject
 
         private void SendBtnBox(int vitriHienTai)
         {
-            PictureBox ptb_co = (PictureBox)this.Controls.Find("btn" + vitriHienTai, false).FirstOrDefault() as PictureBox;
+            //dành cho việc việc thay đổi hình ảnh
+            PictureBox ptb_co = (PictureBox)this.Controls.Find("btn" + vitriHienTai, false).FirstOrDefault() as PictureBox; 
+
 
             if (username == DSUser[ThuTuLuotChoi])
             {
                 //////Kiểm tra xem ô đó có chứa quân cờ của người chơi đó không 
-                if (ptb_co.BackgroundImage != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
-                { }
 
+                string CheckONhan = null;
+                CheckONhan = dsViTri.FirstOrDefault(source => source.Value == "btn" + vitriHienTai).Key;
+                if (CheckONhan == null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
+                {
+                    return;
+                }
                 int vitriDen = vitriHienTai + xingau;
 
                 int solanCheck = 1;
@@ -993,12 +1026,21 @@ namespace GameProject
                                 SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriDich, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
                                 break;
                         }
+
+                        //Đá được thì đồng bộ quân cờ 
+                        dsViTri[$"{quan_o_vitriDich}"] = null;
+                        if (socket.isServer)
+                        {
+                            socket.Broadcast(new SocketData((int)SocketCommand.DA_QUAN, new Point(), $"{quan_o_vitriDich}"));
+                        }
+                        else
+                        {
+                            socket.Send(new SocketData((int)SocketCommand.DA_QUAN, new Point(), $"{quan_o_vitriDich}"));
+                        }
                     }
                     else
                         return;
                 }
-
-
 
                 if (vitriDen > 56)
                 {
@@ -1475,33 +1517,79 @@ namespace GameProject
         private void Send_XuatQuanCo(string co) //Gui thong diep xuat quan co 
         {
             PictureBox ptb = (PictureBox)this.Controls.Find(co, false).FirstOrDefault() as PictureBox;
-
+            string quan_o_vitriSapDen;
             switch (co)
             {
                 case "b1":
                 case "b2":
                 case "b3":
                 case "b4":
-                    SetControlImage(btn29, Animation.UI_Horse_Select_04);
-                    Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
-
-                    if (socket.isServer)
+                    quan_o_vitriSapDen = null;
+                    quan_o_vitriSapDen = dsViTri.FirstOrDefault(source => source.Value == "btn29").Key;
+                    if (quan_o_vitriSapDen == null)
                     {
                         dsViTri[$"{co}"] = "btn29";
-                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
                         cd = 30;
                         lbCD.Text = cd.ToString();
                     }
-                    else
+                    else if (quan_o_vitriSapDen[0] == 'b')
+                        return;
+                    else if (quan_o_vitriSapDen[0] == 'r' ||
+                              quan_o_vitriSapDen[0] == 'y' ||
+                              quan_o_vitriSapDen[0] == 'g')
                     {
-                        socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
+                        switch (quan_o_vitriSapDen[0])
+                        {
+                            case 'r':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                                break;
+                            case 'y':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                                break;
+                            case 'g':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                                break;
+                        }
+                        //Đá được thì đồng bộ quân cờ 
+                        dsViTri[$"{quan_o_vitriSapDen}"] = null;
+                        socket.Broadcast(new SocketData((int)SocketCommand.DA_QUAN, new Point(), $"{quan_o_vitriSapDen}"));
                     }
+                    Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
+                    socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
+                    SetControlImage(btn29, Animation.UI_Horse_Select_04);
                     KhoaChuong();
                     break;
+
                 case "r1":
                 case "r2":
                 case "r3":
                 case "r4":
+                    quan_o_vitriSapDen = null;
+                    quan_o_vitriSapDen = dsViTri.FirstOrDefault(source => source.Value == "btn43").Key;
+                    if (quan_o_vitriSapDen == null)
+                    { }
+                    else if (quan_o_vitriSapDen[0] == 'r')
+                        return;
+                    else if ( quan_o_vitriSapDen[0] == 'b' ||
+                               quan_o_vitriSapDen[0] == 'y' ||
+                               quan_o_vitriSapDen[0] == 'g')
+                    {
+                        switch (quan_o_vitriSapDen[0])
+                        {
+                            case 'b':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                                break;
+                            case 'y':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                                break;
+                            case 'g':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                                break;
+                        }
+                        //Đá được thì đồng bộ quân cờ 
+                        dsViTri[$"{quan_o_vitriSapDen}"] = null; //Cập nhật trên danh sách vị trí
+                        socket.Send(new SocketData((int)SocketCommand.DA_QUAN, new Point(), $"{quan_o_vitriSapDen}"));
+                    }
                     socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     KhoaChuong();
                     break;
@@ -1509,14 +1597,68 @@ namespace GameProject
                 case "y2":
                 case "y3":
                 case "y4":
+                    quan_o_vitriSapDen = null;
+                    quan_o_vitriSapDen = dsViTri.FirstOrDefault(source => source.Value == "btn1").Key;
+                    
+                    if (quan_o_vitriSapDen == null )
+                    { }
+                    else if (quan_o_vitriSapDen[0] == 'y')
+                        return;
+                    else if  (quan_o_vitriSapDen[0] == 'b' ||
+                               quan_o_vitriSapDen[0] == 'r' ||
+                               quan_o_vitriSapDen[0] == 'g') 
+                    {
+                        switch (quan_o_vitriSapDen[0])
+                        {
+                            case 'b':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                                break;
+                            case 'r':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                                break;
+                            case 'g':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                                break;
+                        }
+                        //Đá được thì đồng bộ quân cờ 
+                        dsViTri[$"{quan_o_vitriSapDen}"] = null; //Cập nhật trên danh sách vị trí
+                        socket.Send(new SocketData((int)SocketCommand.DA_QUAN, new Point(), $"{quan_o_vitriSapDen}"));
+                    }
                     socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
                     KhoaChuong();
                     break;
+
                 case "g1":
                 case "g2":
                 case "g3":
                 case "g4":
-                    socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
+                    quan_o_vitriSapDen = null;
+                    quan_o_vitriSapDen = dsViTri.FirstOrDefault(source => source.Value == "btn15").Key;
+                    if (quan_o_vitriSapDen == null)
+                    { }
+                    else if (quan_o_vitriSapDen[0] == 'g')
+                        return;
+                    else if ( quan_o_vitriSapDen[0] == 'b' ||
+                               quan_o_vitriSapDen[0] == 'r' ||
+                               quan_o_vitriSapDen[0] == 'y')
+                    {
+                        switch (quan_o_vitriSapDen[0])
+                        {
+                            case 'b':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                                break;
+                            case 'r':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                                break;
+                            case 'y':
+                                SetControlImage((PictureBox)this.Controls.Find(quan_o_vitriSapDen, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                                break;
+                        }
+                        //Đá được thì đồng bộ quân cờ 
+                        dsViTri[$"{quan_o_vitriSapDen}"] = null; //Cập nhật trên danh sách vị trí
+                        socket.Send(new SocketData((int)SocketCommand.DA_QUAN, new Point(), $"{quan_o_vitriSapDen}"));
+                    }
+                    socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
                     KhoaChuong();
                     break;
             }
@@ -2105,7 +2247,6 @@ namespace GameProject
                 }
             }
         }
-
         #endregion
 
         private async void SendMSGtoFB (string code, string username, string idphong, string MSG)
@@ -2119,11 +2260,6 @@ namespace GameProject
             PlayAnimation(btnLuatChoi);
             LuatChoi luatChoi = new LuatChoi();
             luatChoi.ShowDialog();
-        }
-
-        private void lbCD_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

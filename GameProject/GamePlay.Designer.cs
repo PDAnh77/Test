@@ -1571,7 +1571,6 @@
             this.lbCD.Size = new System.Drawing.Size(27, 25);
             this.lbCD.TabIndex = 136;
             this.lbCD.Text = "...";
-            this.lbCD.Click += new System.EventHandler(this.lbCD_Click);
             // 
             // btnLuatChoi
             // 

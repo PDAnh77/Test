@@ -40,6 +40,7 @@ namespace GameProject
         LUOT_CHOI,
         STARTTIMER,
         DI_CHUYEN,
-        XUC_XAC
+        XUC_XAC,
+        DA_QUAN
     }
 }
