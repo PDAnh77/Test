@@ -30,13 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GamePlay));
-            this.lbluotchoi = new System.Windows.Forms.Label();
             this.lbun1 = new System.Windows.Forms.Label();
             this.lbID = new System.Windows.Forms.Label();
             this.lbun4 = new System.Windows.Forms.Label();
             this.lbun3 = new System.Windows.Forms.Label();
             this.lbun2 = new System.Windows.Forms.Label();
-            this.lbWork = new System.Windows.Forms.Label();
             this.luotchoitimer = new System.Windows.Forms.Timer(this.components);
             this.timercd = new System.Windows.Forms.Timer(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -256,19 +254,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.SuspendLayout();
             // 
-            // lbluotchoi
-            // 
-            this.lbluotchoi.AutoSize = true;
-            this.lbluotchoi.BackColor = System.Drawing.Color.Transparent;
-            this.lbluotchoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbluotchoi.ForeColor = System.Drawing.Color.Transparent;
-            this.lbluotchoi.Location = new System.Drawing.Point(699, 209);
-            this.lbluotchoi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbluotchoi.Name = "lbluotchoi";
-            this.lbluotchoi.Size = new System.Drawing.Size(21, 20);
-            this.lbluotchoi.TabIndex = 2;
-            this.lbluotchoi.Text = "...";
-            // 
             // lbun1
             // 
             this.lbun1.AutoSize = true;
@@ -324,19 +309,6 @@
             this.lbun2.Name = "lbun2";
             this.lbun2.Size = new System.Drawing.Size(0, 25);
             this.lbun2.TabIndex = 112;
-            // 
-            // lbWork
-            // 
-            this.lbWork.AutoSize = true;
-            this.lbWork.BackColor = System.Drawing.Color.Transparent;
-            this.lbWork.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbWork.ForeColor = System.Drawing.Color.Transparent;
-            this.lbWork.Location = new System.Drawing.Point(699, 250);
-            this.lbWork.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbWork.Name = "lbWork";
-            this.lbWork.Size = new System.Drawing.Size(21, 20);
-            this.lbWork.TabIndex = 114;
-            this.lbWork.Text = "...";
             // 
             // luotchoitimer
             // 
@@ -1566,7 +1538,7 @@
             this.lbCD.AutoSize = true;
             this.lbCD.BackColor = System.Drawing.Color.Lavender;
             this.lbCD.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lbCD.Location = new System.Drawing.Point(723, 306);
+            this.lbCD.Location = new System.Drawing.Point(929, 11);
             this.lbCD.Name = "lbCD";
             this.lbCD.Size = new System.Drawing.Size(27, 25);
             this.lbCD.TabIndex = 136;
@@ -1709,7 +1681,6 @@
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnLeave);
-            this.Controls.Add(this.lbWork);
             this.Controls.Add(this.lbun2);
             this.Controls.Add(this.lbun3);
             this.Controls.Add(this.lbun4);
@@ -1812,7 +1783,6 @@
             this.Controls.Add(this.btn56);
             this.Controls.Add(this.btn1);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.lbluotchoi);
             this.Controls.Add(this.imgXiNgau);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -1929,7 +1899,6 @@
 
         #endregion
         private System.Windows.Forms.PictureBox imgXiNgau;
-        private System.Windows.Forms.Label lbluotchoi;
         private System.Windows.Forms.PictureBox btn1;
         private System.Windows.Forms.PictureBox btn56;
         private System.Windows.Forms.PictureBox btn55;
@@ -2030,7 +1999,6 @@
         private System.Windows.Forms.Label lbun4;
         private System.Windows.Forms.Label lbun3;
         private System.Windows.Forms.Label lbun2;
-        private System.Windows.Forms.Label lbWork;
         private System.Windows.Forms.Timer luotchoitimer;
         private CustomControls.ButtonDesign btnLeave;
         private System.Windows.Forms.PictureBox btn33;
