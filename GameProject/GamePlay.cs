@@ -92,7 +92,7 @@ namespace GameProject
 
             Setptbimage();
             BodyConfig();
-            //SetControlImage(lbID, Animation.UI_Textbox_02);
+
             //Cập nhật ngay mã id phòng là IDphong
             Invoke(new System.Action(() =>
             {
@@ -103,9 +103,6 @@ namespace GameProject
             SetControlImage(imgXiNgau, Animation.XiNgau_1);
             LockCacNut();
 
-            
-            /*SetControlImage(b4, Animation.UI_Horse_Select_04);
-            SetControlImage(btn29, Animation.UI_Horse_Select_04);*/
             this.AcceptButton = btnSendMSG;
         }
 
@@ -191,6 +188,7 @@ namespace GameProject
                 SetResponse setResponse = await client.SetAsync("Room/" + roomName, roomData);
             }
         }
+
         private async void UpdateRoomViewer(string roomName, bool join)
         {
             // Lấy dữ liệu hiện tại của phòng
@@ -855,12 +853,6 @@ namespace GameProject
             }
         }
 
-        //tương tự như hàm sendFrmPlay trong frmLogin.cs
-        //public void sendFormLG(GameLogin frm)
-        //{
-        //    FrmLogin = frm;
-        //}
-
         private void addUsserInForm(string name)// Hàm viết tên lên label của GamePlay
         {
             Invoke(new System.Action(() =>
@@ -873,22 +865,6 @@ namespace GameProject
                     WriteTextSafe(lb, name);
             }
             ));
-        }
-
-        //Viết id phòng lên label của frmPlay
-        public void ABC(string id)
-        {
-            this.IDphong = id;
-            WriteTextSafe(lbID, IDphong);
-        }
-        public void ABC(string id, string name, string[] arrU)
-        {
-            this.IDphong = id;
-            username = name;
-            for (int i = 0; i < arrU.Length; i++)
-            {
-                DSUser.Add(arrU[i]);
-            }
         }
 
         public void getUsername(string name, string idPhong)
@@ -923,225 +899,6 @@ namespace GameProject
                 }
             }
         }
-
-        public void getMSG(string Msg)  //tạo tin nhắn gữi đi
-        {
-            //luotchoitimer.Stop();
-            //counter = 30;                  
-            string[] Do = Msg.Split(':');//chia Msg thành một mảng các phần tử dựa trên ký tự ':'
-
-            if (Do[0] == "2")
-            {
-                WriteTextSafe(lbluotchoi, "Lượt chơi: " + Do[2]); /////Error
-                WriteTextSafe(lbWork, "Thảy xí ngầu");
-
-                if (Do[1] == username)
-                {
-                    SetButtonEnabledSafe(btnXiNgau, true);// bỏ khóa nút thảy xí ngầu
-                }
-                
-            }
-            else if (Do[0] == "3")
-            {
-                //string imagePath;
-                //switch (Do[2])
-                /*{
-                    case "1":
-                        //imagePath =
-                        imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "1" + ".png");
-                        break;
-                    case "2":
-                        imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "2" + ".png");
-                        break;
-                    case "3":
-                        imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "3" + ".png");
-                        break;
-                    case "4":
-                        imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "4" + ".png");
-                        break;
-                    case "5":
-                        imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "5" + ".png");
-                        break;
-                    case "6":
-                        imgXiNgau.Image = new Bitmap(Application.StartupPath + "/HinhXiNgau/" + "6" + ".png");
-                        break;
-                }*/
-                if (Do[3] == "y")
-                {
-                    WriteTextSafe(lbluotchoi, "Lượt chơi: " + Do[1]);
-                    WriteTextSafe(lbWork, "Đánh cờ");
-                }
-                else
-                {
-                    WriteTextSafe(lbluotchoi, "Lượt chơi: " + Do[3]);
-                    WriteTextSafe(lbWork, "Thảy xí ngầu");
-                    if (username == Do[1])
-                        SetButtonEnabledSafe(btnXiNgau, false);
-                    if (username == Do[3])
-                    {
-                        SetButtonEnabledSafe(btnXiNgau, true);
-                    }
-                }
-                if (Do[2] != "6" && Do[1] != "1")
-                {
-
-                }
-            }
-            else if (Do[0] == "5")
-            {
-                string msg = "";
-                if (Do[1] == username)
-                    msg = username + " (you): " + Do[2];
-                else
-                    msg = Do[1] + ": " + Do[2];
-                WriteTextSafe(rtbMSG, msg + "\n");
-            }
-            else if (Do[0] == "4")
-            {
-                if (Do[2] != "")
-                {
-                    string s = "";
-                    /*switch (Do[2])
-                    {
-                        case "b1":
-                        case "b2":
-                        case "b3":
-                        case "b4":
-                            s = "29";
-                            break;
-                        case "r1":
-                        case "r2":
-                        case "r3":
-                        case "r4":
-                            s = "43";
-                            break;
-                        case "y1":
-                        case "y2":
-                        case "y3":
-                        case "y4":
-                            s = "1";
-                            break;
-                        case "g1":
-                        case "g2":
-                        case "g3":
-                        case "g4":
-                            s = "15";
-                            break;
-                    }*/
-                    PictureBox ptb = (PictureBox)this.Controls.Find(Do[2], false).FirstOrDefault() as PictureBox;
-                    PictureBox btn = (PictureBox)this.Controls.Find("btn" + s, false).FirstOrDefault() as PictureBox;
-                    btn.Image = ptb.Image;
-                    ptb.Image = null;
-                    WriteTextSafe(lbWork, "Thảy xí ngầu");
-                }
-            }
-            else if (Do[0] == "6")
-            {
-                if (Do[2] != "")
-                {
-                    if (Do[3] != "")
-                    {
-                        if (Do[2] == "dich")
-                        {
-                            string btnDich = "";
-                            PictureBox btn = (PictureBox)this.Controls.Find("btn" + Do[4], false).FirstOrDefault() as PictureBox;
-                            if (Do[3] == "b")
-                            {
-                                btnDich = "dichXD";
-                            }
-                            else if (Do[3] == "r")
-                            {
-                                btnDich = "dichD";
-                            }
-                            else if (Do[3] == "y")
-                            {
-                                btnDich = "dichV";
-                            }
-                            else if (Do[3] == "g")
-                            {
-                                btnDich = "dichXL";
-                            }
-                            PictureBox btnMau = (PictureBox)this.Controls.Find(btnDich + Do[5], false).FirstOrDefault() as PictureBox;
-                            btnMau.Image = btn.Image;
-                            btn.Image = null;
-                        }
-                        else if (Do[2] == "win")
-                        {
-                            string btnDich = "";
-                            PictureBox btn = (PictureBox)this.Controls.Find("btn" + Do[4], false).FirstOrDefault() as PictureBox;
-                            if (Do[3] == "b")
-                            {
-                                btnDich = "dichXD";
-                            }
-                            else if (Do[3] == "r")
-                            {
-                                btnDich = "dichD";
-                            }
-                            else if (Do[3] == "y")
-                            {
-                                btnDich = "dichV";
-                            }
-                            else if (Do[3] == "g")
-                            {
-                                btnDich = "dichXL";
-                            }
-                            PictureBox btnMau = (PictureBox)this.Controls.Find(btnDich + "4", false).FirstOrDefault() as PictureBox;
-                            btnMau.Image = btn.Image;
-                            btn.Image = null;
-                            MessageBox.Show("Chúc mừng người chơi " + Do[5] + " thắng");
-                        }
-                        else
-                        {
-                            PictureBox ptb = (PictureBox)this.Controls.Find(Do[3], false).FirstOrDefault() as PictureBox;
-                            PictureBox btn = (PictureBox)this.Controls.Find("btn" + Do[2], false).FirstOrDefault() as PictureBox;
-                            PictureBox btnl = (PictureBox)this.Controls.Find("btn" + Do[4], false).FirstOrDefault() as PictureBox;
-                            ptb.Image = btn.Image;
-                            btn.Image = btnl.Image;
-                            btnl.Image = null;
-                        }
-                    }
-                    else
-                    {
-                        PictureBox btn = (PictureBox)this.Controls.Find("btn" + Do[2], false).FirstOrDefault() as PictureBox;
-                        PictureBox btnl = (PictureBox)this.Controls.Find("btn" + Do[4], false).FirstOrDefault() as PictureBox;
-                        btn.Image = btnl.Image;
-                        btnl.Image = null;
-                    }
-                }
-                if (Do[5] != "")
-                {
-                    if (Do[5] != "1" && Do[5] != "2" && Do[5] != "3" && Do[5] != "4")
-                        WriteTextSafe(lbluotchoi, "Lượt chơi: " + Do[5]);
-                    else
-                        WriteTextSafe(lbluotchoi, "Lượt chơi: " + Do[6]);
-                    WriteTextSafe(lbWork, "Thảy xí ngầu");
-
-                    if (username == Do[5])
-                    {
-                        SetButtonEnabledSafe(btnXiNgau, true);
-                    }
-                    else
-                        SetButtonEnabledSafe(btnXiNgau, false);
-                }
-            }
-
-            else if (Do[0] == "7")
-            {
-                WriteTextSafe(lbluotchoi, "Lượt chơi: " + Do[2]);
-                WriteTextSafe(lbWork, "Thảy xí ngầu");
-
-                if (username == Do[2])
-                {
-                    SetButtonEnabledSafe(btnXiNgau, true);
-                }
-                else
-                    SetButtonEnabledSafe(btnXiNgau, false);
-                //counter = 30;              
-            }
-            try { luotchoitimer.Start(); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
-        }
-
 
         private void SendBtnBox(int x)
         {
@@ -1235,10 +992,6 @@ namespace GameProject
                     }
                 }    
             }
-
-            /* PictureBox ptb = (PictureBox)this.Controls.Find("btn" + x, false).FirstOrDefault() as PictureBox;
-             if (ptb.Image != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
-                 SendMSGtoFB("6", username, IDphong, x.ToString());*/
         }
         #endregion
 
@@ -1361,8 +1114,6 @@ namespace GameProject
                 }
             }
         }
-
-
 
         private void MoChuong(int Luot)
         {
@@ -1586,20 +1337,12 @@ namespace GameProject
                             }
                             SetButtonEnabledSafe(btnXiNgau, false);
                         }
-
-                        
                     }
                 }
             }
         }
 
-       /* private void button1_Click(object sender, EventArgs e)
-        {
-            PlayAnimation(dichD1);
-            senDoFrom("5", username, IDphong, txtSendMSG.Text);
-        }
-*/
-       private void diceimg (int dice)
+        private void diceimg (int dice)
         { 
             switch (dice)
                 {
@@ -1649,10 +1392,10 @@ namespace GameProject
             }
             return -1;
         }
+
         private void Send_XuatQuanCo(string co) //Gui thong diep xuat quan co 
         {
             PictureBox ptb = (PictureBox)this.Controls.Find(co, false).FirstOrDefault() as PictureBox;
-            //int numUser = Tim_User_ThucHien();
 
             switch (co)
             {
@@ -1670,44 +1413,30 @@ namespace GameProject
                         lbCD.Text = cd.ToString();
                     }
                     else
+                    {
                         socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
+                    }
                     KhoaChuong();
                     break;
                 case "r1":
                 case "r2":
                 case "r3":
                 case "r4":
-                    /*SetControlImage(btn43, Animation.UI_Horse_Select_01);
-                    Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
-                    if (socket.isServer)
-                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
-                    else */
-                        socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
+                    socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/43"));
                     KhoaChuong();
                     break;
-
                 case "y1":
                 case "y2":
                 case "y3":
                 case "y4":
-                    /*SetControlImage(btn1, Animation.UI_Horse_Select_02);
-                    Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
-                    if (socket.isServer)
-                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
-                    else*/
-                        socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
+                    socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/1"));
                     KhoaChuong();
                     break;
                 case "g1":
                 case "g2":
                 case "g3":
                 case "g4":
-                    /*SetControlImage(btn15, Animation.UI_Horse_Select_03);
-                    Invoke(new System.Action(() => { ptb.BackgroundImage = null; }));
-                    if (socket.isServer)
-                        socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
-                    else*/
-                        socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
+                    socket.Send(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/15"));
                     KhoaChuong();
                     break;
             }
@@ -2088,7 +1817,6 @@ namespace GameProject
             }
         }
 
-
         ///////////////////////////////////////////////////
         private delegate void SetPictureBoxEnabledDelegate(PictureBox picturebox, bool status);
         private void SetPictureBoxEnabledSafe(PictureBox picturebox, bool status)
@@ -2247,15 +1975,6 @@ namespace GameProject
             }
         }
 
-        private void CenterControl(Control control)
-        {
-            if (control.Parent != null)
-            {
-                int x = (control.Parent.ClientSize.Width - control.Width) / 2;
-                control.Location = new Point(x, control.Location.Y);
-            }
-        }
-
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);
@@ -2277,8 +1996,6 @@ namespace GameProject
         }
 
         #endregion
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        #region CopyTuGameLogin
 
         private async void SendMSGtoFB (string code, string username, string idphong, string MSG)
         {
@@ -2287,141 +2004,6 @@ namespace GameProject
             string data = code + "/" + username + "/" + idphong + "/" + MSG;
             SetResponse response = await client.SetAsync("Messages/" , data);
         }
-
-        public void senDoFrom(string code, string username, string idphong, string MSG)
-        {
-            if (string.IsNullOrEmpty(MSG))
-            {
-                return;
-            }
-            SendMSGtoFB(code, username, idphong, MSG);
-        }
-
-        //private void check(string data)
-        //{
-        //    string[] arr = data.Split('/');
-        //    Console.WriteLine(data);
-
-        //    //bằng 0 khi cần tạo phòng mới
-        //    if (arr[0] == "0")
-        //    {
-        //        //kiểm tra xem có phải đang là tên người dùng hiện tại k
-        //        if (arr[1] == username)
-        //        {
-        //            idPhong = arr[2];
-
-        //            //FrmMenu.showFrmChoiaddphong(arr[2]);
-        //        }
-        //    }
-
-        //    //bằng 1 khi ng chơi tham gia vào phòng có sẵn
-        //    else if (arr[0] == "1")
-        //    {
-        //        //arrU được chia từ arr[3] theo dấu ":"
-        //        arrU = arr[3].Split(':');
-
-        //        if (arr[1] == username)
-        //        {
-        //            // FrmMenu.getAllUserinRoom(idPhong,arrU);
-        //            idPhong = arr[2];
-        //        }
-        //        else
-        //        {
-        //            if (arr[2] == idPhong)
-        //            {
-        //                FrmMenu.getNameuserother(arr[1]);
-        //            }
-        //        }
-        //    }
-
-        //    else if (arr[0] == "2")
-        //    {
-        //        string msgToForm = "";
-        //        if (idPhong == arr[2])
-        //        {
-        //            msgToForm = "2" + ":" + arr[1] + ":" + arr[3];
-        //            FrmMenu.sendMSG(msgToForm);
-        //        }
-        //    }
-        //    else if (arr[0] == "3")
-        //    {
-        //        string msgToForm = "";
-        //        if (idPhong == arr[2])
-        //        {
-        //            msgToForm = "3" + ":" + arr[1] + ":" + arr[3] + ":" + arr[4];
-        //            FrmMenu.sendMSG(msgToForm);
-        //        }
-        //    }
-        //    else if (arr[0] == "5")
-        //    {
-        //        string msgToForm = "";
-        //        if (idPhong == arr[2])
-        //        {
-        //            msgToForm = "5" + ":" + arr[1] + ":" + arr[3];
-
-        //            FrmMenu.sendMSG(msgToForm);
-        //        }
-        //    }
-        //    else if (arr[0] == "4")
-        //    {
-        //        string msgToForm = "";
-        //        if (idPhong == arr[2])
-        //        {
-        //            msgToForm = "4" + ":" + arr[1] + ":" + arr[3];
-
-        //            FrmMenu.sendMSG(msgToForm);
-        //        }
-        //    }
-        //    else if (arr[0] == "6")
-        //    {
-        //        string msgToForm = "";
-        //        if (idPhong == arr[2])
-        //        {
-
-        //            msgToForm = "6" + ":" + arr[1] + ":" + arr[3];
-
-        //            FrmMenu.sendMSG(msgToForm);
-        //        }
-        //    }
-        //    else if (arr[0] == "7")
-        //    {
-        //        string msgToForm = "";
-        //        if (idPhong == arr[2])
-        //        {
-        //            msgToForm = "7" + ":" + arr[1] + ":" + arr[3];
-        //            FrmMenu.sendMSG(msgToForm);
-        //        }
-        //    }
-        //}
-        #endregion
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        #region CopyTuGameMenu
-
-        public void getAllUserinRoom()
-        {
-            //ABC(FrmLogin.sendIDtoForm(), userName, FrmLogin.sendAllnameOtheruser());
-        }
-
-        //public string getUsername(string s)
-        //{
-        //    //userName = s;
-        //    //return userName;
-        //}
-        //public void getfmrlg(GameLogin frm)
-        //{
-        //    //FrmLogin = frm;
-        //}
-        public void showFrmPlayaddphong()
-        {
-            //Frm1 = new GamePlay(userName, FrmLogin.sendIDtoForm());//tạo frmplay mới vs tên và id
-           // Frm1.ABC(FrmLogin.sendIDtoForm());
-           // Frm1.Show();
-            //FrmLogin.sendFrmPlay(Frm1);
-
-           // Frm1.sendFormLG(FrmLogin);
-        }
-
-        #endregion
 
         private void btnLuatChoi_Click(object sender, EventArgs e)
         {
