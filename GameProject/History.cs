@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FireSharp.Interfaces;
+using FireSharp.Response;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,9 +19,20 @@ namespace GameProject
             InitializeComponent();
         }
 
+        IFirebaseClient client;
+        private string history;
+        private string history0;
+
         private void History_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private async void buttonDesign2_Click(object sender, EventArgs e)
+        {
+            FirebaseResponse response = await client.GetAsync("History/"+history);
+            String history0= response.ResultAs<String>();
+           
         }
     }
 }
