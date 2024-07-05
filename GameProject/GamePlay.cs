@@ -18,6 +18,7 @@ using System.Net.NetworkInformation;
 using FirebaseAdmin.Messaging;
 using FireSharp;
 using System.Xml.Linq;
+using System.Diagnostics.SymbolStore;
 
 
 
@@ -64,6 +65,9 @@ namespace GameProject
         private int counter = 30;
         private int time = 0;
 
+
+        Dictionary<string, string> dsViTri = new Dictionary<string, string>();
+
         #endregion
 
         #region Initialize
@@ -84,6 +88,24 @@ namespace GameProject
             DSUser.Add(username); // Mỗi người chơi sẽ tự có danh sách người chơi của riêng mình, khi có thay đổi server sẽ thông báo để cập nhật
             CreateOrConnect(server);
             lbCD.Text=cd.ToString();
+
+
+            dsViTri.Add("b1", null);
+            dsViTri.Add("b2", null);
+            dsViTri.Add("b3", null);
+            dsViTri.Add("b4", null);
+            dsViTri.Add("r1", null);
+            dsViTri.Add("r2", null);
+            dsViTri.Add("r3", null);
+            dsViTri.Add("r4", null);
+            dsViTri.Add("g1", null);
+            dsViTri.Add("g2", null);
+            dsViTri.Add("g3", null);
+            dsViTri.Add("g4", null);
+            dsViTri.Add("y1", null);
+            dsViTri.Add("y2", null);
+            dsViTri.Add("y3", null);
+            dsViTri.Add("y4", null);
         }
 
         private void GamePlay_Load(object sender, EventArgs e) //LoadForm chinh
@@ -659,21 +681,25 @@ namespace GameProject
 
                         if (QuanCo[0] == 'b')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn29";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_04);
                         }
                         else if (QuanCo[0] == 'r')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn43";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_01);
                         }
                         else if (QuanCo[0] == 'y')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn1";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_02);
                         }
                         else if (QuanCo[0] == 'g')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn15";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_03);
                         }
@@ -689,21 +715,25 @@ namespace GameProject
 
                         if (QuanCo[0] == 'b')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn29";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_04);
                         }
                         else if (QuanCo[0] == 'r')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn43";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_01);
                         }
                         else if (QuanCo[0] == 'y')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn1";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_02);
                         }
                         else if (QuanCo[0] == 'g')
                         {
+                            dsViTri[$"{QuanCo}"] = "btn15";
                             PictureBox ptb_KetThuc = (PictureBox)this.Controls.Find(Dich, false).FirstOrDefault() as PictureBox;
                             SetControlImage(ptb_KetThuc, Animation.UI_Horse_Select_03);
                         }
@@ -755,11 +785,13 @@ namespace GameProject
                         Point point = new Point(from, to);
                         socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, point, null));
                     }
+                    string quanco = dsViTri.FirstOrDefault(source => source.Value == "btn" + from).Key;
                     PictureBox ptb_co = (PictureBox)this.Controls.Find("btn" + from, false).FirstOrDefault();
                     PictureBox ptb_dich = (PictureBox)this.Controls.Find("btn" + to, false).FirstOrDefault();
 
                     SetControlImage(ptb_dich, ptb_co.BackgroundImage);
                     SetControlImage(ptb_co, Animation.UI_Square);
+                    dsViTri[$"{quanco}"] = $"btn" + to;
                     break;
                 default:
                     break;
@@ -922,8 +954,7 @@ namespace GameProject
                 { }
 
                 int y = x + xingau;
-
-                if( y > 56 )
+                if (y > 56)
                 {
                     y -= 56;
                 }    
@@ -933,11 +964,13 @@ namespace GameProject
                 Point point = new Point(x,y);
                 if (socket.isServer)
                 {
+                    string quanco = dsViTri.FirstOrDefault(source => source.Value == co).Key;
                     string tmp2 = y.ToString();
                     PictureBox ptb_dich = (PictureBox)this.Controls.Find("btn" + tmp2, false).FirstOrDefault() as PictureBox;
 
                     SetControlImage(ptb_dich, ptb_co.BackgroundImage);
                     SetControlImage(ptb_co, Animation.UI_Square);
+                    dsViTri[$"{quanco}"] = $"{dich}";
                     socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, point, null));
                 }
                 else
@@ -1414,6 +1447,7 @@ namespace GameProject
 
                     if (socket.isServer)
                     {
+                        dsViTri[$"{co}"] = "btn29";
                         socket.Broadcast(new SocketData((int)SocketCommand.XUAT_QUAN, new Point(), $"{co}/29"));
                         cd = 30;
                         lbCD.Text = cd.ToString();
