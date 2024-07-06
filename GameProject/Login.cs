@@ -116,11 +116,11 @@ namespace GameProject
                         Password = pass
                     };
 
-                    //if (ResUser.isLogin == true)
-                    //{
-                    //    ShowNotification("Tài khoản đã đăng nhập ở nơi khác!");
-                    //    return;
-                    //}
+                    if (ResUser.isLogin == true)
+                    {
+                        ShowNotification("Tài khoản đã đăng nhập ở nơi khác!");
+                        return;
+                    }
 
                     if (User.IsEqual(ResUser, CurUser))
                     {
@@ -176,7 +176,6 @@ namespace GameProject
                 Notification.Text = text;
             }
         }
-
         private void PlayAnimation(Control control)
         {
             if (control is Button button)
@@ -200,7 +199,6 @@ namespace GameProject
         }
 
         Color customColor = Color.FromArgb(234, 212, 172);
-
         private void BodyConfig()
         {
 
@@ -242,7 +240,6 @@ namespace GameProject
                 control.Location = new Point(x, control.Location.Y);
             }
         }
-
         private void SetControlImage(Control control, Image image)
         {
             control.BackgroundImage = new Bitmap(image, control.Size);

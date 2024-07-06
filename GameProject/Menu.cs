@@ -220,7 +220,6 @@ namespace GameProject
             if (User.CurrentUser != null)
             {
                 User.CurrentUser.isLogin = false;
-                //SetResponse request = await client.SetAsync("Information/" + User.CurrentUser.Username, User.CurrentUser);
                 User.CurrentUser = null;
                 ShowNotification("Đăng xuất tài khoản thành công!");
                 CenterControl(Notification);

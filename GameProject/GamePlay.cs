@@ -1697,16 +1697,6 @@ namespace GameProject
         }
         #endregion
 
-        private int Tim_User_ThucHien()
-        {
-            for (int i = 0; i < DSUser.Count; i++)
-            {
-                if (DSUser[i] == username)
-                    return i;
-            }
-            return -1;
-        }
-
         private void Send_XuatQuanCo(string co) //Gui thong diep xuat quan co 
         {
             PictureBox ptb = (PictureBox)this.Controls.Find(co, false).FirstOrDefault() as PictureBox;
@@ -2562,7 +2552,6 @@ namespace GameProject
                     }
                     else
                         return;
-
                 }
             }
         } 
