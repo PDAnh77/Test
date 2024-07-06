@@ -40,6 +40,8 @@ namespace GameProject
         private GamePlay game;
         string NameUser = User.CurrentUser.Username;
 
+
+
         #endregion
 
         public GameLobby()

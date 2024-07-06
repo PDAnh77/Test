@@ -120,6 +120,7 @@
             this.buttonDesign2.Text = "Tải lại";
             this.buttonDesign2.TextColor = System.Drawing.Color.White;
             this.buttonDesign2.UseVisualStyleBackColor = false;
+            this.buttonDesign2.Click += new System.EventHandler(this.buttonDesign2_Click);
             // 
             // History
             // 

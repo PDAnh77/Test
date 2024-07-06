@@ -61,6 +61,12 @@ namespace GameProject
         //cooldown
         private int cd = 30;
 
+
+        //líchsu
+        private string History;
+
+
+
         private string msg;
         private int counter = 30;
         private int time = 0;
@@ -152,6 +158,7 @@ namespace GameProject
             {
                 await DeleteRoom(IDphong);
                 socket.CloseConnect();
+                SetResponse setResponse = await client.SetAsync("History/", History);
                 timercd.Stop();
                 DialogResult = DialogResult.Cancel; // Quay về GameLobby
             }
@@ -464,6 +471,16 @@ namespace GameProject
                             {
                                 if (socket.isServer)
                                 {
+                                    string curuser="";
+                                    for(int i = 0; i < DSUser.Count;i++)
+                                    {
+                                        if (i==ThuTuLuotChoi)
+                                        {
+                                            curuser = DSUser[i];
+                                            break;
+                                        }
+                                    }
+                                    History += $"{curuser} tung ra {xingau}/";
                                     diceimg(xingau);
                                     socket.Broadcast(new SocketData((int)SocketCommand.XUC_XAC, new Point(), data.Message));
                                 }
@@ -1537,6 +1554,7 @@ namespace GameProject
             SetButtonEnabledSafe(btnXiNgau, false);
             if (socket.isServer)
             {
+                History += $"{User.CurrentUser.Username} tung ra {xingau}/";
                 diceimg(xingau);
                 socket.Broadcast(new SocketData((int)SocketCommand.XUC_XAC, new Point(), $"{xingau}"));
                 if (xingau != 1)
@@ -2240,11 +2258,13 @@ namespace GameProject
             }
         }
 
-        private void btnSendMSG_Click(object sender, EventArgs e)
+        private async  void btnSendMSG_Click(object sender, EventArgs e)
         {
             PlayAnimation(btnSendMSG);
             if (txtSendMSG.Text == "")
-                return;
+            {
+                return; 
+            }
             if (socket.isServer)
             {
                 rtbMSG.SelectionColor = Color.Cyan;
