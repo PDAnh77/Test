@@ -73,6 +73,7 @@ namespace GameProject
 
 
         Dictionary<string, string> dsViTri = new Dictionary<string, string>();
+        Dictionary<string, int> dsSoODaDi = new Dictionary<string, int>();
 
         #endregion
 
@@ -112,6 +113,23 @@ namespace GameProject
             dsViTri.Add("y2", null);
             dsViTri.Add("y3", null);
             dsViTri.Add("y4", null);
+
+            dsSoODaDi.Add("b1", 1);
+            dsSoODaDi.Add("b2", 1);
+            dsSoODaDi.Add("b3", 1);
+            dsSoODaDi.Add("b4", 1);
+            dsSoODaDi.Add("r1", 1);
+            dsSoODaDi.Add("r2", 1);
+            dsSoODaDi.Add("r3", 1);
+            dsSoODaDi.Add("r4", 1);
+            dsSoODaDi.Add("g1", 1);
+            dsSoODaDi.Add("g2", 1);
+            dsSoODaDi.Add("g3", 1);
+            dsSoODaDi.Add("g4", 1);
+            dsSoODaDi.Add("y1", 1);
+            dsSoODaDi.Add("y2", 1);
+            dsSoODaDi.Add("y3", 1);
+            dsSoODaDi.Add("y4", 1);
         }
 
         private void GamePlay_Load(object sender, EventArgs e) //LoadForm chinh
@@ -163,7 +181,7 @@ namespace GameProject
 
         private void InitializeTimer()
         {
-            listenTimer = new System.Timers.Timer(500); // (1000ms = 1 giây)
+            listenTimer = new System.Timers.Timer(100); // (1000ms = 1 giây)
             listenTimer.Elapsed += OnTimedEvent; // Cứ cách 0.5s thì gọi Listen()
             listenTimer.AutoReset = true;
             listenTimer.Enabled = true;
@@ -787,15 +805,102 @@ namespace GameProject
                     if (socket.isServer)
                     {
                         Point point = new Point(from, to);
-                        socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, point, null));
+                        socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, point, data.Message));
                     }
+
+                    if(data.Message != null)
+                    {
+                        string[] rcv = data.Message.Split('/');
+                        string ohientai = rcv[0];
+                        string oden = rcv[1];
+                        string horse = dsViTri.FirstOrDefault(source => source.Value == ohientai).Key;
+
+                        Invoke(new System.Action(() =>
+                        {
+                            //set lại hình của ô hiện tại
+                            if (ohientai[4] == 'D')
+                            {
+                                SetControlImage((PictureBox)this.Controls.Find(ohientai, false).FirstOrDefault(), Animation.UI_Square_R);
+                                SetControlImage((PictureBox)this.Controls.Find(oden, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                            }
+                            else if (ohientai[4] == 'V')
+                            {
+                                SetControlImage((PictureBox)this.Controls.Find(ohientai, false).FirstOrDefault(), Animation.UI_Square_Y);
+                                SetControlImage((PictureBox)this.Controls.Find(oden, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                            }
+                            else if (ohientai[4] == 'G')
+                            {
+                                SetControlImage((PictureBox)this.Controls.Find(ohientai, false).FirstOrDefault(), Animation.UI_Square_G);
+                                SetControlImage((PictureBox)this.Controls.Find(oden, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                            }
+                            else if (ohientai[4] == 'B')
+                            {
+                                SetControlImage((PictureBox)this.Controls.Find(ohientai, false).FirstOrDefault(), Animation.UI_Square_B);
+                                SetControlImage((PictureBox)this.Controls.Find(oden, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                            }
+                        }));
+
+                        dsViTri[$"{horse}"] = $"{oden}";
+                        return;
+                    }
+
                     string quanco = dsViTri.FirstOrDefault(source => source.Value == "btn" + from).Key;
+                    if (quanco == null)
+                    {
+                    }
+                    else if (quanco[0] == 'b')
+                    {
+                        if (dsSoODaDi[quanco] + xingau > 56) //nếu như quân xanh đi lố 1 vòng
+                        {
+                            to = dsSoODaDi[quanco] + xingau - 56;
+                            SetControlImage((PictureBox)this.Controls.Find("dichB" + to, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                            SetControlImage((PictureBox)this.Controls.Find("btn" + from, false).FirstOrDefault(), Animation.UI_Square);
+                            dsViTri[$"{quanco}"] = "dichB" + to;
+                            return;
+                        }
+
+                    }
+                    else if (quanco[0] == 'r')
+                    {
+                        if (dsSoODaDi[quanco] + xingau > 56) //nếu như quân đỏ đi lố 1 vòng
+                        {
+                            to = dsSoODaDi[quanco] + xingau - 56;
+                            SetControlImage((PictureBox)this.Controls.Find("dichD" + to, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                            SetControlImage((PictureBox)this.Controls.Find("btn" + from, false).FirstOrDefault(), Animation.UI_Square);
+                            dsViTri[$"{quanco}"] = "dichD" + to;
+                            return;
+                        }
+                    }
+                    else if (quanco[0] == 'y')
+                    {
+                        if (dsSoODaDi[quanco] + xingau > 56) //nếu như quân xanh đi lố 1 vòng
+                        {
+                            to = dsSoODaDi[quanco] + xingau - 56;
+                            SetControlImage((PictureBox)this.Controls.Find("dichV" + to, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                            SetControlImage((PictureBox)this.Controls.Find("btn" + from, false).FirstOrDefault(), Animation.UI_Square);
+                            dsViTri[$"{quanco}"] = "dichV" + to;
+                            return;
+                        }
+                    }
+                    else if (quanco[0] == 'g')
+                    {
+                        if (dsSoODaDi[quanco] + xingau > 56) //nếu như quân xanh đi lố 1 vòng
+                        {
+                            to = dsSoODaDi[quanco] + xingau - 56;
+                            SetControlImage((PictureBox)this.Controls.Find("dichG" + to, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                            SetControlImage((PictureBox)this.Controls.Find("btn" + from, false).FirstOrDefault(), Animation.UI_Square);
+                            dsViTri[$"{quanco}"] = "dichG" + to;
+                            return;
+                        }
+                    }
+
                     PictureBox ptb_co = (PictureBox)this.Controls.Find("btn" + from, false).FirstOrDefault();
                     PictureBox ptb_dich = (PictureBox)this.Controls.Find("btn" + to, false).FirstOrDefault();
 
                     SetControlImage(ptb_dich, ptb_co.BackgroundImage);
                     SetControlImage(ptb_co, Animation.UI_Square);
                     dsViTri[$"{quanco}"] = $"btn" + to;
+                    dsSoODaDi[$"{quanco}"] += xingau;
                     break;
 
                 case (int)SocketCommand.DA_QUAN:
@@ -940,14 +1045,6 @@ namespace GameProject
             ));
         }
 
-        public void getUsername(string name, string idPhong)
-        {
-            string uname;
-            uname = name;
-            IDphong = idPhong;
-            DSUser.Add(uname);
-        }
-
         private void reloadForm()
         {
             //SetButtonEnabledSafe(btnXiNgau, false);//Khóa nút lắc xí ngầu
@@ -975,10 +1072,9 @@ namespace GameProject
 
         private void SendBtnBox(int vitriHienTai)
         {
+            int xetchienthang = vitriHienTai;
             //dành cho việc việc thay đổi hình ảnh
             PictureBox ptb_co = (PictureBox)this.Controls.Find("btn" + vitriHienTai, false).FirstOrDefault() as PictureBox; 
-
-
             if (username == DSUser[ThuTuLuotChoi])
             {
                 //////Kiểm tra xem ô đó có chứa quân cờ của người chơi đó không 
@@ -993,6 +1089,70 @@ namespace GameProject
 
                 int solanCheck = 1;
                 int oCheck = vitriHienTai + 1;
+
+
+                string CheckQuanCo = dsViTri.FirstOrDefault(source => source.Value == "btn" + xetchienthang).Key;
+                if (CheckQuanCo[0] == 'b')
+                {
+                    if (dsSoODaDi[CheckONhan] + xingau > 56) //nếu như quân xanh đi lố 1 vòng
+                    {
+                        vitriDen = dsSoODaDi[CheckONhan] + xingau - 56;
+                        SetControlImage((PictureBox)this.Controls.Find("dichB" + vitriDen, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                        SetControlImage((PictureBox)this.Controls.Find("btn" + vitriHienTai, false).FirstOrDefault(), Animation.UI_Square);
+                        dsViTri[$"{CheckQuanCo}"] = "dichB" + vitriDen;
+
+                        socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, new Point(xetchienthang, xetchienthang + xingau), null));
+
+                        CheckLuotSauKhiDi(xingau);
+                        return;
+                    }
+
+                }
+                if (CheckQuanCo[0] == 'r')
+                {
+                    if (dsSoODaDi[CheckONhan] + xingau > 56) //nếu như quân đỏ đi lố 1 vòng
+                    {
+                        vitriDen = dsSoODaDi[CheckONhan] + xingau - 56;
+                        SetControlImage((PictureBox)this.Controls.Find("dichD" + vitriDen, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                        SetControlImage((PictureBox)this.Controls.Find("btn" + vitriHienTai, false).FirstOrDefault(), Animation.UI_Square);
+                        dsViTri[$"{CheckQuanCo}"] = "dichD" + vitriDen;
+
+                        socket.Send(new SocketData((int)SocketCommand.DI_CHUYEN, new Point(xetchienthang, xetchienthang + xingau), null));
+
+                        CheckLuotSauKhiDi(xingau);
+                        return;
+                    }
+                }
+                if (CheckQuanCo[0] == 'y')
+                {
+                    if (dsSoODaDi[CheckONhan] + xingau > 56) //nếu như quân xanh đi lố 1 vòng
+                    {
+                        vitriDen = dsSoODaDi[CheckONhan] + xingau - 56;
+                        SetControlImage((PictureBox)this.Controls.Find("dichV" + vitriDen, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                        SetControlImage((PictureBox)this.Controls.Find("btn" + vitriHienTai, false).FirstOrDefault(), Animation.UI_Square);
+                        dsViTri[$"{CheckQuanCo}"] = "dichV" + vitriDen;
+
+                        socket.Send(new SocketData((int)SocketCommand.DI_CHUYEN, new Point(xetchienthang, xetchienthang + xingau), null));
+
+                        CheckLuotSauKhiDi(xingau);
+                        return;
+                    }
+                }
+                if (CheckQuanCo[0] == 'g')
+                {
+                    if (dsSoODaDi[CheckONhan] + xingau > 56) //nếu như quân xanh đi lố 1 vòng
+                    {
+                        vitriDen = dsSoODaDi[CheckONhan] + xingau - 56;
+                        SetControlImage((PictureBox)this.Controls.Find("dichG" + vitriDen, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                        SetControlImage((PictureBox)this.Controls.Find("btn" + vitriHienTai, false).FirstOrDefault(), Animation.UI_Square);
+                        dsViTri[$"{CheckQuanCo}"] = "dichG" + vitriDen;
+
+                        socket.Send(new SocketData((int)SocketCommand.DI_CHUYEN, new Point(xetchienthang, xetchienthang + xingau), null));
+
+                        CheckLuotSauKhiDi(xingau);
+                        return;
+                    }
+                }
 
                 //Check bị chặn ở giữa nước đi
                 while (true) 
@@ -1018,6 +1178,11 @@ namespace GameProject
                     solanCheck++;
                     oCheck++;
                 }
+
+                //check xem trường hợp đã có quân cờ ở ô đích chưa!!!!!!!
+
+                ///////////Xét nhảy lên sảnh chiến thắng ////////////////////////////////////
+                
 
                 //Đá quân cờ về chuồng của nó
                 string quan_o_vitriDich = null;
@@ -1063,6 +1228,9 @@ namespace GameProject
                 {
                     vitriDen -= 56;
                 }
+
+
+                //////////////////////////////////  ĐI BÌNH THƯỜNG  ///////////////////////////////////////////
                 string co = "btn" + vitriHienTai;
                 string dich = "btn" + vitriDen;
 
@@ -1077,77 +1245,84 @@ namespace GameProject
                     SetControlImage(ptb_co, Animation.UI_Square);
                     dsViTri[$"{quanco}"] = $"{dich}";
                     socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, point, null));
+                    dsSoODaDi[$"{quanco}"] += xingau;
                 }
                 else
                 {
                     socket.Send(new SocketData((int)SocketCommand.DI_CHUYEN, point, null));
                 }
 
-                if (xingau != 1)                // Kiểm tra xem xí ngầu lắc ra được có phải 1 hay 6 không, nếu không thì kết thúc lượt 
+                CheckLuotSauKhiDi(xingau);
+                //////////////////////////////////////////////////////////////////////////////////////
+            }
+        }
+
+        private void CheckLuotSauKhiDi(int xingau)
+        {
+            if (xingau != 1)                // Kiểm tra xem xí ngầu lắc ra được có phải 1 hay 6 không, nếu không thì kết thúc lượt 
+            {
+                if (xingau != 6)
                 {
-                    if (xingau != 6)
+                    int ThuTuTiepTheo = (ThuTuLuotChoi + 1) % DSUser.Count;
+                    if (socket.isServer)
                     {
-                        int ThuTuTiepTheo = (ThuTuLuotChoi + 1) % DSUser.Count;
-                        if (socket.isServer)
+                        ThuTuLuotChoi = ThuTuTiepTheo;
+                        string name = "lbun";
+
+                        if (ThuTuLuotChoi == 0)
                         {
-                            ThuTuLuotChoi = ThuTuTiepTheo;
-                            string name = "lbun";
-
-                            if (ThuTuLuotChoi == 0)
+                            for (int i = 1; i <= 4; i++)
                             {
-                                for (int i = 1; i <= 4; i++)
-                                {
-                                    string labelName = name + i;
-                                    Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
+                                string labelName = name + i;
+                                Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
 
-                                    if (lb.Text == username + " (you)")
-                                    {
-                                        SetKhungLuot(lb);
-                                    }
-                                    else
-                                    {
-                                        ResetKhungLuot(lb);
-                                    }
+                                if (lb.Text == username + " (you)")
+                                {
+                                    SetKhungLuot(lb);
+                                }
+                                else
+                                {
+                                    ResetKhungLuot(lb);
                                 }
                             }
-                            else
-                            {
-                                for (int i = 1; i <= 4; i++)
-                                {
-                                    string labelName = name + i;
-                                    Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
-
-                                    if (lb.Text == DSUser[ThuTuLuotChoi])
-                                    {
-                                        SetKhungLuot(lb);
-                                    }
-                                    else
-                                    {
-                                        ResetKhungLuot(lb);
-                                    }
-                                }
-                            }
-
-                            socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
-                            cd = 30;
-                            lbCD.Text = cd.ToString();
                         }
                         else
                         {
-                            socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuTiepTheo}"));
-                        }
-                        SetButtonEnabledSafe(btnXiNgau, false);
+                            for (int i = 1; i <= 4; i++)
+                            {
+                                string labelName = name + i;
+                                Label lb = this.Controls.Find(labelName, true).FirstOrDefault() as Label;
 
+                                if (lb.Text == DSUser[ThuTuLuotChoi])
+                                {
+                                    SetKhungLuot(lb);
+                                }
+                                else
+                                {
+                                    ResetKhungLuot(lb);
+                                }
+                            }
+                        }
+
+                        socket.Broadcast(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuLuotChoi}"));
+                        cd = 30;
+                        lbCD.Text = cd.ToString();
                     }
                     else
                     {
-                        SetButtonEnabledSafe(btnXiNgau, true);
+                        socket.Send(new SocketData((int)SocketCommand.LUOT_CHOI, new Point(), $"{ThuTuTiepTheo}"));
                     }
+                    SetButtonEnabledSafe(btnXiNgau, false);
+
                 }
                 else
                 {
                     SetButtonEnabledSafe(btnXiNgau, true);
                 }
+            }
+            else
+            {
+                SetButtonEnabledSafe(btnXiNgau, true);
             }
         }
 
@@ -1245,7 +1420,7 @@ namespace GameProject
                 }
                 if (j <= 6)
                 {
-                    if (c is PictureBox && c.Name.Contains($"dichXD{j}"))
+                    if (c is PictureBox && c.Name.Contains($"dichB{j}"))
                     {
                         Invoke(new System.Action(() => { c.Enabled = true; }));
                     }
@@ -1257,7 +1432,7 @@ namespace GameProject
                     {
                         Invoke(new System.Action(() => { c.Enabled = true; }));
                     }
-                    if (c is PictureBox && c.Name.Contains($"dichXL{j}"))
+                    if (c is PictureBox && c.Name.Contains($"dichG{j}"))
                     {
                         Invoke(new System.Action(() => { c.Enabled = true; }));
                     }
@@ -1345,7 +1520,7 @@ namespace GameProject
                 }
                 if (j <= 6)
                 {
-                    if (c is PictureBox && c.Name.Contains($"dichXD{j}"))
+                    if (c is PictureBox && c.Name.Contains($"dichB{j}"))
                     {
                         c.Enabled = false;
                     }
@@ -1357,7 +1532,7 @@ namespace GameProject
                     {
                         c.Enabled = false;
                     }
-                    if (c is PictureBox && c.Name.Contains($"dichXL{j}"))
+                    if (c is PictureBox && c.Name.Contains($"dichG{j}"))
                     {
                         c.Enabled = false;
                     }
@@ -2171,11 +2346,11 @@ namespace GameProject
                     {
                         SetControlImage(control, Animation.UI_Square_R);
                     }
-                    if (control.Name.Contains("dichXL"))
+                    if (control.Name.Contains("dichG"))
                     {
                         SetControlImage(control, Animation.UI_Square_G);
                     }
-                    if (control.Name.Contains("dichXD"))
+                    if (control.Name.Contains("dichB"))
                     {
                         SetControlImage(control, Animation.UI_Square_B);
                     }
@@ -2280,6 +2455,196 @@ namespace GameProject
             PlayAnimation(btnLuatChoi);
             LuatChoi luatChoi = new LuatChoi();
             luatChoi.ShowDialog();
+        }
+
+                
+        private void DiChuyenVaGuiDongBo (string DiaChiOHienTai, string DiaChiODen)
+        {
+            //////////////////////////////////  ĐI BÌNH THƯỜNG  ///////////////////////////////////////////
+            int vitriHienTai = Convert.ToInt32(DiaChiOHienTai[5]);
+            int vitriDen = Convert.ToInt32(DiaChiODen[5]);
+            Point point = new Point(vitriHienTai, vitriDen);
+
+            if (socket.isServer)
+            {
+                string quanco = dsViTri.FirstOrDefault(source => source.Value == DiaChiOHienTai).Key;
+
+                /*//tạo một biến tạm chứa hình của ô hiện tại
+                PictureBox ptb_tmp = (PictureBox)this.Controls.Find(DiaChiOHienTai, false).FirstOrDefault() as PictureBox;
+
+                //chuyển hình của ô hiện tại sang ô đến
+                SetControlImage((PictureBox)this.Controls.Find(DiaChiODen, false).FirstOrDefault(), ptb_tmp.BackgroundImage);*/
+                Invoke(new System.Action(() =>
+                {
+                    //set lại hình của ô hiện tại
+                    if (DiaChiOHienTai[4] == 'D')
+                    {
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiOHienTai, false).FirstOrDefault(), Animation.UI_Square_R);
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiODen, false).FirstOrDefault(), Animation.UI_Horse_Select_01);
+                    }
+                    else if (DiaChiOHienTai[4] == 'V')
+                    {
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiOHienTai, false).FirstOrDefault(), Animation.UI_Square_Y);
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiODen, false).FirstOrDefault(), Animation.UI_Horse_Select_02);
+                    }
+                    else if (DiaChiOHienTai[4] == 'G')
+                    {
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiOHienTai, false).FirstOrDefault(), Animation.UI_Square_G);
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiODen, false).FirstOrDefault(), Animation.UI_Horse_Select_03);
+                    }
+                    else if (DiaChiOHienTai[4] == 'B')
+                    {
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiOHienTai, false).FirstOrDefault(), Animation.UI_Square_B);
+                        SetControlImage((PictureBox)this.Controls.Find(DiaChiODen, false).FirstOrDefault(), Animation.UI_Horse_Select_04);
+                    }
+                }));
+
+                dsViTri[$"{quanco}"] = $"{DiaChiODen}";
+                socket.Broadcast(new SocketData((int)SocketCommand.DI_CHUYEN, point, $"{DiaChiOHienTai}/{DiaChiODen}"));
+
+            }
+            else
+            {
+                socket.Send(new SocketData((int)SocketCommand.DI_CHUYEN, point, $"{DiaChiOHienTai}/{DiaChiODen}"));
+            }
+
+            CheckLuotSauKhiDi(xingau);
+            //////////////////////////////////////////////////////////////////////////////////////
+        }
+
+        private void SendDiChuyenTrogSanh(string vitridangdung, int vitriso)
+        {
+            string CheckONhan = null;
+            CheckONhan = dsViTri.FirstOrDefault(source => source.Value == vitridangdung ).Key;
+            if (CheckONhan != null)// xét xem vị trí của ô có chứa con cờ cá ngựa hay ko
+            {
+                int vitriden = vitriso + xingau;
+                //CÀI ĐẶT TRƯỜNG HỢP THÌ VỊ TRÍ ĐẾN THÌ ĐƯỢC ĐI
+                string CheckODen = null;
+                if (vitridangdung[4] == 'D')
+                {
+                    CheckODen = dsViTri.FirstOrDefault(source => source.Value == $"dichD{vitriden}").Key;
+                    if (CheckODen == null)
+                    {
+                        DiChuyenVaGuiDongBo(vitridangdung, $"dichD{vitriden}");
+                    }
+                    else
+                        return;
+                }
+                if (vitridangdung[4] == 'V')
+                {
+                    CheckODen = dsViTri.FirstOrDefault(source => source.Value == $"dichV{vitriden}").Key;
+                    if (CheckODen == null)
+                    {
+                        DiChuyenVaGuiDongBo(vitridangdung, $"dichV{vitriden}");
+                    }
+                    else
+                        return;
+
+                }
+                if (vitridangdung[4] == 'G')
+                {
+                    CheckODen = dsViTri.FirstOrDefault(source => source.Value == $"dichG{vitriden}").Key;
+                    if (CheckODen == null)
+                    {
+                        DiChuyenVaGuiDongBo(vitridangdung, $"dichG{vitriden}");
+                    }
+                    else
+                        return;
+
+                }
+                if (vitridangdung[4] == 'B')
+                {
+                    CheckODen = dsViTri.FirstOrDefault(source => source.Value == $"dichB{vitriden}").Key;
+                    if (CheckODen == null)
+                    {
+                        DiChuyenVaGuiDongBo(vitridangdung, $"dichB{vitriden}");
+                    }
+                    else
+                        return;
+
+                }
+            }
+        } 
+        private void dichB1_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichB1",1);
+        }
+        private void dichB2_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichB2",2);
+        }
+        private void dichB3_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichB3",3);
+        }
+        private void dichB4_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichB4",4);
+        }
+        private void dichB5_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichB5",5);
+        }
+        private void dichD1_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichD1",1);
+        }
+        private void dichD2_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichD2",2);
+        }
+        private void dichD3_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichD3",3);
+        }
+        private void dichD4_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichD4",4);
+        }
+        private void dichD5_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichD5",5);
+        }
+        private void dichV1_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichV1",1);
+        }
+        private void dichV2_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichV2",2);
+        }
+        private void dichV3_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichV3",3);
+        }
+        private void dichV4_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichV4",4);
+        }
+        private void dichV5_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichV5",5);
+        }
+        private void dichG1_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichG1",1);
+        }
+        private void dichG2_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichG2",2);
+        }
+        private void dichG3_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichG3",3);
+        }
+        private void dichG4_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichG4",4);
+        }
+        private void dichG5_Click(object sender, EventArgs e)
+        {
+            SendDiChuyenTrogSanh("dichG5",5);
         }
     }
 }
